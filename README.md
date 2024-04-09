@@ -1,4 +1,4 @@
-# Group10
+# Connect Four
 
 
 
@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab-edu.supsi.ch/dti-isin/labingsw/labingsw01/20232024/connect-four/Group10.git
+git remote add origin https://gitlab-edu.supsi.ch/dti-isin/labingsw/labingsw01/demos/labs/connectfour.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlab-edu.supsi.ch/dti-isin/labingsw/labingsw01/20232024/connect-four/Group10/-/settings/integrations)
+- [ ] [Set up project integrations](https://gitlab-edu.supsi.ch/dti-isin/labingsw/labingsw01/demos/labs/connectfour/-/settings/integrations)
 
 ## Collaborate with your team
 

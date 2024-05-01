@@ -1,16 +1,12 @@
-package ch.supsi.connectfour.backend.model;
+package ch.supsi.connectfour.backend.business.player;
 
-import java.io.Serial;
-import java.io.Serializable;
 import java.util.Objects;
 
-public final class Player implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 4278903726155278393L;
+public final class PlayerModel {
     private String name;
     private int numWin;
 
-    public Player(String name, int numWin) {  //delego il controllo ai setters
+    public PlayerModel(String name, int numWin) {  //delego il controllo ai setters
         setName(name);
         setNumWin(numWin);
     }
@@ -43,7 +39,7 @@ public final class Player implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Player player)) return false;
+        if (!(o instanceof PlayerModel player)) return false;
         return getNumWin() == player.getNumWin() && Objects.equals(getName(), player.getName());
     }
 

@@ -1,17 +1,17 @@
 package ch.supsi.connectfour.backend;
 
-import ch.supsi.connectfour.backend.model.Match;
-import ch.supsi.connectfour.backend.model.Player;
+import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
+import ch.supsi.connectfour.backend.business.player.PlayerModel;
 
 //questa classe serve esclusivamente per testare il backend in fase di produzione, va eliminata alla fine!!!
 public class Main {
     public static void main(String[] args) {
-        Player p = new Player("giovanni", 80);
+        PlayerModel p = new PlayerModel("giovanni", 80);
         System.out.println(p);
-        Player p1 = new Player("", -2);
+        PlayerModel p1 = new PlayerModel("", -2);
         System.out.println(p1);
 
-        Match m = new Match(p, p1);
+        ConnectFourModel m = new ConnectFourModel(p, p1);
         System.out.println(m);
 
         m.setCell(p1, 0);

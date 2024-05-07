@@ -11,10 +11,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     protected static ConnectFourModel instance;
     private static ConnectFourDataAccessInterface dataAccess;;
 
-    /*
-    TODO: implement singleton pattern
-     */
-
     private static final int GRID_LENGTH = 7;
     private static final int GRID_HEIGHT = 6;
 
@@ -44,6 +40,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         this.player1 = player1;
         this.player2 = player2;
     }
+
 
     //getters and setters
     public boolean isFinished() {

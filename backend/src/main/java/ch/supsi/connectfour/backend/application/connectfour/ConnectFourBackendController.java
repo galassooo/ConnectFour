@@ -1,8 +1,14 @@
 package ch.supsi.connectfour.backend.application.connectfour;
 
+import ch.supsi.connectfour.backend.application.preferences.PreferencesBusinessInterface;
+import ch.supsi.connectfour.backend.application.serialization.SerializationBusinessInterface;
+
 public class ConnectFourBackendController {
     private static ConnectFourBackendController instance;
+    private static PreferencesBusinessInterface preferences;
+    private static SerializationBusinessInterface serialization;
     private static ConnectFourBusinessInterface model;
+
 
     // implement singleton pattern
     // implement methods declared in ConnectFourBusinessInterface

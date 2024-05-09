@@ -1,4 +1,33 @@
 package ch.supsi.connectfour.backend.business.serialization;
 
-public class SerializationModel {
+import ch.supsi.connectfour.backend.application.serialization.SerializationBusinessInterface;
+import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
+import ch.supsi.connectfour.backend.dataaccess.SerializationDataAccess;
+
+import java.io.File;
+
+public class SerializationModel implements SerializationBusinessInterface {
+    private static SerializationModel instance;
+    private final SerializationDataAccessInterface dataAccess;
+
+    private SerializationModel() {
+        instance = this;
+        this.dataAccess = SerializationDataAccess.getInstance();
+    }
+    public static SerializationModel getInstance() {
+        if (instance == null) {
+            instance = new SerializationModel();
+        }
+        return instance;
+    }
+
+    @Override
+    public ConnectFourModel getSave(final File file) {
+        return dataAccess.getSave(file);
+    }
+
+    @Override
+    public boolean persist(final ConnectFourModel model, final File file) {
+        return dataAccess.persist(model, file);
+    }
 }

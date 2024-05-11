@@ -1,12 +1,16 @@
 package ch.supsi.connectfour.backend.business.player;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 public final class PlayerModel {
     private String name;
     private int numWin;
 
-    public PlayerModel(String name, int numWin) {  //delego il controllo ai setters
+    @JsonCreator
+    public PlayerModel(@JsonProperty(value = "name") String name, @JsonProperty(value = "numWin") int numWin) {  //delego il controllo ai setters
         setName(name);
         setNumWin(numWin);
     }

@@ -63,7 +63,7 @@ public class SerializationController {
     public ConnectFourModel getSave(final File file) {
         ConnectFourModel model = this.model.getSave(file);
         if (model == null) {
-
+            // TODO: do something
         }
         return model;
     }

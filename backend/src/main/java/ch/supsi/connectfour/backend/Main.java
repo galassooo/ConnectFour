@@ -14,12 +14,6 @@ public class Main {
         ConnectFourModel m = new ConnectFourModel(p, p1);
         System.out.println(m);
 
-        m.setCell(p1, 0);
-        m.setCell(p1, 1);
-        m.setCell(p,0);
-        m.setCell(p, 6);
-        m.setCell(p, 6);
-        m.setCell(p1, 6);
 
         System.out.println();
         System.out.println(m);

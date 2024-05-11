@@ -24,27 +24,34 @@ public class ConnectFourBackendController {
 
     /**
      * Serve per gestire la mossa del giocatore
+     *
      * @param column colonna nel quale il giocatore intende inserire la pedina
-     * @return un oggetto contenente i dati relativi alla mossa
+     * @return un oggetto contenente i dati relativi alla mossa, null se la partita è finita
      */
-    public @Nullable MoveData playerMove(int column){
-        if(currentMatch == null){
+    public @Nullable MoveData playerMove(int column) {
+        if (currentMatch == null) {
             currentMatch = new ConnectFourModel(new PlayerModel("p1"), new PlayerModel("p2"));
         }
-        if(currentMatch.canInsert(column)){
-            currentMatch.insert(column);
-            MoveData data;
-            if(currentMatch.checkWin()){
-                System.out.println("player ha vinto");
-                data = new MoveData(currentMatch.getCurrentPlayer(), column, currentMatch.getLastPositioned(column), true);
-            }else {
-                data = new MoveData(currentMatch.getCurrentPlayer(), column, currentMatch.getLastPositioned(column), false);
+        if (!currentMatch.isFinished()) {
+            if (currentMatch.canInsert(column)) {
+                currentMatch.insert(column);
+                MoveData data;
+
+                PlayerModel playerWhoMoved = currentMatch.getCurrentPlayer();
                 currentMatch.switchCurrentPlayer();
-                System.out.println(currentMatch);
-                System.out.println("player ha mosso e il turno è cambiato");
-            }
-            return data;
-        }else
-            return null;
+                if (currentMatch.checkWin()) {
+                    currentMatch.setFinished(true);
+                    System.out.println("player ha vinto");
+                    data = new MoveData(playerWhoMoved, currentMatch.getCurrentPlayer(), column, currentMatch.getLastPositioned(column), true, true);
+                } else {
+                    data = new MoveData(playerWhoMoved, currentMatch.getCurrentPlayer(), column, currentMatch.getLastPositioned(column), false, true);
+                    System.out.println(currentMatch);
+                    System.out.println("player ha mosso e il turno è cambiato");
+                }
+                return data;
+            } else
+                return new MoveData(currentMatch.getCurrentPlayer(), currentMatch.getCurrentPlayer(), column, currentMatch.getLastPositioned(column), false, false);
+        }
+        return null;
     }
 }

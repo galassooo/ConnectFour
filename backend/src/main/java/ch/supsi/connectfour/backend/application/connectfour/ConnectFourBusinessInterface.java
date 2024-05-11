@@ -11,4 +11,6 @@ public interface ConnectFourBusinessInterface {
 
     int getLastPositioned(int column);
     PlayerModel getCurrentPlayer();
+    boolean isFinished();
+    void setFinished(boolean finished);
 }

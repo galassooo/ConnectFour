@@ -11,6 +11,10 @@ public final class PlayerModel {
         setNumWin(numWin);
     }
 
+    public PlayerModel(String name) {
+        this.name = name;
+    }
+
     //getters and setters
     public String getName() {
         return name;

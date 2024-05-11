@@ -25,13 +25,20 @@ public class MainFx extends Application {
     private ColumnsSelectorDispatcher columnsSelectorDispatcher;
     private BoardView boardView;
     private InfoBarView infoBarView;
-    private GameController gameController;
+    private GameController gameController = GameController.getInstance();
+    private static MainFx instance;
+
+    //singleton
+    public static MainFx getInstance() {
+        return instance;
+    }
 
     public MainFx() throws InstantiationException {
     }
 
     @Override
     public void start(Stage primaryStage) {
+        instance = this;
         // handle the main window close request
         // in real life, this event should not be dealt with here!
         // it should actually be delegated to a suitable ExitController!
@@ -89,6 +96,7 @@ public class MainFx extends Application {
             FXMLLoader boardLoader = new FXMLLoader(fxmlUrl);
             board = boardLoader.load();
             this.boardView = boardLoader.getController();
+            gameController.setBoardView(boardView);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -130,6 +138,10 @@ public class MainFx extends Application {
         primaryStage.setTitle(MainFx.APP_TITLE);
         primaryStage.setScene(scene);
         primaryStage.show();
+    }
+
+    public BoardView getBoardView() {
+        return boardView;
     }
 
     public static void main(String[] args) {

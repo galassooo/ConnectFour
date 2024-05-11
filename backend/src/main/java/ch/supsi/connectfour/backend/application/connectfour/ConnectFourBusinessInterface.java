@@ -1,5 +1,14 @@
 package ch.supsi.connectfour.backend.application.connectfour;
 
-public interface ConnectFourBusinessInterface {
+import ch.supsi.connectfour.backend.business.player.PlayerModel;
+import org.jetbrains.annotations.Nullable;
 
+public interface ConnectFourBusinessInterface {
+    void switchCurrentPlayer();
+    void insert(int column);
+    boolean checkWin();
+    boolean canInsert(int column);
+
+    int getLastPositioned(int column);
+    PlayerModel getCurrentPlayer();
 }

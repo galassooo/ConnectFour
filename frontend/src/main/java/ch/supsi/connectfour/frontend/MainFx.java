@@ -20,6 +20,7 @@ import java.net.URL;
 public class MainFx extends Application {
 
     public static final String APP_TITLE = "connectfour";
+    public static Stage stage;
 
     private MenuBarDispatcher menuBarDispatcher;
     private ColumnsSelectorDispatcher columnsSelectorDispatcher;
@@ -139,6 +140,8 @@ public class MainFx extends Application {
         primaryStage.setTitle(MainFx.APP_TITLE);
         primaryStage.setScene(scene);
         primaryStage.show();
+
+        stage = primaryStage;
     }
 
     public BoardView getBoardView() {

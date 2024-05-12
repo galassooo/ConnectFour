@@ -2,6 +2,7 @@ package ch.supsi.connectfour.backend.application.connectfour;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesBusinessInterface;
 import ch.supsi.connectfour.backend.application.serialization.SerializationBusinessInterface;
+import ch.supsi.connectfour.backend.business.connectfour.ConnectFourDataAccessInterface;
 import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
 import ch.supsi.connectfour.backend.business.movedata.MoveData;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
@@ -53,5 +54,15 @@ public class ConnectFourBackendController {
                 return new MoveData(currentMatch.getCurrentPlayer(), currentMatch.getCurrentPlayer(), column, currentMatch.getLastPositioned(column), false, false);
         }
         return null;
+    }
+    public ConnectFourBusinessInterface getCurrentMatch() {
+        return currentMatch;
+    }
+    public boolean setCurrentMatch(ConnectFourModel currentMatch) {
+        if (currentMatch == null) {
+            return false;
+        }
+        ConnectFourBackendController.currentMatch.setCurrentMatch(currentMatch);
+        return true;
     }
 }

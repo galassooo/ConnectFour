@@ -38,6 +38,7 @@ public class GameController {
             boardView.setCellText(data.row(), data.column(), data.player().getName());
 
             if(infoBarView != null){
+                // TODO: QUESTI MESSAGGI SARANNO DA CARICARE TRAMITE LE TRADUZIONI
                 if(data.win()){
                     infoBarView.setText(data.player().getName() + " won the game!");
 

@@ -158,6 +158,12 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         return firstFreeCell < GRID_HEIGHT && firstFreeCell >= 0;
     }
 
+    @Override
+    public boolean setCurrentMatch(ConnectFourModel match) {
+        instance = match;
+        return true;
+    }
+
     /**
      * Inserisce la pedina nella prima posizione disponibile nella colonna
      * @param column colonna nel quale si intende inserire la pedina

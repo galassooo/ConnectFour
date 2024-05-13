@@ -6,7 +6,6 @@ import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
 import ch.supsi.connectfour.backend.dataaccess.SerializationDataAccess;
 
 import java.io.File;
-import java.lang.annotation.*;
 
 public class SerializationModel implements SerializationBusinessInterface {
     private static SerializationModel instance;
@@ -17,9 +16,8 @@ public class SerializationModel implements SerializationBusinessInterface {
         this.dataAccess = SerializationDataAccess.getInstance();
     }
     public static SerializationModel getInstance() {
-        if (instance == null) {
+        if (instance == null)
             return new SerializationModel();
-        }
         return instance;
     }
 

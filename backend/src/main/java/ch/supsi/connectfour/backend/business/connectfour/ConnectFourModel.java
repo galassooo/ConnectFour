@@ -10,10 +10,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.TestOnly;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Random;
 
 
@@ -29,39 +29,30 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     private static final int GRID_LENGTH = 7;
     @JsonIgnore
     private static final int GRID_HEIGHT = 6;
-
+    // A Path object representing the path - if available - of a save of this game
     private Path pathToSave = null;
 
-    /**
-     * restituisce true se la partita è terminata, altrimenti false.
-     */
+    // True if the game is finished, false otherwise
     private boolean isFinished = false;
 
-    /**
-     * permette di ottenere per ogni colonna la prima posizione libera disponibile
-     */
+    // Stores information about the first available row in any given column
     private int[] lastPositionOccupied;
 
-    /**
-     * player1 se è presente elemento del giocatore1, idem per il giocatore 2, null se vuoto
-     */
+    // Represents the game board. Contains null if the cell is empty, or a reference to an instance of PlayerModel if a player is present
     private PlayerModel[][] gameMatrix;
 
-    /**
-     * Giocatore 1
-     */
+    // The first player
     private PlayerModel player1;
 
-    /**
-     * Giocatore 2
-     */
+    // The second player
     private PlayerModel player2;
 
-    /**
-     * Giocatore attualmente in turno
-     */
+    // Player currently allowed to move
     private PlayerModel currentPlayer;
 
+    /*
+    This constructor is required in order for the Jackson library to serialize the game. It should not be used elsewhere nor modified.
+    */
     @JsonCreator
     private ConnectFourModel(
             @JsonProperty(value = "isFinished") final boolean isFinished,
@@ -88,12 +79,12 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         this.gameMatrix = new PlayerModel[GRID_HEIGHT][GRID_LENGTH];
         this.lastPositionOccupied = new int[GRID_LENGTH];
         this.dataAccess = ConnectFourDataAccess.getInstance();
-
     }
 
     /**
-     * controlla se allo stato della chiamata la partita è vinta
-     * @return true se un giocatore ha vinto
+     * Checks if a player has won
+     *
+     * @return true if one of the players won, false if none won yet
      */
     //TODO trovare approccio migliore della brute force
     public boolean checkWin() {
@@ -147,21 +138,13 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         return false;
     }
 
-
-    //getters and setters
-    public boolean isFinished() {
-        return isFinished;
-    }
-
-    public void setFinished(boolean finished) {
-        isFinished = finished;
-    }
-
+    // TODO: add comment
     @Override
     public ConnectFourModel getSave(@NotNull final File file) {
         return this.dataAccess.getSave(file);
     }
 
+    // TODO: add comment
     @Override
     public boolean persist(@Nullable final File outputDirectory, @Nullable final String name) {
         boolean wasSaved = false;
@@ -192,7 +175,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
 
     @Override
     public PlayerModel[][] getGameMatrix() {
-        // TODO: consider a better approach like a defensive copy to prevent misuse outside
+        // TODO: consider a better approach like a defensive copy to prevent misuse outside or change the approach altogether
         return this.gameMatrix;
     }
 
@@ -213,16 +196,17 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     }
 
     /**
-     * Inserisce la pedina nella prima posizione disponibile nella colonna
-     * @param column colonna nel quale si intende inserire la pedina
+     * Inserts the pawn in the first available row in the given column
+     *
+     * @param column the column where the player wants to insert their pawn
      */
-    public void insert(int column) { //evita di avere getter e setter, nasconde implementazione
+    public void insert(int column) { // Evita di avere getter e setter, nasconde implementazione
         int firstFreeCell = GRID_HEIGHT - 1 - lastPositionOccupied[column];
         lastPositionOccupied[column]++;
         gameMatrix[firstFreeCell][column] = currentPlayer;
     }
 
-    @Contract(pure = true) //indica che il metodo non modifica nessun valore
+    @Contract(pure = true)
     public @Nullable PlayerModel getCell(int row, int column) {
         if (column < 0 || column >= GRID_LENGTH || row < 0 || row >= GRID_HEIGHT)
             return null;
@@ -239,13 +223,13 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     }
 
     /**
-     * Effettua il cambio di giocatore in turno
+     * Switches the player currently allowed to move
      */
     public void switchCurrentPlayer() {
         currentPlayer = currentPlayer.equals(player2) ? player1 : player2;
     }
 
-    //solo per test
+    // TODO: get rid of this once the project is ready to be submitted
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -263,6 +247,13 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
             sb.append("\n");  // Nuova linea alla fine di ogni riga
         }
         return sb.toString();
+    }
+    // Getter and setter methods
+    public boolean isFinished() {
+        return isFinished;
+    }
+    public void setFinished(boolean finished) {
+        isFinished = finished;
     }
 
 }

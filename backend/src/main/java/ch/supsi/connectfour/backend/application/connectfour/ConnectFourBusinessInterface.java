@@ -18,7 +18,7 @@ public interface ConnectFourBusinessInterface {
     boolean isFinished();
     void setFinished(boolean finished);
 
-    // Persistence related
+    // Persistence related methods
     ConnectFourModel getSave(final File file);
     boolean persist(final File outputDirectory, final String name);
     boolean wasSavedAs();

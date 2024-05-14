@@ -11,8 +11,11 @@ import java.io.File;
 public class ConnectFourBackendController {
     private static ConnectFourBackendController instance;
     private static PreferencesBusinessInterface preferences;
+    // The match currently linked to this controller
     private static ConnectFourBusinessInterface currentMatch = new ConnectFourModel(new PlayerModel("p1"), new PlayerModel("p2"));
 
+
+    // Singleton instantiation of this class
     public static ConnectFourBackendController getInstance() {
         if (instance == null) {
             instance = new ConnectFourBackendController();
@@ -64,19 +67,42 @@ public class ConnectFourBackendController {
      *
      * @param newMatch the match that should replace the current match, or null if a new, blank one is required
      */
-    public void overrideCurrentMatch(final ConnectFourBusinessInterface newMatch) {
+    public void overrideCurrentMatch(@Nullable final ConnectFourBusinessInterface newMatch) {
         if (newMatch == null) {
             currentMatch = new ConnectFourModel(new PlayerModel("p1"), new PlayerModel("p2"));
             return;
         }
         currentMatch = newMatch;
     }
+
+    /**
+     * Checks wether or not the current game is finished
+     *
+     * @return true if the game is finished, false if it is not
+     */
+
     public boolean isCurrentGameFinished() {
         return currentMatch.isFinished();
     }
-    public boolean persist(@Nullable final File outputFile, @Nullable final String name) {
-        return currentMatch.persist(outputFile, name);
+
+    /**
+     * Tries to persist the current match linked to this controller
+     *
+     * @param outputDirectory the directory where the game should be saved
+     * @param name the name for the save
+     *
+     * @return true if the operation succeeded, false if it failed
+     */
+    public boolean persist(@Nullable final File outputDirectory, @Nullable final String name) {
+        return currentMatch.persist(outputDirectory, name);
     }
+
+    /**
+     * Tries loading the match stored in a file into this controller
+     *
+     * @param file a File instance representing the file in the filesystem
+     * @return the deserialized game if the operation succeeded, null if it failed
+     */
     public ConnectFourModel tryLoadingSave(@NotNull final File file) {
         final ConnectFourModel loadedGame = currentMatch.getSave(file);
 

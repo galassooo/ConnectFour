@@ -1,25 +1,25 @@
 package ch.supsi.connectfour.frontend.dispatcher;
 
-import ch.supsi.connectfour.frontend.controller.SerializationFrontendController;
+import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
 import javafx.event.ActionEvent;
 
 public class MenuBarDispatcher {
-    private final SerializationFrontendController serializationFrontendController = SerializationFrontendController.getInstance();
+    private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
 
     public void newGame(ActionEvent actionEvent) {
-        serializationFrontendController.manageNew();
+        connectFourFrontendController.manageNew();
     }
 
     public void openGame(ActionEvent actionEvent) {
-        serializationFrontendController.manageOpen();
+        connectFourFrontendController.manageOpen();
     }
 
     public void saveGame(ActionEvent actionEvent) {
-        serializationFrontendController.manageSave();
+        connectFourFrontendController.manageSave();
     }
 
     public void saveGameAs(ActionEvent actionEvent) {
-        serializationFrontendController.manageSaveAs();
+        connectFourFrontendController.manageSaveAs();
     }
 
     public void quit(ActionEvent actionEvent) {

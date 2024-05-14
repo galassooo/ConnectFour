@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-public class InfoBarView {
+public class InfoBarView implements Viewable {
 
     @FXML
     private TextFlow textLabel;
@@ -18,5 +18,10 @@ public class InfoBarView {
         textLabel.getChildren().clear(); // se voglio pulire il precedene
         Text textNode = new Text(text);
         textLabel.getChildren().add(textNode);
+    }
+
+    @Override
+    public void clear() {
+        textLabel.getChildren().clear();
     }
 }

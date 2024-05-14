@@ -2,13 +2,18 @@ package ch.supsi.connectfour.backend.business.connectfour;
 
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
+import ch.supsi.connectfour.backend.dataaccess.ConnectFourDataAccess;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -16,14 +21,16 @@ import java.util.Random;
 public final class ConnectFourModel implements ConnectFourBusinessInterface {
 
     @JsonIgnore
-    private static ConnectFourModel instance;
+    private static ConnectFourBusinessInterface instance;
     @JsonIgnore
-    private static ConnectFourDataAccessInterface dataAccess;;
+    private final ConnectFourDataAccessInterface dataAccess;
 
     @JsonIgnore
     private static final int GRID_LENGTH = 7;
     @JsonIgnore
     private static final int GRID_HEIGHT = 6;
+
+    private Path pathToSave = null;
 
     /**
      * restituisce true se la partita è terminata, altrimenti false.
@@ -33,36 +40,44 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     /**
      * permette di ottenere per ogni colonna la prima posizione libera disponibile
      */
-    private final int[] lastPositionOccupied;
+    private int[] lastPositionOccupied;
 
     /**
      * player1 se è presente elemento del giocatore1, idem per il giocatore 2, null se vuoto
      */
-    private final PlayerModel[][] gameMatrix;
+    private PlayerModel[][] gameMatrix;
 
     /**
      * Giocatore 1
      */
-    private final PlayerModel player1;
+    private PlayerModel player1;
 
     /**
      * Giocatore 2
      */
-    private final PlayerModel player2;
-
-    @JsonCreator
-    private ConnectFourModel(@JsonProperty(value = "isFinished") final boolean isFinished, @JsonProperty(value = "lastPositionOccupied") final int[] lastPositionOccupied, @JsonProperty(value = "gameMatrix") final PlayerModel[][] gameMatrix, @JsonProperty(value = "player1") final PlayerModel player1, @JsonProperty(value = "player2") final PlayerModel player2) {
-        this.player1 = player1;
-        this.player2 = player2;
-        this.gameMatrix = gameMatrix;
-        this.lastPositionOccupied = lastPositionOccupied;
-        this.isFinished = isFinished;
-    }
+    private PlayerModel player2;
 
     /**
      * Giocatore attualmente in turno
      */
     private PlayerModel currentPlayer;
+
+    @JsonCreator
+    private ConnectFourModel(
+            @JsonProperty(value = "isFinished") final boolean isFinished,
+            @JsonProperty(value = "lastPositionOccupied") final int[] lastPositionOccupied,
+            @JsonProperty(value = "gameMatrix") final PlayerModel[][] gameMatrix,
+            @JsonProperty(value = "player1") final PlayerModel player1,
+            @JsonProperty(value = "player2") final PlayerModel player2,
+            @JsonProperty(value = "pathToSave") final Path pathToSave) {
+        this.player1 = player1;
+        this.player2 = player2;
+        this.gameMatrix = gameMatrix;
+        this.lastPositionOccupied = lastPositionOccupied;
+        this.isFinished = isFinished;
+        this.pathToSave = pathToSave;
+        this.dataAccess = ConnectFourDataAccess.getInstance();
+    }
 
     public ConnectFourModel(PlayerModel player1, PlayerModel player2) {
         if (player2 == null || player1 == null)
@@ -72,6 +87,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         currentPlayer = new Random().nextBoolean() ? player1 : player2;
         this.gameMatrix = new PlayerModel[GRID_HEIGHT][GRID_LENGTH];
         this.lastPositionOccupied = new int[GRID_LENGTH];
+        this.dataAccess = ConnectFourDataAccess.getInstance();
 
     }
 
@@ -128,7 +144,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
                 }
             }
         }
-
         return false;
     }
 
@@ -140,6 +155,45 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
 
     public void setFinished(boolean finished) {
         isFinished = finished;
+    }
+
+    @Override
+    public ConnectFourModel getSave(@NotNull final File file) {
+        return this.dataAccess.getSave(file);
+    }
+
+    @Override
+    public boolean persist(@Nullable final File outputDirectory, @Nullable final String name) {
+        boolean wasSaved = false;
+        Path path = null;
+        /*
+            If the provided file and name are null, then it means the user wants to use the already available save
+            If there is actually a path to a linked save, check if the Path actually points to an existing
+            file (else it could be deleted in the meantime and lead to errors).
+         */
+        if (outputDirectory == null && name == null && this.pathToSave != null && this.pathToSave.toFile().exists()) {
+            wasSaved = this.dataAccess.persist(this, this.pathToSave.toFile());
+        } else {
+            path = Path.of(outputDirectory + File.separator + name + ".json");
+            wasSaved = this.dataAccess.persist(this, new File(String.valueOf(path)));
+        }
+        // If the user specified an output directory and this game was successfully saved, then update the path to the save
+        // The naming convention for the saves was chosen arbitrarily and consists of
+        if (outputDirectory != null && wasSaved) {
+            this.pathToSave = path;
+        }
+        return wasSaved;
+    }
+
+    @Override
+    public boolean wasSavedAs() {
+        return this.pathToSave != null;
+    }
+
+    @Override
+    public PlayerModel[][] getGameMatrix() {
+        // TODO: consider a better approach like a defensive copy to prevent misuse outside
+        return this.gameMatrix;
     }
 
     public PlayerModel getCurrentPlayer() {
@@ -156,12 +210,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
             return false;
         int firstFreeCell = GRID_HEIGHT - 1 - lastPositionOccupied[column]; //post increment
         return firstFreeCell < GRID_HEIGHT && firstFreeCell >= 0;
-    }
-
-    @Override
-    public boolean setCurrentMatch(ConnectFourModel match) {
-        instance = match;
-        return true;
     }
 
     /**

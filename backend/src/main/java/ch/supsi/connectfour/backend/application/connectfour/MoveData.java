@@ -1,4 +1,4 @@
-package ch.supsi.connectfour.backend.business.movedata;
+package ch.supsi.connectfour.backend.application.connectfour;
 
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
 

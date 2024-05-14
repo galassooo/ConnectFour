@@ -6,14 +6,14 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
-public class BoardView {
+public class BoardView implements Viewable {
     @FXML
     private GridPane gridPane;
 
     @FXML
     public void initialize(){
         gridPane.setStyle("-fx-grid-lines-visible: true;");
-        clearGrid(); //valutare di cambiare direttamente il file fxml
+        this.clear();
     }
     public void setCellText(int row, int column, String text) {
         for (javafx.scene.Node node : gridPane.getChildren()) {
@@ -27,7 +27,9 @@ public class BoardView {
             }
         }
     }
-    private void clearGrid(){
+
+    @Override
+    public void clear() {
         for (javafx.scene.Node node : gridPane.getChildren()) {
             if (node instanceof AnchorPane anchorPane) {
                 for (javafx.scene.Node child : anchorPane.getChildren()) {

@@ -1,7 +1,7 @@
 package ch.supsi.connectfour.frontend;
 
 
-import ch.supsi.connectfour.frontend.controller.GameController;
+import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher;
 import ch.supsi.connectfour.frontend.view.BoardView;
@@ -26,7 +26,7 @@ public class MainFx extends Application {
     private ColumnsSelectorDispatcher columnsSelectorDispatcher;
     private BoardView boardView;
     private InfoBarView infoBarView;
-    private GameController gameController = GameController.getInstance();
+    private ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
     private static MainFx instance;
 
     //singleton
@@ -97,7 +97,7 @@ public class MainFx extends Application {
             FXMLLoader boardLoader = new FXMLLoader(fxmlUrl);
             board = boardLoader.load();
             this.boardView = boardLoader.getController();
-            gameController.setBoardView(boardView);
+            connectFourFrontendController.setBoardView(boardView);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -115,7 +115,7 @@ public class MainFx extends Application {
             FXMLLoader infoBarLoader = new FXMLLoader(fxmlUrl);
             infoBar = infoBarLoader.load();
             this.infoBarView = infoBarLoader.getController();
-            gameController.setInfoBarView(infoBarView);
+            connectFourFrontendController.setInfoBarView(infoBarView);
 
         } catch (IOException e) {
             throw new RuntimeException(e);

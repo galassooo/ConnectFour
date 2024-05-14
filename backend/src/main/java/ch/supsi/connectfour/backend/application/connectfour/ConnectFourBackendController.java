@@ -1,21 +1,18 @@
 package ch.supsi.connectfour.backend.application.connectfour;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesBusinessInterface;
-import ch.supsi.connectfour.backend.application.serialization.SerializationBusinessInterface;
-import ch.supsi.connectfour.backend.business.connectfour.ConnectFourDataAccessInterface;
 import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
-import ch.supsi.connectfour.backend.business.movedata.MoveData;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.io.File;
 
 public class ConnectFourBackendController {
     private static ConnectFourBackendController instance;
     private static PreferencesBusinessInterface preferences;
-    private static SerializationBusinessInterface serialization;
-    private static ConnectFourBusinessInterface currentMatch;
+    private static ConnectFourBusinessInterface currentMatch = new ConnectFourModel(new PlayerModel("p1"), new PlayerModel("p2"));
 
-
-    //singleton pattern
     public static ConnectFourBackendController getInstance() {
         if (instance == null) {
             instance = new ConnectFourBackendController();
@@ -58,11 +55,35 @@ public class ConnectFourBackendController {
     public ConnectFourBusinessInterface getCurrentMatch() {
         return currentMatch;
     }
-    public boolean setCurrentMatch(ConnectFourModel currentMatch) {
-        if (currentMatch == null) {
-            return false;
+
+    /**
+     * Overrides this instance's current match, if a new one is provided. If the provided match is null, it replaces it
+     * with a new one.
+     * This method is used with a null input parameter if a new game is requested, and with an actual instance of
+     * ConnectFourModel if we are de-serializing a game and loading it.
+     *
+     * @param newMatch the match that should replace the current match, or null if a new, blank one is required
+     */
+    public void overrideCurrentMatch(final ConnectFourBusinessInterface newMatch) {
+        if (newMatch == null) {
+            currentMatch = new ConnectFourModel(new PlayerModel("p1"), new PlayerModel("p2"));
+            return;
         }
-        ConnectFourBackendController.currentMatch.setCurrentMatch(currentMatch);
-        return true;
+        currentMatch = newMatch;
+    }
+    public boolean isCurrentGameFinished() {
+        return currentMatch.isFinished();
+    }
+    public boolean persist(@Nullable final File outputFile, @Nullable final String name) {
+        return currentMatch.persist(outputFile, name);
+    }
+    public ConnectFourModel tryLoadingSave(@NotNull final File file) {
+        final ConnectFourModel loadedGame = currentMatch.getSave(file);
+
+        if (loadedGame != null) {
+            this.overrideCurrentMatch(loadedGame);
+        }
+        return loadedGame;
+
     }
 }

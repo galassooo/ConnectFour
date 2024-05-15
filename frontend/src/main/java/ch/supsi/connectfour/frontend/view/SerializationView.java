@@ -26,6 +26,7 @@ public class SerializationView {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
     // TODO: LOAD THESE MESSAGES THROUGH TRANSLATIONS
     public File askForDirectory() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -33,11 +34,13 @@ public class SerializationView {
         directoryChooser.setTitle("Scegli la directory dove salvare il file...");
         return directoryChooser.showDialog(primaryStage);
     }
+
     public File askForFile() {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Seleziona il file da cui caricare la partita...");
         return fileChooser.showOpenDialog(primaryStage);
     }
+
     public boolean showConfirmationDialog(String message) {
         // Create a confirmation dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -58,6 +61,7 @@ public class SerializationView {
         // Return true if OK button is clicked, false otherwise
         return result.isPresent() && result.get() == okButton;
     }
+
     public String showInputDialog(String message) {
         // Create a TextInputDialog
         TextInputDialog dialog = new TextInputDialog();

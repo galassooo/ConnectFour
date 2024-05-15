@@ -114,18 +114,21 @@ public class ConnectFourFrontendController {
         if (file != null && file.exists() && file.isFile()) {
             final ConnectFourBusinessInterface loadedGame = this.backendController.tryLoadingSave(file);
             if (loadedGame != null) {
-                // Success!
-                System.out.println("YAY");
                 // TODO: it would be nice if we found a way to just add the views to a List of Viewable and simply do list.forEach(Viewable::clear);
                 this.boardView.clear();
                 this.infoBarView.clear();
 
+                // TODO: not sure if this is the best approach... should the frontend do this? I guess so, since it needs the view to perform this action...
+                // Working on a deep copy of the actual game matrix to try and preserve invariants and prevent unauthorized modifications from the outside
                 final PlayerModel[][] gameMatrix = loadedGame.getGameMatrix();
                 for (int row = 0; row < gameMatrix.length; row++) {
                     for (int column = 0; column < gameMatrix[0].length; column++) {
                         this.boardView.setCellText(row, column, gameMatrix[row][column] == null ? "" : gameMatrix[row][column].getName());
                     }
                 }
+                // Success!
+                System.out.println("YAY");
+                this.serializationView.showMessage("Salvataggio caricato correttamente", "conferma", Alert.AlertType.INFORMATION);
             } else {
                 System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             }

@@ -94,6 +94,7 @@ public class ConnectFourBackendController {
     public boolean persist(@Nullable final File outputDirectory, @Nullable final String saveName) {
         return currentMatch.persist(outputDirectory, saveName);
     }
+
     public boolean wasCurrentGameSavedAs() {
         return currentMatch.wasSavedAs();
     }

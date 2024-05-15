@@ -171,8 +171,28 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
 
     @Override
     public PlayerModel[][] getGameMatrix() {
-        // TODO: consider a better approach like a defensive copy to prevent misuse outside or change the approach altogether
-        return this.gameMatrix;
+        return this.getGameMatrixDeepCopy();
+    }
+
+    // TODO: consider if it's worth doing... not sure if we are supposed to trust that the controller knows what it is doing or if we should be cautious and make defensive copies / prevent random modifications from the outside
+    private PlayerModel[][] getGameMatrixDeepCopy() {
+        // Get the dimensions of the original array
+        int rows = this.gameMatrix.length;
+        int cols = gameMatrix[0].length;
+
+        // Create a new array with the same dimensions
+        PlayerModel[][] copiedMatrix = new PlayerModel[rows][cols];
+
+        // Deep copy each element from the original array to the new array
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                // Perform a deep copy of the PlayerModel object
+                if (this.gameMatrix[i][j] != null) {
+                    copiedMatrix[i][j] = new PlayerModel(this.gameMatrix[i][j].getName(), this.gameMatrix[i][j].getNumWin());
+                }
+            }
+        }
+        return copiedMatrix;
     }
 
     public PlayerModel getCurrentPlayer() {

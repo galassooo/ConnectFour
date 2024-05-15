@@ -3,23 +3,24 @@ package ch.supsi.connectfour.backend.business.connectfour;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.dataaccess.ConnectFourDataAccess;
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.*;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.TestOnly;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Random;
 
 
-@JsonAutoDetect(fieldVisibility=JsonAutoDetect.Visibility.ANY)
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public final class ConnectFourModel implements ConnectFourBusinessInterface {
-
+    /*
+        While technically not essential because Jackson considers non-annoted fields as
+        included by default, I decided to explicitly annotate both ignored and included
+        fields for serialization to state as clearly as possible what is serialized and what
+        is not
+     */
     @JsonIgnore
     private static ConnectFourBusinessInterface instance;
     @JsonIgnore
@@ -30,43 +31,38 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     @JsonIgnore
     private static final int GRID_HEIGHT = 6;
     // A Path object representing the path - if available - of a save of this game
+    @JsonInclude
     private Path pathToSave = null;
 
     // True if the game is finished, false otherwise
+    @JsonInclude
     private boolean isFinished = false;
 
     // Stores information about the first available row in any given column
+    @JsonInclude
     private int[] lastPositionOccupied;
 
     // Represents the game board. Contains null if the cell is empty, or a reference to an instance of PlayerModel if a player is present
+    @JsonInclude
     private PlayerModel[][] gameMatrix;
 
     // The first player
+    @JsonInclude
     private PlayerModel player1;
 
     // The second player
+    @JsonInclude
     private PlayerModel player2;
 
     // Player currently allowed to move
+    @JsonInclude
     private PlayerModel currentPlayer;
 
     /*
     This constructor is required in order for the Jackson library to serialize the game. It should not be used elsewhere nor modified.
     */
     @JsonCreator
-    private ConnectFourModel(
-            @JsonProperty(value = "isFinished") final boolean isFinished,
-            @JsonProperty(value = "lastPositionOccupied") final int[] lastPositionOccupied,
-            @JsonProperty(value = "gameMatrix") final PlayerModel[][] gameMatrix,
-            @JsonProperty(value = "player1") final PlayerModel player1,
-            @JsonProperty(value = "player2") final PlayerModel player2,
-            @JsonProperty(value = "pathToSave") final Path pathToSave) {
-        this.player1 = player1;
-        this.player2 = player2;
-        this.gameMatrix = gameMatrix;
-        this.lastPositionOccupied = lastPositionOccupied;
-        this.isFinished = isFinished;
-        this.pathToSave = pathToSave;
+    private ConnectFourModel() {
         this.dataAccess = ConnectFourDataAccess.getInstance();
     }
 
@@ -146,7 +142,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
 
     // TODO: add comment
     @Override
-    public boolean persist(@Nullable final File outputDirectory, @Nullable final String name) {
+    public boolean persist(@Nullable final File outputDirectory, @Nullable final String saveName) {
         boolean wasSaved = false;
         Path path = null;
         /*
@@ -154,10 +150,10 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
             If there is actually a path to a linked save, check if the Path actually points to an existing
             file (else it could be deleted in the meantime and lead to errors).
          */
-        if (outputDirectory == null && name == null && this.pathToSave != null && this.pathToSave.toFile().exists()) {
+        if (outputDirectory == null && saveName == null && this.pathToSave != null && this.pathToSave.toFile().exists()) {
             wasSaved = this.dataAccess.persist(this, this.pathToSave.toFile());
         } else {
-            path = Path.of(outputDirectory + File.separator + name + ".json");
+            path = Path.of(outputDirectory + File.separator + saveName + ".json");
             wasSaved = this.dataAccess.persist(this, new File(String.valueOf(path)));
         }
         // If the user specified an output directory and this game was successfully saved, then update the path to the save
@@ -185,6 +181,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
 
     /**
      * Controlla se è possibile inserire la pedina nella colonna selezionata
+     *
      * @param column colonna nel quale si vuole controllare se l'inserimento è possibile
      * @return true se è possibile inserire nella colonna, altrimenti false
      */
@@ -214,7 +211,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     }
 
     /**
-     *
      * @param column colonna della quale si vuole ottenere l'ultima riga occupata
      * @return l'indice dell'ultima riga occupata in quella colonna
      */
@@ -248,10 +244,12 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         }
         return sb.toString();
     }
+
     // Getter and setter methods
     public boolean isFinished() {
         return isFinished;
     }
+
     public void setFinished(boolean finished) {
         isFinished = finished;
     }

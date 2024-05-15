@@ -30,9 +30,6 @@ public class ConnectFourBackendController {
      * @return un oggetto contenente i dati relativi alla mossa, null se la partita è finita
      */
     public @Nullable MoveData playerMove(int column) {
-        if (currentMatch == null) {
-            currentMatch = new ConnectFourModel(new PlayerModel("p1"), new PlayerModel("p2"));
-        }
         if (!currentMatch.isFinished()) {
             if (currentMatch.canInsert(column)) {
                 currentMatch.insert(column);
@@ -55,6 +52,7 @@ public class ConnectFourBackendController {
         }
         return null;
     }
+
     public ConnectFourBusinessInterface getCurrentMatch() {
         return currentMatch;
     }
@@ -68,6 +66,7 @@ public class ConnectFourBackendController {
      * @param newMatch the match that should replace the current match, or null if a new, blank one is required
      */
     public void overrideCurrentMatch(@Nullable final ConnectFourBusinessInterface newMatch) {
+        // Check comment above for an explanation on why newMatch could ever be null and why
         if (newMatch == null) {
             currentMatch = new ConnectFourModel(new PlayerModel("p1"), new PlayerModel("p2"));
             return;
@@ -89,12 +88,14 @@ public class ConnectFourBackendController {
      * Tries to persist the current match linked to this controller
      *
      * @param outputDirectory the directory where the game should be saved
-     * @param name the name for the save
-     *
+     * @param saveName        the name for the save
      * @return true if the operation succeeded, false if it failed
      */
-    public boolean persist(@Nullable final File outputDirectory, @Nullable final String name) {
-        return currentMatch.persist(outputDirectory, name);
+    public boolean persist(@Nullable final File outputDirectory, @Nullable final String saveName) {
+        return currentMatch.persist(outputDirectory, saveName);
+    }
+    public boolean wasCurrentGameSavedAs() {
+        return currentMatch.wasSavedAs();
     }
 
     /**
@@ -103,13 +104,12 @@ public class ConnectFourBackendController {
      * @param file a File instance representing the file in the filesystem
      * @return the deserialized game if the operation succeeded, null if it failed
      */
-    public ConnectFourModel tryLoadingSave(@NotNull final File file) {
+    public @Nullable ConnectFourModel tryLoadingSave(@NotNull final File file) {
         final ConnectFourModel loadedGame = currentMatch.getSave(file);
-
+        // Override the current match if a match was successfully loaded & return it, else just return (null)
         if (loadedGame != null) {
             this.overrideCurrentMatch(loadedGame);
         }
         return loadedGame;
-
     }
 }

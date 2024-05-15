@@ -29,6 +29,7 @@ public class SerializationView {
     // TODO: LOAD THESE MESSAGES THROUGH TRANSLATIONS
     public File askForDirectory() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
         directoryChooser.setTitle("Scegli la directory dove salvare il file...");
         return directoryChooser.showDialog(primaryStage);
     }

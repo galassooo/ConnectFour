@@ -6,15 +6,15 @@ import javafx.event.ActionEvent;
 public class MenuBarDispatcher {
     private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
 
-    public void newGame(ActionEvent actionEvent) {
+    public void newGame() {
         connectFourFrontendController.manageNew();
     }
 
-    public void openGame(ActionEvent actionEvent) {
+    public void openGame() {
         connectFourFrontendController.manageOpen();
     }
 
-    public void saveGame(ActionEvent actionEvent) {
+    public void saveGame() {
         connectFourFrontendController.manageSave();
     }
 

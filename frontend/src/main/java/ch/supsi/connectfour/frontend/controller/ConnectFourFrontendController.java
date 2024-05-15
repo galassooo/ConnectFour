@@ -3,17 +3,14 @@ package ch.supsi.connectfour.frontend.controller;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBackendController;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.application.connectfour.MoveData;
-import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.frontend.MainFx;
-import ch.supsi.connectfour.frontend.model.GameModel;
 import ch.supsi.connectfour.frontend.view.BoardView;
 import ch.supsi.connectfour.frontend.view.InfoBarView;
 import ch.supsi.connectfour.frontend.view.SerializationView;
 import javafx.scene.control.Alert;
 
 import java.io.File;
-
 // TODO: BACKUP THE INFOBAR
 
 public class ConnectFourFrontendController {
@@ -61,7 +58,6 @@ public class ConnectFourFrontendController {
                     infoBarView.setText(data.player().getName() + " moved, it's " + data.playerToPlay().getName() + "'s turn");
                 }
             }
-
         }
         if (data == null) {
             infoBarView.setText("Match is finished! you can't move!");
@@ -88,7 +84,8 @@ public class ConnectFourFrontendController {
     }
 
     public void manageSave() {
-        if (this.backendController.getCurrentMatch().wasSavedAs()) {
+        // Ask the backend controller to ask the model if it was ever saved as
+        if (this.backendController.wasCurrentGameSavedAs()) {
             // These two values are used to indicate that we want to use an already available file, stored in the current match
             this.backendController.persist(null, null);
         } else {
@@ -99,10 +96,11 @@ public class ConnectFourFrontendController {
 
     public void manageSaveAs() {
         // TODO: manage translations
+        //
         final File dir = this.serializationView.askForDirectory();
         final String fileName = this.serializationView.showInputDialog("Inserisci il nome da assegnare al file:");
         // Check if the dir variable points to something, wether the directory exists on the filesystem and is a directory
-        if (dir != null && dir.exists() && dir.isDirectory()) {
+        if (dir != null && dir.exists() && dir.isDirectory() && fileName != null) {
             if (this.backendController.persist(dir, fileName)) {
                 this.serializationView.showMessage("Yay salvato correttamente", null, Alert.AlertType.INFORMATION);
             } else {
@@ -118,7 +116,7 @@ public class ConnectFourFrontendController {
             if (loadedGame != null) {
                 // Success!
                 System.out.println("YAY");
-                // TODO: handle updating the view
+                // TODO: it would be nice if we found a way to just add the views to a List of Viewable and simply do list.forEach(Viewable::clear);
                 this.boardView.clear();
                 this.infoBarView.clear();
 

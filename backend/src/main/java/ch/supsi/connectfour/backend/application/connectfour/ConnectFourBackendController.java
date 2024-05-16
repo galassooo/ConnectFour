@@ -29,28 +29,29 @@ public class ConnectFourBackendController {
      * @param column colonna nel quale il giocatore intende inserire la pedina
      * @return un oggetto contenente i dati relativi alla mossa, null se la partita è finita
      */
-    public @Nullable MoveData playerMove(int column) {
+    public @NotNull MoveData playerMove(int column) {
         if (!currentMatch.isFinished()) {
             if (currentMatch.canInsert(column)) {
                 currentMatch.insert(column);
                 MoveData data;
 
                 PlayerModel playerWhoMoved = currentMatch.getCurrentPlayer();
-                currentMatch.switchCurrentPlayer();
                 if (currentMatch.checkWin()) {
                     currentMatch.setFinished(true);
                     System.out.println("player ha vinto");
-                    data = new MoveData(playerWhoMoved, currentMatch.getCurrentPlayer(), column, currentMatch.getLastPositioned(column), true, true);
+                    data = new MoveData(playerWhoMoved, currentMatch.getLastPositioned(column), column, true, currentMatch.getMessageToDisplay());
                 } else {
-                    data = new MoveData(playerWhoMoved, currentMatch.getCurrentPlayer(), column, currentMatch.getLastPositioned(column), false, true);
+                    // Only switched if it actually makes sense to do so -> only if the game is still going
+                    currentMatch.switchCurrentPlayer();
+                    data = new MoveData(playerWhoMoved, currentMatch.getLastPositioned(column), column, true, currentMatch.getMessageToDisplay());
                     System.out.println(currentMatch);
                     System.out.println("player ha mosso e il turno è cambiato");
                 }
                 return data;
-            } else
-                return new MoveData(currentMatch.getCurrentPlayer(), currentMatch.getCurrentPlayer(), column, currentMatch.getLastPositioned(column), false, false);
+            }
         }
-        return null;
+        // TODO: fa un po' schifo perché in realtà in questo caso non ho bisogno di player, row e column
+        return new MoveData(null, -1, -1, false, currentMatch.getMessageToDisplay());
     }
 
     public ConnectFourBusinessInterface getCurrentMatch() {

@@ -32,6 +32,7 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
         try {
             return mapper.readValue(file, ConnectFourModel.class);
         } catch (IOException e) {
+            e.printStackTrace();
             System.out.println("Error reading file: " + file.getAbsolutePath());;
             return null;
         }

@@ -45,30 +45,21 @@ public class ConnectFourFrontendController {
      * @param column colonna nel quale il giocatore intende inserire la pedina
      */
     public void manageColumnSelection(int column) {
+        // What information does this controller need?
+        // - Wether or not the player moved successfully
+        // - What message it should display
         MoveData data = backendController.playerMove(column);
-        if (data != null && boardView != null && data.isValid()) { //allora la mossa è andata a buon fine
+
+        if (boardView != null && data.isValid()) {
+            // Then it means the player was able to move successfully
             boardView.setCellText(data.row(), data.column(), data.player().getName());
-
-            if (infoBarView != null) {
-                // TODO: QUESTI MESSAGGI SARANNO DA CARICARE TRAMITE LE TRADUZIONI
-                if (data.win()) {
-                    infoBarView.setText(data.player().getName() + " won the game!");
-
-                } else {
-                    infoBarView.setText(data.player().getName() + " moved, it's " + data.playerToPlay().getName() + "'s turn");
-                }
-            }
         }
-        if (data == null) {
-            infoBarView.setText("Match is finished! you can't move!");
-        } else if (infoBarView != null && !data.isValid()) {
-            infoBarView.setText("You cannot insert your pawn there!, try again");
-        }
+        infoBarView.setText(data.messageToDisplay());
     }
 
     public void manageNew() {
         // TODO: find a way to check if a game has started. It doesn't make that much sense that the user is prompted with a confirmation request when no moves have been made yet
-        if (this.backendController.getCurrentMatch() != null && !this.backendController.isCurrentGameFinished()) {
+        if (this.backendController.getCurrentMatch() != null) {
             // If the user confirms their choice to open a new game
             if (this.serializationView.showConfirmationDialog(
                     "Are you sure you want to start a new game? " +
@@ -126,7 +117,10 @@ public class ConnectFourFrontendController {
                         this.boardView.setCellText(row, column, gameMatrix[row][column] == null ? "" : gameMatrix[row][column].getName());
                     }
                 }
+                this.infoBarView.setText(loadedGame.getMessageToDisplay());
                 // Success!
+                // TODO: remove these
+                System.out.println(loadedGame);
                 System.out.println("YAY");
                 this.serializationView.showMessage("Salvataggio caricato correttamente", "conferma", Alert.AlertType.INFORMATION);
             } else {

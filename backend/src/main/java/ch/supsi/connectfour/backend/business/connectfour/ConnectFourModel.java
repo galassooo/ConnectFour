@@ -32,7 +32,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     private static final int GRID_HEIGHT = 6;
     // A Path object representing the path - if available - of a save of this game
     @JsonInclude
-    private Path pathToSave = null;
+    private Path pathToSave;
 
     // True if the game is finished, false otherwise
     @JsonInclude
@@ -57,6 +57,9 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     // Player currently allowed to move
     @JsonInclude
     private PlayerModel currentPlayer;
+    // Gives information about wether or not the last move operation was valid or not
+    @JsonInclude
+    private boolean wasLastMoveValid;
 
     /*
     This constructor is required in order for the Jackson library to serialize the game. It should not be used elsewhere nor modified.
@@ -143,8 +146,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     // TODO: add comment
     @Override
     public boolean persist(@Nullable final File outputDirectory, @Nullable final String saveName) {
-        boolean wasSaved = false;
-        Path path = null;
+        boolean wasSaved;
         /*
             If the provided file and name are null, then it means the user wants to use the already available save
             If there is actually a path to a linked save, check if the Path actually points to an existing
@@ -153,13 +155,16 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         if (outputDirectory == null && saveName == null && this.pathToSave != null && this.pathToSave.toFile().exists()) {
             wasSaved = this.dataAccess.persist(this, this.pathToSave.toFile());
         } else {
-            path = Path.of(outputDirectory + File.separator + saveName + ".json");
-            wasSaved = this.dataAccess.persist(this, new File(String.valueOf(path)));
+            this.pathToSave = Path.of(outputDirectory + File.separator + saveName + ".json");
+            wasSaved = this.dataAccess.persist(this, new File(String.valueOf(this.pathToSave)));
         }
-        // If the user specified an output directory and this game was successfully saved, then update the path to the save
-        // The naming convention for the saves was chosen arbitrarily and consists of
-        if (outputDirectory != null && wasSaved) {
-            this.pathToSave = path;
+        /**
+         * If there was an error while saving the game, remove the path from this instance. The update of the path
+         * is performed before actually knowing if the saving operation was successfull to already include the path in
+         * the serialized version of this instance.
+         */
+        if (outputDirectory == null && !wasSaved) {
+            this.pathToSave = null;
         }
         return wasSaved;
     }
@@ -198,6 +203,36 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     public PlayerModel getCurrentPlayer() {
         return currentPlayer;
     }
+    /*
+        Tells Jackson not to use this method as a getter for a field named
+        messageToDisplay. Not having this annotation makes the program throw an
+        exception when loading games as Jackson tries to find a field with this name even
+        though it does not exist
+     */
+    @JsonIgnore
+    public String getMessageToDisplay() {
+        // TODO: load with translations
+        /**
+         * Four possible cases:
+         * - Player moved, game isn't finished
+         * - Player moved, they won
+         * - Player tried to move but game is finished
+         * - Player tried to move but the move isn't valid
+         */
+        // TODO: HANDLE WITH TRANSLATIONS
+        if (this.wasLastMoveValid && !this.isFinished) {
+            return (currentPlayer.equals(player2) ? player1.getName() : player2.getName()) + " moved. It's " + this.currentPlayer.getName() + " turn.";
+        } else if (this.wasLastMoveValid) {
+            // If we are here then the game must be finished
+            return this.currentPlayer.getName() + " won the game!";
+        } else if (this.isFinished) {
+            // If we are here then the last move wasn't valid
+            return "Match is finished! you can't move!";
+        } else {
+            // If we are here then the move wasn't valid AND the game is not finished
+            return "You cannot insert your pawn there!, try again";
+        }
+    }
 
     /**
      * Controlla se è possibile inserire la pedina nella colonna selezionata
@@ -206,10 +241,15 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
      * @return true se è possibile inserire nella colonna, altrimenti false
      */
     public boolean canInsert(int column) {
-        if (column < 0 || column >= GRID_LENGTH)
+        // Reset it before reassigning it
+        this.wasLastMoveValid = false;
+
+        if (column < 0 || column >= GRID_LENGTH) {
             return false;
+        }
         int firstFreeCell = GRID_HEIGHT - 1 - lastPositionOccupied[column]; //post increment
-        return firstFreeCell < GRID_HEIGHT && firstFreeCell >= 0;
+        this.wasLastMoveValid = firstFreeCell < GRID_HEIGHT && firstFreeCell >= 0;
+        return this.wasLastMoveValid;
     }
 
     /**
@@ -262,11 +302,19 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
             }
             sb.append("\n");  // Nuova linea alla fine di ogni riga
         }
+        sb.append("isFinished:").append(this.isFinished);
+        sb.append("\nwasLastMoveValid:").append(this.wasLastMoveValid);
+        sb.append("\npathToSave:").append(this.pathToSave);
+        sb.append("\ncurrentPlayer:").append(this.currentPlayer);
         return sb.toString();
     }
 
     // Getter and setter methods
     public boolean isFinished() {
+        // TODO: FA SCHIFO
+        if (this.isFinished)
+            this.wasLastMoveValid = false;
+
         return isFinished;
     }
 

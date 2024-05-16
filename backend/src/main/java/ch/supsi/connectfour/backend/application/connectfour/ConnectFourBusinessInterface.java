@@ -17,6 +17,7 @@ public interface ConnectFourBusinessInterface {
     PlayerModel getCurrentPlayer();
     boolean isFinished();
     void setFinished(boolean finished);
+    public String getMessageToDisplay();
 
     // Persistence related methods
     ConnectFourModel getSave(final File file);

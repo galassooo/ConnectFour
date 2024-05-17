@@ -91,13 +91,13 @@ public class ConnectFourFrontendController {
     public void manageSaveAs() {
         // TODO: manage translations
         final File dir = this.serializationView.askForDirectory();
-        final String fileName = this.serializationView.showInputDialog(translations.translate("insert_name"));
+        final String fileName = this.serializationView.showInputDialog(translations.translate("label.insert_name"));
         // Check if the dir variable points to something, wether the directory exists on the filesystem and is a directory
         if (dir != null && dir.exists() && dir.isDirectory() && fileName != null) {
             if (this.backendController.persist(dir, fileName)) {
-                this.serializationView.showMessage(translations.translate("correctly_saved"), null, Alert.AlertType.INFORMATION);
+                this.serializationView.showMessage(translations.translate("label.correctly_saved"), null, Alert.AlertType.INFORMATION);
             } else {
-                this.serializationView.showMessage(translations.translate("not_correctly_saved"), null, Alert.AlertType.ERROR);
+                this.serializationView.showMessage(translations.translate("label.not_correctly_saved"), null, Alert.AlertType.ERROR);
             }
         }
     }

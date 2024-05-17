@@ -34,13 +34,13 @@ public class SerializationView {
     public File askForDirectory() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        directoryChooser.setTitle(translations.translate("chosen_directory"));
+        directoryChooser.setTitle(translations.translate("label.chosen_directory"));
         return directoryChooser.showDialog(primaryStage);
     }
 
     public File askForFile() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle(translations.translate("select_file_to_load"));
+        fileChooser.setTitle(translations.translate("label.select_file_to_load"));
         return fileChooser.showOpenDialog(primaryStage);
     }
 
@@ -48,14 +48,14 @@ public class SerializationView {
         // Create a confirmation dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         // TODO: handle with translations
-        alert.setTitle(translations.translate("confirmation"));
+        alert.setTitle(translations.translate("label.confirmation"));
         alert.setHeaderText(null);
         alert.setContentText(message);
 
         // Set OK and Cancel buttons
         // TODO: handle with translations
-        ButtonType okButton = new ButtonType(translations.translate("confirm"));
-        ButtonType cancelButton = new ButtonType(translations.translate("cancel"), ButtonType.CANCEL.getButtonData());
+        ButtonType okButton = new ButtonType(translations.translate("label.confirm"));
+        ButtonType cancelButton = new ButtonType(translations.translate("label.cancel"), ButtonType.CANCEL.getButtonData());
         alert.getButtonTypes().setAll(okButton, cancelButton);
 
         // Show the confirmation dialog and wait for user input

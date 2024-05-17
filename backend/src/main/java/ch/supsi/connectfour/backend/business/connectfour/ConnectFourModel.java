@@ -1,7 +1,10 @@
 package ch.supsi.connectfour.backend.business.connectfour;
 
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
+import ch.supsi.connectfour.backend.application.translations.TranslationsBusinessInterface;
+import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
+import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import ch.supsi.connectfour.backend.dataaccess.ConnectFourDataAccess;
 import com.fasterxml.jackson.annotation.*;
 import org.jetbrains.annotations.Contract;
@@ -61,6 +64,8 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     @JsonInclude
     private boolean wasLastMoveValid;
 
+    private TranslationsBusinessInterface translations;
+
     /*
     This constructor is required in order for the Jackson library to serialize the game. It should not be used elsewhere nor modified.
     */
@@ -78,6 +83,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         this.gameMatrix = new PlayerModel[GRID_HEIGHT][GRID_LENGTH];
         this.lastPositionOccupied = new int[GRID_LENGTH];
         this.dataAccess = ConnectFourDataAccess.getInstance();
+        this.translations = TranslationsModel.getInstance();
     }
 
     /**
@@ -221,18 +227,19 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
          */
         // TODO: HANDLE WITH TRANSLATIONS
         if (this.wasLastMoveValid && !this.isFinished) {
-            return (currentPlayer.equals(player2) ? player1.getName() : player2.getName()) + " moved. It's " + this.currentPlayer.getName() + " turn.";
+            return (currentPlayer.equals(player2) ? player1.getName() : player2.getName()) + translations.translate("player_moved") + this.currentPlayer.getName() + translations.translate("player_turn");
         } else if (this.wasLastMoveValid) {
             // If we are here then the game must be finished
-            return this.currentPlayer.getName() + " won the game!";
+            return this.currentPlayer.getName() + translations.translate("player_won");
         } else if (this.isFinished) {
             // If we are here then the last move wasn't valid
-            return "Match is finished! you can't move!";
+            return translations.translate("game_finished");
         } else {
             // If we are here then the move wasn't valid AND the game is not finished
-            return "You cannot insert your pawn there!, try again";
+            return translations.translate("invalid_move");
         }
     }
+
 
     /**
      * Controlla se è possibile inserire la pedina nella colonna selezionata

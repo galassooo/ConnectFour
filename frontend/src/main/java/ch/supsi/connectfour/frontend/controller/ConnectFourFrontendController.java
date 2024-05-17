@@ -3,7 +3,9 @@ package ch.supsi.connectfour.frontend.controller;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBackendController;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.application.connectfour.MoveData;
+import ch.supsi.connectfour.backend.application.translations.TranslationsBusinessInterface;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
+import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import ch.supsi.connectfour.frontend.MainFx;
 import ch.supsi.connectfour.frontend.view.BoardView;
 import ch.supsi.connectfour.frontend.view.InfoBarView;
@@ -23,6 +25,7 @@ public class ConnectFourFrontendController {
     private InfoBarView infoBarView;
 
     private final SerializationView serializationView = new SerializationView(MainFx.stage);
+    private TranslationsBusinessInterface translations = TranslationsModel.getInstance();
 
     public static ConnectFourFrontendController getInstance() {
         if (instance == null) {
@@ -89,13 +92,13 @@ public class ConnectFourFrontendController {
         // TODO: manage translations
         //
         final File dir = this.serializationView.askForDirectory();
-        final String fileName = this.serializationView.showInputDialog("Inserisci il nome da assegnare al file:");
+        final String fileName = this.serializationView.showInputDialog(translations.translate("insert_name"));
         // Check if the dir variable points to something, wether the directory exists on the filesystem and is a directory
         if (dir != null && dir.exists() && dir.isDirectory() && fileName != null) {
             if (this.backendController.persist(dir, fileName)) {
-                this.serializationView.showMessage("Yay salvato correttamente", null, Alert.AlertType.INFORMATION);
+                this.serializationView.showMessage(translations.translate("correctly_saved"), null, Alert.AlertType.INFORMATION);
             } else {
-                this.serializationView.showMessage(":(", null, Alert.AlertType.ERROR);
+                this.serializationView.showMessage(translations.translate("not_correctly_saved"), null, Alert.AlertType.ERROR);
             }
         }
     }

@@ -1,5 +1,7 @@
 package ch.supsi.connectfour.frontend.view;
 
+import ch.supsi.connectfour.backend.application.translations.TranslationsBusinessInterface;
+import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
@@ -13,6 +15,7 @@ import java.util.Optional;
 public class SerializationView {
     // TODO: probabilmente da sostituire, trovare un modo di passare il primary stage in giro
     private final Stage primaryStage;
+    private TranslationsBusinessInterface translations = TranslationsModel.getInstance();
 
     public SerializationView(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -31,13 +34,13 @@ public class SerializationView {
     public File askForDirectory() {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        directoryChooser.setTitle("Scegli la directory dove salvare il file...");
+        directoryChooser.setTitle(translations.translate("chosen_directory"));
         return directoryChooser.showDialog(primaryStage);
     }
 
     public File askForFile() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Seleziona il file da cui caricare la partita...");
+        fileChooser.setTitle(translations.translate("select_file_to_load"));
         return fileChooser.showOpenDialog(primaryStage);
     }
 
@@ -45,14 +48,14 @@ public class SerializationView {
         // Create a confirmation dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         // TODO: handle with translations
-        alert.setTitle("Confirmation");
+        alert.setTitle(translations.translate("confirmation"));
         alert.setHeaderText(null);
         alert.setContentText(message);
 
         // Set OK and Cancel buttons
         // TODO: handle with translations
-        ButtonType okButton = new ButtonType("Confirm");
-        ButtonType cancelButton = new ButtonType("Cancel", ButtonType.CANCEL.getButtonData());
+        ButtonType okButton = new ButtonType(translations.translate("confirm"));
+        ButtonType cancelButton = new ButtonType(translations.translate("cancel"), ButtonType.CANCEL.getButtonData());
         alert.getButtonTypes().setAll(okButton, cancelButton);
 
         // Show the confirmation dialog and wait for user input

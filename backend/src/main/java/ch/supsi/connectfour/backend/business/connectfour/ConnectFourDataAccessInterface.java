@@ -5,6 +5,6 @@ import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessI
 import java.io.File;
 
 public interface ConnectFourDataAccessInterface {
-    ConnectFourModel getSave(final File file);
+    ConnectFourBusinessInterface getSave(final File file);
     boolean persist(final ConnectFourBusinessInterface game, final File outputFile);
 }

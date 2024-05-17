@@ -1,8 +1,10 @@
 package ch.supsi.connectfour.backend.application.connectfour;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesBusinessInterface;
+import ch.supsi.connectfour.backend.application.translations.TranslationsBusinessInterface;
 import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
+import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -11,9 +13,9 @@ import java.io.File;
 public class ConnectFourBackendController {
     private static ConnectFourBackendController instance;
     private static PreferencesBusinessInterface preferences;
+    private static TranslationsBusinessInterface translations;
     // The match currently linked to this controller
     private static ConnectFourBusinessInterface currentMatch = new ConnectFourModel(new PlayerModel("p1"), new PlayerModel("p2"));
-
 
     // Singleton instantiation of this class
     public static ConnectFourBackendController getInstance() {
@@ -21,6 +23,9 @@ public class ConnectFourBackendController {
             instance = new ConnectFourBackendController();
         }
         return instance;
+    }
+    private ConnectFourBackendController() {
+        translations = TranslationsModel.getInstance();
     }
 
     /**
@@ -76,16 +81,6 @@ public class ConnectFourBackendController {
     }
 
     /**
-     * Checks wether or not the current game is finished
-     *
-     * @return true if the game is finished, false if it is not
-     */
-
-    public boolean isCurrentGameFinished() {
-        return currentMatch.isFinished();
-    }
-
-    /**
      * Tries to persist the current match linked to this controller
      *
      * @param outputDirectory the directory where the game should be saved
@@ -106,8 +101,8 @@ public class ConnectFourBackendController {
      * @param file a File instance representing the file in the filesystem
      * @return the deserialized game if the operation succeeded, null if it failed
      */
-    public @Nullable ConnectFourModel tryLoadingSave(@NotNull final File file) {
-        final ConnectFourModel loadedGame = currentMatch.getSave(file);
+    public @Nullable ConnectFourBusinessInterface tryLoadingSave(@NotNull final File file) {
+        final ConnectFourBusinessInterface loadedGame = currentMatch.getSave(file);
         // Override the current match if a match was successfully loaded & return it, else just return (null)
         if (loadedGame != null) {
             this.overrideCurrentMatch(loadedGame);

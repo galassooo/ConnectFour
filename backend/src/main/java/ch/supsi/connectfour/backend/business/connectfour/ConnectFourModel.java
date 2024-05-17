@@ -7,12 +7,12 @@ import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import ch.supsi.connectfour.backend.dataaccess.ConnectFourDataAccess;
 import com.fasterxml.jackson.annotation.*;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -72,6 +72,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     @JsonCreator
     private ConnectFourModel() {
         this.dataAccess = ConnectFourDataAccess.getInstance();
+        this.translations = TranslationsModel.getInstance();
     }
 
     public ConnectFourModel(PlayerModel player1, PlayerModel player2) {
@@ -94,13 +95,15 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     //TODO trovare approccio migliore della brute force
     public boolean checkWin() {
         // Controlla orizzontali
+        boolean won = false;
         for (int row = 0; row < GRID_HEIGHT; row++) {
             for (int col = 0; col <= GRID_LENGTH - 4; col++) {
                 if (gameMatrix[row][col] != null &&
                         gameMatrix[row][col] == gameMatrix[row][col + 1] &&
                         gameMatrix[row][col] == gameMatrix[row][col + 2] &&
                         gameMatrix[row][col] == gameMatrix[row][col + 3]) {
-                    return true;
+                    won = true;
+                    break;
                 }
             }
         }
@@ -112,7 +115,8 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
                         gameMatrix[row][col] == gameMatrix[row + 1][col] &&
                         gameMatrix[row][col] == gameMatrix[row + 2][col] &&
                         gameMatrix[row][col] == gameMatrix[row + 3][col]) {
-                    return true;
+                    won = true;
+                    break;
                 }
             }
         }
@@ -124,7 +128,8 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
                         gameMatrix[row][col] == gameMatrix[row + 1][col + 1] &&
                         gameMatrix[row][col] == gameMatrix[row + 2][col + 2] &&
                         gameMatrix[row][col] == gameMatrix[row + 3][col + 3]) {
-                    return true;
+                    won = true;
+                    break;
                 }
             }
         }
@@ -136,16 +141,18 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
                         gameMatrix[row][col] == gameMatrix[row + 1][col - 1] &&
                         gameMatrix[row][col] == gameMatrix[row + 2][col - 2] &&
                         gameMatrix[row][col] == gameMatrix[row + 3][col - 3]) {
-                    return true;
+                    won = true;
+                    break;
                 }
             }
         }
-        return false;
+        System.out.println("Won:" + won);
+        return won;
     }
 
     // TODO: add comment
     @Override
-    public ConnectFourModel getSave(@NotNull final File file) {
+    public ConnectFourBusinessInterface getSave(@NotNull final File file) {
         return this.dataAccess.getSave(file);
     }
 
@@ -164,7 +171,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
             this.pathToSave = Path.of(outputDirectory + File.separator + saveName + ".json");
             wasSaved = this.dataAccess.persist(this, new File(String.valueOf(this.pathToSave)));
         }
-        /**
+        /*
          * If there was an error while saving the game, remove the path from this instance. The update of the path
          * is performed before actually knowing if the saving operation was successfull to already include the path in
          * the serialized version of this instance.
@@ -209,6 +216,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     public PlayerModel getCurrentPlayer() {
         return currentPlayer;
     }
+
     /*
         Tells Jackson not to use this method as a getter for a field named
         messageToDisplay. Not having this annotation makes the program throw an
@@ -218,7 +226,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     @JsonIgnore
     public String getMessageToDisplay() {
         // TODO: load with translations
-        /**
+        /*
          * Four possible cases:
          * - Player moved, game isn't finished
          * - Player moved, they won
@@ -227,16 +235,20 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
          */
         // TODO: HANDLE WITH TRANSLATIONS
         if (this.wasLastMoveValid && !this.isFinished) {
-            return (currentPlayer.equals(player2) ? player1.getName() : player2.getName()) + translations.translate("player_moved") + this.currentPlayer.getName() + translations.translate("player_turn");
+            return String.format("%s  %s %s %s",
+                    (currentPlayer.equals(player2) ? player1.getName() : player2.getName()),
+                    translations.translate("label.player_moved"),
+                    this.currentPlayer.getName(),
+                    translations.translate("label.player_turn"));
         } else if (this.wasLastMoveValid) {
             // If we are here then the game must be finished
-            return this.currentPlayer.getName() + translations.translate("player_won");
+            return this.currentPlayer.getName() + translations.translate("label.player_won");
         } else if (this.isFinished) {
             // If we are here then the last move wasn't valid
-            return translations.translate("game_finished");
+            return translations.translate("label.game_finished");
         } else {
             // If we are here then the move wasn't valid AND the game is not finished
-            return translations.translate("invalid_move");
+            return translations.translate("label.invalid_move");
         }
     }
 
@@ -270,13 +282,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         gameMatrix[firstFreeCell][column] = currentPlayer;
     }
 
-    @Contract(pure = true)
-    public @Nullable PlayerModel getCell(int row, int column) {
-        if (column < 0 || column >= GRID_LENGTH || row < 0 || row >= GRID_HEIGHT)
-            return null;
-        return gameMatrix[row][column];
-    }
-
     /**
      * @param column colonna della quale si vuole ottenere l'ultima riga occupata
      * @return l'indice dell'ultima riga occupata in quella colonna
@@ -302,9 +307,12 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
                 if (cell == null) {
                     sb.append("0 ");
                 } else if (cell.equals(player1)) {
-                    sb.append("1 ");
+                    // TODO: uncomment and go back to 1s and 2s
+                    //sb.append("1 ");
+                    sb.append(player1.hashCode()).append("   ");
                 } else if (cell.equals(player2)) {
-                    sb.append("2 ");
+                    //sb.append("2 ");
+                    sb.append(player2.hashCode()).append("   ");
                 }
             }
             sb.append("\n");  // Nuova linea alla fine di ogni riga
@@ -325,6 +333,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         return isFinished;
     }
 
+    @JsonIgnore
     public void setFinished(boolean finished) {
         isFinished = finished;
     }

@@ -66,7 +66,7 @@ public class ConnectFourFrontendController {
             // If the user confirms their choice to open a new game
             if (this.serializationView.showConfirmationDialog(
                     "Are you sure you want to start a new game? " +
-                            "\n This will overwrite any ongoing games.")) {
+                    "\n This will overwrite any ongoing games.")) {
                 // Update the current game stored in the controller, null indicates that it will create a new, blank instance inside the method
                 this.backendController.overrideCurrentMatch(null);
 
@@ -90,7 +90,6 @@ public class ConnectFourFrontendController {
 
     public void manageSaveAs() {
         // TODO: manage translations
-        //
         final File dir = this.serializationView.askForDirectory();
         final String fileName = this.serializationView.showInputDialog(translations.translate("insert_name"));
         // Check if the dir variable points to something, wether the directory exists on the filesystem and is a directory
@@ -105,7 +104,10 @@ public class ConnectFourFrontendController {
 
     public void manageOpen() {
         final File file = this.serializationView.askForFile();
-        if (file != null && file.exists() && file.isFile()) {
+        /*
+        If it points to an instance of File, exists, is an actual file in the filesystem and can be read
+         */
+        if (file != null && file.exists() && file.isFile() && file.canRead()) {
             final ConnectFourBusinessInterface loadedGame = this.backendController.tryLoadingSave(file);
             if (loadedGame != null) {
                 // TODO: it would be nice if we found a way to just add the views to a List of Viewable and simply do list.forEach(Viewable::clear);
@@ -115,11 +117,13 @@ public class ConnectFourFrontendController {
                 // TODO: not sure if this is the best approach... should the frontend do this? I guess so, since it needs the view to perform this action...
                 // Working on a deep copy of the actual game matrix to try and preserve invariants and prevent unauthorized modifications from the outside
                 final PlayerModel[][] gameMatrix = loadedGame.getGameMatrix();
+                // TODO: can be improved, if we already know the last index we can stop looping if not needed
                 for (int row = 0; row < gameMatrix.length; row++) {
                     for (int column = 0; column < gameMatrix[0].length; column++) {
                         this.boardView.setCellText(row, column, gameMatrix[row][column] == null ? "" : gameMatrix[row][column].getName());
                     }
                 }
+                // TODO: non sono sicuro di questa interazione. Il frontendcontroller puo' agire direttamente sul model? tecnicamente non è un layer sotto
                 this.infoBarView.setText(loadedGame.getMessageToDisplay());
                 // Success!
                 // TODO: remove these

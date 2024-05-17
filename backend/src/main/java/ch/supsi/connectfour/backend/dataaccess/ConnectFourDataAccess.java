@@ -22,7 +22,7 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
     }
 
     @Override
-    public ConnectFourModel getSave(@NotNull final File file) {
+    public ConnectFourBusinessInterface getSave(@NotNull final File file) {
         // Check if the file is valid: exists, is a file and can be read
         if (!file.exists() || !file.isFile() || !file.canRead()) {
             return null;

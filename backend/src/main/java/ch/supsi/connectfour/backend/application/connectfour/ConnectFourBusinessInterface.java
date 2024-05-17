@@ -20,7 +20,7 @@ public interface ConnectFourBusinessInterface {
     public String getMessageToDisplay();
 
     // Persistence related methods
-    ConnectFourModel getSave(final File file);
+    ConnectFourBusinessInterface getSave(final File file);
     boolean persist(final File outputDirectory, final String saveName);
     boolean wasSavedAs();
     PlayerModel[][] getGameMatrix();

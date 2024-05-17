@@ -16,6 +16,7 @@ public class TranslationsController {
         this.preferencesModel = PreferencesModel.getInstance();
         this.translationsModel = TranslationsModel.getInstance();
 
+        // TODO: fix once we implement the preferences!!!!
         String currentLanguage = preferencesModel.getCurrentLanguage();
         this.translationsModel.changeLanguage(currentLanguage);
     }

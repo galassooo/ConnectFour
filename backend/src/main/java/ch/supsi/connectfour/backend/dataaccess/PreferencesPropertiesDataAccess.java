@@ -120,6 +120,8 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
 
     @Override
     public Properties getPreferences() {
+        return this.loadDefaultPreferences();
+        /*
         if (userPreferences != null) {
             return userPreferences;
         }
@@ -134,6 +136,8 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
 
         // return the properties object with the loaded preferences
         return userPreferences;
+
+         */
     }
 
 }

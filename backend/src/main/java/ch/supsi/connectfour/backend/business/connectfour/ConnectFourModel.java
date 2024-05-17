@@ -12,7 +12,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.Random;
 
 
@@ -63,8 +62,10 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     // Gives information about wether or not the last move operation was valid or not
     @JsonInclude
     private boolean wasLastMoveValid;
+    @JsonIgnore
+    // TODO: REMOVE THESE FROM HERE! model <-> model
 
-    private TranslationsBusinessInterface translations;
+    private final TranslationsBusinessInterface translations;
 
     /*
     This constructor is required in order for the Jackson library to serialize the game. It should not be used elsewhere nor modified.
@@ -242,7 +243,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
                     translations.translate("label.player_turn"));
         } else if (this.wasLastMoveValid) {
             // If we are here then the game must be finished
-            return this.currentPlayer.getName() + translations.translate("label.player_won");
+            return String.format("%s %s", this.currentPlayer.getName(), translations.translate("label.player_won"));
         } else if (this.isFinished) {
             // If we are here then the last move wasn't valid
             return translations.translate("label.game_finished");

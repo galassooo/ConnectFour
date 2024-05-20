@@ -55,9 +55,11 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
 
     /**
      * controlla se allo stato della chiamata la partita è vinta
+     *
      * @return true se un giocatore ha vinto
      */
     //TODO trovare approccio migliore della brute force
+    @Override
     public boolean checkWin() {
         // Controlla orizzontali
         for (int row = 0; row < GRID_HEIGHT; row++) {
@@ -112,35 +114,65 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     }
 
 
+    @Override
+    @Contract(pure = true)
+    public boolean isDraw() {
+        for (int j : lastPositionOccupied) {
+            int firstFreeCell = GRID_HEIGHT - 1 - j;
+            if (firstFreeCell == GRID_HEIGHT) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     //getters and setters
+    @Override
     public boolean isFinished() {
         return isFinished;
     }
 
+    @Override
     public void setFinished(boolean finished) {
         isFinished = finished;
     }
 
+    @Override
     public PlayerModel getCurrentPlayer() {
         return currentPlayer;
     }
 
+    @Override
+    public PlayerModel getPlayer1() {
+        return (PlayerModel) player1.clone();
+    }
+
+    @Override
+    public PlayerModel getPlayer2() {
+        return (PlayerModel) player2.clone();
+    }
+
     /**
      * Controlla se è possibile inserire la pedina nella colonna selezionata
+     *
      * @param column colonna nel quale si vuole controllare se l'inserimento è possibile
      * @return true se è possibile inserire nella colonna, altrimenti false
      */
+    @Override
+    @Contract(pure = true)
     public boolean canInsert(int column) {
         if (column < 0 || column >= GRID_LENGTH)
             return false;
-        int firstFreeCell = GRID_HEIGHT - 1 - lastPositionOccupied[column]; //post increment
+        int firstFreeCell = GRID_HEIGHT - 1 - lastPositionOccupied[column];
         return firstFreeCell < GRID_HEIGHT && firstFreeCell >= 0;
     }
 
     /**
      * Inserisce la pedina nella prima posizione disponibile nella colonna
+     *
      * @param column colonna nel quale si intende inserire la pedina
      */
+    @Override
     public void insert(int column) { //evita di avere getter e setter, nasconde implementazione
         int firstFreeCell = GRID_HEIGHT - 1 - lastPositionOccupied[column];
         lastPositionOccupied[column]++;
@@ -155,10 +187,10 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     }
 
     /**
-     *
      * @param column colonna della quale si vuole ottenere l'ultima riga occupata
      * @return l'indice dell'ultima riga occupata in quella colonna
      */
+    @Override
     public int getLastPositioned(int column) {
         return GRID_HEIGHT - lastPositionOccupied[column];
     }
@@ -166,6 +198,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     /**
      * Effettua il cambio di giocatore in turno
      */
+    @Override
     public void switchCurrentPlayer() {
         currentPlayer = currentPlayer.equals(player2) ? player1 : player2;
     }

@@ -8,9 +8,11 @@ public interface ConnectFourBusinessInterface {
     void insert(int column);
     boolean checkWin();
     boolean canInsert(int column);
-
     int getLastPositioned(int column);
     PlayerModel getCurrentPlayer();
     boolean isFinished();
     void setFinished(boolean finished);
+    boolean isDraw();
+    PlayerModel getPlayer1();
+    PlayerModel getPlayer2();
 }

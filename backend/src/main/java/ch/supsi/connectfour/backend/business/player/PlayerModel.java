@@ -2,7 +2,7 @@ package ch.supsi.connectfour.backend.business.player;
 
 import java.util.Objects;
 
-public final class PlayerModel {
+public final class PlayerModel implements Cloneable{
     private String name;
     private int numWin;
 
@@ -32,6 +32,15 @@ public final class PlayerModel {
         this.numWin =Math.max(0, numWin);
     }
 
+    @Override
+    public Object clone(){
+        try {
+            return super.clone();
+        } catch (CloneNotSupportedException e) {
+            System.err.println("Clone function is not supported in a Player's superclass");
+        }
+        return null;
+    }
     //solo per test
     @Override
     public String toString() {

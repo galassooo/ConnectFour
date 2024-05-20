@@ -1,4 +1,4 @@
-package ch.supsi.connectfour.backend.application.event;
+package ch.supsi.connectfour.backend.application.connectfour;
 
 import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
 

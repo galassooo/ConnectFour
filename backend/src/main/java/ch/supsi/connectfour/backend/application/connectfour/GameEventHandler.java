@@ -5,6 +5,7 @@ import ch.supsi.connectfour.backend.application.event.InvalidMoveEvent;
 import ch.supsi.connectfour.backend.application.event.ValidMoveEvent;
 import ch.supsi.connectfour.backend.application.event.WinEvent;
 
+//todo considerare di spostarla?
 public interface GameEventHandler {
     void handle(ValidMoveEvent event);
     void handle(WinEvent event);

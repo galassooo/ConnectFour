@@ -52,6 +52,7 @@ public class MainFx extends Application {
                     primaryStage.close();
                 }
         );
+        primaryStage.setResizable(false);
 
         // MENU BAR
         MenuBar menuBar;

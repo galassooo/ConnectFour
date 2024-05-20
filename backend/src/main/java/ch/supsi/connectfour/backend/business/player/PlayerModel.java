@@ -1,10 +1,15 @@
 package ch.supsi.connectfour.backend.business.player;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Objects;
 
 public final class PlayerModel implements Cloneable{
     private String name;
     private int numWin;
+
+    //TODO DA MODIFICARE! SERVIVA PER TESTARE E NON CE ANCORA IL CARICAMENTO DELLE PREFERENZE
+    private URL preferenceUrl;
 
     public PlayerModel(String name, int numWin) {  //delego il controllo ai setters
         setName(name);
@@ -13,6 +18,11 @@ public final class PlayerModel implements Cloneable{
 
     public PlayerModel(String name) {
         this.name = name;
+    }
+
+    public PlayerModel(String name, URL preferenceUrl){
+        setName(name);
+        this.preferenceUrl = preferenceUrl;
     }
 
     //getters and setters
@@ -32,12 +42,27 @@ public final class PlayerModel implements Cloneable{
         this.numWin =Math.max(0, numWin);
     }
 
+    public void setPreferenceUrl(URL preferenceUrl) {
+        if(preferenceUrl == null){
+            throw new IllegalArgumentException("Url cannot be null");
+        }
+        this.preferenceUrl = preferenceUrl;
+    }
+
+    public URL getPreferenceUrl() {
+        return preferenceUrl;
+    }
+
     @Override
     public Object clone(){
         try {
-            return super.clone();
+             PlayerModel cloned = (PlayerModel) super.clone();
+             cloned.preferenceUrl = new URL(this.preferenceUrl.toString());
+             return cloned;
         } catch (CloneNotSupportedException e) {
             System.err.println("Clone function is not supported in a Player's superclass");
+        } catch (MalformedURLException e) {
+            System.err.println("Malformed url");
         }
         return null;
     }

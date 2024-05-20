@@ -52,13 +52,13 @@ public class GameController implements GameEventHandler {
 
     @Override
     public void handle(WinEvent event) {
-        boardView.setCellText(event.getRow(), event.getColumn(), event.getPlayerWhoWon().getName());
+        boardView.setCellImage(event.getRow(), event.getColumn(), event.getPlayerWhoWon().getPreferenceUrl());
         infoBarView.setText(event.getPlayerWhoWon().getName() + " won the game!");
     }
 
     @Override
     public void handle(ValidMoveEvent event) {
-        boardView.setCellText(event.getRow(), event.getColumn(), event.getPlayer().getName());
+        boardView.setCellImage(event.getRow(), event.getColumn(), event.getPlayer().getPreferenceUrl());
         infoBarView.setText(event.getPlayer().getName() + " moved, it's " + event.getPlayerToPlay().getName() + "'s turn");
     }
 

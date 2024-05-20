@@ -72,4 +72,9 @@ public class GameController implements GameEventHandler {
         infoBarView.setText(event.getEventMessage());
     }
 
+    public void newGame() {
+        boardView.clearGrid();
+        infoBarView.clear();
+        backendController.createNewGame();
+    }
 }

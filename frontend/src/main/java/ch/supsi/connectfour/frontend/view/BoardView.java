@@ -22,7 +22,7 @@ public class BoardView {
 
         URL imageUrl = getClass().getResource("/images/board.png");
         if(imageUrl == null){
-            System.err.println("Error while loading image");
+            System.err.println("Error while loading board image");
             return;
         }
         Image image = new Image(imageUrl.toExternalForm());
@@ -35,6 +35,25 @@ public class BoardView {
                     if (child instanceof ImageView) {
                         ((ImageView) child).setImage(new Image(urlImage.toExternalForm()));
                         return;
+                    }
+                }
+            }
+        }
+    }
+
+    public void clearGrid() {
+        URL imageUrl = getClass().getResource("/images/pawns/white.png");
+        if(imageUrl == null){
+            System.err.println("Error while loading white pawn image");
+            return;
+        }
+        Image image = new Image(imageUrl.toExternalForm());
+
+        for (javafx.scene.Node node : gridPane.getChildren()) {
+            if (node instanceof AnchorPane anchorPane) {
+                for (javafx.scene.Node child : anchorPane.getChildren()) {
+                    if (child instanceof ImageView) {
+                        ((ImageView) child).setImage(image);
                     }
                 }
             }

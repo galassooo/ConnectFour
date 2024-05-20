@@ -33,11 +33,7 @@ public class ConnectFourBackendController {
      */
     public @Nullable GameEvent playerMove(int column) {
         if (currentMatch == null) {
-            PlayerModel p1 = new PlayerModel("P1", getClass().getResource("/images/pawns/red.png"));
-            PlayerModel p2 = new PlayerModel("P2", getClass().getResource("/images/pawns/yellow.png"));
-
-            currentMatch = new ConnectFourModel(p1, p2);
-
+            createNewGame();
         }
         if (!currentMatch.isFinished()) {
             if (currentMatch.canInsert(column)) {
@@ -61,5 +57,12 @@ public class ConnectFourBackendController {
             return new InvalidMoveEvent(currentMatch.getCurrentPlayer(), currentMatch.getCurrentPlayer(), column);
         }
         return null;
+    }
+
+    public void createNewGame(){
+        PlayerModel p1 = new PlayerModel("P1", getClass().getResource("/images/pawns/red.png"));
+        PlayerModel p2 = new PlayerModel("P2", getClass().getResource("/images/pawns/yellow.png"));
+
+        currentMatch = new ConnectFourModel(p1, p2);
     }
 }

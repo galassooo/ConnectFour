@@ -96,7 +96,6 @@ public class MainFx extends Application {
             FXMLLoader boardLoader = new FXMLLoader(fxmlUrl);
             board = boardLoader.load();
             this.boardView = boardLoader.getController();
-            gameController.setBoardView(boardView);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -114,7 +113,6 @@ public class MainFx extends Application {
             FXMLLoader infoBarLoader = new FXMLLoader(fxmlUrl);
             infoBar = infoBarLoader.load();
             this.infoBarView = infoBarLoader.getController();
-            gameController.setInfoBarView(infoBarView);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -139,10 +137,7 @@ public class MainFx extends Application {
         primaryStage.setTitle(MainFx.APP_TITLE);
         primaryStage.setScene(scene);
         primaryStage.show();
-    }
-
-    public BoardView getBoardView() {
-        return boardView;
+        gameController.build(this.boardView, this.infoBarView);
     }
 
     public static void main(String[] args) {

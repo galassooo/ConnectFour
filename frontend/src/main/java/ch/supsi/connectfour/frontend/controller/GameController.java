@@ -1,10 +1,13 @@
 package ch.supsi.connectfour.frontend.controller;
+
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBackendController;
-import ch.supsi.connectfour.backend.business.movedata.MoveData;
+import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
+import ch.supsi.connectfour.backend.application.event.*;
 import ch.supsi.connectfour.frontend.view.BoardView;
 import ch.supsi.connectfour.frontend.view.InfoBarView;
 
-public class GameController {
+
+public class GameController implements GameEventHandler {
 
     private static GameController instance;
     private final ConnectFourBackendController backendController = ConnectFourBackendController.getInstance();
@@ -20,36 +23,53 @@ public class GameController {
         return instance;
     }
 
-    public void setBoardView(BoardView boardView) {
-        this.boardView = boardView;
+    private GameController() {
     }
 
-    public void setInfoBarView(InfoBarView infoBarView) {
+    public GameController build(BoardView boardView, InfoBarView infoBarView) {
+        if (infoBarView == null || boardView == null) {
+            throw new IllegalArgumentException();
+        }
+        this.boardView = boardView;
         this.infoBarView = infoBarView;
+        return getInstance();
     }
 
     /**
      * Effettua la chiamata al controller in backend per gestire la mossa e gestisce l'esito graficamente
+     *
      * @param column colonna nel quale il giocatore intende inserire la pedina
      */
-    public void manageColumnSelection(int column){
-        MoveData data = backendController.playerMove(column);
-        if(data!= null && boardView != null) { //allora la mossa è andata a buon fine
-            boardView.setCellText(data.row(), data.column(), data.player().getName());
+    public void manageColumnSelection(int column) {
+        GameEvent data = backendController.playerMove(column);
 
-            if(infoBarView != null){
-                if(data.win()){
-                    infoBarView.setText(data.player().getName() + " won the game!");
-
-                }else{
-                    infoBarView.setText(data.player().getName() + " moved, it's "+ data.playerToPlay().getName() + "'s turn");
-                }
-            }
-
-        }if(data == null){
+        if (data == null) {
             infoBarView.setText("Match is finished! you can't move!");
-        } else if(infoBarView != null && !data.isValid()){
-            infoBarView.setText("You cannot insert your pawn there!, try again");
+        } else {
+            data.handle(this);
         }
     }
+
+    @Override
+    public void handle(WinEvent event) {
+        boardView.setCellText(event.getRow(), event.getColumn(), event.getPlayerWhoWon().getName());
+        infoBarView.setText(event.getPlayerWhoWon().getName() + " won the game!");
+    }
+
+    @Override
+    public void handle(ValidMoveEvent event) {
+        boardView.setCellText(event.getRow(), event.getColumn(), event.getPlayer().getName());
+        infoBarView.setText(event.getPlayer().getName() + " moved, it's " + event.getPlayerToPlay().getName() + "'s turn");
+    }
+
+    @Override
+    public void handle(InvalidMoveEvent event) {
+        infoBarView.setText("You cannot insert your pawn there!, try again");
+    }
+
+    @Override
+    public void handle(DrawEvent event) {
+        infoBarView.setText(event.getEventMessage());
+    }
+
 }

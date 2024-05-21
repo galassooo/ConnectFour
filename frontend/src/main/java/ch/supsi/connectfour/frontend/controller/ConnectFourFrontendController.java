@@ -3,7 +3,6 @@ package ch.supsi.connectfour.frontend.controller;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBackendController;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
-import ch.supsi.connectfour.backend.application.connectfour.MoveData;
 import ch.supsi.connectfour.backend.application.event.*;
 import ch.supsi.connectfour.backend.application.translations.TranslationsBusinessInterface;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
@@ -66,7 +65,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
         GameEvent data = backendController.playerMove(column);
 
         if (data == null) {
-            infoBarView.setText("Match is finished! you can't move!");
+            infoBarView.setText(translations.translate("label.game_finished"));
         } else {
             data.handle(this);
         }
@@ -80,7 +79,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
             // If the user confirms their choice to open a new game
             if (this.serializationView.showConfirmationDialog(
                     "Are you sure you want to start a new game? " +
-                    "\n This will overwrite any ongoing games.")) {
+                            "\n This will overwrite any ongoing games.")) {
                 // Update the current game stored in the controller, null indicates that it will create a new, blank instance inside the method
                 this.backendController.overrideCurrentMatch(null);
 
@@ -116,21 +115,22 @@ public class ConnectFourFrontendController implements GameEventHandler {
             }
         }
     }
+
     @Override
     public void handle(WinEvent event) {
         boardView.setCellText(event.getRow(), event.getColumn(), event.getPlayerWhoWon().getName());
-        infoBarView.setText(event.getPlayerWhoWon().getName() + " won the game!");
+        infoBarView.setText(event.getPlayerWhoWon().getName() + translations.translate("label.player_won"));
     }
 
     @Override
     public void handle(ValidMoveEvent event) {
         boardView.setCellText(event.getRow(), event.getColumn(), event.getPlayer().getName());
-        infoBarView.setText(event.getPlayer().getName() + " moved, it's " + event.getPlayerToPlay().getName() + "'s turn");
+        infoBarView.setText(event.getPlayer().getName() + translations.translate("label.player_moved") + event.getPlayerToPlay().getName() + translations.translate("label.player_turn"));
     }
 
     @Override
     public void handle(InvalidMoveEvent event) {
-        infoBarView.setText("You cannot insert your pawn there!, try again");
+        infoBarView.setText(translations.translate("labels.label.invalid_move"));
     }
 
     @Override
@@ -138,7 +138,19 @@ public class ConnectFourFrontendController implements GameEventHandler {
         infoBarView.setText(event.getEventMessage());
     }
 
-
+    private void clearViews() {
+        // TODO: it would be nice if we found a way to just add the views to a List of Viewable and simply do list.forEach(Viewable::clear);
+        this.boardView.clear();
+        this.infoBarView.clear();
+    }
+    private void updateBoard(final PlayerModel[][] newMatrix) {
+        // TODO: can be improved, if we already know the last index we can stop looping if not needed
+        for (int row = 0; row < newMatrix.length; row++) {
+            for (int column = 0; column < newMatrix[0].length; column++) {
+                this.boardView.setCellText(row, column, newMatrix[row][column] == null ? "" : newMatrix[row][column].getName());
+            }
+        }
+    }
     public void manageOpen() {
         final File file = this.serializationView.askForFile();
         /*
@@ -147,19 +159,11 @@ public class ConnectFourFrontendController implements GameEventHandler {
         if (file != null && file.exists() && file.isFile() && file.canRead()) {
             final ConnectFourBusinessInterface loadedGame = this.backendController.tryLoadingSave(file);
             if (loadedGame != null) {
-                // TODO: it would be nice if we found a way to just add the views to a List of Viewable and simply do list.forEach(Viewable::clear);
-                this.boardView.clear();
-                this.infoBarView.clear();
 
-                // TODO: not sure if this is the best approach... should the frontend do this? I guess so, since it needs the view to perform this action...
-                // Working on a deep copy of the actual game matrix to try and preserve invariants and prevent unauthorized modifications from the outside
-                final PlayerModel[][] gameMatrix = loadedGame.getGameMatrix();
-                // TODO: can be improved, if we already know the last index we can stop looping if not needed
-                for (int row = 0; row < gameMatrix.length; row++) {
-                    for (int column = 0; column < gameMatrix[0].length; column++) {
-                        this.boardView.setCellText(row, column, gameMatrix[row][column] == null ? "" : gameMatrix[row][column].getName());
-                    }
-                }
+                this.clearViews();
+
+                this.updateBoard(loadedGame.getGameMatrix());
+
                 // TODO: non sono sicuro di questa interazione. Il frontendcontroller puo' agire direttamente sul model? tecnicamente non è un layer sotto
                 this.infoBarView.setText(loadedGame.getMessageToDisplay());
                 // Success!
@@ -168,7 +172,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
                 System.out.println("YAY");
                 this.serializationView.showMessage("Salvataggio caricato correttamente", "conferma", Alert.AlertType.INFORMATION);
             } else {
-                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                System.err.println("Error while loading save!");
             }
         }
     }

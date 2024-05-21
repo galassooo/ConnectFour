@@ -70,6 +70,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
         } else {
             data.handle(this);
         }
+        System.out.println(backendController.getCurrentMatch());
 
     }
 

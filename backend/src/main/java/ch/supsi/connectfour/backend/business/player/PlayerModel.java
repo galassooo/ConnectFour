@@ -85,7 +85,12 @@ public final class PlayerModel implements Cloneable{
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PlayerModel player)) return false;
-        return getNumWin() == player.getNumWin() && Objects.equals(getName(), player.getName());
+        // TODO: REMOVE THIS. Needed for testing
+        final boolean isEqual = getNumWin() == player.getNumWin() &&
+                Objects.equals(getName(), player.getName());
+
+        System.out.println("Equals " + isEqual);
+        return isEqual;
     }
 
     @Override

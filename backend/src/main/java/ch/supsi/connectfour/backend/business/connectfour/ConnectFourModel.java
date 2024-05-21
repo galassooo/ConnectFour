@@ -106,6 +106,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
                         gameMatrix[row][col] == gameMatrix[row][col + 2] &&
                         gameMatrix[row][col] == gameMatrix[row][col + 3]) {
                     won = true;
+                    System.out.println("Controllo orizzontale passato");
                     break;
                 }
             }
@@ -119,6 +120,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
                         gameMatrix[row][col] == gameMatrix[row + 2][col] &&
                         gameMatrix[row][col] == gameMatrix[row + 3][col]) {
                     won = true;
+                    System.out.println("Controllo verticale passato");
                     break;
                 }
             }
@@ -132,6 +134,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
                         gameMatrix[row][col] == gameMatrix[row + 2][col + 2] &&
                         gameMatrix[row][col] == gameMatrix[row + 3][col + 3]) {
                     won = true;
+                    System.out.println("Controllo diagonale passato");
                     break;
                 }
             }
@@ -338,10 +341,10 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
                 } else if (cell.equals(player1)) {
                     // TODO: uncomment and go back to 1s and 2s
                     //sb.append("1 ");
-                    sb.append(player1.hashCode()).append("   ");
+                    sb.append(player1.id).append(" ");
                 } else if (cell.equals(player2)) {
                     //sb.append("2 ");
-                    sb.append(player2.hashCode()).append("   ");
+                    sb.append(player2.id).append(" ");
                 }
             }
             sb.append("\n");  // Nuova linea alla fine di ogni riga

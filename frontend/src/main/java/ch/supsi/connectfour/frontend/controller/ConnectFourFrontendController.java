@@ -25,7 +25,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
     private InfoBarView infoBarView;
 
     private final SerializationView serializationView = new SerializationView(MainFx.stage);
-    private TranslationsBusinessInterface translations = TranslationsModel.getInstance();
+    private final TranslationsBusinessInterface translations = TranslationsModel.getInstance();
 
     public static ConnectFourFrontendController getInstance() {
         if (instance == null) {
@@ -72,18 +72,14 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
     public void manageNew() {
-        // TODO: find a way to check if a game has started. It doesn't make that much sense that the user is prompted with a confirmation request when no moves have been made yet
         if (this.backendController.getCurrentMatch() != null) {
             // If the user confirms their choice to open a new game
-            if (this.serializationView.showConfirmationDialog(
-                    "Are you sure you want to start a new game? " +
-                            "\n This will overwrite any ongoing games.")) {
+            if (this.serializationView.showConfirmationDialog(translations.translate("label.overwrite_confirmation"), translations.translate("label.confirmation"), translations.translate("label.confirm"), translations.translate("label.cancel"))) {
                 // Update the current game stored in the controller, null indicates that it will create a new, blank instance inside the method
                 this.backendController.overrideCurrentMatch(null);
 
                 // Update the views
-                this.boardView.clear();
-                this.infoBarView.clear();
+                this.clearViews();
             }
         }
     }
@@ -100,10 +96,10 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
     public void manageSaveAs() {
-        final File dir = this.serializationView.askForDirectory();
+        final File dir = this.serializationView.askForDirectory(new File(System.getProperty("user.home")), translations.translate("label.chosen_directory"));
         // Check if the dir variable points to something, wether the directory exists on the filesystem and is a directory
         if (dir != null && dir.exists() && dir.isDirectory()) {
-            final String fileName = this.serializationView.showInputDialog(translations.translate("label.insert_name"));
+            final String fileName = this.serializationView.showInputDialog(translations.translate("label.insert_name"), translations.translate("label.insert_name_title"));
 
             if (fileName != null && this.backendController.persist(dir, fileName)) {
                 this.serializationView.showMessage(translations.translate("label.correctly_saved"), null, Alert.AlertType.INFORMATION);
@@ -151,7 +147,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
     public void manageOpen() {
-        final File file = this.serializationView.askForFile();
+        final File file = this.serializationView.askForFile(translations.translate("label.select_file_to_load"));
         /*
         If it points to an instance of File, exists, is an actual file in the filesystem and can be read
          */

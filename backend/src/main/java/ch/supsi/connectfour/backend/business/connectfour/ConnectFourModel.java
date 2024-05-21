@@ -162,6 +162,12 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         return this.dataAccess.getSave(file);
     }
 
+    @JsonIgnore
+    @Override
+    public String getSaveName() {
+        return this.pathToSave.getFileName().toString();
+    }
+
     /**
      * Tries to persist this instance into a file in a directory
      *
@@ -351,10 +357,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
             this.wasLastMoveValid = false;
 
         return isFinished;
-    }
-
-    public void setCurrentPlayer(final PlayerModel currentPlayer) {
-        this.currentPlayer = currentPlayer;
     }
 
     @JsonIgnore

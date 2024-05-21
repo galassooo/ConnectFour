@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -20,7 +21,7 @@ import java.net.URL;
 
 public class MainFx extends Application {
 
-    public static final String APP_TITLE = "connectfour";
+    public static final String APP_TITLE = "ConnectFour";
     public static Stage stage;
 
     private MenuBarDispatcher menuBarDispatcher;
@@ -141,7 +142,11 @@ public class MainFx extends Application {
         // PRIMARY STAGE
         primaryStage.setTitle(MainFx.APP_TITLE);
         primaryStage.setScene(scene);
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/about/board.png")));
+
         primaryStage.show();
+
+        stage = primaryStage;
         connectFourFrontendController.build(this.boardView, this.infoBarView);
     }
 

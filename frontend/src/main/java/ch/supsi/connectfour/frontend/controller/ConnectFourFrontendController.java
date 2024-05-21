@@ -93,6 +93,14 @@ public class ConnectFourFrontendController implements GameEventHandler {
             // If the user has never saved this save as, then save as
             this.manageSaveAs();
         }
+        if (this.backendController.wasCurrentGameSavedAs()) {
+            this.updateTitle(this.backendController.getSaveName());
+        }
+
+    }
+
+    private void updateTitle(final String gameName) {
+        MainFx.stage.setTitle(MainFx.APP_TITLE + " - " + gameName.replaceAll(".json", ""));
     }
 
     public void manageSaveAs() {
@@ -161,13 +169,14 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
                 // TODO: non sono sicuro di questa interazione. Il frontendcontroller puo' agire direttamente sul model? tecnicamente non è un layer sotto
                 this.infoBarView.setText(this.backendController.getMessageToDisplay());
+
                 // Success!
-                // TODO: remove these
-                System.out.println(loadedGame);
-                System.out.println("YAY");
-                this.serializationView.showMessage("Salvataggio caricato correttamente", "conferma", Alert.AlertType.INFORMATION);
+                this.serializationView.showMessage(translations.translate("label.loading_confirmation"), translations.translate("label.confirm"), Alert.AlertType.INFORMATION);
+
+                this.updateTitle(loadedGame.getSaveName());
             } else {
-                System.err.println("Error while loading save!");
+                // Error while loading the game
+                this.serializationView.showMessage(translations.translate("label.loading_error"), translations.translate("label.error"), Alert.AlertType.ERROR);
             }
         }
     }

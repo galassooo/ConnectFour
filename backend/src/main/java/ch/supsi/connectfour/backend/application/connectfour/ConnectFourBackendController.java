@@ -145,4 +145,8 @@ public class ConnectFourBackendController {
 
         currentMatch = new ConnectFourModel(p1, p2);
     }
+
+    public String getSaveName() {
+        return currentMatch.getSaveName();
+    }
 }

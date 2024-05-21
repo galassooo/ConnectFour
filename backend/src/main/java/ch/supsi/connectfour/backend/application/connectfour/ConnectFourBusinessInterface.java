@@ -7,12 +7,12 @@ import java.io.File;
 public interface ConnectFourBusinessInterface {
     int getLastPositioned(int column);
     ConnectFourBusinessInterface getSave(final File file);
+    String getSaveName();
 
     void switchCurrentPlayer();
     void insert(int column);
     void setFinished(boolean finished);
-    void setCurrentPlayer(PlayerModel model);
-
+    /* Getter methods */
     PlayerModel[][] getGameMatrix();
     PlayerModel getCurrentPlayer();
     PlayerModel getPlayer1();

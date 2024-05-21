@@ -15,7 +15,7 @@ public class InfoBarView implements Viewable {
 
     }
     public void setText(String text){
-        textLabel.getChildren().clear(); // se voglio pulire il precedene
+        textLabel.getChildren().clear(); // se voglio pulire il precedente
         Text textNode = new Text(text);
         textLabel.getChildren().add(textNode);
     }
@@ -23,5 +23,6 @@ public class InfoBarView implements Viewable {
     @Override
     public void clear() {
         textLabel.getChildren().clear();
+        textLabel.getChildren().add(new Text("")); //setto il text a testo vuoto per evitare spostamento dei componenti
     }
 }

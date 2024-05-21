@@ -94,6 +94,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
      * @return true if one of the players won, false if none won yet
      */
     //TODO trovare approccio migliore della brute force
+    @Override
     public boolean checkWin() {
         // Controlla orizzontali
         boolean won = false;
@@ -214,10 +215,19 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         return copiedMatrix;
     }
 
+    @Override
     public PlayerModel getCurrentPlayer() {
         return currentPlayer;
     }
+    @Override
+    public PlayerModel getPlayer1() {
+        return (PlayerModel) player1.clone();
+    }
 
+    @Override
+    public PlayerModel getPlayer2() {
+        return (PlayerModel) player2.clone();
+    }
     /*
         Tells Jackson not to use this method as a getter for a field named
         messageToDisplay. Not having this annotation makes the program throw an
@@ -260,6 +270,8 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
      * @param column colonna nel quale si vuole controllare se l'inserimento è possibile
      * @return true se è possibile inserire nella colonna, altrimenti false
      */
+    @Override
+    @Contract(pure = true)
     public boolean canInsert(int column) {
         // Reset it before reassigning it
         this.wasLastMoveValid = false;
@@ -268,8 +280,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
             return false;
         }
         int firstFreeCell = GRID_HEIGHT - 1 - lastPositionOccupied[column]; //post increment
-        this.wasLastMoveValid = firstFreeCell < GRID_HEIGHT && firstFreeCell >= 0;
-        return this.wasLastMoveValid;
+        return firstFreeCell < GRID_HEIGHT && firstFreeCell >= 0;
     }
 
     /**
@@ -277,7 +288,8 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
      *
      * @param column the column where the player wants to insert their pawn
      */
-    public void insert(int column) { // Evita di avere getter e setter, nasconde implementazione
+    @Override
+    public void insert(int column) { //evita di avere getter e setter, nasconde implementazione
         int firstFreeCell = GRID_HEIGHT - 1 - lastPositionOccupied[column];
         lastPositionOccupied[column]++;
         gameMatrix[firstFreeCell][column] = currentPlayer;
@@ -287,6 +299,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
      * @param column colonna della quale si vuole ottenere l'ultima riga occupata
      * @return l'indice dell'ultima riga occupata in quella colonna
      */
+    @Override
     public int getLastPositioned(int column) {
         return GRID_HEIGHT - lastPositionOccupied[column];
     }
@@ -294,6 +307,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     /**
      * Switches the player currently allowed to move
      */
+    @Override
     public void switchCurrentPlayer() {
         currentPlayer = currentPlayer.equals(player2) ? player1 : player2;
     }

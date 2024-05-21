@@ -3,11 +3,16 @@ package ch.supsi.connectfour.backend.business.player;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Objects;
 
-public final class PlayerModel {
+public final class PlayerModel implements Cloneable{
     private String name;
     private int numWin;
+
+    //TODO DA MODIFICARE! SERVIVA PER TESTARE E NON CE ANCORA IL CARICAMENTO DELLE PREFERENZE
+    private URL preferenceUrl;
 
     @JsonCreator
     public PlayerModel(@JsonProperty(value = "name") String name, @JsonProperty(value = "numWin") int numWin) {  //delego il controllo ai setters
@@ -17,6 +22,11 @@ public final class PlayerModel {
 
     public PlayerModel(String name) {
         this.name = name;
+    }
+
+    public PlayerModel(String name, URL preferenceUrl){
+        setName(name);
+        this.preferenceUrl = preferenceUrl;
     }
 
     //getters and setters
@@ -36,6 +46,30 @@ public final class PlayerModel {
         this.numWin =Math.max(0, numWin);
     }
 
+    public void setPreferenceUrl(URL preferenceUrl) {
+        if(preferenceUrl == null){
+            throw new IllegalArgumentException("Url cannot be null");
+        }
+        this.preferenceUrl = preferenceUrl;
+    }
+
+    public URL getPreferenceUrl() {
+        return preferenceUrl;
+    }
+
+    @Override
+    public Object clone(){
+        try {
+             PlayerModel cloned = (PlayerModel) super.clone();
+             cloned.preferenceUrl = new URL(this.preferenceUrl.toString());
+             return cloned;
+        } catch (CloneNotSupportedException e) {
+            System.err.println("Clone function is not supported in a Player's superclass");
+        } catch (MalformedURLException e) {
+            System.err.println("Malformed url");
+        }
+        return null;
+    }
     //solo per test
     @Override
     public String toString() {

@@ -12,7 +12,6 @@ public interface ConnectFourBusinessInterface {
     void insert(int column);
     boolean checkWin();
     boolean canInsert(int column);
-
     int getLastPositioned(int column);
     PlayerModel getCurrentPlayer();
     boolean isFinished();
@@ -24,4 +23,7 @@ public interface ConnectFourBusinessInterface {
     boolean persist(final File outputDirectory, final String saveName);
     boolean wasSavedAs();
     PlayerModel[][] getGameMatrix();
+    boolean isDraw();
+    PlayerModel getPlayer1();
+    PlayerModel getPlayer2();
 }

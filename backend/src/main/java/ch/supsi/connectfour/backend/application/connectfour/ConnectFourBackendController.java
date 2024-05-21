@@ -1,5 +1,6 @@
 package ch.supsi.connectfour.backend.application.connectfour;
 
+import ch.supsi.connectfour.backend.application.event.*;
 import ch.supsi.connectfour.backend.application.preferences.PreferencesBusinessInterface;
 import ch.supsi.connectfour.backend.application.translations.TranslationsBusinessInterface;
 import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
@@ -7,6 +8,9 @@ import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import java.io.File;
 
@@ -34,25 +38,32 @@ public class ConnectFourBackendController {
      * @param column colonna nel quale il giocatore intende inserire la pedina
      * @return un oggetto contenente i dati relativi alla mossa, null se la partita è finita
      */
-    public @NotNull MoveData playerMove(int column) {
+    public @Nullable GameEvent playerMove(int column) {
+        if (currentMatch == null) {
+            createNewGame();
+        }
         if (!currentMatch.isFinished()) {
             if (currentMatch.canInsert(column)) {
                 currentMatch.insert(column);
-                MoveData data;
+                GameEvent data;
 
                 PlayerModel playerWhoMoved = currentMatch.getCurrentPlayer();
+                currentMatch.switchCurrentPlayer();
                 if (currentMatch.checkWin()) {
                     currentMatch.setFinished(true);
-                    System.out.println("player ha vinto");
-                    data = new MoveData(playerWhoMoved, currentMatch.getLastPositioned(column), column, true, currentMatch.getMessageToDisplay());
+                    playerWhoMoved.setNumWin(playerWhoMoved.getNumWin() + 1);
+                    data = new WinEvent(playerWhoMoved, column, currentMatch.getLastPositioned(column));
                 } else {
-                    // Only switched if it actually makes sense to do so -> only if the game is still going
-                    currentMatch.switchCurrentPlayer();
-                    data = new MoveData(playerWhoMoved, currentMatch.getLastPositioned(column), column, true, currentMatch.getMessageToDisplay());
-                    System.out.println(currentMatch);
-                    System.out.println("player ha mosso e il turno è cambiato");
+                    data = new ValidMoveEvent(playerWhoMoved, currentMatch.getCurrentPlayer(), column, currentMatch.getLastPositioned(column));
                 }
                 return data;
+            } else if (currentMatch.isDraw()) {
+                currentMatch.setFinished(true);
+                return new DrawEvent(currentMatch.getPlayer1(), currentMatch.getPlayer2());
+            }
+            return new InvalidMoveEvent(currentMatch.getCurrentPlayer(), currentMatch.getCurrentPlayer(), column);
+        }
+        return null;
             }
         }
         // TODO: fa un po' schifo perché in realtà in questo caso non ho bisogno di player, row e column
@@ -108,5 +119,12 @@ public class ConnectFourBackendController {
             this.overrideCurrentMatch(loadedGame);
         }
         return loadedGame;
+    }
+
+    public void createNewGame(){
+        PlayerModel p1 = new PlayerModel("P1", getClass().getResource("/images/pawns/red.png"));
+        PlayerModel p2 = new PlayerModel("P2", getClass().getResource("/images/pawns/yellow.png"));
+
+        currentMatch = new ConnectFourModel(p1, p2);
     }
 }

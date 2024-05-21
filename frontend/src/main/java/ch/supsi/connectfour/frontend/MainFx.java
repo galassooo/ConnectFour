@@ -7,6 +7,7 @@ import ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher;
 import ch.supsi.connectfour.frontend.view.BoardView;
 import ch.supsi.connectfour.frontend.view.InfoBarView;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -53,6 +54,7 @@ public class MainFx extends Application {
                     primaryStage.close();
                 }
         );
+        primaryStage.setResizable(false);
 
         // MENU BAR
         MenuBar menuBar;
@@ -140,14 +142,14 @@ public class MainFx extends Application {
         primaryStage.setTitle(MainFx.APP_TITLE);
         primaryStage.setScene(scene);
         primaryStage.show();
-
-        stage = primaryStage;
+        gameController.build(this.boardView, this.infoBarView);
     }
 
-    public BoardView getBoardView() {
-        return boardView;
+    @Override
+    public void stop(){
+        //Se ci sono processi extra, come Executors eccetera vanno chiusi qui !!!!PRIMA DEL PLATFORM EXIT!!!!
+        Platform.exit();
     }
-
     public static void main(String[] args) {
         launch(args);
     }

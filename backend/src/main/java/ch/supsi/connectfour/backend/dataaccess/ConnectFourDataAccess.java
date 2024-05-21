@@ -3,8 +3,7 @@ package ch.supsi.connectfour.backend.dataaccess;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.business.connectfour.ConnectFourDataAccessInterface;
 import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,23 +26,15 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
         if (!file.exists() || !file.isFile() || !file.canRead()) {
             return null;
         }
+        // The mapper will handle the deserialization of the game save, whereas the loadedGame will hold the game loaded by the mapper
         final ObjectMapper mapper = new ObjectMapper();
         final ConnectFourBusinessInterface loadedGame;
 
         try {
             loadedGame = mapper.readValue(file, ConnectFourModel.class);
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.out.println("Error reading file: " + file.getAbsolutePath());;
+        } catch (final IOException e) {
+            System.err.println("Error reading file: " + file.getAbsolutePath());
             return null;
-        }
-        final String playerOneName = loadedGame.getPlayer1().getName();
-        final String currentPlayerName = loadedGame.getCurrentPlayer().getName();
-
-        if (currentPlayerName.equals(playerOneName)) {
-            loadedGame.setCurrentPlayer(loadedGame.getPlayer1());
-        } else {
-            loadedGame.setCurrentPlayer(loadedGame.getPlayer2());
         }
         return loadedGame;
     }
@@ -53,19 +44,19 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
         try {
             // If the file exists already then it means it was created already, so no need to try to create it again. If the creation fails then return an error
             if (!outputFile.exists() && !outputFile.createNewFile()) {
-                System.out.println("ERRORE nella creazione del file di salvataggio");
+                System.err.println("ERRORE nella creazione del file di salvataggio");
                 return false;
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (final IOException e) {
+            // TODO: do something clever with this exception
         }
         final ObjectMapper mapper = new ObjectMapper();
         try {
             mapper.writeValue(outputFile, game);
-        } catch (IOException e ) {
-            System.out.println("ERRORE nella scrittura su file del salvataggio");
+        } catch (IOException e) {
+            System.err.println("ERRORE nella scrittura su file del salvataggio");
             return false;
-            // TODO: handle exception -- this is generic and is catching everything
+            // TODO: do something clever with this exception
         }
         return true;
     }

@@ -58,7 +58,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
 
     // Player currently allowed to move
     @JsonInclude
-    public PlayerModel currentPlayer;
+    private PlayerModel currentPlayer;
     // Gives information about wether or not the last move operation was valid or not
     @JsonInclude
     private boolean wasLastMoveValid;
@@ -106,7 +106,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
                         gameMatrix[row][col].equals(gameMatrix[row][col + 2]) &&
                         gameMatrix[row][col].equals(gameMatrix[row][col + 3])) {
                     won = true;
-                    System.out.println("Controllo orizzontale passato");
                     break;
                 }
             }
@@ -133,7 +132,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
                         gameMatrix[row][col].equals(gameMatrix[row + 2][col + 2]) &&
                         gameMatrix[row][col].equals(gameMatrix[row + 3][col + 3])) {
                     won = true;
-                    System.out.println("Controllo diagonale passato");
                     break;
                 }
             }
@@ -151,17 +149,27 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
                 }
             }
         }
-        System.out.println("Won:" + won);
         return won;
     }
 
-    // TODO: add comment
+    /**
+     * Tries to retrieve an instance of ConnectFourModel potentially associated with a file instance
+     *
+     * @param file a file potentially containing a valid save
+     * @return an instance of ConnectFourModel if the file is valid, null otherwise
+     */
     @Override
     public ConnectFourBusinessInterface getSave(@NotNull final File file) {
         return this.dataAccess.getSave(file);
     }
 
-    // TODO: add comment
+    /**
+     * Tries to persist this instance into a file in a directory
+     *
+     * @param outputDirectory the directory in which the file should be created
+     * @param saveName        the name of the save
+     * @return true if the persistence operation was successfull, false otherwise
+     */
     @Override
     public boolean persist(@Nullable final File outputDirectory, @Nullable final String saveName) {
         boolean wasSaved;
@@ -187,15 +195,26 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         return wasSaved;
     }
 
+    /**
+     * Used to get information about wether or not this instance was ever saved as before or not
+     *
+     * @return true if this instance was saved as, false otherwise
+     */
     @Override
     public boolean wasSavedAs() {
         return this.pathToSave != null;
     }
 
+    /**
+     * Getter method for the gameMatrix field
+     *
+     * @return a deep copy of the original matrix
+     */
     @Override
     public PlayerModel[][] getGameMatrix() {
         return this.getGameMatrixDeepCopy();
     }
+
 
     @JsonIgnore
     @Override
@@ -231,7 +250,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         return copiedMatrix;
     }
 
-    @JsonGetter()
     @Override
     public PlayerModel getCurrentPlayer() {
         return currentPlayer;
@@ -281,7 +299,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
             return translations.translate("label.invalid_move");
         }
     }
-
 
     /**
      * Controlla se è possibile inserire la pedina nella colonna selezionata

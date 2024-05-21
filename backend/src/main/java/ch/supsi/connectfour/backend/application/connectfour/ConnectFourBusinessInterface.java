@@ -17,6 +17,7 @@ public interface ConnectFourBusinessInterface {
     PlayerModel getCurrentPlayer();
     PlayerModel getPlayer1();
     PlayerModel getPlayer2();
+    int[] getLastPositionOccupied();
 
     boolean isDraw();
     boolean checkWin();

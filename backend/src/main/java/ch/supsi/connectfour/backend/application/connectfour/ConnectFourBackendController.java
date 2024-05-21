@@ -108,6 +108,11 @@ public class ConnectFourBackendController {
         return loadedGame;
     }
 
+    /**
+     * Creates a contextual message depending on the state of the current game.
+     *
+     * @return a String representing the message
+     */
     public String getMessageToDisplay() {
         /*
          * Four possible cases:

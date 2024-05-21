@@ -8,10 +8,13 @@ import ch.supsi.connectfour.backend.application.translations.TranslationsBusines
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import ch.supsi.connectfour.frontend.MainFx;
+import ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher;
 import ch.supsi.connectfour.frontend.view.BoardView;
 import ch.supsi.connectfour.frontend.view.InfoBarView;
 import ch.supsi.connectfour.frontend.view.SerializationView;
+import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.MenuItem;
 
 import java.io.File;
 
@@ -26,6 +29,8 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
     private final SerializationView serializationView = new SerializationView(MainFx.stage);
     private final TranslationsBusinessInterface translations = TranslationsModel.getInstance();
+    private static MenuItem saveMenu;
+
 
     public static ConnectFourFrontendController getInstance() {
         if (instance == null) {
@@ -33,6 +38,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
         }
         return instance;
     }
+    private ConnectFourFrontendController() {}
 
     public void setBoardView(BoardView boardView) {
         this.boardView = boardView;
@@ -42,12 +48,13 @@ public class ConnectFourFrontendController implements GameEventHandler {
         this.infoBarView = infoBarView;
     }
 
-    public ConnectFourFrontendController build(BoardView boardView, InfoBarView infoBarView) {
+    public ConnectFourFrontendController build(BoardView boardView, InfoBarView infoBarView, MenuItem saveMenuItem) {
         if (infoBarView == null || boardView == null) {
             throw new IllegalArgumentException();
         }
         this.boardView = boardView;
         this.infoBarView = infoBarView;
+        saveMenu = saveMenuItem;
         return getInstance();
     }
 
@@ -77,7 +84,8 @@ public class ConnectFourFrontendController implements GameEventHandler {
             if (this.serializationView.showConfirmationDialog(translations.translate("label.overwrite_confirmation"), translations.translate("label.confirmation"), translations.translate("label.confirm"), translations.translate("label.cancel"))) {
                 // Update the current game stored in the controller, null indicates that it will create a new, blank instance inside the method
                 this.backendController.overrideCurrentMatch(null);
-
+                // Update the save button to prevent saving on new game
+                saveMenu.setDisable(true);
                 // Update the views
                 this.clearViews();
             }
@@ -85,18 +93,8 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
     public void manageSave() {
-        // Ask the backend controller to ask the model if it was ever saved as
-        if (this.backendController.wasCurrentGameSavedAs()) {
-            // These two values are used to indicate that we want to use an already available file, stored in the current match
-            this.backendController.persist(null, null);
-        } else {
-            // If the user has never saved this save as, then save as
-            this.manageSaveAs();
-        }
-        if (this.backendController.wasCurrentGameSavedAs()) {
-            this.updateTitle(this.backendController.getSaveName());
-        }
-
+        // These two values are used to indicate that we want to use an already available file, stored in the current match
+        this.backendController.persist(null, null);
     }
 
     private void updateTitle(final String gameName) {
@@ -111,6 +109,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
             if (fileName != null && this.backendController.persist(dir, fileName)) {
                 this.serializationView.showMessage(translations.translate("label.correctly_saved"), null, Alert.AlertType.INFORMATION);
+                saveMenu.setDisable(false);
             } else {
                 this.serializationView.showMessage(translations.translate("label.not_correctly_saved"), null, Alert.AlertType.ERROR);
             }
@@ -145,11 +144,13 @@ public class ConnectFourFrontendController implements GameEventHandler {
         this.infoBarView.clear();
     }
 
-    private void updateBoard(final PlayerModel[][] newMatrix) {
+    private void updateBoard(final PlayerModel[][] newMatrix, final int[] lastOccupied) {
+
         // TODO: can be improved, if we already know the last index we can stop looping if not needed
         for (int row = 0; row < newMatrix.length; row++) {
             for (int column = 0; column < newMatrix[0].length; column++) {
                 this.boardView.setCellText(row, column, newMatrix[row][column] == null ? "" : newMatrix[row][column].getName());
+                // todo: implement logic to skip some computations
             }
         }
     }
@@ -165,13 +166,15 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
                 this.clearViews();
 
-                this.updateBoard(loadedGame.getGameMatrix());
+                //this.updateBoard(loadedGame.getGameMatrix(), loadedGame.getLastPositionOccupied());
+                this.updateBoard(loadedGame.getGameMatrix(), null);
 
                 // TODO: non sono sicuro di questa interazione. Il frontendcontroller puo' agire direttamente sul model? tecnicamente non è un layer sotto
                 this.infoBarView.setText(this.backendController.getMessageToDisplay());
 
                 // Success!
                 this.serializationView.showMessage(translations.translate("label.loading_confirmation"), translations.translate("label.confirm"), Alert.AlertType.INFORMATION);
+                saveMenu.setDisable(false);
 
                 this.updateTitle(loadedGame.getSaveName());
             } else {

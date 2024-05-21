@@ -4,10 +4,17 @@ import ch.supsi.connectfour.frontend.MainFx;
 import ch.supsi.connectfour.frontend.controller.AboutController;
 import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.MenuItem;
 
 public class MenuBarDispatcher {
     private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
     private final AboutController aboutController = AboutController.getInstance();
+
+    // TODO: decide how to handle this
+    @FXML
+    public MenuItem saveMenuItem;
+
 
     public void newGame() {
         connectFourFrontendController.manageNew();

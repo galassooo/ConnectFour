@@ -2,7 +2,6 @@ package ch.supsi.connectfour.backend.business.connectfour;
 
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.application.translations.TranslationsBusinessInterface;
-import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import ch.supsi.connectfour.backend.dataaccess.ConnectFourDataAccess;
@@ -58,7 +57,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     private PlayerModel player2;
 
     // Player currently allowed to move
-    @JsonInclude()
+    @JsonInclude
     public PlayerModel currentPlayer;
     // Gives information about wether or not the last move operation was valid or not
     @JsonInclude
@@ -300,7 +299,8 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
             return false;
         }
         int firstFreeCell = GRID_HEIGHT - 1 - lastPositionOccupied[column]; //post increment
-        return firstFreeCell < GRID_HEIGHT && firstFreeCell >= 0;
+        this.wasLastMoveValid = firstFreeCell < GRID_HEIGHT && firstFreeCell >= 0;
+        return this.wasLastMoveValid;
     }
 
     /**

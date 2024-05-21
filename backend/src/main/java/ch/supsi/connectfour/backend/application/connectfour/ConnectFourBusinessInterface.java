@@ -8,23 +8,24 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 
 public interface ConnectFourBusinessInterface {
+    String getMessageToDisplay();
+    int getLastPositioned(int column);
+    ConnectFourBusinessInterface getSave(final File file);
+
     void switchCurrentPlayer();
     void insert(int column);
-    boolean checkWin();
-    boolean canInsert(int column);
-    int getLastPositioned(int column);
-    PlayerModel getCurrentPlayer();
-    boolean isFinished();
     void setFinished(boolean finished);
-    String getMessageToDisplay();
     void setCurrentPlayer(PlayerModel model);
 
-    // Persistence related methods
-    ConnectFourBusinessInterface getSave(final File file);
-    boolean persist(final File outputDirectory, final String saveName);
-    boolean wasSavedAs();
     PlayerModel[][] getGameMatrix();
-    boolean isDraw();
+    PlayerModel getCurrentPlayer();
     PlayerModel getPlayer1();
     PlayerModel getPlayer2();
+
+    boolean isDraw();
+    boolean checkWin();
+    boolean canInsert(int column);
+    boolean isFinished();
+    boolean persist(final File outputDirectory, final String saveName);
+    boolean wasSavedAs();
 }

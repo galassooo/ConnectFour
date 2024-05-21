@@ -5,24 +5,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Objects;
 
-public final class PlayerModel implements Cloneable{
-    // TODO: FOR TESTING PURPOSES
-    @JsonIgnore
-    public int id;
-    private static int ids = 0;
+public final class PlayerModel implements Cloneable {
     @JsonInclude
     private String name;
     @JsonInclude
     private int numWin;
 
     @JsonCreator
-    public PlayerModel(@JsonProperty(value = "name") String name, @JsonProperty(value = "numWin") int numWin){
-        this.id = ids + 1;
-        ids++;
+    public PlayerModel(@JsonProperty(value = "name") String name, @JsonProperty(value = "numWin") int numWin) {
         this.name = name;
         this.numWin = numWin;
     }
@@ -41,11 +33,11 @@ public final class PlayerModel implements Cloneable{
     }
 
     public void setNumWin(int numWin) {
-        this.numWin =Math.max(0, numWin);
+        this.numWin = Math.max(0, numWin);
     }
 
     @Override
-    public Object clone(){
+    public Object clone() {
         try {
             return super.clone();
         } catch (CloneNotSupportedException e) {
@@ -53,10 +45,11 @@ public final class PlayerModel implements Cloneable{
         }
         return null;
     }
+
     //solo per test
     @Override
     public String toString() {
-        return "name: " + name  +
+        return "name: " + name +
                 ", win: " + numWin;
     }
 

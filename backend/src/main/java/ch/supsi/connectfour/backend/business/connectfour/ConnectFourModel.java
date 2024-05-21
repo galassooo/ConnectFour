@@ -58,8 +58,8 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     private PlayerModel player2;
 
     // Player currently allowed to move
-    @JsonInclude
-    private PlayerModel currentPlayer;
+    @JsonInclude()
+    public PlayerModel currentPlayer;
     // Gives information about wether or not the last move operation was valid or not
     @JsonInclude
     private boolean wasLastMoveValid;
@@ -77,6 +77,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         this.translations = TranslationsModel.getInstance();
     }
 
+    @JsonIgnore
     public ConnectFourModel(PlayerModel player1, PlayerModel player2) {
         if (player2 == null || player1 == null)
             throw new IllegalArgumentException("Players cannot be null");
@@ -102,9 +103,9 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         for (int row = 0; row < GRID_HEIGHT; row++) {
             for (int col = 0; col <= GRID_LENGTH - 4; col++) {
                 if (gameMatrix[row][col] != null &&
-                        gameMatrix[row][col] == gameMatrix[row][col + 1] &&
-                        gameMatrix[row][col] == gameMatrix[row][col + 2] &&
-                        gameMatrix[row][col] == gameMatrix[row][col + 3]) {
+                        gameMatrix[row][col].equals(gameMatrix[row][col + 1]) &&
+                        gameMatrix[row][col].equals(gameMatrix[row][col + 2]) &&
+                        gameMatrix[row][col].equals(gameMatrix[row][col + 3])) {
                     won = true;
                     System.out.println("Controllo orizzontale passato");
                     break;
@@ -116,11 +117,10 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         for (int col = 0; col < GRID_LENGTH; col++) {
             for (int row = 0; row <= GRID_HEIGHT - 4; row++) {
                 if (gameMatrix[row][col] != null &&
-                        gameMatrix[row][col] == gameMatrix[row + 1][col] &&
-                        gameMatrix[row][col] == gameMatrix[row + 2][col] &&
-                        gameMatrix[row][col] == gameMatrix[row + 3][col]) {
+                        gameMatrix[row][col].equals(gameMatrix[row + 1][col]) &&
+                        gameMatrix[row][col].equals(gameMatrix[row + 2][col]) &&
+                        gameMatrix[row][col].equals(gameMatrix[row + 3][col])) {
                     won = true;
-                    System.out.println("Controllo verticale passato");
                     break;
                 }
             }
@@ -130,9 +130,9 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         for (int row = 0; row <= GRID_HEIGHT - 4; row++) {
             for (int col = 0; col <= GRID_LENGTH - 4; col++) {
                 if (gameMatrix[row][col] != null &&
-                        gameMatrix[row][col] == gameMatrix[row + 1][col + 1] &&
-                        gameMatrix[row][col] == gameMatrix[row + 2][col + 2] &&
-                        gameMatrix[row][col] == gameMatrix[row + 3][col + 3]) {
+                        gameMatrix[row][col].equals(gameMatrix[row + 1][col + 1]) &&
+                        gameMatrix[row][col].equals(gameMatrix[row + 2][col + 2]) &&
+                        gameMatrix[row][col].equals(gameMatrix[row + 3][col + 3])) {
                     won = true;
                     System.out.println("Controllo diagonale passato");
                     break;
@@ -144,9 +144,9 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         for (int row = 0; row <= GRID_HEIGHT - 4; row++) {
             for (int col = 3; col < GRID_LENGTH; col++) {
                 if (gameMatrix[row][col] != null &&
-                        gameMatrix[row][col] == gameMatrix[row + 1][col - 1] &&
-                        gameMatrix[row][col] == gameMatrix[row + 2][col - 2] &&
-                        gameMatrix[row][col] == gameMatrix[row + 3][col - 3]) {
+                        gameMatrix[row][col].equals(gameMatrix[row + 1][col - 1]) &&
+                        gameMatrix[row][col].equals(gameMatrix[row + 2][col - 2]) &&
+                        gameMatrix[row][col].equals(gameMatrix[row + 3][col - 3])) {
                     won = true;
                     break;
                 }
@@ -232,10 +232,12 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         return copiedMatrix;
     }
 
+    @JsonGetter()
     @Override
     public PlayerModel getCurrentPlayer() {
         return currentPlayer;
     }
+
     @Override
     public PlayerModel getPlayer1() {
         return (PlayerModel) player1.clone();
@@ -245,6 +247,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     public PlayerModel getPlayer2() {
         return (PlayerModel) player2.clone();
     }
+
     /*
         Tells Jackson not to use this method as a getter for a field named
         messageToDisplay. Not having this annotation makes the program throw an
@@ -339,12 +342,12 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
                 if (cell == null) {
                     sb.append("0 ");
                 } else if (cell.equals(player1)) {
-                    // TODO: uncomment and go back to 1s and 2s
+                    // TODO: EVENTUALLY uncomment and go back to 1s and 2s
                     //sb.append("1 ");
-                    sb.append(player1.id).append(" ");
+                    sb.append("P1").append(" ");
                 } else if (cell.equals(player2)) {
                     //sb.append("2 ");
-                    sb.append(player2.id).append(" ");
+                    sb.append("P2").append(" ");
                 }
             }
             sb.append("\n");  // Nuova linea alla fine di ogni riga
@@ -363,6 +366,11 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
             this.wasLastMoveValid = false;
 
         return isFinished;
+    }
+
+    @JsonIgnore
+    public void setCurrentPlayer(final PlayerModel currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
     @JsonIgnore

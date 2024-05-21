@@ -28,14 +28,24 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
             return null;
         }
         final ObjectMapper mapper = new ObjectMapper();
+        final ConnectFourBusinessInterface loadedGame;
 
         try {
-            return mapper.readValue(file, ConnectFourModel.class);
+            loadedGame = mapper.readValue(file, ConnectFourModel.class);
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error reading file: " + file.getAbsolutePath());;
             return null;
         }
+        final String playerOneName = loadedGame.getPlayer1().getName();
+        final String currentPlayerName = loadedGame.getCurrentPlayer().getName();
+
+        if (currentPlayerName.equals(playerOneName)) {
+            loadedGame.setCurrentPlayer(loadedGame.getPlayer1());
+        } else {
+            loadedGame.setCurrentPlayer(loadedGame.getPlayer2());
+        }
+        return loadedGame;
     }
 
     @Override
@@ -47,7 +57,7 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
                 return false;
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         final ObjectMapper mapper = new ObjectMapper();
         try {

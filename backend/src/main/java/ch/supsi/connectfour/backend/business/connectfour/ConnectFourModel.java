@@ -7,6 +7,7 @@ import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import ch.supsi.connectfour.backend.dataaccess.ConnectFourDataAccess;
 import com.fasterxml.jackson.annotation.*;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -194,6 +195,19 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         return this.getGameMatrixDeepCopy();
     }
 
+    @JsonIgnore
+    @Override
+    public boolean isDraw() {
+        for (int j : lastPositionOccupied) {
+            int firstFreeCell = GRID_HEIGHT - 1 - j;
+            if (firstFreeCell == GRID_HEIGHT) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
     // TODO: consider if it's worth doing... not sure if we are supposed to trust that the controller knows what it is doing or if we should be cautious and make defensive copies / prevent random modifications from the outside
     private PlayerModel[][] getGameMatrixDeepCopy() {
         // Get the dimensions of the original array
@@ -208,7 +222,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
             for (int j = 0; j < cols; j++) {
                 // Perform a deep copy of the PlayerModel object
                 if (this.gameMatrix[i][j] != null) {
-                    copiedMatrix[i][j] = new PlayerModel(this.gameMatrix[i][j].getName(), this.gameMatrix[i][j].getNumWin());
+                    copiedMatrix[i][j] = (PlayerModel) this.gameMatrix[i][j].clone();
                 }
             }
         }

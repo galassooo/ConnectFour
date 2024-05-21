@@ -8,9 +8,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import java.net.URL;
 
-public class BoardView implements Viewable {
-
-public class BoardView {
+public class BoardView implements Viewable{
     @FXML
     private GridPane gridPane;
 

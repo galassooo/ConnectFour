@@ -1,6 +1,8 @@
 package ch.supsi.connectfour.backend.business.player;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.net.MalformedURLException;
@@ -8,24 +10,25 @@ import java.net.URL;
 import java.util.Objects;
 
 public final class PlayerModel implements Cloneable{
+    // TODO: FOR TESTING PURPOSES
+    @JsonIgnore
+    public int id;
+    private static int ids = 0;
+    @JsonInclude
     private String name;
+    @JsonInclude
     private int numWin;
 
     //TODO DA MODIFICARE! SERVIVA PER TESTARE E NON CE ANCORA IL CARICAMENTO DELLE PREFERENZE
+    @JsonInclude
     private URL preferenceUrl;
 
     @JsonCreator
-    public PlayerModel(@JsonProperty(value = "name") String name, @JsonProperty(value = "numWin") int numWin) {  //delego il controllo ai setters
-        setName(name);
-        setNumWin(numWin);
-    }
-
-    public PlayerModel(String name) {
+    public PlayerModel(@JsonProperty(value = "name") String name, @JsonProperty(value = "numWin") int numWin , @JsonProperty(value = "preferenceUrl") URL preferenceUrl){
+        this.id = ids + 1;
+        ids++;
         this.name = name;
-    }
-
-    public PlayerModel(String name, URL preferenceUrl){
-        setName(name);
+        this.numWin = numWin;
         this.preferenceUrl = preferenceUrl;
     }
 

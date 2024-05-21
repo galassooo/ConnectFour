@@ -2,12 +2,12 @@ package ch.supsi.connectfour.frontend.dispatcher;
 
 import ch.supsi.connectfour.frontend.MainFx;
 import ch.supsi.connectfour.frontend.controller.AboutController;
-import ch.supsi.connectfour.frontend.controller.GameController;
 import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
 import javafx.event.ActionEvent;
 
 public class MenuBarDispatcher {
     private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
+    private final AboutController aboutController = AboutController.getInstance();
 
     public void newGame() {
         connectFourFrontendController.manageNew();

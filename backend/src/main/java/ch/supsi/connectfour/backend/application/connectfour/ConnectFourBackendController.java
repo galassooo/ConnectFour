@@ -8,10 +8,6 @@ import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import java.io.File;
 
 public class ConnectFourBackendController {
@@ -19,7 +15,7 @@ public class ConnectFourBackendController {
     private static PreferencesBusinessInterface preferences;
     private static TranslationsBusinessInterface translations;
     // The match currently linked to this controller
-    private static ConnectFourBusinessInterface currentMatch = new ConnectFourModel(new PlayerModel("p1"), new PlayerModel("p2"));
+    private static ConnectFourBusinessInterface currentMatch;
 
     // Singleton instantiation of this class
     public static ConnectFourBackendController getInstance() {
@@ -29,6 +25,7 @@ public class ConnectFourBackendController {
         return instance;
     }
     private ConnectFourBackendController() {
+        createNewGame();
         translations = TranslationsModel.getInstance();
     }
 
@@ -64,28 +61,16 @@ public class ConnectFourBackendController {
             return new InvalidMoveEvent(currentMatch.getCurrentPlayer(), currentMatch.getCurrentPlayer(), column);
         }
         return null;
-            }
-        }
-        // TODO: fa un po' schifo perché in realtà in questo caso non ho bisogno di player, row e column
-        return new MoveData(null, -1, -1, false, currentMatch.getMessageToDisplay());
     }
 
     public ConnectFourBusinessInterface getCurrentMatch() {
         return currentMatch;
     }
 
-    /**
-     * Overrides this instance's current match, if a new one is provided. If the provided match is null, it replaces it
-     * with a new one.
-     * This method is used with a null input parameter if a new game is requested, and with an actual instance of
-     * ConnectFourModel if we are de-serializing a game and loading it.
-     *
-     * @param newMatch the match that should replace the current match, or null if a new, blank one is required
-     */
     public void overrideCurrentMatch(@Nullable final ConnectFourBusinessInterface newMatch) {
         // Check comment above for an explanation on why newMatch could ever be null and why
         if (newMatch == null) {
-            currentMatch = new ConnectFourModel(new PlayerModel("p1"), new PlayerModel("p2"));
+            createNewGame();
             return;
         }
         currentMatch = newMatch;
@@ -122,8 +107,8 @@ public class ConnectFourBackendController {
     }
 
     public void createNewGame(){
-        PlayerModel p1 = new PlayerModel("P1", getClass().getResource("/images/pawns/red.png"));
-        PlayerModel p2 = new PlayerModel("P2", getClass().getResource("/images/pawns/yellow.png"));
+        PlayerModel p1 = new PlayerModel("P1", 0, getClass().getResource("/images/pawns/red.png"));
+        PlayerModel p2 = new PlayerModel("P2", 0, getClass().getResource("/images/pawns/yellow.png"));
 
         currentMatch = new ConnectFourModel(p1, p2);
     }

@@ -2,7 +2,9 @@ package ch.supsi.connectfour.frontend.controller;
 
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBackendController;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
+import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
 import ch.supsi.connectfour.backend.application.connectfour.MoveData;
+import ch.supsi.connectfour.backend.application.event.*;
 import ch.supsi.connectfour.backend.application.translations.TranslationsBusinessInterface;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
@@ -15,7 +17,7 @@ import javafx.scene.control.Alert;
 import java.io.File;
 // TODO: BACKUP THE INFOBAR
 
-public class ConnectFourFrontendController {
+public class ConnectFourFrontendController implements GameEventHandler {
 
     private static ConnectFourFrontendController instance;
     private final ConnectFourBackendController backendController = ConnectFourBackendController.getInstance();
@@ -42,6 +44,16 @@ public class ConnectFourFrontendController {
         this.infoBarView = infoBarView;
     }
 
+    public ConnectFourFrontendController build(BoardView boardView, InfoBarView infoBarView) {
+        if (infoBarView == null || boardView == null) {
+            throw new IllegalArgumentException();
+        }
+        this.boardView = boardView;
+        this.infoBarView = infoBarView;
+        return getInstance();
+    }
+
+
     /**
      * Effettua la chiamata al controller in backend per gestire la mossa e gestisce l'esito graficamente
      *
@@ -51,13 +63,14 @@ public class ConnectFourFrontendController {
         // What information does this controller need?
         // - Wether or not the player moved successfully
         // - What message it should display
-        MoveData data = backendController.playerMove(column);
+        GameEvent data = backendController.playerMove(column);
 
-        if (boardView != null && data.isValid()) {
-            // Then it means the player was able to move successfully
-            boardView.setCellText(data.row(), data.column(), data.player().getName());
+        if (data == null) {
+            infoBarView.setText("Match is finished! you can't move!");
+        } else {
+            data.handle(this);
         }
-        infoBarView.setText(data.messageToDisplay());
+
     }
 
     public void manageNew() {
@@ -101,6 +114,28 @@ public class ConnectFourFrontendController {
             }
         }
     }
+    @Override
+    public void handle(WinEvent event) {
+        boardView.setCellImage(event.getRow(), event.getColumn(), event.getPlayerWhoWon().getPreferenceUrl());
+        infoBarView.setText(event.getPlayerWhoWon().getName() + " won the game!");
+    }
+
+    @Override
+    public void handle(ValidMoveEvent event) {
+        boardView.setCellImage(event.getRow(), event.getColumn(), event.getPlayer().getPreferenceUrl());
+        infoBarView.setText(event.getPlayer().getName() + " moved, it's " + event.getPlayerToPlay().getName() + "'s turn");
+    }
+
+    @Override
+    public void handle(InvalidMoveEvent event) {
+        infoBarView.setText("You cannot insert your pawn there!, try again");
+    }
+
+    @Override
+    public void handle(DrawEvent event) {
+        infoBarView.setText(event.getEventMessage());
+    }
+
 
     public void manageOpen() {
         final File file = this.serializationView.askForFile();
@@ -120,7 +155,7 @@ public class ConnectFourFrontendController {
                 // TODO: can be improved, if we already know the last index we can stop looping if not needed
                 for (int row = 0; row < gameMatrix.length; row++) {
                     for (int column = 0; column < gameMatrix[0].length; column++) {
-                        this.boardView.setCellText(row, column, gameMatrix[row][column] == null ? "" : gameMatrix[row][column].getName());
+                        this.boardView.setCellImage(row, column, gameMatrix[row][column] == null ? getClass().getResource("/images/pawns/white.png") : gameMatrix[row][column].getPreferenceUrl());
                     }
                 }
                 // TODO: non sono sicuro di questa interazione. Il frontendcontroller puo' agire direttamente sul model? tecnicamente non è un layer sotto

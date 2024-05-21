@@ -51,7 +51,6 @@ public class ConnectFourFrontendController implements GameEventHandler {
         return getInstance();
     }
 
-
     /**
      * Effettua la chiamata al controller in backend per gestire la mossa e gestisce l'esito graficamente
      *
@@ -101,7 +100,6 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
     public void manageSaveAs() {
-        // TODO: manage translations
         final File dir = this.serializationView.askForDirectory();
         // Check if the dir variable points to something, wether the directory exists on the filesystem and is a directory
         if (dir != null && dir.exists() && dir.isDirectory()) {
@@ -129,7 +127,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
     @Override
     public void handle(InvalidMoveEvent event) {
-        infoBarView.setText(translations.translate("labels.label.invalid_move"));
+        infoBarView.setText(translations.translate("label.invalid_move"));
     }
 
     @Override

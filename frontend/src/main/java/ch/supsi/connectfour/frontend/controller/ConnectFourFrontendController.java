@@ -117,13 +117,13 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
     @Override
     public void handle(WinEvent event) {
-        boardView.setCellImage(event.getRow(), event.getColumn(), event.getPlayerWhoWon().getPreferenceUrl());
+        boardView.setCellText(event.getRow(), event.getColumn(), event.getPlayerWhoWon().getName());
         infoBarView.setText(event.getPlayerWhoWon().getName() + " won the game!");
     }
 
     @Override
     public void handle(ValidMoveEvent event) {
-        boardView.setCellImage(event.getRow(), event.getColumn(), event.getPlayer().getPreferenceUrl());
+        boardView.setCellText(event.getRow(), event.getColumn(), event.getPlayer().getName());
         infoBarView.setText(event.getPlayer().getName() + " moved, it's " + event.getPlayerToPlay().getName() + "'s turn");
     }
 
@@ -156,7 +156,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
                 // TODO: can be improved, if we already know the last index we can stop looping if not needed
                 for (int row = 0; row < gameMatrix.length; row++) {
                     for (int column = 0; column < gameMatrix[0].length; column++) {
-                        this.boardView.setCellImage(row, column, gameMatrix[row][column] == null ? getClass().getResource("/images/pawns/white.png") : gameMatrix[row][column].getPreferenceUrl());
+                        this.boardView.setCellText(row, column, gameMatrix[row][column] == null ? "" : gameMatrix[row][column].getName());
                     }
                 }
                 // TODO: non sono sicuro di questa interazione. Il frontendcontroller puo' agire direttamente sul model? tecnicamente non è un layer sotto

@@ -19,17 +19,12 @@ public final class PlayerModel implements Cloneable{
     @JsonInclude
     private int numWin;
 
-    //TODO DA MODIFICARE! SERVIVA PER TESTARE E NON CE ANCORA IL CARICAMENTO DELLE PREFERENZE
-    @JsonInclude
-    private URL preferenceUrl;
-
     @JsonCreator
-    public PlayerModel(@JsonProperty(value = "name") String name, @JsonProperty(value = "numWin") int numWin , @JsonProperty(value = "preferenceUrl") URL preferenceUrl){
+    public PlayerModel(@JsonProperty(value = "name") String name, @JsonProperty(value = "numWin") int numWin){
         this.id = ids + 1;
         ids++;
         this.name = name;
         this.numWin = numWin;
-        this.preferenceUrl = preferenceUrl;
     }
 
     //getters and setters
@@ -49,27 +44,12 @@ public final class PlayerModel implements Cloneable{
         this.numWin =Math.max(0, numWin);
     }
 
-    public void setPreferenceUrl(URL preferenceUrl) {
-        if(preferenceUrl == null){
-            throw new IllegalArgumentException("Url cannot be null");
-        }
-        this.preferenceUrl = preferenceUrl;
-    }
-
-    public URL getPreferenceUrl() {
-        return preferenceUrl;
-    }
-
     @Override
     public Object clone(){
         try {
-             PlayerModel cloned = (PlayerModel) super.clone();
-             cloned.preferenceUrl = new URL(this.preferenceUrl.toString());
-             return cloned;
+            return super.clone();
         } catch (CloneNotSupportedException e) {
             System.err.println("Clone function is not supported in a Player's superclass");
-        } catch (MalformedURLException e) {
-            System.err.println("Malformed url");
         }
         return null;
     }

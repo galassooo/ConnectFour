@@ -15,6 +15,7 @@ public class BoardView implements Viewable{
     @FXML
     private ImageView boardLayer;
 
+    /*
     @FXML
     public void initialize(){
         gridPane.setStyle("-fx-grid-lines-visible: true;");
@@ -28,12 +29,13 @@ public class BoardView implements Viewable{
         Image image = new Image(imageUrl.toExternalForm());
         boardLayer.setImage(image);
     }
-    public void setCellImage(int row, int column, URL urlImage) {
+    */
+    public void setCellText(int row, int column, String text) {
         for (javafx.scene.Node node : gridPane.getChildren()) {
             if (node instanceof AnchorPane anchorPane && GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
                 for (javafx.scene.Node child : anchorPane.getChildren()) {
-                    if (child instanceof ImageView) {
-                        ((ImageView) child).setImage(new Image(urlImage.toExternalForm()));
+                    if (child instanceof Label) {
+                        ((Label) child).setText(text);
                         return;
                     }
                 }
@@ -43,18 +45,11 @@ public class BoardView implements Viewable{
 
     @Override
     public void clear() {
-        URL imageUrl = getClass().getResource("/images/pawns/white.png");
-        if(imageUrl == null){
-            System.err.println("Error while loading white pawn image");
-            return;
-        }
-        Image image = new Image(imageUrl.toExternalForm());
-
         for (javafx.scene.Node node : gridPane.getChildren()) {
             if (node instanceof AnchorPane anchorPane) {
                 for (javafx.scene.Node child : anchorPane.getChildren()) {
-                    if (child instanceof ImageView) {
-                        ((ImageView) child).setImage(image);
+                    if (child instanceof Label) {
+                        ((Label) child).setText("");
                     }
                 }
             }

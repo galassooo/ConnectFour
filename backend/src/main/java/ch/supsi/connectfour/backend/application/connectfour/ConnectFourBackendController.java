@@ -107,8 +107,8 @@ public class ConnectFourBackendController {
     }
 
     public void createNewGame(){
-        PlayerModel p1 = new PlayerModel("P1", 0, getClass().getResource("/images/pawns/red.png"));
-        PlayerModel p2 = new PlayerModel("P2", 0, getClass().getResource("/images/pawns/yellow.png"));
+        PlayerModel p1 = new PlayerModel("P1", 0);
+        PlayerModel p2 = new PlayerModel("P2", 0);
 
         currentMatch = new ConnectFourModel(p1, p2);
     }

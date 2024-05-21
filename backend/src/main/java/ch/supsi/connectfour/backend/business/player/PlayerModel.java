@@ -23,12 +23,12 @@ public final class PlayerModel implements Cloneable {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name == null || name.isEmpty() || name.isBlank() ? "not available" : name;
-    }
-
     public int getNumWin() {
         return numWin;
+    }
+
+    public void setName(String name) {
+        this.name = name == null || name.isEmpty() || name.isBlank() ? "not available" : name;
     }
 
     public void setNumWin(int numWin) {
@@ -57,12 +57,8 @@ public final class PlayerModel implements Cloneable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PlayerModel player)) return false;
-        // TODO: REMOVE THIS. Needed for testing
-        final boolean isEqual = getNumWin() == player.getNumWin() &&
+        return getNumWin() == player.getNumWin() &&
                 Objects.equals(getName(), player.getName());
-
-        System.out.println("Equals " + isEqual);
-        return isEqual;
     }
 
     @Override

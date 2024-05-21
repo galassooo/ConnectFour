@@ -8,6 +8,7 @@ import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
 import java.io.File;
 
 public class ConnectFourBackendController {
@@ -24,6 +25,7 @@ public class ConnectFourBackendController {
         }
         return instance;
     }
+
     private ConnectFourBackendController() {
         createNewGame();
         translations = TranslationsModel.getInstance();
@@ -106,7 +108,38 @@ public class ConnectFourBackendController {
         return loadedGame;
     }
 
-    public void createNewGame(){
+    public String getMessageToDisplay() {
+        /*
+         * Four possible cases:
+         * - Player moved, game isn't finished
+         * - Player moved, they won
+         * - Player tried to move but game is finished
+         * - Player tried to move but the move isn't valid
+         */
+
+        final PlayerModel player1 = currentMatch.getPlayer1();
+        final PlayerModel player2 = currentMatch.getPlayer2();
+        final PlayerModel currentPlayer = currentMatch.getCurrentPlayer();
+
+        if (currentMatch.isLastMoveValid() && !currentMatch.isFinished()) {
+            return String.format("%s  %s %s %s",
+                    (currentPlayer.equals(player2) ? player1.getName() : player2.getName()),
+                    translations.translate("label.player_moved"),
+                    currentPlayer.getName(),
+                    translations.translate("label.player_turn"));
+        } else if (currentMatch.isLastMoveValid()) {
+            // If we are here then the game must be finished
+            return String.format("%s %s", currentPlayer.getName(), translations.translate("label.player_won"));
+        } else if (currentMatch.isFinished()) {
+            // If we are here then the last move wasn't valid
+            return translations.translate("label.game_finished");
+        } else {
+            // If we are here then the move wasn't valid AND the game is not finished
+            return translations.translate("label.invalid_move");
+        }
+    }
+
+    public void createNewGame() {
         PlayerModel p1 = new PlayerModel("P1", 0);
         PlayerModel p2 = new PlayerModel("P2", 0);
 

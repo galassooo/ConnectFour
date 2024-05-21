@@ -6,14 +6,12 @@ import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import ch.supsi.connectfour.backend.dataaccess.ConnectFourDataAccess;
 import com.fasterxml.jackson.annotation.*;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Random;
-
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public final class ConnectFourModel implements ConnectFourBusinessInterface {
@@ -80,6 +78,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     public ConnectFourModel(PlayerModel player1, PlayerModel player2) {
         if (player2 == null || player1 == null)
             throw new IllegalArgumentException("Players cannot be null");
+
         this.player1 = player1;
         this.player2 = player2;
         currentPlayer = new Random().nextBoolean() ? player1 : player2;
@@ -215,7 +214,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         return this.getGameMatrixDeepCopy();
     }
 
-
     @JsonIgnore
     @Override
     public boolean isDraw() {
@@ -265,39 +263,10 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         return (PlayerModel) player2.clone();
     }
 
-    /*
-        Tells Jackson not to use this method as a getter for a field named
-        messageToDisplay. Not having this annotation makes the program throw an
-        exception when loading games as Jackson tries to find a field with this name even
-        though it does not exist
-     */
     @JsonIgnore
-    public String getMessageToDisplay() {
-        // TODO: load with translations
-        /*
-         * Four possible cases:
-         * - Player moved, game isn't finished
-         * - Player moved, they won
-         * - Player tried to move but game is finished
-         * - Player tried to move but the move isn't valid
-         */
-        // TODO: HANDLE WITH TRANSLATIONS
-        if (this.wasLastMoveValid && !this.isFinished) {
-            return String.format("%s  %s %s %s",
-                    (currentPlayer.equals(player2) ? player1.getName() : player2.getName()),
-                    translations.translate("label.player_moved"),
-                    this.currentPlayer.getName(),
-                    translations.translate("label.player_turn"));
-        } else if (this.wasLastMoveValid) {
-            // If we are here then the game must be finished
-            return String.format("%s %s", this.currentPlayer.getName(), translations.translate("label.player_won"));
-        } else if (this.isFinished) {
-            // If we are here then the last move wasn't valid
-            return translations.translate("label.game_finished");
-        } else {
-            // If we are here then the move wasn't valid AND the game is not finished
-            return translations.translate("label.invalid_move");
-        }
+    @Override
+    public boolean isLastMoveValid() {
+        return wasLastMoveValid;
     }
 
     /**
@@ -307,7 +276,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
      * @return true se è possibile inserire nella colonna, altrimenti false
      */
     @Override
-    @Contract(pure = true)
     public boolean canInsert(int column) {
         // Reset it before reassigning it
         this.wasLastMoveValid = false;
@@ -385,7 +353,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         return isFinished;
     }
 
-    @JsonIgnore
     public void setCurrentPlayer(final PlayerModel currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
@@ -394,5 +361,4 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     public void setFinished(boolean finished) {
         isFinished = finished;
     }
-
 }

@@ -1,14 +1,10 @@
 package ch.supsi.connectfour.backend.application.connectfour;
 
-import ch.supsi.connectfour.backend.business.connectfour.ConnectFourDataAccessInterface;
-import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 
 public interface ConnectFourBusinessInterface {
-    String getMessageToDisplay();
     int getLastPositioned(int column);
     ConnectFourBusinessInterface getSave(final File file);
 
@@ -28,4 +24,5 @@ public interface ConnectFourBusinessInterface {
     boolean isFinished();
     boolean persist(final File outputDirectory, final String saveName);
     boolean wasSavedAs();
+    boolean isLastMoveValid();
 }

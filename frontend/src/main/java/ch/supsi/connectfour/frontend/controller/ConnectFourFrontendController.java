@@ -14,7 +14,6 @@ import ch.supsi.connectfour.frontend.view.SerializationView;
 import javafx.scene.control.Alert;
 
 import java.io.File;
-// TODO: BACKUP THE INFOBAR
 
 public class ConnectFourFrontendController implements GameEventHandler {
 
@@ -143,6 +142,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
         this.boardView.clear();
         this.infoBarView.clear();
     }
+
     private void updateBoard(final PlayerModel[][] newMatrix) {
         // TODO: can be improved, if we already know the last index we can stop looping if not needed
         for (int row = 0; row < newMatrix.length; row++) {
@@ -151,6 +151,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
             }
         }
     }
+
     public void manageOpen() {
         final File file = this.serializationView.askForFile();
         /*
@@ -165,7 +166,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
                 this.updateBoard(loadedGame.getGameMatrix());
 
                 // TODO: non sono sicuro di questa interazione. Il frontendcontroller puo' agire direttamente sul model? tecnicamente non è un layer sotto
-                this.infoBarView.setText(loadedGame.getMessageToDisplay());
+                this.infoBarView.setText(this.backendController.getMessageToDisplay());
                 // Success!
                 // TODO: remove these
                 System.out.println(loadedGame);

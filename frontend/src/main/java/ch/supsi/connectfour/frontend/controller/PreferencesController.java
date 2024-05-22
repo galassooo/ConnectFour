@@ -29,7 +29,6 @@ public class PreferencesController {
             }
 
             FXMLLoader loader = new FXMLLoader(fxmlUrl);
-            loader.setController(new PreferencesView());
             Scene scene = new Scene(loader.load());
             preferencesView = loader.getController();
 

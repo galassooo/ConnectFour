@@ -37,6 +37,7 @@ public class PreferencesView {
         playerOneShapeComboBox.getItems().addAll("Circle", "Rectangle");
         playerTwoShapeComboBox.getItems().addAll("Circle", "Rectangle");
     }
+    public PreferencesView() {}
 
     public void setOnSaveButton(Consumer<ActionEvent> eventConsumer) {
         saveButton.setOnAction(eventConsumer::accept);

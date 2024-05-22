@@ -15,6 +15,7 @@ import ch.supsi.connectfour.frontend.view.SerializationView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
@@ -80,6 +81,14 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
     }
 
+    /**
+     * All serialization actions have some elements in common:
+     * - Either enable or disable the saveMenu button
+     * - Update the application title
+     * - Clear all the views
+     * It would be neat if we managed to generalize this behaviour and find a way to standardize it
+     */
+
     public void manageNew() {
         if (this.backendController.getCurrentMatch() != null) {
             // If the user confirms their choice to open a new game
@@ -97,11 +106,10 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
     public void manageSave() {
-        // These two values are used to indicate that we want to use an already available file, stored in the current match
-        this.backendController.persist(null, null);
+        this.backendController.persist();
     }
 
-    private void updateTitle(final String gameName) {
+    private void updateTitle(final @NotNull String gameName) {
         MainFx.stage.setTitle(MainFx.APP_TITLE + " - " + gameName.replaceAll(".json", ""));
     }
 

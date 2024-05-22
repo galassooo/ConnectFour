@@ -196,6 +196,19 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     }
 
     /**
+     * This method exists only to allow higher-level layers to persist an already saved game without
+     * passing any parameters. The goal of this method is to hide implementation details about how
+     * this persist method is implemented, aka the fact that passing null values has a specific meaning
+     * for the flow of the program (information hiding)
+     *
+     * @return  true if the game was saved correctly, false otherwise
+     */
+    @Override
+    public boolean persist() {
+        return this.persist(null, null);
+    }
+
+    /**
      * Used to get information about wether or not this instance was ever saved as before or not
      *
      * @return true if this instance was saved as, false otherwise
@@ -215,7 +228,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
             }
         }
         return false;
-
     }
 
     // TODO: consider if it's worth doing... not sure if we are supposed to trust that the controller knows what it is doing or if we should be cautious and make defensive copies / prevent random modifications from the outside

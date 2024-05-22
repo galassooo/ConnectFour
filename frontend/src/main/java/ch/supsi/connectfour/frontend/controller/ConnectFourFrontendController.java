@@ -38,7 +38,9 @@ public class ConnectFourFrontendController implements GameEventHandler {
         }
         return instance;
     }
-    private ConnectFourFrontendController() {}
+
+    private ConnectFourFrontendController() {
+    }
 
     public void setBoardView(BoardView boardView) {
         this.boardView = boardView;
@@ -144,13 +146,21 @@ public class ConnectFourFrontendController implements GameEventHandler {
         this.infoBarView.clear();
     }
 
-    private void updateBoard(final PlayerModel[][] newMatrix, final int[] lastOccupied) {
-
-        // TODO: can be improved, if we already know the last index we can stop looping if not needed
-        for (int row = 0; row < newMatrix.length; row++) {
-            for (int column = 0; column < newMatrix[0].length; column++) {
-                this.boardView.setCellText(row, column, newMatrix[row][column] == null ? "" : newMatrix[row][column].getName());
-                // todo: implement logic to skip some computations
+    /**
+     * Scans the provided matrix column by column and updates the board view as long as it does not encounter any null references.
+     * As soon as a row in a given column is null, it means there will not be any more tokens in that row, therefore this method
+     * stops looping over that row and skips to the next column.
+     *
+     * @param newMatrix the matrix representing the board
+     */
+    private void updateBoard(final PlayerModel[][] newMatrix) {
+        for (int column = newMatrix[0].length - 1 ; column >= 0; column--) {
+            for (int row = newMatrix.length - 1; row >= 0; row--) {
+                // As soon as it finds a null cell, it knows there can't be any more tokens so it skips to the next
+                if (newMatrix[row][column] == null) {
+                    break;
+                }
+                this.boardView.setCellText(row, column, newMatrix[row][column].getName());
             }
         }
     }
@@ -166,8 +176,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
                 this.clearViews();
 
-                //this.updateBoard(loadedGame.getGameMatrix(), loadedGame.getLastPositionOccupied());
-                this.updateBoard(loadedGame.getGameMatrix(), null);
+                this.updateBoard(loadedGame.getGameMatrix());
 
                 // TODO: non sono sicuro di questa interazione. Il frontendcontroller puo' agire direttamente sul model? tecnicamente non è un layer sotto
                 this.infoBarView.setText(this.backendController.getMessageToDisplay());

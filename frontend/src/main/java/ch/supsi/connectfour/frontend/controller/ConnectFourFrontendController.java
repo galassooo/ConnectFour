@@ -88,6 +88,8 @@ public class ConnectFourFrontendController implements GameEventHandler {
                 this.backendController.overrideCurrentMatch(null);
                 // Update the save button to prevent saving on new game
                 saveMenu.setDisable(true);
+                // TODO: FA SCHIFO!!!!!
+                MainFx.stage.setTitle(MainFx.APP_TITLE);
                 // Update the views
                 this.clearViews();
             }
@@ -112,6 +114,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
             if (fileName != null && this.backendController.persist(dir, fileName)) {
                 this.serializationView.showMessage(translations.translate("label.correctly_saved"), null, Alert.AlertType.INFORMATION);
                 saveMenu.setDisable(false);
+                this.updateTitle(this.backendController.getSaveName());
             } else {
                 this.serializationView.showMessage(translations.translate("label.not_correctly_saved"), null, Alert.AlertType.ERROR);
             }

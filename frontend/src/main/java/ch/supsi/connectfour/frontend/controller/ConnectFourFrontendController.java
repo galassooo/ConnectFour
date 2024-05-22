@@ -119,13 +119,13 @@ public class ConnectFourFrontendController implements GameEventHandler {
     @Override
     public void handle(WinEvent event) {
         boardView.setCellText(event.getRow(), event.getColumn(), event.getPlayerWhoWon().getName());
-        infoBarView.setText(event.getPlayerWhoWon().getName() + translations.translate("label.player_won"));
+        infoBarView.setText(String.format("%s %s", event.getPlayerWhoWon().getName(), translations.translate("label.player_won")));
     }
 
     @Override
     public void handle(ValidMoveEvent event) {
         boardView.setCellText(event.getRow(), event.getColumn(), event.getPlayer().getName());
-        infoBarView.setText(event.getPlayer().getName() + translations.translate("label.player_moved") + event.getPlayerToPlay().getName() + translations.translate("label.player_turn"));
+        infoBarView.setText(String.format("%s %s %s %s", event.getPlayer().getName(), translations.translate("label.player_moved"), event.getPlayerToPlay().getName(), translations.translate("label.player_turn")));
     }
 
     @Override

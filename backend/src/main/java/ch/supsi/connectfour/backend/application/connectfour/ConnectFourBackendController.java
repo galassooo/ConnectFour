@@ -50,7 +50,6 @@ public class ConnectFourBackendController {
                 currentMatch.switchCurrentPlayer();
                 if (currentMatch.checkWin()) {
                     currentMatch.setFinished(true);
-                    playerWhoMoved.setNumWin(playerWhoMoved.getNumWin() + 1);
                     data = new WinEvent(playerWhoMoved, column, currentMatch.getLastPositioned(column));
                 } else {
                     data = new ValidMoveEvent(playerWhoMoved, currentMatch.getCurrentPlayer(), column, currentMatch.getLastPositioned(column));
@@ -145,8 +144,8 @@ public class ConnectFourBackendController {
     }
 
     public void createNewGame() {
-        PlayerModel p1 = new PlayerModel("P1", 0);
-        PlayerModel p2 = new PlayerModel("P2", 0);
+        PlayerModel p1 = new PlayerModel("P1");
+        PlayerModel p2 = new PlayerModel("P2");
 
         currentMatch = new ConnectFourModel(p1, p2);
     }

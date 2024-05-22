@@ -8,14 +8,11 @@ import java.util.Objects;
 
 public final class PlayerModel implements Cloneable {
     @JsonInclude
-    private String name;
-    @JsonInclude
-    private int numWin;
+    private final String name;
 
     @JsonCreator
-    public PlayerModel(@JsonProperty(value = "name") String name, @JsonProperty(value = "numWin") int numWin) {
+    public PlayerModel(@JsonProperty(value = "name") String name) {
         this.name = name;
-        this.numWin = numWin;
     }
 
     //getters and setters
@@ -23,17 +20,6 @@ public final class PlayerModel implements Cloneable {
         return name;
     }
 
-    public int getNumWin() {
-        return numWin;
-    }
-
-    public void setName(String name) {
-        this.name = name == null || name.isEmpty() || name.isBlank() ? "not available" : name;
-    }
-
-    public void setNumWin(int numWin) {
-        this.numWin = Math.max(0, numWin);
-    }
 
     @Override
     public Object clone() {
@@ -48,8 +34,7 @@ public final class PlayerModel implements Cloneable {
     //solo per test
     @Override
     public String toString() {
-        return "name: " + name +
-                ", win: " + numWin;
+        return "name: " + name;
     }
 
     //todo: considerare un modo per rendere univoco ogni player
@@ -57,12 +42,11 @@ public final class PlayerModel implements Cloneable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof PlayerModel player)) return false;
-        return getNumWin() == player.getNumWin() &&
-                Objects.equals(getName(), player.getName());
+        return Objects.equals(getName(), player.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName(), getNumWin());
+        return Objects.hash(getName());
     }
 }

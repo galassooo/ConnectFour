@@ -58,6 +58,7 @@ public class PreferencesController {
     }
 
     public void managePreferences(){
+        stage.setResizable(false);
         stage.show();
     }
 }

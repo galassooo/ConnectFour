@@ -2,7 +2,7 @@ package ch.supsi.connectfour.backend.application.event;
 
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
 
-//record per salvare i dati relativi alla mossa effettuata da un giocatore
+
 public abstract class MoveEvent extends GameEvent {
     private final PlayerModel player;
     private final PlayerModel playerToPlay;

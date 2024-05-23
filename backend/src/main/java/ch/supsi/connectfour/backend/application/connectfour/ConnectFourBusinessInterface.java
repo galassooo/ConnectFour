@@ -1,18 +1,29 @@
 package ch.supsi.connectfour.backend.application.connectfour;
 
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
-import org.jetbrains.annotations.Nullable;
+
+import java.io.File;
 
 public interface ConnectFourBusinessInterface {
+    int getLastPositioned(int column);
+    ConnectFourBusinessInterface getSave(final File file);
+    String getSaveName();
+
     void switchCurrentPlayer();
     void insert(int column);
-    boolean checkWin();
-    boolean canInsert(int column);
-    int getLastPositioned(int column);
-    PlayerModel getCurrentPlayer();
-    boolean isFinished();
     void setFinished(boolean finished);
-    boolean isDraw();
+    /* Getter methods */
+    PlayerModel[][] getGameMatrix();
+    PlayerModel getCurrentPlayer();
     PlayerModel getPlayer1();
     PlayerModel getPlayer2();
+
+    boolean isDraw();
+    boolean checkWin();
+    boolean canInsert(int column);
+    boolean isFinished();
+    boolean isLastMoveValid();
+    boolean persist(final File outputDirectory, final String saveName);
+    boolean persist();
+    boolean wasSavedAs();
 }

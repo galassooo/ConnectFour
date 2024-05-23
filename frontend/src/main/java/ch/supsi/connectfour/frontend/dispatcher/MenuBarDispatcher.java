@@ -2,33 +2,36 @@ package ch.supsi.connectfour.frontend.dispatcher;
 
 import ch.supsi.connectfour.frontend.MainFx;
 import ch.supsi.connectfour.frontend.controller.AboutController;
-import ch.supsi.connectfour.frontend.controller.GameController;
+import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
 import ch.supsi.connectfour.frontend.controller.HelpController;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.MenuItem;
 
 public class MenuBarDispatcher {
-    private final GameController gameController = GameController.getInstance();
-
+    private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
     private final AboutController aboutController = AboutController.getInstance();
 
     private final HelpController helpController = HelpController.getInstance();
+    // TODO: decide how to handle this
+    @FXML
+    public MenuItem saveMenuItem;
+
+
     public void newGame(ActionEvent actionEvent) {
-        gameController.newGame();
+        connectFourFrontendController.manageNew();
     }
 
     public void openGame(ActionEvent actionEvent) {
-        // decode this event
-        // delegate it to a suitable controller
+        connectFourFrontendController.manageOpen();
     }
 
     public void saveGame(ActionEvent actionEvent) {
-        // decode this event
-        // delegate it to a suitable controller
+        connectFourFrontendController.manageSave();
     }
 
     public void saveGameAs(ActionEvent actionEvent) {
-        // decode this event
-        // delegate it to a suitable controller
+        connectFourFrontendController.manageSaveAs();
     }
 
     public void quit(ActionEvent actionEvent) {

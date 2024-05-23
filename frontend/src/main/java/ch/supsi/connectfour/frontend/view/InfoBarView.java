@@ -5,7 +5,8 @@ import javafx.scene.control.Label;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-public class InfoBarView {
+public class InfoBarView implements Viewable {
+    private static String DEFAULT_MESSAGE = "Welcome to Connect4";
 
     @FXML
     private TextFlow textLabel;
@@ -19,8 +20,10 @@ public class InfoBarView {
         Text textNode = new Text(text);
         textLabel.getChildren().add(textNode);
     }
-    public void clear(){
+
+    @Override
+    public void clear() {
         textLabel.getChildren().clear();
-        textLabel.getChildren().add(new Text("")); //setto il text a testo vuoto per evitare spostamento dei componenti
+        textLabel.getChildren().add(new Text(DEFAULT_MESSAGE)); //setto il text a testo vuoto per evitare spostamento dei componenti
     }
 }

@@ -1,7 +1,7 @@
 package ch.supsi.connectfour.frontend;
 
 
-import ch.supsi.connectfour.frontend.controller.GameController;
+import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher;
 import ch.supsi.connectfour.frontend.view.BoardView;
@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -20,13 +21,14 @@ import java.net.URL;
 
 public class MainFx extends Application {
 
-    public static final String APP_TITLE = "connectfour";
+    public static final String APP_TITLE = "ConnectFour";
+    public static Stage stage;
 
     private MenuBarDispatcher menuBarDispatcher;
     private ColumnsSelectorDispatcher columnsSelectorDispatcher;
     private BoardView boardView;
     private InfoBarView infoBarView;
-    private GameController gameController = GameController.getInstance();
+    private ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
     private static MainFx instance;
 
     //singleton
@@ -98,6 +100,7 @@ public class MainFx extends Application {
             FXMLLoader boardLoader = new FXMLLoader(fxmlUrl);
             board = boardLoader.load();
             this.boardView = boardLoader.getController();
+            connectFourFrontendController.setBoardView(boardView);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -115,6 +118,7 @@ public class MainFx extends Application {
             FXMLLoader infoBarLoader = new FXMLLoader(fxmlUrl);
             infoBar = infoBarLoader.load();
             this.infoBarView = infoBarLoader.getController();
+            connectFourFrontendController.setInfoBarView(infoBarView);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -138,8 +142,12 @@ public class MainFx extends Application {
         // PRIMARY STAGE
         primaryStage.setTitle(MainFx.APP_TITLE);
         primaryStage.setScene(scene);
+        primaryStage.getIcons().add(new Image(getClass().getResourceAsStream("/images/about/board.png")));
+
         primaryStage.show();
-        gameController.build(this.boardView, this.infoBarView, this.columnsSelectorDispatcher);
+
+        stage = primaryStage;
+        connectFourFrontendController.build(this.boardView, this.infoBarView, this.menuBarDispatcher.saveMenuItem);
     }
 
     @Override

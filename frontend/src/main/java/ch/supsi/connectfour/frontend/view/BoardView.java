@@ -7,17 +7,15 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
-import java.net.URL;
-
-public class BoardView {
+public class BoardView implements Viewable {
     @FXML
     private GridPane gridPaneSymbols;
     @FXML
     private GridPane gridPaneColor;
-
-    @FXML
-    private ImageView boardLayer;
 
     @FXML
     public void initialize(){
@@ -68,8 +66,8 @@ public class BoardView {
         for (javafx.scene.Node node : gridPaneSymbols.getChildren()) {
             if (node instanceof AnchorPane anchorPane) {
                 for (javafx.scene.Node child : anchorPane.getChildren()) {
-                    if (child instanceof ImageView) {
-                        ((ImageView) child).setImage(image);
+                    if (child instanceof Label) {
+                        ((Label) child).setText("");
                     }
                 }
             }

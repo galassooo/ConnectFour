@@ -1,6 +1,6 @@
 package ch.supsi.connectfour.frontend.dispatcher;
 
-import ch.supsi.connectfour.frontend.controller.GameController;
+import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -36,9 +36,10 @@ public class ColumnsSelectorDispatcher {
         }
     }
 
+    private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
     public void playerMove(ActionEvent actionEvent) {
         if(actionEvent.getSource() instanceof Button button){
-            gameController.manageColumnSelection(Integer.parseInt(button.getId()));
+            connectFourFrontendController.manageColumnSelection(Integer.parseInt(button.getId()));
         }
     }
 

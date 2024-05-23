@@ -17,14 +17,13 @@ public interface ConnectFourBusinessInterface {
     PlayerModel getCurrentPlayer();
     PlayerModel getPlayer1();
     PlayerModel getPlayer2();
-    int[] getLastPositionOccupied();
 
     boolean isDraw();
     boolean checkWin();
     boolean canInsert(int column);
     boolean isFinished();
+    boolean isLastMoveValid();
     boolean persist(final File outputDirectory, final String saveName);
     boolean persist();
     boolean wasSavedAs();
-    boolean isLastMoveValid();
 }

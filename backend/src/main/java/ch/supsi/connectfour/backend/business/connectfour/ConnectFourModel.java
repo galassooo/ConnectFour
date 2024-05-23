@@ -159,7 +159,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
 
     @JsonIgnore
     @Override
-    public String getSaveName() {
+    public @NotNull String getSaveName() {
         return this.pathToSave.getFileName().toString();
     }
 

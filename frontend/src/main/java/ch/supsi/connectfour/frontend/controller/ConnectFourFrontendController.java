@@ -8,11 +8,9 @@ import ch.supsi.connectfour.backend.application.translations.TranslationsBusines
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import ch.supsi.connectfour.frontend.MainFx;
-import ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher;
 import ch.supsi.connectfour.frontend.view.BoardView;
 import ch.supsi.connectfour.frontend.view.InfoBarView;
 import ch.supsi.connectfour.frontend.view.SerializationView;
-import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import org.jetbrains.annotations.NotNull;
@@ -106,7 +104,11 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
     public void manageSave() {
-        this.backendController.persist();
+        if (this.backendController.persist()) {
+            this.serializationView.showMessage(translations.translate("label.correctly_saved"), null, Alert.AlertType.INFORMATION);
+        } else {
+            this.serializationView.showMessage(translations.translate("label.not_correctly_saved"), null, Alert.AlertType.ERROR);
+        }
     }
 
     private void updateTitle(final @NotNull String gameName) {
@@ -165,7 +167,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
      * @param newMatrix the matrix representing the board
      */
     private void updateBoard(final PlayerModel[][] newMatrix) {
-        for (int column = newMatrix[0].length - 1 ; column >= 0; column--) {
+        for (int column = newMatrix[0].length - 1; column >= 0; column--) {
             for (int row = newMatrix.length - 1; row >= 0; row--) {
                 // As soon as it finds a null cell, it knows there can't be any more tokens so it skips to the next
                 if (newMatrix[row][column] == null) {

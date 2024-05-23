@@ -127,20 +127,15 @@ public class ConnectFourBackendController {
          * - Player tried to move but game is finished
          * - Player tried to move but the move isn't valid
          */
-
         final PlayerModel player1 = currentMatch.getPlayer1();
         final PlayerModel player2 = currentMatch.getPlayer2();
         final PlayerModel currentPlayer = currentMatch.getCurrentPlayer();
 
         if (currentMatch.isLastMoveValid() && !currentMatch.isFinished()) {
-            return String.format("%s  %s %s %s",
-                    (currentPlayer.equals(player2) ? player1.getName() : player2.getName()),
-                    translations.translate("label.player_moved"),
-                    currentPlayer.getName(),
-                    translations.translate("label.player_turn"));
+            return String.format(translations.translate("label.player_moved"), (currentPlayer.equals(player2) ? player1.getName() : player2.getName()), currentPlayer.getName());
         } else if (currentMatch.isLastMoveValid()) {
             // If we are here then the game must be finished
-            return String.format("%s %s", currentPlayer.getName(), translations.translate("label.player_won"));
+            return String.format(translations.translate("label.player_won"), currentPlayer.getName());
         } else if (currentMatch.isFinished()) {
             // If we are here then the last move wasn't valid
             return translations.translate("label.game_finished");

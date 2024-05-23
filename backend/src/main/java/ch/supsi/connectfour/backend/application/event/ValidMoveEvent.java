@@ -10,7 +10,9 @@ public class ValidMoveEvent extends MoveEvent {
     private final PlayerModel playerToPlay;
 
     public ValidMoveEvent(PlayerModel player, PlayerModel playerToPlay, int column, int row) {
-        super(player.getName() + " " + getTranslator().translate("label.player_moved") + playerToPlay.getName(), player.getName() + " successfully inserted a pawn to cell " + row + "-" + column, player);
+        super(String.format(getTranslator().translate("label.player_moved"), player.getName(), playerToPlay.getName()),
+                String.format(getTranslator().translate("label.player_moved_successfully"), player.getName(), row, column)
+                , player);
         this.playerToPlay = playerToPlay;
         this.column = column;
         this.row = row;

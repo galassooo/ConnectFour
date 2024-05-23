@@ -30,9 +30,9 @@ public class AboutView {
     private ImageView imageView;
 
     @FXML
-    void initialize(){
+    void initialize() {
         URL imageUrl = getClass().getResource("/images/about/board.png");
-        if(imageUrl == null){
+        if (imageUrl == null) {
             System.err.println("Error while loading board image");
             return;
         }
@@ -62,9 +62,10 @@ public class AboutView {
 
     /**
      * set the action of the 'close button'
+     *
      * @param eventConsumer the action to be performed on press
      */
-    public void setOnActButton(Consumer<ActionEvent> eventConsumer){
+    public void setOnActButton(Consumer<ActionEvent> eventConsumer) {
         button.setOnAction(eventConsumer::accept);
     }
 }

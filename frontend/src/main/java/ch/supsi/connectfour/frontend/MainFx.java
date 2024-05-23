@@ -101,7 +101,6 @@ public class MainFx extends Application {
             FXMLLoader boardLoader = new FXMLLoader(fxmlUrl);
             board = boardLoader.load();
             this.boardView = boardLoader.getController();
-            connectFourFrontendController.setBoardView(boardView);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -119,7 +118,6 @@ public class MainFx extends Application {
             FXMLLoader infoBarLoader = new FXMLLoader(fxmlUrl);
             infoBar = infoBarLoader.load();
             this.infoBarView = infoBarLoader.getController();
-            connectFourFrontendController.setInfoBarView(infoBarView);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -148,7 +146,7 @@ public class MainFx extends Application {
         primaryStage.show();
 
         stage = primaryStage;
-        connectFourFrontendController.build(this.boardView, this.infoBarView, this.menuBarDispatcher.saveMenuItem, this.columnsSelectorDispatcher);
+        connectFourFrontendController.build(this.menuBarDispatcher.saveMenuItem, this.columnsSelectorDispatcher, this.boardView, this.infoBarView);
     }
 
     @Override

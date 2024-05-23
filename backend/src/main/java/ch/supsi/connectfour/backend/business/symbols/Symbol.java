@@ -9,7 +9,8 @@ public enum Symbol {
     SQUARE(Symbol.class.getResource("/images/symbols/square.PNG"));
 
     final URL resource;
-    Symbol(URL resourceURL){
+
+    Symbol(URL resourceURL) {
         resource = resourceURL;
     }
 

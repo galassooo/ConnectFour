@@ -15,16 +15,18 @@ public class ColumnsSelectorDispatcher {
     private GridPane pane;
 
     private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
+
     @FXML
-    void initialize(){
+    void initialize() {
         disableButtons(true);
     }
 
     /**
      * Set all buttons on disabled/enabled
+     *
      * @param disable true for disabling buttons or false to enable them
      */
-    public void disableButtons(boolean disable){
+    public void disableButtons(boolean disable) {
         for (javafx.scene.Node node : pane.getChildren()) {
             if (node instanceof AnchorPane anchorPane) {
                 for (javafx.scene.Node child : anchorPane.getChildren()) {
@@ -35,8 +37,9 @@ public class ColumnsSelectorDispatcher {
             }
         }
     }
+
     public void playerMove(ActionEvent actionEvent) {
-        if(actionEvent.getSource() instanceof Button button){
+        if (actionEvent.getSource() instanceof Button button) {
             connectFourFrontendController.manageColumnSelection(Integer.parseInt(button.getId()));
         }
     }

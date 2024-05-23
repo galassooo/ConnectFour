@@ -19,7 +19,6 @@ public class AboutController {
     private final Stage stage = new Stage();
 
     /**
-     *
      * @return the istance of this class
      */
     public static AboutController getInstance() {
@@ -36,7 +35,7 @@ public class AboutController {
         3) concettualmente ci sta che il controller si occupi inizializzare la view,
            è come il controller della partita che crea la partita eccetera
      */
-    private AboutController(){
+    private AboutController() {
         try {
             URL fxmlUrl = getClass().getResource("/about.fxml");
             if (fxmlUrl == null) {
@@ -58,7 +57,7 @@ public class AboutController {
     /**
      * Shows the popup
      */
-    public void showAboutPopUp(){
+    public void showAboutPopUp() {
         aboutView.setOnActButton((e) -> stage.close());
         aboutView.setPoweredByLabel(translations.translate("label.powered_by"));
         aboutView.setButtonText(translations.translate("label.close"));

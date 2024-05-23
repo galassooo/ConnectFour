@@ -20,7 +20,7 @@ public final class PlayerModel implements Cloneable {
     }
 
 
-    public PlayerModel(String name, String preferenceColor, Symbol symbol){
+    public PlayerModel(String name, String preferenceColor, Symbol symbol) {
         setName(name);
         this.preferenceColor = preferenceColor;
         this.symbol = symbol;
@@ -51,9 +51,9 @@ public final class PlayerModel implements Cloneable {
     @Override
     public Object clone() {
         try {
-             PlayerModel cloned = (PlayerModel) super.clone();
-             cloned.symbol = this.symbol;
-             return cloned;
+            PlayerModel cloned = (PlayerModel) super.clone();
+            cloned.symbol = this.symbol;
+            return cloned;
         } catch (CloneNotSupportedException e) {
             System.err.println("Clone function is not supported in a Player's superclass");
         }

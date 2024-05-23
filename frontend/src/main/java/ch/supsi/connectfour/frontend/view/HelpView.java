@@ -36,24 +36,25 @@ public class HelpView {
         HowToPlayLabel.setText(content);
     }
 
-    public void setCloseButtonText(String text){
+    public void setCloseButtonText(String text) {
         closeButton.setText(text);
     }
-    public void setCloseButtonAction(@NotNull Consumer<ActionEvent> eventConsumer){
+
+    public void setCloseButtonAction(@NotNull Consumer<ActionEvent> eventConsumer) {
         closeButton.setOnAction(eventConsumer::accept);
     }
 
-    public void setNextButtonAction(@NotNull Consumer<ActionEvent> eventConsumer){
+    public void setNextButtonAction(@NotNull Consumer<ActionEvent> eventConsumer) {
         nextButton.setOnAction(eventConsumer::accept);
     }
 
-    public void setNextButtonLabel(String label){
+    public void setNextButtonLabel(String label) {
         nextButton.setText(label);
     }
 
-    public void loadImage(String path){
+    public void loadImage(String path) {
         URL imageUrl = getClass().getResource(path);
-        if(imageUrl == null){
+        if (imageUrl == null) {
             System.err.println("Error while loading board image");
             return;
         }

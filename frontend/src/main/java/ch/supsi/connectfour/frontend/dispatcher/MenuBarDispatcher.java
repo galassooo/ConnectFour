@@ -13,23 +13,20 @@ public class MenuBarDispatcher {
     private final AboutController aboutController = AboutController.getInstance();
 
     private final HelpController helpController = HelpController.getInstance();
-    public void newGame(ActionEvent actionEvent) {
-        connectFourFrontendController.newGame();
-
     // TODO: decide how to handle this
     @FXML
     public MenuItem saveMenuItem;
 
 
-    public void newGame() {
+    public void newGame(ActionEvent actionEvent) {
         connectFourFrontendController.manageNew();
     }
 
-    public void openGame() {
+    public void openGame(ActionEvent actionEvent) {
         connectFourFrontendController.manageOpen();
     }
 
-    public void saveGame() {
+    public void saveGame(ActionEvent actionEvent) {
         connectFourFrontendController.manageSave();
     }
 

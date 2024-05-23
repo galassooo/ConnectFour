@@ -95,6 +95,7 @@ public class ConnectFourBackendController {
         return currentMatch.persist();
     }
 
+    // TODO: remove
     public boolean wasCurrentGameSavedAs() {
         return currentMatch.wasSavedAs();
     }
@@ -119,6 +120,7 @@ public class ConnectFourBackendController {
      *
      * @return a String representing the message
      */
+    // TODO: REMOVE THIS METHOD
     public String getMessageToDisplay() {
         /*
          * Four possible cases:

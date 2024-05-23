@@ -4,14 +4,10 @@ import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBackendCo
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
 import ch.supsi.connectfour.backend.application.event.*;
-import ch.supsi.connectfour.backend.application.translations.TranslationsBusinessInterface;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
-import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import ch.supsi.connectfour.frontend.MainFx;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
-import ch.supsi.connectfour.frontend.view.BoardView;
-import ch.supsi.connectfour.frontend.view.InfoBarView;
 import ch.supsi.connectfour.frontend.view.SerializationView;
 import ch.supsi.connectfour.frontend.view.Viewable;
 import javafx.scene.control.Alert;
@@ -61,14 +57,9 @@ public class ConnectFourFrontendController implements GameEventHandler {
      * @param column colonna nel quale il giocatore intende inserire la pedina
      */
     public void manageColumnSelection(int column) {
-        // What information does this controller need?
-        // - Wether or not the player moved successfully
-        // - What message it should display
         GameEvent data = backendController.playerMove(column);
 
         data.handle(this);
-        //System.out.println(backendController.getCurrentMatch());
-
     }
 
     /**

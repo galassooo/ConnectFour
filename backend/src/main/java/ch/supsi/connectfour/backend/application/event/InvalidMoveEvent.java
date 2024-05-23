@@ -8,7 +8,7 @@ public class InvalidMoveEvent extends MoveEvent {
     private final int column;
 
     public InvalidMoveEvent(PlayerModel player, int column) {
-        super(getTranslator().translate("label.label.invalid_move"),
+        super(getTranslator().translate("label.invalid_move"),
                 String.format(getTranslator().translate("label.player_failed_move"), player.getName(), column)
                 , player);
         this.column = column;

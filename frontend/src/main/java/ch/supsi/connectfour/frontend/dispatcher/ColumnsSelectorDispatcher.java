@@ -14,7 +14,7 @@ public class ColumnsSelectorDispatcher {
     @FXML
     private GridPane pane;
 
-    private final GameController gameController = GameController.getInstance();
+    private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
     @FXML
     void initialize(){
         disableButtons(true);
@@ -35,8 +35,6 @@ public class ColumnsSelectorDispatcher {
             }
         }
     }
-
-    private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
     public void playerMove(ActionEvent actionEvent) {
         if(actionEvent.getSource() instanceof Button button){
             connectFourFrontendController.manageColumnSelection(Integer.parseInt(button.getId()));

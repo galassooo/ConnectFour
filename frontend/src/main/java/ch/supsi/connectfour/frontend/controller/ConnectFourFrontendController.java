@@ -8,6 +8,7 @@ import ch.supsi.connectfour.backend.application.translations.TranslationsBusines
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import ch.supsi.connectfour.frontend.MainFx;
+import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.view.BoardView;
 import ch.supsi.connectfour.frontend.view.InfoBarView;
 import ch.supsi.connectfour.frontend.view.SerializationView;
@@ -22,6 +23,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
     private static ConnectFourFrontendController instance;
     private final ConnectFourBackendController backendController = ConnectFourBackendController.getInstance();
 
+    private ColumnsSelectorDispatcher columnsSelectorDispatcher;
     private BoardView boardView;
 
     private InfoBarView infoBarView;
@@ -49,13 +51,14 @@ public class ConnectFourFrontendController implements GameEventHandler {
         this.infoBarView = infoBarView;
     }
 
-    public ConnectFourFrontendController build(BoardView boardView, InfoBarView infoBarView, MenuItem saveMenuItem) {
+    public ConnectFourFrontendController build(BoardView boardView, InfoBarView infoBarView,MenuItem saveMenuItem, ColumnsSelectorDispatcher btnDispatcher) {
         if (infoBarView == null || boardView == null) {
             throw new IllegalArgumentException();
         }
+        this.columnsSelectorDispatcher = btnDispatcher;
         this.boardView = boardView;
-        this.infoBarView = infoBarView;
         saveMenu = saveMenuItem;
+        this.infoBarView = infoBarView;
         return getInstance();
     }
 
@@ -75,7 +78,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
         } else {
             data.handle(this);
         }
-        System.out.println(backendController.getCurrentMatch());
+        //System.out.println(backendController.getCurrentMatch());
 
     }
 
@@ -99,8 +102,16 @@ public class ConnectFourFrontendController implements GameEventHandler {
                 MainFx.stage.setTitle(MainFx.APP_TITLE);
                 // Update the views
                 this.clearViews();
+                newGame();
             }
+        }else {
+            newGame();
         }
+    }
+    public void newGame() {
+        this.clearViews();
+        columnsSelectorDispatcher.disableButtons(false);
+        backendController.createNewGame();
     }
 
     public void manageSave() {
@@ -133,19 +144,21 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
     @Override
     public void handle(WinEvent event) {
-        boardView.setCellText(event.getRow(), event.getColumn(), event.getPlayerWhoWon().getName());
-        infoBarView.setText(String.format("%s %s", event.getPlayerWhoWon().getName(), translations.translate("label.player_won")));
+        boardView.setCellSymbol(event.getRow(), event.getColumn(), event.getPlayer().getSymbol());
+        boardView.setCellBackground(event.getRow(), event.getColumn(), event.getPlayer().getPreferenceColor());
+        infoBarView.setText(event.getPlayerWhoWon().getName() + " won the game!");
     }
 
     @Override
     public void handle(ValidMoveEvent event) {
-        boardView.setCellText(event.getRow(), event.getColumn(), event.getPlayer().getName());
-        infoBarView.setText(String.format("%s %s %s %s", event.getPlayer().getName(), translations.translate("label.player_moved"), event.getPlayerToPlay().getName(), translations.translate("label.player_turn")));
+        boardView.setCellSymbol(event.getRow(), event.getColumn(), event.getPlayer().getSymbol());
+        boardView.setCellBackground(event.getRow(), event.getColumn(), event.getPlayer().getPreferenceColor());
+        infoBarView.setText(event.getPlayer().getName() + " moved, it's " + event.getPlayerToPlay().getName() + "'s turn");
     }
 
     @Override
     public void handle(InvalidMoveEvent event) {
-        infoBarView.setText(translations.translate("label.invalid_move"));
+        infoBarView.setText("You cannot insert your pawn there!, try again");
     }
 
     @Override
@@ -158,7 +171,6 @@ public class ConnectFourFrontendController implements GameEventHandler {
         this.boardView.clear();
         this.infoBarView.clear();
     }
-
     /**
      * Scans the provided matrix column by column and updates the board view as long as it does not encounter any null references.
      * As soon as a row in a given column is null, it means there will not be any more tokens in that row, therefore this method
@@ -173,7 +185,8 @@ public class ConnectFourFrontendController implements GameEventHandler {
                 if (newMatrix[row][column] == null) {
                     break;
                 }
-                this.boardView.setCellText(row, column, newMatrix[row][column].getName());
+                boardView.setCellSymbol(row, column, newMatrix[row][column].getSymbol());
+                boardView.setCellBackground(row, column, newMatrix[row][column].getPreferenceColor());
             }
         }
     }

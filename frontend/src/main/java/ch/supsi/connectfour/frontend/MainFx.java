@@ -147,7 +147,7 @@ public class MainFx extends Application {
         primaryStage.show();
 
         stage = primaryStage;
-        connectFourFrontendController.build(this.boardView, this.infoBarView, this.menuBarDispatcher.saveMenuItem);
+        connectFourFrontendController.build(this.boardView, this.infoBarView, this.menuBarDispatcher.saveMenuItem, this.columnsSelectorDispatcher);
     }
 
     @Override

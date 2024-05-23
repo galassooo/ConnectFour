@@ -28,7 +28,6 @@ public class ConnectFourBackendController {
     }
 
     private ConnectFourBackendController() {
-        createNewGame();
         translations = TranslationsModel.getInstance();
     }
 
@@ -65,6 +64,7 @@ public class ConnectFourBackendController {
     public void createNewGame(){
         PlayerModel p1 = new PlayerModel("P1", "#FFD133", Symbol.SQUARE);
         PlayerModel p2 = new PlayerModel("P2", "#F1A1FC", Symbol.STAR );
+        currentMatch = new ConnectFourModel(p1, p2);
     }
     public ConnectFourBusinessInterface getCurrentMatch() {
         return currentMatch;

@@ -11,11 +11,16 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
+import java.net.URL;
+
 public class BoardView implements Viewable {
     @FXML
     private GridPane gridPaneSymbols;
     @FXML
     private GridPane gridPaneColor;
+
+    @FXML
+    private ImageView boardLayer;
 
     @FXML
     public void initialize(){
@@ -55,7 +60,8 @@ public class BoardView implements Viewable {
         }
     }
 
-    public void clearGrid() {
+    @Override
+    public void clear() {
         URL imageUrl = getClass().getResource("/images/pawns/plain.png");
         if(imageUrl == null){
             System.err.println("Error while loading transparent png image");
@@ -66,8 +72,8 @@ public class BoardView implements Viewable {
         for (javafx.scene.Node node : gridPaneSymbols.getChildren()) {
             if (node instanceof AnchorPane anchorPane) {
                 for (javafx.scene.Node child : anchorPane.getChildren()) {
-                    if (child instanceof Label) {
-                        ((Label) child).setText("");
+                    if (child instanceof ImageView) {
+                        ((ImageView) child).setImage(image);
                     }
                 }
             }

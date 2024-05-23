@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public final class PlayerModel implements Cloneable {
     @JsonInclude
-    private final String name;
+    private String name;
 
     //TODO DA MODIFICARE! SERVIVA PER TESTARE E NON CE ANCORA IL CARICAMENTO DELLE PREFERENZE
     private String preferenceColor;
@@ -17,7 +17,6 @@ public final class PlayerModel implements Cloneable {
 
     public PlayerModel(String name, int numWin) {  //delego il controllo ai setters
         setName(name);
-        setNumWin(numWin);
     }
 
 
@@ -40,15 +39,6 @@ public final class PlayerModel implements Cloneable {
     public void setName(String name) {
         this.name = name == null || name.isEmpty() || name.isBlank() ? "not available" : name;
     }
-
-    public int getNumWin() {
-        return numWin;
-    }
-
-    public void setNumWin(int numWin) {
-        this.numWin =Math.max(0, numWin);
-    }
-
 
     public String getPreferenceColor() {
         return preferenceColor;

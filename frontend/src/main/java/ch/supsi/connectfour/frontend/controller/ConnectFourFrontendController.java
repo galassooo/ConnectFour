@@ -5,6 +5,7 @@ import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessI
 import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
 import ch.supsi.connectfour.backend.application.event.*;
 import ch.supsi.connectfour.backend.application.translations.TranslationsBusinessInterface;
+import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import ch.supsi.connectfour.frontend.MainFx;
@@ -29,7 +30,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
     private InfoBarView infoBarView;
 
     private final SerializationView serializationView = new SerializationView(MainFx.stage);
-    private final TranslationsBusinessInterface translations = TranslationsModel.getInstance();
+    private final TranslationsController translations = TranslationsController.getInstance();
     private static MenuItem saveMenu;
 
 
@@ -146,19 +147,19 @@ public class ConnectFourFrontendController implements GameEventHandler {
     public void handle(WinEvent event) {
         boardView.setCellSymbol(event.getRow(), event.getColumn(), event.getPlayer().getSymbol());
         boardView.setCellBackground(event.getRow(), event.getColumn(), event.getPlayer().getPreferenceColor());
-        infoBarView.setText(event.getPlayerWhoWon().getName() + " won the game!");
+        infoBarView.setText(event.getPlayerWhoWon().getName() + translations.translate("label.player_won"));
     }
 
     @Override
     public void handle(ValidMoveEvent event) {
         boardView.setCellSymbol(event.getRow(), event.getColumn(), event.getPlayer().getSymbol());
         boardView.setCellBackground(event.getRow(), event.getColumn(), event.getPlayer().getPreferenceColor());
-        infoBarView.setText(event.getPlayer().getName() + " moved, it's " + event.getPlayerToPlay().getName() + "'s turn");
+        infoBarView.setText(event.getPlayer().getName() + translations.translate("label.player_moved") + event.getPlayerToPlay().getName() + translations.translate("label.player_turn"));
     }
 
     @Override
     public void handle(InvalidMoveEvent event) {
-        infoBarView.setText("You cannot insert your pawn there!, try again");
+        infoBarView.setText(translations.translate("label.invalid_move"));
     }
 
     @Override

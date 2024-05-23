@@ -1,5 +1,6 @@
 package ch.supsi.connectfour.frontend.controller;
 
+import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.frontend.view.AboutView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,6 +14,7 @@ public class AboutController {
     private AboutView aboutView;
 
     private static AboutController instance;
+    private final static TranslationsController translations = TranslationsController.getInstance();
 
     private final Stage stage = new Stage();
 
@@ -58,6 +60,10 @@ public class AboutController {
      */
     public void showAboutPopUp(){
         aboutView.setOnActButton((e) -> stage.close());
+        aboutView.setPoweredByLabel(translations.translate("label.powered_by"));
+        aboutView.setButtonText(translations.translate("label.close"));
+        aboutView.setBuiltOnLabel(translations.translate("label.built_on"));
+        aboutView.setRuntimeVersionLabel(translations.translate("label.runtime_version"));
         stage.setResizable(false);
         stage.show();
     }

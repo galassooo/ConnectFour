@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
 import java.util.function.Consumer;
@@ -35,11 +36,14 @@ public class HelpView {
         HowToPlayLabel.setText(content);
     }
 
-    public void setCloseButtonAction(Consumer<ActionEvent> eventConsumer){
+    public void setCloseButtonText(String text){
+        closeButton.setText(text);
+    }
+    public void setCloseButtonAction(@NotNull Consumer<ActionEvent> eventConsumer){
         closeButton.setOnAction(eventConsumer::accept);
     }
 
-    public void setNextButtonAction(Consumer<ActionEvent> eventConsumer){
+    public void setNextButtonAction(@NotNull Consumer<ActionEvent> eventConsumer){
         nextButton.setOnAction(eventConsumer::accept);
     }
 

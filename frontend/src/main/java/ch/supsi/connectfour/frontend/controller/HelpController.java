@@ -1,5 +1,6 @@
 package ch.supsi.connectfour.frontend.controller;
 
+import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.frontend.view.HelpView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -15,6 +16,8 @@ public class HelpController {
     private static HelpController instance;
 
     private final Stage stage = new Stage();
+
+    private final TranslationsController translations = TranslationsController.getInstance();
 
     /**
      *
@@ -54,37 +57,39 @@ public class HelpController {
      */
     public void showHelpPopUp(){
         helpView.loadImage("/images/board.png");
-        helpView.setHelpLabel("You can start a match by clicking on the button or selecting new match from menu");
+        helpView.setCloseButtonText(translations.translate("label.close"));
+        helpView.setHowToPlayLabel(translations.translate("label.help_title"));
+        helpView.setHelpLabel(translations.translate("label.help_start"));
         helpView.setCloseButtonAction((e) -> stage.close());
-        helpView.setNextButtonLabel("Next");
+        helpView.setNextButtonLabel(translations.translate("label.next"));
         helpView.setNextButtonAction((e) -> showSecondScreen());
         stage.show();
     }
 
     private void showSecondScreen(){
         helpView.loadImage("/images/board.png");
-        helpView.setHelpLabel("Or you can load an existing match by clicking on Open...");
-        helpView.setNextButtonLabel("Next");
+        helpView.setHelpLabel(translations.translate("label.help_load"));
+        helpView.setNextButtonLabel(translations.translate("label.next"));
         helpView.setNextButtonAction((e) -> showThirdScreen());
     }
 
     private void showThirdScreen(){
         helpView.loadImage("/images/board.png");
-        helpView.setHelpLabel("To save a game click on Save... or on Save as...");
-        helpView.setNextButtonLabel("Next");
+        helpView.setHelpLabel(translations.translate("label.help_save"));
+        helpView.setNextButtonLabel(translations.translate("label.next"));
         helpView.setNextButtonAction((e) -> showFourthScreen());
     }
 
     private void showFourthScreen(){
         helpView.loadImage("/images/board.png");
-        helpView.setHelpLabel("To edit your preferences you can select preference from the edit menu");
-        helpView.setNextButtonLabel("Next");
+        helpView.setHelpLabel(translations.translate("label.help_preferences"));
+        helpView.setNextButtonLabel(translations.translate("label.next"));
         helpView.setNextButtonAction((e) -> showFifthScreen());
     }
     private void showFifthScreen(){
         helpView.loadImage("/images/board.png");
-        helpView.setHelpLabel("You're ready to play!");
-        helpView.setNextButtonLabel("Play!");
+        helpView.setHelpLabel(translations.translate("label.help_finished"));
+        helpView.setNextButtonLabel(translations.translate("label.play"));
         helpView.setNextButtonAction((e) -> stage.close());
     }
 }

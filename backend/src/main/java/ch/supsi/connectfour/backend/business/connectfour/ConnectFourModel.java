@@ -221,13 +221,13 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     @JsonIgnore
     @Override
     public boolean isDraw() {
+        int cnt = 0;
         for (int j : lastPositionOccupied) {
-            int firstFreeCell = GRID_HEIGHT - 1 - j;
-            if (firstFreeCell == GRID_HEIGHT) {
-                return true;
+            if (j == GRID_HEIGHT - 1) {
+                cnt++;
             }
         }
-        return false;
+        return cnt == GRID_LENGTH;
     }
 
     // TODO: consider if it's worth doing... not sure if we are supposed to trust that the controller knows what it is doing or if we should be cautious and make defensive copies / prevent random modifications from the outside

@@ -1,4 +1,4 @@
-package ch.supsi.connectfour.backend.application.connectfour;
+package ch.supsi.connectfour.backend.application.event;
 
 
 public interface GameEventInterface {

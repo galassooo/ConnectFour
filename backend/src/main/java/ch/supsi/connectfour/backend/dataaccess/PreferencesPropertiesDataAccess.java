@@ -16,9 +16,9 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
 
     private static final String userHomeDirectory = System.getProperty("user.home");
 
-    private static final String preferencesDirectory = ".l10ndemo";
+    private static final String preferencesDirectory = ".connectfour";
 
-    private static final String preferencesFile = "preferences.properties";
+    private static final String preferencesFile = "/user-preferences.properties";
 
     public static PreferencesPropertiesDataAccess dao;
 
@@ -120,8 +120,7 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
 
     @Override
     public Properties getPreferences() {
-        return this.loadDefaultPreferences();
-        /*
+
         if (userPreferences != null) {
             return userPreferences;
         }
@@ -136,8 +135,6 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
 
         // return the properties object with the loaded preferences
         return userPreferences;
-
-         */
     }
 
 }

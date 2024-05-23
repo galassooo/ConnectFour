@@ -30,6 +30,9 @@ public class PreferencesController {
         return this.preferencesModel.getPreference(key);
     }
 
+    public void setPreference(String key, String value){
+        preferencesModel.setPreference(key, value);
+    }
 }
 
 

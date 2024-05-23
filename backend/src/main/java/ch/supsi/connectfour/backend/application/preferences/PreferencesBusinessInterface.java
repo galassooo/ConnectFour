@@ -6,5 +6,7 @@ public interface PreferencesBusinessInterface {
 
     Object getPreference(String key);
 
+    void setPreference(String key, String value);
+
 }
 

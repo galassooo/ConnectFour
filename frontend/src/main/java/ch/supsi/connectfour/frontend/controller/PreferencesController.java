@@ -1,5 +1,6 @@
 package ch.supsi.connectfour.frontend.controller;
 
+import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBackendController;
 import ch.supsi.connectfour.frontend.view.PreferencesView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,6 +13,7 @@ public class PreferencesController {
 
     private PreferencesView preferencesView;
     private static PreferencesController instance;
+    private final ch.supsi.connectfour.backend.application.preferences.PreferencesController backendController = ch.supsi.connectfour.backend.application.preferences.PreferencesController.getInstance();
     private final Stage stage = new Stage();
 
     public static PreferencesController getInstance() {
@@ -35,10 +37,20 @@ public class PreferencesController {
             preferencesView.setOnSaveButton((e) -> {
                 // Handle saving preferences
                 String language = preferencesView.getSelectedLanguage();
+                backendController.setPreference("language-tag", language);
+
                 String playerOneColor = preferencesView.getPlayerOneColor();
+                backendController.setPreference("player-one-color", playerOneColor);
+
                 String playerTwoColor = preferencesView.getPlayerTwoColor();
+                backendController.setPreference("player-two-color", playerTwoColor);
+
                 String playerOneShape = preferencesView.getPlayerOneShape();
+                backendController.setPreference("player-one-shape", playerOneShape);
+
                 String playerTwoShape = preferencesView.getPlayerTwoShape();
+                backendController.setPreference("player-two-shape", playerTwoShape);
+
                 System.out.println("Preferences Saved:");
                 System.out.println("Language: " + language);
                 System.out.println("Player 1 Color: " + playerOneColor);

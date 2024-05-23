@@ -139,7 +139,7 @@ public class MainFx extends Application {
         primaryStage.setTitle(MainFx.APP_TITLE);
         primaryStage.setScene(scene);
         primaryStage.show();
-        gameController.build(this.boardView, this.infoBarView);
+        gameController.build(this.boardView, this.infoBarView, this.columnsSelectorDispatcher);
     }
 
     @Override

@@ -3,6 +3,7 @@ package ch.supsi.connectfour.frontend.controller;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBackendController;
 import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
 import ch.supsi.connectfour.backend.application.event.*;
+import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.view.BoardView;
 import ch.supsi.connectfour.frontend.view.InfoBarView;
 
@@ -11,6 +12,8 @@ public class GameController implements GameEventHandler {
 
     private static GameController instance;
     private final ConnectFourBackendController backendController = ConnectFourBackendController.getInstance();
+
+    private ColumnsSelectorDispatcher columnsSelectorDispatcher;
 
     private BoardView boardView;
 
@@ -26,10 +29,11 @@ public class GameController implements GameEventHandler {
     private GameController() {
     }
 
-    public GameController build(BoardView boardView, InfoBarView infoBarView) {
+    public GameController build(BoardView boardView, InfoBarView infoBarView, ColumnsSelectorDispatcher btnDispatcher) {
         if (infoBarView == null || boardView == null) {
             throw new IllegalArgumentException();
         }
+        this.columnsSelectorDispatcher = btnDispatcher;
         this.boardView = boardView;
         this.infoBarView = infoBarView;
         return getInstance();
@@ -73,6 +77,7 @@ public class GameController implements GameEventHandler {
     }
 
     public void newGame() {
+        columnsSelectorDispatcher.disableButtons(false);
         boardView.clearGrid();
         infoBarView.clear();
         backendController.createNewGame();

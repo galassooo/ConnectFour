@@ -32,9 +32,6 @@ public class ConnectFourBackendController {
      * @return un oggetto contenente i dati relativi alla mossa, null se la partita è finita
      */
     public @Nullable GameEvent playerMove(int column) {
-        if (currentMatch == null) {
-            createNewGame();
-        }
         if (!currentMatch.isFinished()) {
             if (currentMatch.canInsert(column)) {
                 currentMatch.insert(column);

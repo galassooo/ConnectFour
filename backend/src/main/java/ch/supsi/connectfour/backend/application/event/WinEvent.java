@@ -8,7 +8,9 @@ public class WinEvent extends ValidMoveEvent {
     private final PlayerModel playerWhoWon;
 
     public WinEvent(PlayerModel playerWhoWon, int column, int row) {
-        super(playerWhoWon.getName() + " won the game", playerWhoWon, column, row);
+        super(playerWhoWon.getName() + " " + getTranslator().translate("label.player_won"),
+                playerWhoWon.getName() + " won the game on " + row + "-" + column,
+                playerWhoWon, column, row);
         this.playerWhoWon = playerWhoWon;
     }
 

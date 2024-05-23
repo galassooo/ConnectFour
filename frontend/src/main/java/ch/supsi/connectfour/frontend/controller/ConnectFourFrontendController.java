@@ -13,11 +13,15 @@ import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.view.BoardView;
 import ch.supsi.connectfour.frontend.view.InfoBarView;
 import ch.supsi.connectfour.frontend.view.SerializationView;
+import ch.supsi.connectfour.frontend.view.Viewable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ConnectFourFrontendController implements GameEventHandler {
 
@@ -25,9 +29,8 @@ public class ConnectFourFrontendController implements GameEventHandler {
     private final ConnectFourBackendController backendController = ConnectFourBackendController.getInstance();
 
     private ColumnsSelectorDispatcher columnsSelectorDispatcher;
-    private BoardView boardView;
 
-    private InfoBarView infoBarView;
+    private final List<Viewable> viewableItems = new ArrayList<>();
 
     private final SerializationView serializationView = new SerializationView(MainFx.stage);
     private final TranslationsController translations = TranslationsController.getInstance();
@@ -44,22 +47,11 @@ public class ConnectFourFrontendController implements GameEventHandler {
     private ConnectFourFrontendController() {
     }
 
-    public void setBoardView(BoardView boardView) {
-        this.boardView = boardView;
-    }
 
-    public void setInfoBarView(InfoBarView infoBarView) {
-        this.infoBarView = infoBarView;
-    }
-
-    public ConnectFourFrontendController build(BoardView boardView, InfoBarView infoBarView,MenuItem saveMenuItem, ColumnsSelectorDispatcher btnDispatcher) {
-        if (infoBarView == null || boardView == null) {
-            throw new IllegalArgumentException();
-        }
+    public ConnectFourFrontendController build(MenuItem saveMenuItem, ColumnsSelectorDispatcher btnDispatcher, Viewable... viewables) {
         this.columnsSelectorDispatcher = btnDispatcher;
-        this.boardView = boardView;
         saveMenu = saveMenuItem;
-        this.infoBarView = infoBarView;
+        viewableItems.addAll(Arrays.stream(viewables).toList());
         return getInstance();
     }
 
@@ -74,11 +66,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
         // - What message it should display
         GameEvent data = backendController.playerMove(column);
 
-        if (data == null) {
-            infoBarView.setText(translations.translate("label.game_finished"));
-        } else {
-            data.handle(this);
-        }
+        data.handle(this);
         //System.out.println(backendController.getCurrentMatch());
 
     }
@@ -105,10 +93,11 @@ public class ConnectFourFrontendController implements GameEventHandler {
                 this.clearViews();
                 newGame();
             }
-        }else {
+        } else {
             newGame();
         }
     }
+
     public void newGame() {
         this.clearViews();
         columnsSelectorDispatcher.disableButtons(false);
@@ -144,34 +133,14 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
     @Override
-    public void handle(WinEvent event) {
-        boardView.setCellSymbol(event.getRow(), event.getColumn(), event.getPlayer().getSymbol());
-        boardView.setCellBackground(event.getRow(), event.getColumn(), event.getPlayer().getPreferenceColor());
-        infoBarView.setText(event.getPlayerWhoWon().getName() + translations.translate("label.player_won"));
-    }
-
-    @Override
-    public void handle(ValidMoveEvent event) {
-        boardView.setCellSymbol(event.getRow(), event.getColumn(), event.getPlayer().getSymbol());
-        boardView.setCellBackground(event.getRow(), event.getColumn(), event.getPlayer().getPreferenceColor());
-        infoBarView.setText(event.getPlayer().getName() + translations.translate("label.player_moved") + event.getPlayerToPlay().getName() + translations.translate("label.player_turn"));
-    }
-
-    @Override
-    public void handle(InvalidMoveEvent event) {
-        infoBarView.setText(translations.translate("label.invalid_move"));
-    }
-
-    @Override
-    public void handle(DrawEvent event) {
-        infoBarView.setText(event.getEventMessage());
+    public void handle(MoveEvent event) {
+        viewableItems.forEach(item -> item.show(event));
     }
 
     private void clearViews() {
-        // TODO: it would be nice if we found a way to just add the views to a List of Viewable and simply do list.forEach(Viewable::clear);
-        this.boardView.clear();
-        this.infoBarView.clear();
+        viewableItems.forEach(Viewable::clear);
     }
+
     /**
      * Scans the provided matrix column by column and updates the board view as long as it does not encounter any null references.
      * As soon as a row in a given column is null, it means there will not be any more tokens in that row, therefore this method
@@ -186,8 +155,8 @@ public class ConnectFourFrontendController implements GameEventHandler {
                 if (newMatrix[row][column] == null) {
                     break;
                 }
-                boardView.setCellSymbol(row, column, newMatrix[row][column].getSymbol());
-                boardView.setCellBackground(row, column, newMatrix[row][column].getPreferenceColor());
+                ValidMoveEvent move = new ValidMoveEvent(newMatrix[row][column], newMatrix[row][column], column, row);
+                viewableItems.forEach(item -> item.show(move));
             }
         }
     }
@@ -204,9 +173,6 @@ public class ConnectFourFrontendController implements GameEventHandler {
                 this.clearViews();
 
                 this.updateBoard(loadedGame.getGameMatrix());
-
-                // TODO: non sono sicuro di questa interazione. Il frontendcontroller puo' agire direttamente sul model? tecnicamente non è un layer sotto
-                this.infoBarView.setText(this.backendController.getMessageToDisplay());
 
                 // Success!
                 this.serializationView.showMessage(translations.translate("label.loading_confirmation"), translations.translate("label.confirm"), Alert.AlertType.INFORMATION);

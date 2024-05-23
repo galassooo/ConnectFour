@@ -7,8 +7,14 @@ public class InvalidMoveEvent extends MoveEvent {
 
     private final int column;
 
-    public InvalidMoveEvent(PlayerModel player, PlayerModel playerToPlay, int column) {
-        super(player.getName() + " failed to move on column " + column, player, playerToPlay);
+    public InvalidMoveEvent(PlayerModel player, int column) {
+        super(getTranslator().translate("label.label.invalid_move"),
+                player.getName() + " failed to move on column " + column, player);
+        this.column = column;
+    }
+
+    protected InvalidMoveEvent(String message, String logMessage, PlayerModel playerModel, int column) {
+        super(message, logMessage, playerModel);
         this.column = column;
     }
 

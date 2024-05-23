@@ -201,7 +201,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
      * this persist method is implemented, aka the fact that passing null values has a specific meaning
      * for the flow of the program (information hiding)
      *
-     * @return  true if the game was saved correctly, false otherwise
+     * @return true if the game was saved correctly, false otherwise
      */
     @Override
     public boolean persist() {
@@ -361,10 +361,12 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     public void setFinished(boolean finished) {
         isFinished = finished;
     }
+
     @JsonGetter
     public int[] getLastPositionOccupied() {
         return Arrays.copyOf(lastPositionOccupied, lastPositionOccupied.length);
     }
+
     /**
      * Getter method for the gameMatrix field
      *
@@ -380,34 +382,42 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     private Path getPathToSave() {
         return pathToSave;
     }
+
     @JsonSetter
     private void setPathToSave(Path pathToSave) {
         this.pathToSave = pathToSave;
     }
+
     @JsonSetter
     private void setLastPositionOccupied(int[] lastPositionOccupied) {
         this.lastPositionOccupied = lastPositionOccupied;
     }
+
     @JsonSetter
     private void setGameMatrix(PlayerModel[][] gameMatrix) {
         this.gameMatrix = gameMatrix;
     }
+
     @JsonSetter
     private void setPlayer1(PlayerModel player1) {
         this.player1 = player1;
     }
+
     @JsonSetter
     private void setPlayer2(PlayerModel player2) {
         this.player2 = player2;
     }
+
     @JsonSetter
     private void setCurrentPlayer(PlayerModel currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
+
     @JsonGetter
     private boolean isWasLastMoveValid() {
         return wasLastMoveValid;
     }
+
     @JsonSetter
     private void setWasLastMoveValid(boolean wasLastMoveValid) {
         this.wasLastMoveValid = wasLastMoveValid;

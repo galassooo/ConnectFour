@@ -37,7 +37,7 @@ public class ConnectFourBackendController {
      * @param column colonna nel quale il giocatore intende inserire la pedina
      * @return un oggetto contenente i dati relativi alla mossa, null se la partita è finita
      */
-    public @Nullable GameEvent playerMove(int column) {
+    public GameEvent playerMove(int column) {
         if (!currentMatch.isFinished()) {
             if (currentMatch.canInsert(column)) {
                 currentMatch.insert(column);
@@ -54,18 +54,19 @@ public class ConnectFourBackendController {
                 return data;
             } else if (currentMatch.isDraw()) {
                 currentMatch.setFinished(true);
-                return new DrawEvent(currentMatch.getPlayer1(), currentMatch.getPlayer2());
+                return new DrawEvent(currentMatch.getPlayer1(), currentMatch.getPlayer2(), column);
             }
-            return new InvalidMoveEvent(currentMatch.getCurrentPlayer(), currentMatch.getCurrentPlayer(), column);
+            return new InvalidMoveEvent(currentMatch.getCurrentPlayer(), column);
         }
-        return null;
+        return new GameFinishedEvent(currentMatch.getCurrentPlayer(), column);
     }
 
-    public void createNewGame(){
+    public void createNewGame() {
         PlayerModel p1 = new PlayerModel("P1", "#FFD133", Symbol.SQUARE);
-        PlayerModel p2 = new PlayerModel("P2", "#F1A1FC", Symbol.STAR );
+        PlayerModel p2 = new PlayerModel("P2", "#F1A1FC", Symbol.STAR);
         currentMatch = new ConnectFourModel(p1, p2);
     }
+
     public ConnectFourBusinessInterface getCurrentMatch() {
         return currentMatch;
     }
@@ -89,6 +90,7 @@ public class ConnectFourBackendController {
     public boolean persist(@Nullable final File outputDirectory, @Nullable final String saveName) {
         return currentMatch.persist(outputDirectory, saveName);
     }
+
     public boolean persist() {
         return currentMatch.persist();
     }

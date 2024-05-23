@@ -1,5 +1,8 @@
 package ch.supsi.connectfour.frontend.view;
 
+import ch.supsi.connectfour.backend.application.event.GameEvent;
+import ch.supsi.connectfour.backend.application.event.MoveEvent;
+import ch.supsi.connectfour.backend.application.event.ValidMoveEvent;
 import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -7,7 +10,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
-import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
@@ -23,18 +25,19 @@ public class BoardView implements Viewable {
     private ImageView boardLayer;
 
     @FXML
-    public void initialize(){
+    public void initialize() {
         gridPaneSymbols.setStyle("-fx-grid-lines-visible: true;");
 
         URL imageUrl = getClass().getResource("/images/board.png");
-        if(imageUrl == null){
+        if (imageUrl == null) {
             System.err.println("Error while loading board image");
             return;
         }
         Image image = new Image(imageUrl.toExternalForm());
         boardLayer.setImage(image);
     }
-    public void setCellSymbol(int row, int column, Symbol symbol) {
+
+    private void setCellSymbol(int row, int column, Symbol symbol) {
         for (javafx.scene.Node node : gridPaneSymbols.getChildren()) {
             if (node instanceof AnchorPane anchorPane && GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
                 for (javafx.scene.Node child : anchorPane.getChildren()) {
@@ -46,7 +49,8 @@ public class BoardView implements Viewable {
             }
         }
     }
-    public void setCellBackground(int row, int column, String colorCode){
+
+    private void setCellBackground(int row, int column, String colorCode) {
         Color color = Color.web(colorCode);
         for (javafx.scene.Node node : gridPaneColor.getChildren()) {
             if (node instanceof AnchorPane anchorPane && GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
@@ -61,9 +65,17 @@ public class BoardView implements Viewable {
     }
 
     @Override
+    public void show(GameEvent event) {
+        if (event instanceof ValidMoveEvent e) {
+            setCellBackground(e.getRow(), e.getColumn(), e.getPlayer().getPreferenceColor());
+            setCellSymbol(e.getRow(), e.getColumn(), e.getPlayer().getSymbol());
+        }
+    }
+
+    @Override
     public void clear() {
         URL imageUrl = getClass().getResource("/images/pawns/plain.png");
-        if(imageUrl == null){
+        if (imageUrl == null) {
             System.err.println("Error while loading transparent png image");
             return;
         }

@@ -1,11 +1,17 @@
 package ch.supsi.connectfour.frontend.dispatcher;
 
 import ch.supsi.connectfour.frontend.MainFx;
+import ch.supsi.connectfour.frontend.controller.AboutController;
 import ch.supsi.connectfour.frontend.controller.GameController;
+import ch.supsi.connectfour.frontend.controller.HelpController;
 import javafx.event.ActionEvent;
 
 public class MenuBarDispatcher {
-    private GameController gameController = GameController.getInstance();
+    private final GameController gameController = GameController.getInstance();
+
+    private final AboutController aboutController = AboutController.getInstance();
+
+    private final HelpController helpController = HelpController.getInstance();
     public void newGame(ActionEvent actionEvent) {
         gameController.newGame();
     }
@@ -33,13 +39,11 @@ public class MenuBarDispatcher {
     }
 
     public void showAbout(ActionEvent actionEvent) {
-        // decode this event
-        // delegate it to a suitable controller
+        aboutController.showAboutPopUp();
     }
 
     public void showHelp(ActionEvent actionEvent) {
-        // decode this event
-        // delegate it to a suitable controller
+        helpController.showHelpPopUp();
     }
 
 }

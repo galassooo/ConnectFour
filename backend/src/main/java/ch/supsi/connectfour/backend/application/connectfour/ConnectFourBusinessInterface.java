@@ -22,8 +22,6 @@ public interface ConnectFourBusinessInterface {
     boolean checkWin();
     boolean canInsert(int column);
     boolean isFinished();
-    boolean isLastMoveValid();
     boolean persist(final File outputDirectory, final String saveName);
     boolean persist();
-    boolean wasSavedAs();
 }

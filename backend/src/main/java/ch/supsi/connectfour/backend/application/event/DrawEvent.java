@@ -10,7 +10,6 @@ public class DrawEvent extends InvalidMoveEvent {
                 String.format(getTranslator().translate("label.player_draw"), player1.getName(), player2.getName()),
                 String.format(getTranslator().translate("label.player_caused_draw"), player1.getName(), col),
                 player1, col);
-
     }
 
     @Override

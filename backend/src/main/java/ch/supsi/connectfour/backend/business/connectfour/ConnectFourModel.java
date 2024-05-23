@@ -117,13 +117,13 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     @Override
     @Contract(pure = true)
     public boolean isDraw() {
+        int cnt = 0;
         for (int j : lastPositionOccupied) {
-            int firstFreeCell = GRID_HEIGHT - 1 - j;
-            if (firstFreeCell == GRID_HEIGHT) {
-                return true;
+            if (j == GRID_HEIGHT - 1) {
+                cnt++;
             }
         }
-        return false;
+        return cnt == GRID_LENGTH;
     }
 
     //getters and setters

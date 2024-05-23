@@ -1,7 +1,6 @@
 package ch.supsi.connectfour.backend.business.player;
 
-import java.net.MalformedURLException;
-import java.net.URL;
+import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import java.util.Objects;
 
 public final class PlayerModel implements Cloneable{
@@ -9,7 +8,8 @@ public final class PlayerModel implements Cloneable{
     private int numWin;
 
     //TODO DA MODIFICARE! SERVIVA PER TESTARE E NON CE ANCORA IL CARICAMENTO DELLE PREFERENZE
-    private URL preferenceUrl;
+    private String preferenceColor;
+    private Symbol symbol;
 
     public PlayerModel(String name, int numWin) {  //delego il controllo ai setters
         setName(name);
@@ -20,9 +20,10 @@ public final class PlayerModel implements Cloneable{
         this.name = name;
     }
 
-    public PlayerModel(String name, URL preferenceUrl){
+    public PlayerModel(String name, String preferenceColor, Symbol symbol){
         setName(name);
-        this.preferenceUrl = preferenceUrl;
+        this.preferenceColor = preferenceColor;
+        this.symbol = symbol;
     }
 
     //getters and setters
@@ -42,27 +43,23 @@ public final class PlayerModel implements Cloneable{
         this.numWin =Math.max(0, numWin);
     }
 
-    public void setPreferenceUrl(URL preferenceUrl) {
-        if(preferenceUrl == null){
-            throw new IllegalArgumentException("Url cannot be null");
-        }
-        this.preferenceUrl = preferenceUrl;
+
+    public String getPreferenceColor() {
+        return preferenceColor;
     }
 
-    public URL getPreferenceUrl() {
-        return preferenceUrl;
+    public Symbol getSymbol() {
+        return symbol;
     }
 
     @Override
     public Object clone(){
         try {
              PlayerModel cloned = (PlayerModel) super.clone();
-             cloned.preferenceUrl = new URL(this.preferenceUrl.toString());
+             cloned.symbol = this.symbol;
              return cloned;
         } catch (CloneNotSupportedException e) {
             System.err.println("Clone function is not supported in a Player's superclass");
-        } catch (MalformedURLException e) {
-            System.err.println("Malformed url");
         }
         return null;
     }

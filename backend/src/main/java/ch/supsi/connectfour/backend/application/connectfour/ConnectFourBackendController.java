@@ -5,6 +5,7 @@ import ch.supsi.connectfour.backend.application.preferences.PreferencesBusinessI
 import ch.supsi.connectfour.backend.application.serialization.SerializationBusinessInterface;
 import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
+import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import org.jetbrains.annotations.Nullable;
 
 import java.net.MalformedURLException;
@@ -57,8 +58,8 @@ public class ConnectFourBackendController {
     }
 
     public void createNewGame(){
-        PlayerModel p1 = new PlayerModel("P1", getClass().getResource("/images/pawns/red.png"));
-        PlayerModel p2 = new PlayerModel("P2", getClass().getResource("/images/pawns/yellow.png"));
+        PlayerModel p1 = new PlayerModel("P1", "#FFD133", Symbol.SQUARE);
+        PlayerModel p2 = new PlayerModel("P2", "#F1A1FC", Symbol.STAR );
 
         currentMatch = new ConnectFourModel(p1, p2);
     }

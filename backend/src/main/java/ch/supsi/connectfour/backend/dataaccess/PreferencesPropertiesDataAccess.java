@@ -137,5 +137,17 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
         return userPreferences;
     }
 
+    @Override
+    public boolean storePreferences(Properties preferences) {
+        try {
+            // create user preferences file (with default preferences)
+            FileOutputStream outputStream = new FileOutputStream(String.valueOf(this.getUserPreferencesFilePath()));
+            preferences.store(outputStream, null);
+            return true;
+        } catch (IOException ignoredForDemoPurposes) {
+            return false;
+        }
+    }
+
 }
 

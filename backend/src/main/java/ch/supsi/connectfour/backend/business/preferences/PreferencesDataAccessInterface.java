@@ -5,5 +5,6 @@ import java.util.Properties;
 public interface PreferencesDataAccessInterface {
 
     Properties getPreferences();
+    boolean storePreferences(Properties preferences);
 
 }

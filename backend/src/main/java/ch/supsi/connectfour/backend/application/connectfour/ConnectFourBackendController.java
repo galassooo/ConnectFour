@@ -72,6 +72,7 @@ public class ConnectFourBackendController {
     }
 
     public void overrideCurrentMatch(@Nullable final ConnectFourBusinessInterface newMatch) {
+        // TODO: actually comment this method...
         // Check comment above for an explanation on why newMatch could ever be null and why
         if (newMatch == null) {
             createNewGame();
@@ -95,11 +96,6 @@ public class ConnectFourBackendController {
         return currentMatch.persist();
     }
 
-    // TODO: remove
-    public boolean wasCurrentGameSavedAs() {
-        return currentMatch.wasSavedAs();
-    }
-
     /**
      * Tries loading the match stored in a file into this controller
      *
@@ -114,39 +110,6 @@ public class ConnectFourBackendController {
         }
         return loadedGame;
     }
-
-    /**
-     * Creates a contextual message depending on the state of the current game.
-     *
-     * @return a String representing the message
-     */
-    // TODO: REMOVE THIS METHOD
-    public String getMessageToDisplay() {
-        /*
-         * Four possible cases:
-         * - Player moved, game isn't finished
-         * - Player moved, they won
-         * - Player tried to move but game is finished
-         * - Player tried to move but the move isn't valid
-         */
-        final PlayerModel player1 = currentMatch.getPlayer1();
-        final PlayerModel player2 = currentMatch.getPlayer2();
-        final PlayerModel currentPlayer = currentMatch.getCurrentPlayer();
-
-        if (currentMatch.isLastMoveValid() && !currentMatch.isFinished()) {
-            return String.format(translations.translate("label.player_moved"), (currentPlayer.equals(player2) ? player1.getName() : player2.getName()), currentPlayer.getName());
-        } else if (currentMatch.isLastMoveValid()) {
-            // If we are here then the game must be finished
-            return String.format(translations.translate("label.player_won"), currentPlayer.getName());
-        } else if (currentMatch.isFinished()) {
-            // If we are here then the last move wasn't valid
-            return translations.translate("label.game_finished");
-        } else {
-            // If we are here then the move wasn't valid AND the game is not finished
-            return translations.translate("label.invalid_move");
-        }
-    }
-
 
     public String getSaveName() {
         return currentMatch.getSaveName();

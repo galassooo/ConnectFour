@@ -208,16 +208,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         return this.persist(null, null);
     }
 
-    /**
-     * Used to get information about wether or not this instance was ever saved as before or not
-     *
-     * @return true if this instance was saved as, false otherwise
-     */
-    @Override
-    public boolean wasSavedAs() {
-        return this.pathToSave != null;
-    }
-
     @JsonIgnore
     @Override
     public boolean isDraw() {
@@ -264,12 +254,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     @Override
     public PlayerModel getPlayer2() {
         return (PlayerModel) player2.clone();
-    }
-
-    @JsonIgnore
-    @Override
-    public boolean isLastMoveValid() {
-        return wasLastMoveValid;
     }
 
     /**

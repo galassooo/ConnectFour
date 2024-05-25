@@ -1,14 +1,15 @@
 package ch.supsi.connectfour.frontend.view;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,9 @@ public class PreferencesView {
     public Label playerTwoColorLabel;
     @FXML
     public Label playerTwoShapeLabel;
+    @FXML
+    public Text preferencesText;
+
     @FXML
     private BorderPane borderPane;
     @FXML
@@ -54,6 +58,28 @@ public class PreferencesView {
         // TODO: not sure if this is worth doing, especially considering that in this context, we will only ever have two players
         playerShapeBoxes.add(playerOneShapeComboBox);
         playerShapeBoxes.add(playerTwoShapeComboBox);
+
+        // TODO: not a fan of this because we are defining logic inside a view, but not sure how to handle this since otherwise I'd need to get access to UI elements from the outside (having references to the needed UI elements in the frontend controller) which is ehhhh
+        // Binds this condition to the save button, enabling or disabling it depending on if the condition is met
+        BooleanBinding saveButtonDisabledBinding = Bindings.createBooleanBinding(() -> {
+                    Object playerOneColor = playerOneColorPicker.getValue();
+                    Object playerTwoColor = playerTwoColorPicker.getValue();
+                    Object playerOneShape = playerOneShapeComboBox.getValue();
+                    Object playerTwoShape = playerTwoShapeComboBox.getValue();
+
+                    // Check for null values before comparing
+                    boolean colorsEqual = (playerOneColor == null && playerTwoColor == null) ||
+                            (playerOneColor != null && playerOneColor.equals(playerTwoColor));
+                    boolean shapesEqual = (playerOneShape == null && playerTwoShape == null) ||
+                            (playerOneShape != null && playerOneShape.equals(playerTwoShape));
+
+                    return colorsEqual && shapesEqual;
+                }, playerOneColorPicker.valueProperty(),
+                playerTwoColorPicker.valueProperty(),
+                playerOneShapeComboBox.valueProperty(),
+                playerTwoShapeComboBox.valueProperty());
+
+        saveButton.disableProperty().bind(saveButtonDisabledBinding);
     }
     public void setSaveButtonLabel(String text) {
         this.saveButton.setText(text);

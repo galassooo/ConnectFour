@@ -1,32 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
-<BorderPane fx:id="borderPane" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.supsi.connectfour.frontend.view.PreferencesView">
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.text.TextFlow?>
+
+<?import javafx.scene.text.Text?>
+<BorderPane fx:id="borderPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="ch.supsi.connectfour.frontend.view.PreferencesView">
     <center>
         <GridPane alignment="CENTER" hgap="10" vgap="10">
             <padding>
-                <Insets top="10" right="10" bottom="10" left="10"/>
+                <Insets bottom="10" left="10" right="10" top="10" />
             </padding>
-            <Label fx:id="boxLanguageLabel" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <ComboBox fx:id="languageComboBox" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+            <Label fx:id="boxLanguageLabel" />
+            <ComboBox fx:id="languageComboBox" GridPane.columnIndex="1" />
 
-            <Label fx:id="playerOneColorLabel" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <ColorPicker fx:id="playerOneColorPicker" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Label fx:id="playerOneColorLabel" GridPane.rowIndex="1" />
+            <ColorPicker fx:id="playerOneColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-            <Label fx:id="playerOneShapeLabel" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-            <ComboBox fx:id="playerOneShapeComboBox" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+            <Label fx:id="playerOneShapeLabel" GridPane.rowIndex="2" />
+            <ComboBox fx:id="playerOneShapeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 
-            <Label fx:id="playerTwoColorLabel" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
-            <ColorPicker fx:id="playerTwoColorPicker" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+            <Label fx:id="playerTwoColorLabel" GridPane.rowIndex="3" />
+            <ColorPicker fx:id="playerTwoColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
 
-            <Label fx:id="playerTwoShapeLabel" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
-            <ComboBox fx:id="playerTwoShapeComboBox" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+            <Label fx:id="playerTwoShapeLabel" GridPane.rowIndex="4" />
+            <ComboBox fx:id="playerTwoShapeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="4" />
 
-            <Button fx:id="saveButton" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
-            <Button fx:id="cancelButton" GridPane.rowIndex="5" GridPane.columnIndex="1"/>
+            <Button fx:id="saveButton" GridPane.rowIndex="5" />
+            <Button fx:id="cancelButton" GridPane.columnIndex="1" GridPane.rowIndex="5" />
         </GridPane>
     </center>
 </BorderPane>

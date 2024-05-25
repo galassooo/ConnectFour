@@ -3,6 +3,8 @@ package ch.supsi.connectfour.frontend.controller;
 import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.frontend.view.PreferencesView;
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -79,6 +81,7 @@ public class PreferencesFrontendController {
         this.preferencesView.setShapes(List.of("C", "O", "R", "T", "I", "!!"));
     }
     void initLabels() {
+        // TODO: not sure if there's a cleaner way to do this :/
         this.preferencesView.setBoxLanguageLabel(this.translationsController.translate("label.language_tag"));
         this.preferencesView.setPlayerOneColorLabel(this.translationsController.translate("label.player_one_color"));
         this.preferencesView.setPlayerOneShapeLabel(this.translationsController.translate("label.player_one_shape"));

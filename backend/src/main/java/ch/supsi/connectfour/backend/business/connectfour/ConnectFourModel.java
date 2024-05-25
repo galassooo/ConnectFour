@@ -1,9 +1,7 @@
 package ch.supsi.connectfour.backend.business.connectfour;
 
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
-import ch.supsi.connectfour.backend.application.translations.TranslationsBusinessInterface;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
-import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import ch.supsi.connectfour.backend.dataaccess.ConnectFourDataAccess;
 import com.fasterxml.jackson.annotation.*;
 import org.jetbrains.annotations.NotNull;
@@ -11,6 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Random;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
@@ -21,6 +20,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         fields for serialization to state as clearly as possible what is serialized and what
         is not
      */
+    // TODO: Does it make sense to implement the singleton pattern for the model????
     @JsonIgnore
     private static ConnectFourBusinessInterface instance;
     @JsonIgnore
@@ -60,18 +60,14 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     // Gives information about wether or not the last move operation was valid or not
     @JsonInclude
     private boolean wasLastMoveValid;
-    @JsonIgnore
-    // TODO: REMOVE THESE FROM HERE! model <-> model
-
-    private final TranslationsBusinessInterface translations;
 
     /*
     This constructor is required in order for the Jackson library to serialize the game. It should not be used elsewhere nor modified.
+    All components that are not serialized must be initialized here.
     */
     @JsonCreator
     private ConnectFourModel() {
         this.dataAccess = ConnectFourDataAccess.getInstance();
-        this.translations = TranslationsModel.getInstance();
     }
 
     @JsonIgnore
@@ -85,7 +81,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         this.gameMatrix = new PlayerModel[GRID_HEIGHT][GRID_LENGTH];
         this.lastPositionOccupied = new int[GRID_LENGTH];
         this.dataAccess = ConnectFourDataAccess.getInstance();
-        this.translations = TranslationsModel.getInstance();
     }
 
     /**
@@ -162,6 +157,12 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         return this.dataAccess.getSave(file);
     }
 
+    @JsonIgnore
+    @Override
+    public @NotNull String getSaveName() {
+        return this.pathToSave.getFileName().toString();
+    }
+
     /**
      * Tries to persist this instance into a file in a directory
      *
@@ -195,6 +196,19 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     }
 
     /**
+     * This method exists only to allow higher-level layers to persist an already saved game without
+     * passing any parameters. The goal of this method is to hide implementation details about how
+     * this persist method is implemented, aka the fact that passing null values has a specific meaning
+     * for the flow of the program (information hiding)
+     *
+     * @return true if the game was saved correctly, false otherwise
+     */
+    @Override
+    public boolean persist() {
+        return this.persist(null, null);
+    }
+
+    /**
      * Used to get information about wether or not this instance was ever saved as before or not
      *
      * @return true if this instance was saved as, false otherwise
@@ -204,27 +218,16 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         return this.pathToSave != null;
     }
 
-    /**
-     * Getter method for the gameMatrix field
-     *
-     * @return a deep copy of the original matrix
-     */
-    @Override
-    public PlayerModel[][] getGameMatrix() {
-        return this.getGameMatrixDeepCopy();
-    }
-
     @JsonIgnore
     @Override
     public boolean isDraw() {
+        int cnt = 0;
         for (int j : lastPositionOccupied) {
-            int firstFreeCell = GRID_HEIGHT - 1 - j;
-            if (firstFreeCell == GRID_HEIGHT) {
-                return true;
+            if (j == GRID_HEIGHT - 1) {
+                cnt++;
             }
         }
-        return false;
-
+        return cnt == GRID_LENGTH;
     }
 
     // TODO: consider if it's worth doing... not sure if we are supposed to trust that the controller knows what it is doing or if we should be cautious and make defensive copies / prevent random modifications from the outside
@@ -353,12 +356,70 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         return isFinished;
     }
 
-    public void setCurrentPlayer(final PlayerModel currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
-
+    @JsonSetter
     @JsonIgnore
     public void setFinished(boolean finished) {
         isFinished = finished;
+    }
+
+    @JsonGetter
+    public int[] getLastPositionOccupied() {
+        return Arrays.copyOf(lastPositionOccupied, lastPositionOccupied.length);
+    }
+
+    /**
+     * Getter method for the gameMatrix field
+     *
+     * @return a deep copy of the original matrix
+     */
+    @JsonGetter
+    @Override
+    public PlayerModel[][] getGameMatrix() {
+        return this.getGameMatrixDeepCopy();
+    }
+
+    @JsonGetter
+    private Path getPathToSave() {
+        return pathToSave;
+    }
+
+    @JsonSetter
+    private void setPathToSave(Path pathToSave) {
+        this.pathToSave = pathToSave;
+    }
+
+    @JsonSetter
+    private void setLastPositionOccupied(int[] lastPositionOccupied) {
+        this.lastPositionOccupied = lastPositionOccupied;
+    }
+
+    @JsonSetter
+    private void setGameMatrix(PlayerModel[][] gameMatrix) {
+        this.gameMatrix = gameMatrix;
+    }
+
+    @JsonSetter
+    private void setPlayer1(PlayerModel player1) {
+        this.player1 = player1;
+    }
+
+    @JsonSetter
+    private void setPlayer2(PlayerModel player2) {
+        this.player2 = player2;
+    }
+
+    @JsonSetter
+    private void setCurrentPlayer(PlayerModel currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
+    @JsonGetter
+    private boolean isWasLastMoveValid() {
+        return wasLastMoveValid;
+    }
+
+    @JsonSetter
+    private void setWasLastMoveValid(boolean wasLastMoveValid) {
+        this.wasLastMoveValid = wasLastMoveValid;
     }
 }

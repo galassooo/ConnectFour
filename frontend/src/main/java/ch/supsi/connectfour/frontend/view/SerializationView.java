@@ -1,7 +1,5 @@
 package ch.supsi.connectfour.frontend.view;
 
-import ch.supsi.connectfour.backend.application.translations.TranslationsBusinessInterface;
-import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
@@ -15,13 +13,12 @@ import java.util.Optional;
 public class SerializationView {
     // TODO: probabilmente da sostituire, trovare un modo di passare il primary stage in giro
     private final Stage primaryStage;
-    private TranslationsBusinessInterface translations = TranslationsModel.getInstance();
 
     public SerializationView(Stage primaryStage) {
         this.primaryStage = primaryStage;
     }
 
-    public void showMessage(String message, String title, Alert.AlertType type) {
+    public void showMessage(final String message, final String title, final Alert.AlertType type) {
         Alert alert = new Alert(type);
         alert.initOwner(primaryStage);
         alert.setTitle(title);
@@ -30,32 +27,29 @@ public class SerializationView {
         alert.showAndWait();
     }
 
-    // TODO: LOAD THESE MESSAGES THROUGH TRANSLATIONS
-    public File askForDirectory() {
+    public File askForDirectory(final File initialDirectory, final String title) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
-        directoryChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-        directoryChooser.setTitle(translations.translate("label.chosen_directory"));
+        directoryChooser.setInitialDirectory(initialDirectory);
+        directoryChooser.setTitle(title);
         return directoryChooser.showDialog(primaryStage);
     }
 
-    public File askForFile() {
+    public File askForFile(final String title) {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle(translations.translate("label.select_file_to_load"));
+        fileChooser.setTitle(title);
         return fileChooser.showOpenDialog(primaryStage);
     }
 
-    public boolean showConfirmationDialog(String message) {
+    public boolean showConfirmationDialog(final String message, final String title, final String confirmText, final String cancelText) {
         // Create a confirmation dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        // TODO: handle with translations
-        alert.setTitle(translations.translate("label.confirmation"));
+        alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
 
         // Set OK and Cancel buttons
-        // TODO: handle with translations
-        ButtonType okButton = new ButtonType(translations.translate("label.confirm"));
-        ButtonType cancelButton = new ButtonType(translations.translate("label.cancel"), ButtonType.CANCEL.getButtonData());
+        ButtonType okButton = new ButtonType(confirmText);
+        ButtonType cancelButton = new ButtonType(cancelText, ButtonType.CANCEL.getButtonData());
         alert.getButtonTypes().setAll(okButton, cancelButton);
 
         // Show the confirmation dialog and wait for user input
@@ -65,10 +59,10 @@ public class SerializationView {
         return result.isPresent() && result.get() == okButton;
     }
 
-    public String showInputDialog(String message) {
+    public String showInputDialog(final String message, final String title) {
         // Create a TextInputDialog
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle("Input Dialog");
+        dialog.setTitle(title);
         dialog.setHeaderText(null);
         dialog.setContentText(message);
 

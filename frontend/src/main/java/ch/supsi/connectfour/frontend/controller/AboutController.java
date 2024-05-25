@@ -1,5 +1,6 @@
 package ch.supsi.connectfour.frontend.controller;
 
+import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.frontend.view.AboutView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -13,11 +14,11 @@ public class AboutController {
     private AboutView aboutView;
 
     private static AboutController instance;
+    private final static TranslationsController translations = TranslationsController.getInstance();
 
     private final Stage stage = new Stage();
 
     /**
-     *
      * @return the istance of this class
      */
     public static AboutController getInstance() {
@@ -34,7 +35,7 @@ public class AboutController {
         3) concettualmente ci sta che il controller si occupi inizializzare la view,
            è come il controller della partita che crea la partita eccetera
      */
-    private AboutController(){
+    private AboutController() {
         try {
             URL fxmlUrl = getClass().getResource("/about.fxml");
             if (fxmlUrl == null) {
@@ -56,8 +57,12 @@ public class AboutController {
     /**
      * Shows the popup
      */
-    public void showAboutPopUp(){
+    public void showAboutPopUp() {
         aboutView.setOnActButton((e) -> stage.close());
+        aboutView.setPoweredByLabel(translations.translate("label.powered_by"));
+        aboutView.setButtonText(translations.translate("label.close"));
+        aboutView.setBuiltOnLabel(translations.translate("label.built_on"));
+        aboutView.setRuntimeVersionLabel(translations.translate("label.runtime_version"));
         stage.setResizable(false);
         stage.show();
     }

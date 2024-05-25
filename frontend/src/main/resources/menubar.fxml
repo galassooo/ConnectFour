@@ -6,7 +6,7 @@
         <MenuItem fx:id="newMenuItem" mnemonicParsing="false" onAction="#newGame" text="New"/>
         <MenuItem fx:id="openMenuItem" mnemonicParsing="false" onAction="#openGame" text="Open..."/>
         <SeparatorMenuItem mnemonicParsing="false"/>
-        <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" onAction="#saveGame" text="Save"/>
+        <MenuItem fx:id="saveMenuItem" mnemonicParsing="false" onAction="#saveGame" text="Save" disable="true"/>
         <MenuItem fx:id="saveasMenuItem" mnemonicParsing="false" onAction="#saveGameAs" text="Save as..."/>
         <SeparatorMenuItem mnemonicParsing="false"/>
         <MenuItem fx:id="quitMenuItem" mnemonicParsing="false" onAction="#quit" text="Quit"/>

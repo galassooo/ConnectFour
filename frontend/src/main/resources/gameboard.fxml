@@ -1,286 +1,614 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
 
-<GridPane fx:id="gridPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1" fx:controller="ch.supsi.connectfour.frontend.view.BoardView">
-   <padding><Insets bottom="5" left="11" right="11" top="5" /></padding>
+<StackPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.supsi.connectfour.frontend.view.BoardView">
+    <padding><Insets bottom="5" left="11" right="11" top="5" /></padding>
 
-   <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" />
-      <ColumnConstraints hgrow="SOMETIMES" />
-      <ColumnConstraints hgrow="SOMETIMES" />
-      <ColumnConstraints hgrow="SOMETIMES" />
-      <ColumnConstraints hgrow="SOMETIMES" />
-      <ColumnConstraints hgrow="SOMETIMES" />
-      <ColumnConstraints hgrow="SOMETIMES" />
-   </columnConstraints>
+    <GridPane fx:id="gridPaneColor" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+        <padding><Insets bottom="5" left="11" right="11" top="5" /></padding>
 
-   <rowConstraints>
-      <RowConstraints vgrow="SOMETIMES" />
-      <RowConstraints vgrow="SOMETIMES" />
-      <RowConstraints vgrow="SOMETIMES" />
-      <RowConstraints vgrow="SOMETIMES" />
-      <RowConstraints vgrow="SOMETIMES" />
-      <RowConstraints vgrow="SOMETIMES" />
-   </rowConstraints>
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+        </columnConstraints>
 
-   <children>
-      <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="0">
-         <children>
-            <Label id="cell50" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell50" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+        <rowConstraints>
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+        </rowConstraints>
 
-      <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="0">
-         <children>
-            <Label id="cell51" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell51" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+        <children>
+            <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="0">
-         <children>
-            <Label id="cell52" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell52" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="0">
-         <children>
-            <Label id="cell53" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell53" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="0">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="0">
-         <children>
-            <Label id="cell54" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell54" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="0">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="0">
-         <children>
-            <Label id="cell55" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell55" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="0">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="0">
-         <children>
-            <Label id="cell56" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell56" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="0">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="1">
-         <children>
-            <Label id="cell40" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell40" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="0">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <children>
-            <Label id="cell41" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell41" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="1">
-         <children>
-            <Label id="cell42" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell42" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="1">
-         <children>
-            <Label id="cell43" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell43" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="1">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="1">
-         <children>
-            <Label id="cell44" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell44" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="1">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="1">
-         <children>
-            <Label id="cell45" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell45" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="1">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="1">
-         <children>
-            <Label id="cell46" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell46" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="1">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="2">
-         <children>
-            <Label id="cell30" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell30" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="1">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <children>
-            <Label id="cell31" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell31" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="2">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="2">
-         <children>
-            <Label id="cell32" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell32" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="2">
-         <children>
-            <Label id="cell33" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell33" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="2">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="2">
-         <children>
-            <Label id="cell34" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell34" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="2">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="2">
-         <children>
-            <Label id="cell35" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell35" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="2">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="2">
-         <children>
-            <Label id="cell36" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell36" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="2">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="3">
-         <children>
-            <Label id="cell20" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell20" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="2">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
-         <children>
-            <Label id="cell21" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell21" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="3">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="3">
-         <children>
-            <Label id="cell22" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell22" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="3">
-         <children>
-            <Label id="cell23" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell23" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="3">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="3">
-         <children>
-            <Label id="cell24" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell24" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="3">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="3">
-         <children>
-            <Label id="cell25" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell25" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="3">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="3">
-         <children>
-            <Label id="cell26" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell26" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="3">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="4">
-         <children>
-            <Label id="cell10" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell10" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="3">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
-         <children>
-            <Label id="cell11" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell11" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="4">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="4">
-         <children>
-            <Label id="cell12" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell12" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="4">
-         <children>
-            <Label id="cell13" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell13" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="4">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="4">
-         <children>
-            <Label id="cell14" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell14" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="4">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="4">
-         <children>
-            <Label id="cell15" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell15" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="4">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="4">
-         <children>
-            <Label id="cell16" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell16" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="4">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="5">
-         <children>
-            <Label id="cell00" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell00" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="4">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="5">
-         <children>
-            <Label id="cell01" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell01" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="5">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="5">
-         <children>
-            <Label id="cell02" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell02" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="5">
-         <children>
-            <Label id="cell03" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell03" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="5">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="5">
-         <children>
-            <Label id="cell04" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell04" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="5">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="5">
-         <children>
-            <Label id="cell05" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell05" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="5">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-      <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="5">
-         <children>
-            <Label id="cell06" alignment="CENTER" prefHeight="55.0" prefWidth="55.0" text="cell06" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-         </children>
-      </AnchorPane>
+            <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="5">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
 
-   </children>
-</GridPane>
+            <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="5">
+                <children>
+                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                </children>
+            </AnchorPane>
+
+        </children>
+    </GridPane>
+
+    <GridPane fx:id="gridPaneSymbols" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+        <padding><Insets bottom="5" left="11" right="11" top="5" /></padding>
+
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES" />
+        </columnConstraints>
+
+        <rowConstraints>
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES" />
+        </rowConstraints>
+
+        <children>
+            <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="0">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="0">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="0">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="0">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="0">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="1">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="1">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="1">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="1">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="1">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="2">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="2">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="2">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="2">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="2">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="2">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="3">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="3">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="3">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="3">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="3">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="3">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="4">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="4">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="4">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="4">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="4">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="4">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="5">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="5">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="5">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="5">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="5">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="5">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+            <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="5">
+                <children>
+                    <ImageView fitHeight="55.0" fitWidth="55.0">
+                    </ImageView>
+                </children>
+            </AnchorPane>
+
+        </children>
+    </GridPane>
+    <ImageView fx:id="boardLayer" fitHeight="340.0" fitWidth="400.0">
+    </ImageView>
+</StackPane>

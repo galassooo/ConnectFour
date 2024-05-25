@@ -12,15 +12,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 
 public class MainFx extends Application {
 
-    public static final String APP_TITLE = "connectfour";
+    public static final String APP_TITLE = "ConnectFour";
     public static Stage stage;
 
     private MenuBarDispatcher menuBarDispatcher;
@@ -99,7 +101,6 @@ public class MainFx extends Application {
             FXMLLoader boardLoader = new FXMLLoader(fxmlUrl);
             board = boardLoader.load();
             this.boardView = boardLoader.getController();
-            connectFourFrontendController.setBoardView(boardView);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -117,7 +118,6 @@ public class MainFx extends Application {
             FXMLLoader infoBarLoader = new FXMLLoader(fxmlUrl);
             infoBar = infoBarLoader.load();
             this.infoBarView = infoBarLoader.getController();
-            connectFourFrontendController.setInfoBarView(infoBarView);
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -141,8 +141,12 @@ public class MainFx extends Application {
         // PRIMARY STAGE
         primaryStage.setTitle(MainFx.APP_TITLE);
         primaryStage.setScene(scene);
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/about/board.png"))));
+
         primaryStage.show();
-        connectFourFrontendController.build(this.boardView, this.infoBarView);
+
+        stage = primaryStage;
+        connectFourFrontendController.build(this.menuBarDispatcher.saveMenuItem, this.columnsSelectorDispatcher, this.boardView, this.infoBarView);
     }
 
     @Override

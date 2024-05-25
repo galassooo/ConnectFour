@@ -5,6 +5,7 @@ import ch.supsi.connectfour.backend.application.preferences.PreferencesBusinessI
 import ch.supsi.connectfour.backend.application.translations.TranslationsBusinessInterface;
 import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
+import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,7 +28,6 @@ public class ConnectFourBackendController {
     }
 
     private ConnectFourBackendController() {
-        createNewGame();
         translations = TranslationsModel.getInstance();
     }
 
@@ -37,10 +37,7 @@ public class ConnectFourBackendController {
      * @param column colonna nel quale il giocatore intende inserire la pedina
      * @return un oggetto contenente i dati relativi alla mossa, null se la partita è finita
      */
-    public @Nullable GameEvent playerMove(int column) {
-        if (currentMatch == null) {
-            createNewGame();
-        }
+    public GameEvent playerMove(int column) {
         if (!currentMatch.isFinished()) {
             if (currentMatch.canInsert(column)) {
                 currentMatch.insert(column);
@@ -50,7 +47,6 @@ public class ConnectFourBackendController {
                 currentMatch.switchCurrentPlayer();
                 if (currentMatch.checkWin()) {
                     currentMatch.setFinished(true);
-                    playerWhoMoved.setNumWin(playerWhoMoved.getNumWin() + 1);
                     data = new WinEvent(playerWhoMoved, column, currentMatch.getLastPositioned(column));
                 } else {
                     data = new ValidMoveEvent(playerWhoMoved, currentMatch.getCurrentPlayer(), column, currentMatch.getLastPositioned(column));
@@ -58,11 +54,17 @@ public class ConnectFourBackendController {
                 return data;
             } else if (currentMatch.isDraw()) {
                 currentMatch.setFinished(true);
-                return new DrawEvent(currentMatch.getPlayer1(), currentMatch.getPlayer2());
+                return new DrawEvent(currentMatch.getPlayer1(), currentMatch.getPlayer2(), column);
             }
-            return new InvalidMoveEvent(currentMatch.getCurrentPlayer(), currentMatch.getCurrentPlayer(), column);
+            return new InvalidMoveEvent(currentMatch.getCurrentPlayer(), column);
         }
-        return null;
+        return new GameFinishedEvent(currentMatch.getCurrentPlayer(), column);
+    }
+
+    public void createNewGame() {
+        PlayerModel p1 = new PlayerModel("P1", "#FFD133", Symbol.SQUARE);
+        PlayerModel p2 = new PlayerModel("P2", "#F1A1FC", Symbol.STAR);
+        currentMatch = new ConnectFourModel(p1, p2);
     }
 
     public ConnectFourBusinessInterface getCurrentMatch() {
@@ -89,6 +91,11 @@ public class ConnectFourBackendController {
         return currentMatch.persist(outputDirectory, saveName);
     }
 
+    public boolean persist() {
+        return currentMatch.persist();
+    }
+
+    // TODO: remove
     public boolean wasCurrentGameSavedAs() {
         return currentMatch.wasSavedAs();
     }
@@ -108,6 +115,12 @@ public class ConnectFourBackendController {
         return loadedGame;
     }
 
+    /**
+     * Creates a contextual message depending on the state of the current game.
+     *
+     * @return a String representing the message
+     */
+    // TODO: REMOVE THIS METHOD
     public String getMessageToDisplay() {
         /*
          * Four possible cases:
@@ -116,20 +129,15 @@ public class ConnectFourBackendController {
          * - Player tried to move but game is finished
          * - Player tried to move but the move isn't valid
          */
-
         final PlayerModel player1 = currentMatch.getPlayer1();
         final PlayerModel player2 = currentMatch.getPlayer2();
         final PlayerModel currentPlayer = currentMatch.getCurrentPlayer();
 
         if (currentMatch.isLastMoveValid() && !currentMatch.isFinished()) {
-            return String.format("%s  %s %s %s",
-                    (currentPlayer.equals(player2) ? player1.getName() : player2.getName()),
-                    translations.translate("label.player_moved"),
-                    currentPlayer.getName(),
-                    translations.translate("label.player_turn"));
+            return String.format(translations.translate("label.player_moved"), (currentPlayer.equals(player2) ? player1.getName() : player2.getName()), currentPlayer.getName());
         } else if (currentMatch.isLastMoveValid()) {
             // If we are here then the game must be finished
-            return String.format("%s %s", currentPlayer.getName(), translations.translate("label.player_won"));
+            return String.format(translations.translate("label.player_won"), currentPlayer.getName());
         } else if (currentMatch.isFinished()) {
             // If we are here then the last move wasn't valid
             return translations.translate("label.game_finished");
@@ -139,10 +147,8 @@ public class ConnectFourBackendController {
         }
     }
 
-    public void createNewGame() {
-        PlayerModel p1 = new PlayerModel("P1", 0);
-        PlayerModel p2 = new PlayerModel("P2", 0);
 
-        currentMatch = new ConnectFourModel(p1, p2);
+    public String getSaveName() {
+        return currentMatch.getSaveName();
     }
 }

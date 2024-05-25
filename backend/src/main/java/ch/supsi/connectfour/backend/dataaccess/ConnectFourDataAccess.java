@@ -5,6 +5,7 @@ import ch.supsi.connectfour.backend.business.connectfour.ConnectFourDataAccessIn
 import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -50,7 +51,7 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
         } catch (final IOException e) {
             // TODO: do something clever with this exception
         }
-        final ObjectMapper mapper = new ObjectMapper();
+        final ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
             mapper.writeValue(outputFile, game);
         } catch (IOException e) {

@@ -3,13 +3,13 @@ package ch.supsi.connectfour.frontend.dispatcher;
 import ch.supsi.connectfour.frontend.MainFx;
 import ch.supsi.connectfour.frontend.controller.AboutController;
 import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
-import ch.supsi.connectfour.frontend.controller.PreferencesController;
+import ch.supsi.connectfour.frontend.controller.PreferencesFrontendController;
 import javafx.event.ActionEvent;
 
 public class MenuBarDispatcher {
     private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
     private final AboutController aboutController = AboutController.getInstance();
-    private final PreferencesController preferencesController = PreferencesController.getInstance();
+    private final PreferencesFrontendController preferencesFrontendController = PreferencesFrontendController.getInstance();
 
     public void newGame() {
         connectFourFrontendController.manageNew();
@@ -34,7 +34,7 @@ public class MenuBarDispatcher {
         MainFx.getInstance().stop();
     }
 
-    public void preferences(){ preferencesController.managePreferences(); }
+    public void preferences(){ preferencesFrontendController.managePreferences(); }
 
     public void showAbout(ActionEvent actionEvent) {
         aboutController.showAboutPopUp();

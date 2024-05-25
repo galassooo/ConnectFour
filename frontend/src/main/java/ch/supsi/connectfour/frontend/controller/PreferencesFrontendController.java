@@ -1,5 +1,6 @@
 package ch.supsi.connectfour.frontend.controller;
 
+import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
 import ch.supsi.connectfour.frontend.view.PreferencesView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,21 +9,21 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 
-public class PreferencesController {
+public class PreferencesFrontendController {
 
     private PreferencesView preferencesView;
-    private static PreferencesController instance;
-    private final ch.supsi.connectfour.backend.application.preferences.PreferencesController backendController = ch.supsi.connectfour.backend.application.preferences.PreferencesController.getInstance();
+    private static PreferencesFrontendController instance;
+    private final PreferencesController backendController = ch.supsi.connectfour.backend.application.preferences.PreferencesController.getInstance();
     private final Stage stage = new Stage();
 
-    public static PreferencesController getInstance() {
+    public static PreferencesFrontendController getInstance() {
         if (instance == null) {
-            instance = new PreferencesController();
+            instance = new PreferencesFrontendController();
         }
         return instance;
     }
 
-    private PreferencesController() {
+    private PreferencesFrontendController() {
         try {
             URL fxmlUrl = getClass().getResource("/preferences.fxml");
             if (fxmlUrl == null) {

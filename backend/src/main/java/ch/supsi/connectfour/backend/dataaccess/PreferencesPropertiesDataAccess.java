@@ -138,11 +138,12 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
         // return the properties object with the loaded preferences
         return userPreferences;
     }
-
+    // This method works on a copy of the user preferences to only have an impact on the actual
+    // file in the filesystem and the copy, so that the current settings are not affected until
+    // an application restart
     @Override
     public boolean storePreference(Map.Entry<String, String> preference) {
         // Sets the specified preference
-
         newProperties.setProperty(preference.getKey(), preference.getValue());
         try {
             // Writes the newly edited preferences into the actual file in the filesystem

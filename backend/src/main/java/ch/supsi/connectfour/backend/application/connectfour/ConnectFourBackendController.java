@@ -10,6 +10,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConnectFourBackendController {
     private static ConnectFourBackendController instance;
@@ -60,9 +62,7 @@ public class ConnectFourBackendController {
     }
 
     public void createNewGame() {
-        PlayerModel p1 = new PlayerModel("P1", preferences.getPreference("player-one-color").toString(), Symbol.valueOf(preferences.getPreference("player-one-shape").toString())); // Oppure un cast
-        PlayerModel p2 = new PlayerModel("P2", preferences.getPreference("player-two-color").toString(), Symbol.valueOf(preferences.getPreference("player-two-shape").toString()));
-        currentMatch = new ConnectFourModel(p1, p2);
+        currentMatch = new ConnectFourModel(new PlayerModel("P1", 0), new PlayerModel("P2", 1));
     }
 
     public ConnectFourBusinessInterface getCurrentMatch() {
@@ -95,6 +95,10 @@ public class ConnectFourBackendController {
      * @return the deserialized game if the operation succeeded, null if it failed
      */
     public @Nullable ConnectFourBusinessInterface tryLoadingSave(@NotNull final File file) {
+        // TODO: fix NPE if currentmatch is null
+        if (currentMatch == null)
+            this.createNewGame();
+
         final ConnectFourBusinessInterface loadedGame = currentMatch.getSave(file);
         // Override the current match if a match was successfully loaded & return it, else just return (null)
         if (loadedGame != null) {
@@ -105,5 +109,19 @@ public class ConnectFourBackendController {
 
     public String getSaveName() {
         return currentMatch.getSaveName();
+    }
+
+    public List<String> getPlayerColors() {
+        List<String> colors = new ArrayList<>();
+        colors.add(String.valueOf(preferences.getPreference("player-one-color")));
+        colors.add(String.valueOf(preferences.getPreference("player-two-color")));
+        return colors;
+    }
+
+    public List<Symbol> getPlayerSymbols() {
+        List<Symbol> symbols = new ArrayList<>();
+        symbols.add(Symbol.valueOf(preferences.getPreference("player-one-shape").toString()));
+        symbols.add(Symbol.valueOf(preferences.getPreference("player-two-shape").toString()));
+        return symbols;
     }
 }

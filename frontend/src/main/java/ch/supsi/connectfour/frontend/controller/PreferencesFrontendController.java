@@ -5,12 +5,14 @@ import ch.supsi.connectfour.backend.application.translations.TranslationsControl
 import ch.supsi.connectfour.frontend.view.PreferencesView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.AbstractMap;
 import java.util.List;
+import java.util.Objects;
 
 public class PreferencesFrontendController {
 
@@ -38,6 +40,9 @@ public class PreferencesFrontendController {
             Scene scene = new Scene(loader.load());
             preferencesView = loader.getController();
 
+            this.initViewChoices();
+            this.initLabels();
+
             preferencesView.setOnSaveButton((e) -> {
                 // Handle saving preferences
                 String language = preferencesView.getSelectedLanguage();
@@ -60,17 +65,27 @@ public class PreferencesFrontendController {
 
             preferencesView.setOnCancelButton((e) -> stage.close());
 
-            // TODO: not sure about this interaction. This frontend now depends both on its backend controller and the translations contrller. Not sure if there's better ways to handle this
-            this.preferencesView.setLanguages(this.translationsController.getSupportedLanguages());
-            // TODO: replace with the actual supported shapes, probably will require a minor refactor
-            this.preferencesView.setShapes(List.of("C", "O", "R", "T", "I", "!!"));
-
-
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/preferences/wrench.png"))));
             stage.setScene(scene);
-            stage.setTitle("Preferences");
+            stage.setTitle(this.translationsController.translate("label.preferences"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    void initViewChoices() {
+        // TODO: not sure about this interaction. This frontend now depends both on its backend controller and the translations contrller. Not sure if there's better ways to handle this
+        this.preferencesView.setLanguages(this.translationsController.getSupportedLanguages());
+        // TODO: replace with the actual supported shapes, probably will require a minor refactor
+        this.preferencesView.setShapes(List.of("C", "O", "R", "T", "I", "!!"));
+    }
+    void initLabels() {
+        this.preferencesView.setBoxLanguageLabel(this.translationsController.translate("label.language_tag"));
+        this.preferencesView.setPlayerOneColorLabel(this.translationsController.translate("label.player_one_color"));
+        this.preferencesView.setPlayerOneShapeLabel(this.translationsController.translate("label.player_one_shape"));
+        this.preferencesView.setPlayerTwoColorLabel(this.translationsController.translate("label.player_two_color"));
+        this.preferencesView.setPlayerTwoShapeLabel(this.translationsController.translate("label.player_two_shape"));
+        this.preferencesView.setSaveButtonLabel(this.translationsController.translate("label.save"));
+        this.preferencesView.setCancelButtonLabel(this.translationsController.translate("label.cancel"));
     }
 
     public void managePreferences(){

@@ -4,12 +4,9 @@ import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,6 +78,17 @@ public class PreferencesView {
 
         saveButton.disableProperty().bind(saveButtonDisabledBinding);
     }
+
+    public void initSaveListener(String enableMessage, String disableMessage) {
+        saveButton.disableProperty().addListener((observable, oldValue, newValue) -> {
+            if (oldValue) {
+                this.preferencesText.setText(enableMessage);
+            } else {
+                this.preferencesText.setText(disableMessage);
+            }
+        });
+    }
+
     public void setSaveButtonLabel(String text) {
         this.saveButton.setText(text);
     }

@@ -29,7 +29,7 @@ public class MainFx extends Application {
     private ColumnsSelectorDispatcher columnsSelectorDispatcher;
     private BoardView boardView;
     private InfoBarView infoBarView;
-    private ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
+    private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
     private static MainFx instance;
 
     //singleton

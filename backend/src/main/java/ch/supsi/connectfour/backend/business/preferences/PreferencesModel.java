@@ -4,12 +4,7 @@ package ch.supsi.connectfour.backend.business.preferences;
 import ch.supsi.connectfour.backend.application.preferences.PreferencesBusinessInterface;
 import ch.supsi.connectfour.backend.dataaccess.PreferencesPropertiesDataAccess;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Properties;
 
 public class PreferencesModel implements PreferencesBusinessInterface {
@@ -19,7 +14,6 @@ public class PreferencesModel implements PreferencesBusinessInterface {
     private final PreferencesDataAccessInterface preferencesDao;
 
     private final Properties userPreferences;
-    private static final String PROPERTIES_FILE = "src/main/resources/user-preferences.properties";
 
     protected PreferencesModel() {
         this.preferencesDao = PreferencesPropertiesDataAccess.getInstance();
@@ -53,10 +47,7 @@ public class PreferencesModel implements PreferencesBusinessInterface {
     }
 
     @Override
-    public void setPreference(Map.Entry<String, String> entry) {
-        Properties property = preferencesDao.getPreferences();
-
-        property.setProperty(entry.getKey(), entry.getValue());
-        this.preferencesDao.storePreferences(property);
+    public void setPreference(Map.Entry<String, String> preference) {
+        this.preferencesDao.storePreference(preference);
     }
 }

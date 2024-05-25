@@ -2,9 +2,8 @@ package ch.supsi.connectfour.frontend.controller;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
+import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import ch.supsi.connectfour.frontend.view.PreferencesView;
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -13,8 +12,10 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class PreferencesFrontendController {
 
@@ -44,9 +45,11 @@ public class PreferencesFrontendController {
 
             this.initViewChoices();
             this.initLabels();
+            this.preferencesView.initSaveListener(this.translationsController.translate("label.preferences_please_choose"), this.translationsController.translate("label.preferences_cannot_save") );
 
             preferencesView.setOnSaveButton((e) -> {
                 // Handle saving preferences
+                // todo: handle this in one method call (addALL)
                 String language = preferencesView.getSelectedLanguage();
                 backendController.setPreference(new AbstractMap.SimpleEntry<>("language-tag", language));
 
@@ -75,10 +78,11 @@ public class PreferencesFrontendController {
         }
     }
     void initViewChoices() {
-        // TODO: not sure about this interaction. This frontend now depends both on its backend controller and the translations contrller. Not sure if there's better ways to handle this
+        // TODO: not sure about this interaction. This frontend now depends both on its backend controller AND the translations contrller. Not sure if there's better ways to handle this
         this.preferencesView.setLanguages(this.translationsController.getSupportedLanguages());
-        // TODO: replace with the actual supported shapes, probably will require a minor refactor
-        this.preferencesView.setShapes(List.of("C", "O", "R", "T", "I", "!!"));
+        List<String> validSymbols = Stream.of(Symbol.values()).map(Enum::toString).toList();
+
+        this.preferencesView.setShapes(validSymbols);
     }
     void initLabels() {
         // TODO: not sure if there's a cleaner way to do this :/

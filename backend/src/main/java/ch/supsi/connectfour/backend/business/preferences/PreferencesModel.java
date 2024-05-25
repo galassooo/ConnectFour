@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -52,10 +53,10 @@ public class PreferencesModel implements PreferencesBusinessInterface {
     }
 
     @Override
-    public void setPreference(String key, String value) {
+    public void setPreference(Map.Entry<String, String> entry) {
         Properties property = preferencesDao.getPreferences();
 
-        property.setProperty(key, value);
+        property.setProperty(entry.getKey(), entry.getValue());
         this.preferencesDao.storePreferences(property);
     }
 }

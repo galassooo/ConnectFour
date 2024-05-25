@@ -20,19 +20,19 @@ public class MenuBarDispatcher {
     public MenuItem saveMenuItem;
 
 
-    public void newGame(ActionEvent actionEvent) {
+    public void newGame() {
         connectFourFrontendController.manageNew();
     }
 
-    public void openGame(ActionEvent actionEvent) {
+    public void openGame() {
         connectFourFrontendController.manageOpen();
     }
 
-    public void saveGame(ActionEvent actionEvent) {
+    public void saveGame() {
         connectFourFrontendController.manageSave();
     }
 
-    public void saveGameAs(ActionEvent actionEvent) {
+    public void saveGameAs() {
         connectFourFrontendController.manageSaveAs();
     }
 
@@ -45,11 +45,11 @@ public class MenuBarDispatcher {
 
     public void preferences(){ preferencesFrontendController.managePreferences(); }
 
-    public void showAbout(ActionEvent actionEvent) {
+    public void showAbout() {
         aboutController.showAboutPopUp();
     }
 
-    public void showHelp(ActionEvent actionEvent) {
+    public void showHelp() {
         helpController.showHelpPopUp();
     }
 

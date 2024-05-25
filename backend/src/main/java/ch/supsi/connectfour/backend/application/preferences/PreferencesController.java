@@ -2,6 +2,8 @@ package ch.supsi.connectfour.backend.application.preferences;
 
 import ch.supsi.connectfour.backend.business.preferences.PreferencesModel;
 
+import java.util.Map;
+
 public class PreferencesController {
 
     private static PreferencesController myself;
@@ -30,8 +32,8 @@ public class PreferencesController {
         return this.preferencesModel.getPreference(key);
     }
 
-    public void setPreference(String key, String value){
-        preferencesModel.setPreference(key, value);
+    public void setPreference(Map.Entry<String, String> entry){
+        preferencesModel.setPreference(entry);
     }
 }
 

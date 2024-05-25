@@ -42,6 +42,11 @@ public class TranslationsModel implements TranslationsBusinessInterface {
     }
 
     @Override
+    public List<String> getSupportedLanguages() {
+        return List.copyOf(this.supportedLanguageTags); // Defensive copy
+    }
+
+    @Override
     public boolean changeLanguage(String languageTag) {
         // TODO: modify
         this.translations = translationsDao.getTranslations(Locale.forLanguageTag(languageTag));

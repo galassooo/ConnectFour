@@ -1,6 +1,7 @@
 package ch.supsi.connectfour.frontend.controller;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
+import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.frontend.view.PreferencesView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -8,12 +9,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.AbstractMap;
+import java.util.List;
 
 public class PreferencesFrontendController {
 
     private PreferencesView preferencesView;
     private static PreferencesFrontendController instance;
-    private final PreferencesController backendController = ch.supsi.connectfour.backend.application.preferences.PreferencesController.getInstance();
+    private final PreferencesController backendController = PreferencesController.getInstance();
+    private final TranslationsController translationsController = TranslationsController.getInstance();
     private final Stage stage = new Stage();
 
     public static PreferencesFrontendController getInstance() {
@@ -37,30 +41,30 @@ public class PreferencesFrontendController {
             preferencesView.setOnSaveButton((e) -> {
                 // Handle saving preferences
                 String language = preferencesView.getSelectedLanguage();
-                backendController.setPreference("language-tag", language);
+                backendController.setPreference(new AbstractMap.SimpleEntry<>("language-tag", language));
 
                 String playerOneColor = preferencesView.getPlayerOneColor();
-                backendController.setPreference("player-one-color", playerOneColor);
+                backendController.setPreference(new AbstractMap.SimpleEntry<>("player-one-color", playerOneColor));
 
                 String playerTwoColor = preferencesView.getPlayerTwoColor();
-                backendController.setPreference("player-two-color", playerTwoColor);
+                backendController.setPreference(new AbstractMap.SimpleEntry<>("player-two-color", playerTwoColor));
 
                 String playerOneShape = preferencesView.getPlayerOneShape();
-                backendController.setPreference("player-one-shape", playerOneShape);
+                backendController.setPreference(new AbstractMap.SimpleEntry<>("player-one-shape", playerOneShape));
 
                 String playerTwoShape = preferencesView.getPlayerTwoShape();
-                backendController.setPreference("player-two-shape", playerTwoShape);
+                backendController.setPreference(new AbstractMap.SimpleEntry<>("player-two-shape", playerTwoShape));
 
-                System.out.println("Preferences Saved:");
-                System.out.println("Language: " + language);
-                System.out.println("Player 1 Color: " + playerOneColor);
-                System.out.println("Player 1 Shape: " + playerOneShape);
-                System.out.println("Player 2 Color: " + playerTwoColor);
-                System.out.println("Player 2 Shape: " + playerTwoShape);
                 stage.close();
             });
 
             preferencesView.setOnCancelButton((e) -> stage.close());
+
+            // TODO: not sure about this interaction. This frontend now depends both on its backend controller and the translations contrller. Not sure if there's better ways to handle this
+            this.preferencesView.setLanguages(this.translationsController.getSupportedLanguages());
+            // TODO: replace with the actual supported shapes, probably will require a minor refactor
+            this.preferencesView.setShapes(List.of("C", "O", "R", "T", "I", "!!"));
+
 
             stage.setScene(scene);
             stage.setTitle("Preferences");

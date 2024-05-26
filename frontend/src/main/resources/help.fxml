@@ -29,9 +29,9 @@
       </VBox>
    </center>
    <bottom>
-      <HBox alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="300.0" spacing="20.0" BorderPane.alignment="CENTER">
+      <HBox fx:id="hbox" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="300.0" spacing="20.0" BorderPane.alignment="CENTER">
          <children>
-            <Button fx:id="closeButton" mnemonicParsing="false" text="Close" />
+            <Button fx:id="previousButton" mnemonicParsing="false" text="Close" />
             <Button fx:id="nextButton" mnemonicParsing="false" text="Next" />
          </children>
          <BorderPane.margin>

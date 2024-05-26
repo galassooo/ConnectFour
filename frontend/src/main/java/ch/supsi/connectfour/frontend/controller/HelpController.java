@@ -43,7 +43,6 @@ public class HelpController {
             BorderPane content = aboutLoader.load();
             helpView = aboutLoader.getController();
 
-            helpView.setCloseButtonAction((e) -> stage.close());
 
             Scene scene = new Scene(content);
             stage.setScene(scene);
@@ -61,39 +60,52 @@ public class HelpController {
      * Shows the popup
      */
     public void showHelpPopUp() {
-        helpView.loadImage("/images/board.png");
-        helpView.setCloseButtonText(translations.translate("label.close"));
+        helpView.loadImage("/images/help/new.jpg");
+
         helpView.setHowToPlayLabel(translations.translate("label.help_title"));
         helpView.setHelpLabel(translations.translate("label.help_start"));
-        helpView.setCloseButtonAction((e) -> stage.close());
+        helpView.removePreviousButton();
         helpView.setNextButtonLabel(translations.translate("label.next"));
         helpView.setNextButtonAction((e) -> showSecondScreen());
         stage.show();
     }
 
     private void showSecondScreen() {
-        helpView.loadImage("/images/board.png");
+        helpView.addPreviousButton();
+        helpView.setPreviousButtonAction(e -> showHelpPopUp());
+        helpView.setPreviousButtonText(translations.translate("label.previous"));
+        helpView.loadImage("/images/help/open.jpg");
         helpView.setHelpLabel(translations.translate("label.help_load"));
         helpView.setNextButtonLabel(translations.translate("label.next"));
         helpView.setNextButtonAction((e) -> showThirdScreen());
     }
 
     private void showThirdScreen() {
-        helpView.loadImage("/images/board.png");
-        helpView.setHelpLabel(translations.translate("label.help_save"));
+        helpView.loadImage("/images/help/columns.jpg");
+        helpView.setPreviousButtonAction(e -> showSecondScreen());
+        helpView.setHelpLabel(translations.translate("label.help_column"));
         helpView.setNextButtonLabel(translations.translate("label.next"));
-        helpView.setNextButtonAction((e) -> showFourthScreen());
+        helpView.setNextButtonAction((e) -> showFifthScreen());
     }
 
     private void showFourthScreen() {
-        helpView.loadImage("/images/board.png");
-        helpView.setHelpLabel(translations.translate("label.help_preferences"));
+        helpView.loadImage("/images/help/save.jpg");
+        helpView.setPreviousButtonAction(e -> showThirdScreen());
+        helpView.setHelpLabel(translations.translate("label.help_save"));
         helpView.setNextButtonLabel(translations.translate("label.next"));
         helpView.setNextButtonAction((e) -> showFifthScreen());
     }
 
     private void showFifthScreen() {
-        helpView.loadImage("/images/board.png");
+        helpView.loadImage("/images/help/preferences.jpg");
+        helpView.setPreviousButtonAction(e -> showFourthScreen());
+        helpView.setHelpLabel(translations.translate("label.help_preferences"));
+        helpView.setNextButtonLabel(translations.translate("label.next"));
+        helpView.setNextButtonAction((e) -> showSixthScreen());
+    }
+    private void showSixthScreen() {
+        helpView.loadImage("/images/help/play.jpg");
+        helpView.setPreviousButtonAction(e -> showFifthScreen());
         helpView.setHelpLabel(translations.translate("label.help_finished"));
         helpView.setNextButtonLabel(translations.translate("label.play"));
         helpView.setNextButtonAction((e) -> stage.close());

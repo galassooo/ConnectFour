@@ -1,0 +1,49 @@
+.menu-bar {
+    -fx-background-color: #ced0d0;
+    -fx-border-color: #0063C9;
+    -fx-border-width: 0 0 2 0;
+    -fx-background-radius: 10;
+    -fx-font-size: 15;
+}
+
+.menu {
+    -fx-background-color: #ced0d0;
+    -fx-text-fill: #000;
+}
+
+.context-menu {
+    -fx-background-color: #ced0d0;
+    -fx-padding: 0;
+}
+
+.menu-item {
+    -fx-background-color: #ced0d0;
+    -fx-text-fill: #000;
+    -fx-padding: 10 10 10 10;
+    -fx-background-insets: 0, 10;
+}
+
+.menu-item:focused, .menu-item:hover {
+    -fx-background-color: #919193;
+    -fx-cursor: hand;
+}
+
+.menu-item:disabled {
+    -fx-background-color: #b0b2b3;
+    -fx-opacity: 0.4;
+}
+
+.menu-item.separator {
+    -fx-padding: 0;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #0063C9;
+    -fx-background-color: #ced0d0;
+}
+.menu .label {
+    -fx-text-fill: #000;
+}
+
+.menu:hover .label {
+    -fx-text-fill: #000;
+    /* -fx-cursor: hand;  dal mac non mostra il dito nel menu, non so da windows*/
+}

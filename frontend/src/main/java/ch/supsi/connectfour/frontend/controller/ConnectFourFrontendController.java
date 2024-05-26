@@ -99,6 +99,8 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
     public void newGame() {
+        this.playerColors = this.backendController.getPlayerColors();
+        this.playerSymbols = this.backendController.getPlayerSymbols();
         this.clearViews();
         columnsSelectorDispatcher.disableButtons(false);
         backendController.createNewGame();

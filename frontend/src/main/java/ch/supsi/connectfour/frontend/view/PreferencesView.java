@@ -76,6 +76,7 @@ public class PreferencesView {
                 playerOneShapeComboBox.valueProperty(),
                 playerTwoShapeComboBox.valueProperty());
 
+        preferencesText.setText(" \n ");
         saveButton.disableProperty().bind(saveButtonDisabledBinding);
     }
 

@@ -1,0 +1,19 @@
+.button {
+    -fx-background-color: #0063C9;
+    -fx-text-fill: #FFF;
+    -fx-font-size: 15px;
+    -fx-padding: 2px 2px;
+    -fx-pref-height: 25px;
+    -fx-pref-width: 70px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0, 0, 4);
+}
+.button:hover {
+    -fx-cursor: hand;
+}
+#pane {
+    -fx-background-color: #ced0d0;
+}
+.label{
+    -fx-font-size: 14;
+    -fx-font-family: Helvetica;
+}

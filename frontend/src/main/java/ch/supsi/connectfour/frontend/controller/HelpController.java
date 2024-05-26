@@ -4,11 +4,13 @@ import ch.supsi.connectfour.backend.application.translations.TranslationsControl
 import ch.supsi.connectfour.frontend.view.HelpView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Objects;
 
 public class HelpController {
 
@@ -46,6 +48,9 @@ public class HelpController {
             Scene scene = new Scene(content);
             stage.setScene(scene);
 
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/help/questionMark.png"))));
+            stage.setTitle(translations.translate("label.help"));
+            stage.setResizable(false);
 
         } catch (IOException e) {
             e.printStackTrace();

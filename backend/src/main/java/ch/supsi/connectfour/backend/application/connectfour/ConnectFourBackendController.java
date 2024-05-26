@@ -45,7 +45,7 @@ public class ConnectFourBackendController {
 
                 PlayerModel playerWhoMoved = currentMatch.getCurrentPlayer();
                 currentMatch.switchCurrentPlayer();
-                if (currentMatch.checkWin()) {
+                if (currentMatch.isWin()) {
                     currentMatch.setFinished(true);
                     data = new WinEvent(playerWhoMoved, column, currentMatch.getLastPositioned(column));
                 } else {

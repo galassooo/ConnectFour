@@ -90,7 +90,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
      */
     //TODO trovare approccio migliore della brute force
     @Override
-    public boolean checkWin() {
+    public boolean isWin() {
         // Controlla orizzontali
         boolean won = false;
         for (int row = 0; row < GRID_HEIGHT; row++) {

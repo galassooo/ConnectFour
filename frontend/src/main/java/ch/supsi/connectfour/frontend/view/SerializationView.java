@@ -1,13 +1,17 @@
 package ch.supsi.connectfour.frontend.view;
 
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.Optional;
 
 public class SerializationView {
@@ -24,7 +28,23 @@ public class SerializationView {
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
+
+        loadCssForAlert(alert);
         alert.showAndWait();
+    }
+    private  void loadCssForAlert(@NotNull Alert alert){
+
+        Scene scene = alert.getDialogPane().getScene();
+        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styleSheets/genericScreen.css")).toExternalForm());
+
+        //System.out.println("AAAAAAAAAAA " + Objects.requireNonNull(getClass().getResource("/styleSheets/genericScreen.css")).toExternalForm());
+
+        alert.getDialogPane().getStyleClass().add("custom-alert");
+
+        alert.getDialogPane().getButtonTypes().forEach(buttonType -> {
+            Button button = (Button) alert.getDialogPane().lookupButton(buttonType);
+            button.getStyleClass().add("custom-button");
+        });
     }
 
     public File askForDirectory(final File initialDirectory, final String title) {
@@ -52,6 +72,7 @@ public class SerializationView {
         ButtonType cancelButton = new ButtonType(cancelText, ButtonType.CANCEL.getButtonData());
         alert.getButtonTypes().setAll(okButton, cancelButton);
 
+        loadCssForAlert(alert);
         // Show the confirmation dialog and wait for user input
         Optional<ButtonType> result = alert.showAndWait();
 

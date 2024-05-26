@@ -4,6 +4,7 @@ package ch.supsi.connectfour.backend.business.preferences;
 import ch.supsi.connectfour.backend.application.preferences.PreferencesBusinessInterface;
 import ch.supsi.connectfour.backend.dataaccess.PreferencesPropertiesDataAccess;
 
+import java.util.Map;
 import java.util.Properties;
 
 public class PreferencesModel implements PreferencesBusinessInterface {
@@ -45,4 +46,8 @@ public class PreferencesModel implements PreferencesBusinessInterface {
         return userPreferences.get(key);
     }
 
+    @Override
+    public void setPreference(Map.Entry<String, String> preference) {
+        this.preferencesDao.storePreference(preference);
+    }
 }

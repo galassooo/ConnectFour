@@ -20,9 +20,6 @@ public class TranslationsModel implements TranslationsBusinessInterface {
     protected TranslationsModel() {
         this.translationsDao = TranslationsPropertiesDataAccess.getInstance();
         this.supportedLanguageTags = translationsDao.getSupportedLanguageTags();
-        // TODO: MODIFICARE IL MODO IN CUI VENGONO CARICATE LE TRADUZIONI!!!!!!!!!!!!!!!!!!!!
-        this.translations = this.translationsDao.getTranslations(Locale.forLanguageTag(supportedLanguageTags.get(0)));
-
     }
 
     public static TranslationsModel getInstance() {
@@ -34,11 +31,12 @@ public class TranslationsModel implements TranslationsBusinessInterface {
 
     @Override
     public boolean isSupportedLanguageTag(String languageTag) {
-        if (!this.supportedLanguageTags.contains(languageTag)) {
-            return false;
-        }
+        return this.supportedLanguageTags.contains(languageTag);
+    }
 
-        return true;
+    @Override
+    public List<String> getSupportedLanguages() {
+        return List.copyOf(this.supportedLanguageTags); // Defensive copy
     }
 
     @Override

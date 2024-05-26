@@ -6,8 +6,10 @@ import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
 import ch.supsi.connectfour.backend.application.event.*;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
+import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import ch.supsi.connectfour.frontend.MainFx;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
+import ch.supsi.connectfour.frontend.view.InfoBarView;
 import ch.supsi.connectfour.frontend.view.SerializationView;
 import ch.supsi.connectfour.frontend.view.Viewable;
 import javafx.scene.control.Alert;
@@ -22,15 +24,18 @@ import java.util.List;
 public class ConnectFourFrontendController implements GameEventHandler {
 
     private static ConnectFourFrontendController instance;
-    private final ConnectFourBackendController backendController = ConnectFourBackendController.getInstance();
+    private final ConnectFourBackendController backendController;
 
     private ColumnsSelectorDispatcher columnsSelectorDispatcher;
 
     private final List<Viewable> viewableItems = new ArrayList<>();
 
-    private final SerializationView serializationView = new SerializationView(MainFx.stage);
-    private final TranslationsController translations = TranslationsController.getInstance();
+    private final SerializationView serializationView;
+    private final TranslationsController translations;
     private static MenuItem saveMenu;
+
+    private List<String> playerColors = new ArrayList<>();
+    private List<Symbol> playerSymbols = new ArrayList<>();
 
 
     public static ConnectFourFrontendController getInstance() {
@@ -41,6 +46,11 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
     private ConnectFourFrontendController() {
+        this.backendController = ConnectFourBackendController.getInstance();
+        this.serializationView = new SerializationView(MainFx.stage);
+        this.translations = TranslationsController.getInstance();
+        this.playerColors = this.backendController.getPlayerColors();
+        this.playerSymbols = this.backendController.getPlayerSymbols();
     }
 
 
@@ -48,6 +58,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
         this.columnsSelectorDispatcher = btnDispatcher;
         saveMenu = saveMenuItem;
         viewableItems.addAll(Arrays.stream(viewables).toList());
+        InfoBarView.setDefaultMessage(this.translations.translate("label.infobar_welcome"));
         return getInstance();
     }
 
@@ -75,13 +86,11 @@ public class ConnectFourFrontendController implements GameEventHandler {
             // If the user confirms their choice to open a new game
             if (this.serializationView.showConfirmationDialog(translations.translate("label.overwrite_confirmation"), translations.translate("label.confirmation"), translations.translate("label.confirm"), translations.translate("label.cancel"))) {
                 // Update the current game stored in the controller, null indicates that it will create a new, blank instance inside the method
-                this.backendController.overrideCurrentMatch(null);
+                this.backendController.createNewGame();
                 // Update the save button to prevent saving on new game
                 saveMenu.setDisable(true);
                 // TODO: FA SCHIFO!!!!!
                 MainFx.stage.setTitle(MainFx.APP_TITLE);
-                // Update the views
-                this.clearViews();
                 newGame();
             }
         } else {
@@ -104,7 +113,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
     private void updateTitle(final @NotNull String gameName) {
-        MainFx.stage.setTitle(MainFx.APP_TITLE + " - " + gameName.replaceAll(".json", ""));
+        MainFx.stage.setTitle(MainFx.APP_TITLE + " - " + gameName.replace(".json", ""));
     }
 
     public void manageSaveAs() {
@@ -125,6 +134,12 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
     @Override
     public void handle(MoveEvent event) {
+        if (event instanceof ValidMoveEvent e) {
+            e.setPlayerColor(this.playerColors.get(e.getPlayer().getId()));
+            e.setPlayerSymbol(this.playerSymbols.get(e.getPlayer().getId()));
+            viewableItems.forEach(item -> item.show(e));
+            return;
+        }
         viewableItems.forEach(item -> item.show(event));
     }
 
@@ -146,7 +161,8 @@ public class ConnectFourFrontendController implements GameEventHandler {
                 if (newMatrix[row][column] == null) {
                     break;
                 }
-                ValidMoveEvent move = new ValidMoveEvent(newMatrix[row][column], newMatrix[row][column], column, row);
+                PlayerModel player = newMatrix[row][column];
+                ValidMoveEvent move = new ValidMoveEvent(player, player, column, row, playerSymbols.get(player.getId()), playerColors.get(player.getId()));
                 viewableItems.forEach(item -> item.show(move));
             }
         }

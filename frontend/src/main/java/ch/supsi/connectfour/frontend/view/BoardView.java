@@ -14,6 +14,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BoardView implements Viewable {
     @FXML
@@ -67,8 +69,8 @@ public class BoardView implements Viewable {
     @Override
     public void show(GameEvent event) {
         if (event instanceof ValidMoveEvent e) {
-            setCellBackground(e.getRow(), e.getColumn(), e.getPlayer().getPreferenceColor());
-            setCellSymbol(e.getRow(), e.getColumn(), e.getPlayer().getSymbol());
+            setCellBackground(e.getRow(), e.getColumn(), e.getPlayerColor());
+            setCellSymbol(e.getRow(), e.getColumn(), e.getPlayerSymbol());
         }
     }
 

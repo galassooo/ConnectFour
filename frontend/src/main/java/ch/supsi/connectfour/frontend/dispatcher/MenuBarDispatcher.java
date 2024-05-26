@@ -3,6 +3,7 @@ package ch.supsi.connectfour.frontend.dispatcher;
 import ch.supsi.connectfour.frontend.MainFx;
 import ch.supsi.connectfour.frontend.controller.AboutController;
 import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
+import ch.supsi.connectfour.frontend.controller.PreferencesFrontendController;
 import ch.supsi.connectfour.frontend.controller.HelpController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import javafx.scene.control.MenuItem;
 public class MenuBarDispatcher {
     private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
     private final AboutController aboutController = AboutController.getInstance();
+    private final PreferencesFrontendController preferencesFrontendController = PreferencesFrontendController.getInstance();
 
     private final HelpController helpController = HelpController.getInstance();
     // TODO: decide how to handle this
@@ -18,19 +20,19 @@ public class MenuBarDispatcher {
     public MenuItem saveMenuItem;
 
 
-    public void newGame(ActionEvent actionEvent) {
+    public void newGame() {
         connectFourFrontendController.manageNew();
     }
 
-    public void openGame(ActionEvent actionEvent) {
+    public void openGame() {
         connectFourFrontendController.manageOpen();
     }
 
-    public void saveGame(ActionEvent actionEvent) {
+    public void saveGame() {
         connectFourFrontendController.manageSave();
     }
 
-    public void saveGameAs(ActionEvent actionEvent) {
+    public void saveGameAs() {
         connectFourFrontendController.manageSaveAs();
     }
 
@@ -41,11 +43,13 @@ public class MenuBarDispatcher {
         MainFx.getInstance().stop();
     }
 
-    public void showAbout(ActionEvent actionEvent) {
+    public void preferences(){ preferencesFrontendController.managePreferences(); }
+
+    public void showAbout() {
         aboutController.showAboutPopUp();
     }
 
-    public void showHelp(ActionEvent actionEvent) {
+    public void showHelp() {
         helpController.showHelpPopUp();
     }
 

@@ -2,20 +2,20 @@ package ch.supsi.connectfour.backend.application.connectfour;
 
 import ch.supsi.connectfour.backend.application.event.*;
 import ch.supsi.connectfour.backend.application.preferences.PreferencesBusinessInterface;
-import ch.supsi.connectfour.backend.application.translations.TranslationsBusinessInterface;
 import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
+import ch.supsi.connectfour.backend.business.preferences.PreferencesModel;
 import ch.supsi.connectfour.backend.business.symbols.Symbol;
-import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConnectFourBackendController {
     private static ConnectFourBackendController instance;
-    private static PreferencesBusinessInterface preferences;
-    private static TranslationsBusinessInterface translations;
+    private final PreferencesBusinessInterface preferences;
     // The match currently linked to this controller
     private static ConnectFourBusinessInterface currentMatch;
 
@@ -28,7 +28,7 @@ public class ConnectFourBackendController {
     }
 
     private ConnectFourBackendController() {
-        translations = TranslationsModel.getInstance();
+        preferences = PreferencesModel.getInstance();
     }
 
     /**
@@ -62,9 +62,7 @@ public class ConnectFourBackendController {
     }
 
     public void createNewGame() {
-        PlayerModel p1 = new PlayerModel("P1", "#FFD133", Symbol.SQUARE);
-        PlayerModel p2 = new PlayerModel("P2", "#F1A1FC", Symbol.STAR);
-        currentMatch = new ConnectFourModel(p1, p2);
+        currentMatch = new ConnectFourModel(new PlayerModel("P1", 0), new PlayerModel("P2", 1));
     }
 
     public ConnectFourBusinessInterface getCurrentMatch() {
@@ -72,12 +70,6 @@ public class ConnectFourBackendController {
     }
 
     public void overrideCurrentMatch(@Nullable final ConnectFourBusinessInterface newMatch) {
-        // TODO: actually comment this method...
-        // Check comment above for an explanation on why newMatch could ever be null and why
-        if (newMatch == null) {
-            createNewGame();
-            return;
-        }
         currentMatch = newMatch;
     }
 
@@ -103,6 +95,10 @@ public class ConnectFourBackendController {
      * @return the deserialized game if the operation succeeded, null if it failed
      */
     public @Nullable ConnectFourBusinessInterface tryLoadingSave(@NotNull final File file) {
+        // TODO: fix NPE if currentmatch is null
+        if (currentMatch == null)
+            this.createNewGame();
+
         final ConnectFourBusinessInterface loadedGame = currentMatch.getSave(file);
         // Override the current match if a match was successfully loaded & return it, else just return (null)
         if (loadedGame != null) {
@@ -113,5 +109,19 @@ public class ConnectFourBackendController {
 
     public String getSaveName() {
         return currentMatch.getSaveName();
+    }
+
+    public List<String> getPlayerColors() {
+        List<String> colors = new ArrayList<>();
+        colors.add(String.valueOf(preferences.getPreference("player-one-color")));
+        colors.add(String.valueOf(preferences.getPreference("player-two-color")));
+        return colors;
+    }
+
+    public List<Symbol> getPlayerSymbols() {
+        List<Symbol> symbols = new ArrayList<>();
+        symbols.add(Symbol.valueOf(preferences.getPreference("player-one-shape").toString()));
+        symbols.add(Symbol.valueOf(preferences.getPreference("player-two-shape").toString()));
+        return symbols;
     }
 }

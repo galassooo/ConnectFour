@@ -4,6 +4,8 @@ import ch.supsi.connectfour.backend.application.preferences.PreferencesBusinessI
 import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import ch.supsi.connectfour.backend.business.preferences.PreferencesModel;
 
+import java.util.List;
+
 public class TranslationsController {
 
     private static TranslationsController myself;
@@ -27,6 +29,9 @@ public class TranslationsController {
         }
 
         return myself;
+    }
+    public List<String> getSupportedLanguages() {
+        return this.translationsModel.getSupportedLanguages();
     }
 
     /**

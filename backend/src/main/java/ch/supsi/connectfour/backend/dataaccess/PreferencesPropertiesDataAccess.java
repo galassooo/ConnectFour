@@ -2,12 +2,10 @@ package ch.supsi.connectfour.backend.dataaccess;
 
 import ch.supsi.connectfour.backend.business.preferences.PreferencesDataAccessInterface;
 
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Map;
 import java.util.Properties;
 
 public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInterface {
@@ -16,16 +14,18 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
 
     private static final String userHomeDirectory = System.getProperty("user.home");
 
-    private static final String preferencesDirectory = ".l10ndemo";
+    private static final String preferencesDirectory = ".connectfour";
 
-    private static final String preferencesFile = "preferences.properties";
+    private static final String preferencesFile = "/user-preferences.properties";
 
     public static PreferencesPropertiesDataAccess dao;
 
     private static Properties userPreferences;
+    private Properties newProperties;
 
     // protected default constructor to avoid a new instance being requested from clients
-    protected PreferencesPropertiesDataAccess() {}
+    protected PreferencesPropertiesDataAccess() {
+    }
 
     // singleton instantiation of this data access object
     // guarantees only a single instance exists in the life of the application
@@ -120,24 +120,39 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
 
     @Override
     public Properties getPreferences() {
-        return this.loadDefaultPreferences();
-        /*
+
         if (userPreferences != null) {
             return userPreferences;
         }
 
         if (userPreferencesFileExists()) {
             userPreferences = this.loadPreferences(this.getUserPreferencesFilePath());
+            newProperties = (Properties) userPreferences.clone();
             return userPreferences;
         }
 
         userPreferences = this.loadDefaultPreferences();
+        newProperties = (Properties) userPreferences.clone();
         boolean rv = this.createUserPreferencesFile(userPreferences);
 
         // return the properties object with the loaded preferences
         return userPreferences;
-
-         */
+    }
+    // This method works on a copy of the user preferences to only have an impact on the actual
+    // file in the filesystem and the copy, so that the current settings are not affected until
+    // an application restart
+    @Override
+    public boolean storePreference(Map.Entry<String, String> preference) {
+        // Sets the specified preference
+        newProperties.setProperty(preference.getKey(), preference.getValue());
+        try {
+            // Writes the newly edited preferences into the actual file in the filesystem
+            FileOutputStream outputStream = new FileOutputStream(String.valueOf(this.getUserPreferencesFilePath()));
+            newProperties.store(outputStream, null);
+            return true;
+        } catch (IOException ignoredForDemoPurposes) {
+            return false;
+        }
     }
 
 }

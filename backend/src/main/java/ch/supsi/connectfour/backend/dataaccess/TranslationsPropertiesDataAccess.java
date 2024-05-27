@@ -2,10 +2,13 @@ package ch.supsi.connectfour.backend.dataaccess;
 
 import ch.supsi.connectfour.backend.business.translations.TranslationsDataAccessInterface;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
@@ -54,7 +57,6 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
             supportedLanguageTags.add(props.getProperty((String)key));
         }
 
-        // return
         return supportedLanguageTags;
     }
 
@@ -63,60 +65,54 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
         final Properties translations = new Properties();
 
         try {
-            // TODO: check if this works in a jar!!!!
-            Files.walk(Paths.get(Objects.requireNonNull(this.getClass().getResource(LABELS_PATH)).toURI()))
-                    .filter(Files::isRegularFile)
-                    .filter(path -> path.toString().endsWith(".properties")) // TODO: could avoid this check as there will not be any other files in there
-                    .forEach(path -> {
-                        try {
-                            // Extract the base name and locale from the file path
-                            String[] parts = path.getFileName().toString().split("_");
-
-                            // TODO: fix hardcoding of prefix
-                            String baseName = "i18n\\labels." + parts[0] + "_" + path.getParent().getFileName().toString();
-
-                            // The ResourceBundle.Control allows to prevent any fallback mechanisms in the ResourceBundle factory methods, which is what we want because we want to manually handle invalid locales
-                            ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale, ResourceBundle.Control.getNoFallbackControl(FORMAT_DEFAULT));
-                            for (String key : bundle.keySet()) {
-                                translations.put(key, bundle.getString(key));
-                            }
-
-                        } catch (MissingResourceException e) {
-                            System.err.println("unsupported language tag..." + locale.toLanguageTag());
-
-                            List<String> supportedLanguageTags = this.getSupportedLanguageTags();
-                            String fallbackLanguageTag = supportedLanguageTags.get(0);
-                            System.err.println("falling back to..." + fallbackLanguageTag);
-
-                            try {
-                                Files.walk(Paths.get(Objects.requireNonNull(this.getClass().getResource(LABELS_PATH)).toURI()))
-                                        .filter(Files::isRegularFile)
-                                        .filter(p -> p.toString().endsWith(".properties"))
-                                        .forEach(p -> {
-                                            // Extract the base name and locale from the file path
-                                            String[] parts = p.getFileName().toString().split("_");
-
-                                            // TODO: fix hardcoding of prefix
-                                            String baseName = "i18n\\labels." + parts[0] + "_" + p.getParent().getFileName().toString();
-
-                                            ResourceBundle bundle = ResourceBundle.getBundle(baseName, Locale.forLanguageTag(fallbackLanguageTag), ResourceBundle.Control.getNoFallbackControl(FORMAT_DEFAULT));
-                                            for (String key : bundle.keySet()) {
-                                                translations.put(key, bundle.getString(key));
-                                            }
-                                        });
-                            } catch (IOException | URISyntaxException ex) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-        } catch (IOException e) {
-            // TODO: do something clever with this exception thrown by Files.walk
+            // Access resources using the class loader
+            URL resource = this.getClass().getResource(LABELS_PATH);
+            if (resource != null) {
+                Path path = Paths.get(resource.toURI());
+                Files.walk(path)
+                        .filter(Files::isRegularFile)
+                        .filter(p -> p.toString().endsWith(".properties"))
+                        .forEach(p -> loadTranslationsFromFile(p, locale, translations));
+            }
+        } catch (IOException | URISyntaxException e) {
             e.printStackTrace();
-        } catch (URISyntaxException e) {
-            // todo: do something clever
-            throw new RuntimeException(e);
         }
         return translations;
+    }
+
+    private void loadTranslationsFromFile(Path path, Locale locale, Properties translations) {
+        String[] parts = path.getFileName().toString().split("_");
+        String baseName = "i18n" + File.separator + "labels." + parts[0] + "_" + parts[1];
+        try {
+            ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale, ResourceBundle.Control.getNoFallbackControl(FORMAT_DEFAULT));
+            for (String key : bundle.keySet()) {
+                translations.put(key, bundle.getString(key));
+            }
+        } catch (MissingResourceException e) {
+            handleMissingResourceException(locale, translations);
+        }
+    }
+
+    private void handleMissingResourceException(Locale locale, Properties translations) {
+        System.err.println("Unsupported language tag: " + locale.toLanguageTag());
+        List<String> supportedLanguageTags = this.getSupportedLanguageTags();
+        if (!supportedLanguageTags.isEmpty()) {
+            String fallbackLanguageTag = supportedLanguageTags.get(0);
+            System.err.println("Falling back to: " + fallbackLanguageTag);
+            Locale fallbackLocale = Locale.forLanguageTag(fallbackLanguageTag);
+            try {
+                URL resource = this.getClass().getResource(LABELS_PATH);
+                if (resource != null) {
+                    Path path = Paths.get(resource.toURI());
+                    Files.walk(path)
+                            .filter(Files::isRegularFile)
+                            .filter(p -> p.toString().endsWith(".properties"))
+                            .forEach(p -> loadTranslationsFromFile(p, fallbackLocale, translations));
+                }
+            } catch (IOException | URISyntaxException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

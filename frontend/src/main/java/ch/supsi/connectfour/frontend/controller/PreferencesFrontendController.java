@@ -11,11 +11,10 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.AbstractMap;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Stream;
+
+import static java.util.ResourceBundle.Control.FORMAT_DEFAULT;
 
 public class PreferencesFrontendController {
 
@@ -24,6 +23,8 @@ public class PreferencesFrontendController {
     private final PreferencesController backendController = PreferencesController.getInstance();
     private final TranslationsController translationsController = TranslationsController.getInstance();
     private final Stage stage = new Stage();
+
+    private final static String BUNDLE_NAME = "i18n/UI/ui_labels";
 
     public static PreferencesFrontendController getInstance() {
         if (instance == null) {
@@ -38,14 +39,13 @@ public class PreferencesFrontendController {
             if (fxmlUrl == null) {
                 return;
             }
-
-            FXMLLoader loader = new FXMLLoader(fxmlUrl);
+            // TODO: not sure if this should be loaded here (resource bundle)
+            FXMLLoader loader = new FXMLLoader(fxmlUrl, ResourceBundle.getBundle(BUNDLE_NAME, Locale.forLanguageTag(String.valueOf(this.backendController.getPreference("language-tag"))), ResourceBundle.Control.getNoFallbackControl(FORMAT_DEFAULT)));
             Scene scene = new Scene(loader.load());
             preferencesView = loader.getController();
 
             this.initViewChoices();
-            this.initLabels();
-            this.preferencesView.initSaveListener(this.translationsController.translate("label.preferences_please_choose"), this.translationsController.translate("label.preferences_cannot_save") );
+            this.preferencesView.initSaveListener(this.translationsController.translate("label.preferences_please_choose"), this.translationsController.translate("label.preferences_cannot_save"));
 
             preferencesView.setOnSaveButton((e) -> {
                 // Handle saving preferences
@@ -70,7 +70,7 @@ public class PreferencesFrontendController {
 
             preferencesView.setOnCancelButton((e) -> stage.close());
 
-            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/preferences/wrench.png"))));
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/preferences/gear.png"))));
             stage.setScene(scene);
             stage.setTitle(this.translationsController.translate("label.preferences"));
 
@@ -78,6 +78,7 @@ public class PreferencesFrontendController {
             e.printStackTrace();
         }
     }
+
     void initViewChoices() {
         // TODO: not sure about this interaction. This frontend now depends both on its backend controller AND the translations contrller. Not sure if there's better ways to handle this
         //risolviamo sistemando i simboli
@@ -86,20 +87,8 @@ public class PreferencesFrontendController {
 
         this.preferencesView.setShapes(validSymbols);
     }
-    void initLabels() {
-        // TODO: not sure if there's a cleaner way to do this :/
-        // no, penso non ci sia un modo migliore dato che le stringe sono 'hardcodate'
-        // al massimo si potrebbe pensare una lista di label e una lista di key e ciclarle insieme
-        this.preferencesView.setBoxLanguageLabel(this.translationsController.translate("label.language_tag"));
-        this.preferencesView.setPlayerOneColorLabel(this.translationsController.translate("label.player_one_color"));
-        this.preferencesView.setPlayerOneShapeLabel(this.translationsController.translate("label.player_one_shape"));
-        this.preferencesView.setPlayerTwoColorLabel(this.translationsController.translate("label.player_two_color"));
-        this.preferencesView.setPlayerTwoShapeLabel(this.translationsController.translate("label.player_two_shape"));
-        this.preferencesView.setSaveButtonLabel(this.translationsController.translate("label.save"));
-        this.preferencesView.setCancelButtonLabel(this.translationsController.translate("label.cancel"));
-    }
 
-    public void managePreferences(){
+    public void managePreferences() {
         stage.setResizable(false);
         stage.show();
     }

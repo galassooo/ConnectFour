@@ -41,7 +41,6 @@ public class TranslationsModel implements TranslationsBusinessInterface {
 
     @Override
     public boolean changeLanguage(String languageTag) {
-        // TODO: modify
         this.translations = translationsDao.getTranslations(Locale.forLanguageTag(languageTag));
         return this.translations != null;
     }

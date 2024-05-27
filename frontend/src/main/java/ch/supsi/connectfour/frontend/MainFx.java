@@ -4,8 +4,8 @@ package ch.supsi.connectfour.frontend;
 import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher;
-import ch.supsi.connectfour.frontend.view.BoardView;
-import ch.supsi.connectfour.frontend.view.InfoBarView;
+import ch.supsi.connectfour.frontend.view.viewables.BoardView;
+import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -142,7 +142,7 @@ public class MainFx extends Application {
         // PRIMARY STAGE
         primaryStage.setTitle(MainFx.APP_TITLE);
         primaryStage.setScene(scene);
-        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/about/board.png"))));
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/application/board.png"))));
 
         primaryStage.show();
 

@@ -9,9 +9,9 @@ import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import ch.supsi.connectfour.frontend.MainFx;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
-import ch.supsi.connectfour.frontend.view.InfoBarView;
+import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
 import ch.supsi.connectfour.frontend.view.SerializationView;
-import ch.supsi.connectfour.frontend.view.Viewable;
+import ch.supsi.connectfour.frontend.view.viewables.Viewable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import org.jetbrains.annotations.NotNull;
@@ -34,8 +34,8 @@ public class ConnectFourFrontendController implements GameEventHandler {
     private final TranslationsController translations;
     private static MenuItem saveMenu;
 
-    private List<String> playerColors = new ArrayList<>();
-    private List<Symbol> playerSymbols = new ArrayList<>();
+    private final List<String> playerColors;
+    private final List<Symbol> playerSymbols;
 
 
     public static ConnectFourFrontendController getInstance() {
@@ -99,8 +99,6 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
     public void newGame() {
-        this.playerColors = this.backendController.getPlayerColors();
-        this.playerSymbols = this.backendController.getPlayerSymbols();
         this.clearViews();
         columnsSelectorDispatcher.disableButtons(false);
         backendController.createNewGame();

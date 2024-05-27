@@ -23,7 +23,7 @@ public class ValidMoveEvent extends MoveEvent {
         this.column = column;
         this.row = row;
     }
-    // TODO: simplify constr
+
     public ValidMoveEvent(PlayerModel player, PlayerModel playerToPlay, int column, int row) {
         super(String.format(getTranslator().translate("label.player_moved"), player.getName(), playerToPlay.getName()),
                 String.format(getTranslator().translate("label.player_moved_successfully"), player.getName(), row, column)
@@ -39,9 +39,11 @@ public class ValidMoveEvent extends MoveEvent {
         this.column = column;
         this.row = row;
     }
+
     public void setPlayerSymbol(Symbol symbol) {
         this.playerSymbol = symbol;
     }
+
     public void setPlayerColor(String color) {
         this.playerColor = color;
     }

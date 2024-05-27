@@ -1,7 +1,6 @@
-package ch.supsi.connectfour.frontend.view;
+package ch.supsi.connectfour.frontend.view.viewables;
 
 import ch.supsi.connectfour.backend.application.event.GameEvent;
-import ch.supsi.connectfour.backend.application.event.MoveEvent;
 import ch.supsi.connectfour.backend.application.event.ValidMoveEvent;
 import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import javafx.fxml.FXML;
@@ -14,8 +13,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 
 public class BoardView implements Viewable {
     @FXML

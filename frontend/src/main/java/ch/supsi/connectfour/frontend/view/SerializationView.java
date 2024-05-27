@@ -1,12 +1,12 @@
 package ch.supsi.connectfour.frontend.view;
 
+import ch.supsi.connectfour.frontend.controller.StageManager;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -17,16 +17,12 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class SerializationView {
-    // TODO: probabilmente da sostituire, trovare un modo di passare il primary stage in giro
-    private final Stage primaryStage;
-
-    public SerializationView(Stage primaryStage) {
-        this.primaryStage = primaryStage;
+    public SerializationView() {
     }
 
     public void showMessage(final String message, final String title, final Alert.AlertType type) {
         Alert alert = new Alert(type);
-        alert.initOwner(primaryStage);
+        StageManager.getInstance().setRootAsOwner(alert);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
@@ -35,7 +31,7 @@ public class SerializationView {
         loadCssForAlert(alert);
         alert.showAndWait();
     }
-    private  void loadCssForAlert(@NotNull Alert alert){
+    private void loadCssForAlert(@NotNull Alert alert){
 
         Scene scene = alert.getDialogPane().getScene();
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styleSheets/genericScreen.css")).toExternalForm());
@@ -54,18 +50,19 @@ public class SerializationView {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(initialDirectory);
         directoryChooser.setTitle(title);
-        return directoryChooser.showDialog(primaryStage);
+        return StageManager.getInstance().showDirectoryChooserDialog(directoryChooser);
     }
 
     public File askForFile(final String title) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(title);
-        return fileChooser.showOpenDialog(primaryStage);
+        return StageManager.getInstance().showFileChooserDialog(fileChooser);
     }
 
     public boolean showConfirmationDialog(final String message, final String title, final String confirmText, final String cancelText) {
         // Create a confirmation dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        StageManager.getInstance().setRootAsOwner(alert);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);

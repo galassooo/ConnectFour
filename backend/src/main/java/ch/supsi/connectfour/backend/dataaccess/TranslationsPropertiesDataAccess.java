@@ -2,6 +2,7 @@ package ch.supsi.connectfour.backend.dataaccess;
 
 import ch.supsi.connectfour.backend.business.translations.TranslationsDataAccessInterface;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -73,7 +74,7 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
                             String[] parts = path.getFileName().toString().split("_");
 
                             // TODO: fix hardcoding of prefix
-                            String baseName = "i18n\\labels." + parts[0] + "_" + path.getParent().getFileName().toString();
+                            String baseName = "i18n"+File.separator+"labels." + parts[0] + "_" + path.getParent().getFileName().toString();
 
                             // The ResourceBundle.Control allows to prevent any fallback mechanisms in the ResourceBundle factory methods, which is what we want because we want to manually handle invalid locales
                             ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale, ResourceBundle.Control.getNoFallbackControl(FORMAT_DEFAULT));
@@ -97,7 +98,7 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
                                             String[] parts = p.getFileName().toString().split("_");
 
                                             // TODO: fix hardcoding of prefix
-                                            String baseName = "i18n\\labels." + parts[0] + "_" + p.getParent().getFileName().toString();
+                                            String baseName = "i18n"+ File.separator +"labels." + parts[0] + "_" + p.getParent().getFileName().toString();
 
                                             ResourceBundle bundle = ResourceBundle.getBundle(baseName, Locale.forLanguageTag(fallbackLanguageTag), ResourceBundle.Control.getNoFallbackControl(FORMAT_DEFAULT));
                                             for (String key : bundle.keySet()) {

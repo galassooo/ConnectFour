@@ -14,20 +14,8 @@ import java.util.function.Consumer;
 
 public class PreferencesView {
     @FXML
-    public Label boxLanguageLabel;
-    @FXML
-    public Label playerOneColorLabel;
-    @FXML
-    public Label playerOneShapeLabel;
-    @FXML
-    public Label playerTwoColorLabel;
-    @FXML
-    public Label playerTwoShapeLabel;
-    @FXML
     public Text preferencesText;
 
-    @FXML
-    private BorderPane borderPane;
     @FXML
     private ComboBox<String> languageComboBox;
 
@@ -90,33 +78,8 @@ public class PreferencesView {
         });
     }
 
-    public void setSaveButtonLabel(String text) {
-        this.saveButton.setText(text);
-    }
-    public void setCancelButtonLabel(String text) {
-        this.cancelButton.setText(text);
-    }
     public void setPreferencesText(String text) {
         this.preferencesText.setText(text);
-    }
-    public void setBoxLanguageLabel(String text) {
-        this.boxLanguageLabel.setText(text);
-    }
-
-    public void setPlayerOneColorLabel(String text) {
-        this.playerOneColorLabel.setText(text);
-    }
-
-    public void setPlayerOneShapeLabel(String text) {
-        this.playerOneShapeLabel.setText(text);
-    }
-
-    public void setPlayerTwoColorLabel(String text) {
-        this.playerTwoColorLabel.setText(text);
-    }
-
-    public void setPlayerTwoShapeLabel(String text) {
-        this.playerTwoShapeLabel.setText(text);
     }
 
     public void setShapes(List<String> supportedShapes) {
@@ -136,6 +99,8 @@ public class PreferencesView {
 
     public PreferencesView() {}
 
+
+    // TODO: ?????
     public void setOnSaveButton(Consumer<ActionEvent> eventConsumer) {
         saveButton.setOnAction(eventConsumer::accept);
     }

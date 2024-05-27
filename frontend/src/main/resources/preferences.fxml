@@ -12,50 +12,46 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.text.TextFlow?>
 
-
-<BorderPane id="pane" stylesheets="styleSheets/preferences.css" prefHeight="350.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.supsi.connectfour.frontend.view.PreferencesView">
-   <center>
-      <GridPane BorderPane.alignment="CENTER">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-   
-                           <Button fx:id="saveButton" GridPane.rowIndex="6" />
-               <Button fx:id="cancelButton" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-   
-                           <!-- Additional row for the small text box -->
-               <TextFlow style="-fx-padding: 11;" GridPane.columnSpan="2" GridPane.rowIndex="5">
-                   <Text fx:id="preferencesText" />
-               </TextFlow>
-               <ComboBox fx:id="playerTwoShapeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-   
-                           <Label fx:id="playerTwoShapeLabel" GridPane.rowIndex="4" />
-               <ColorPicker fx:id="playerTwoColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-   
-                           <Label fx:id="playerTwoColorLabel" GridPane.rowIndex="3" />
-               <ComboBox fx:id="playerOneShapeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-   
-                           <Label fx:id="playerOneShapeLabel" GridPane.rowIndex="2" />
-               <ColorPicker fx:id="playerOneColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-   
-                           <Label fx:id="playerOneColorLabel" GridPane.rowIndex="1" />
-               <ComboBox fx:id="languageComboBox" GridPane.columnIndex="1" />
-               <Label fx:id="boxLanguageLabel" />
-         </children>
-      </GridPane>
-   </center>
-   <padding>
-      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-   </padding>
+<BorderPane id="pane" stylesheets="styleSheets/preferences.css" prefHeight="350.0" prefWidth="300.0"
+            xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="ch.supsi.connectfour.frontend.view.PreferencesView">
+    <center>
+        <GridPane BorderPane.alignment="CENTER">
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <children>
+                <Button fx:id="saveButton" text="%ui_save_button" GridPane.rowIndex="6"/>
+                <Button fx:id="cancelButton" text="%ui_cancel_button" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
+                <!-- Additional row for the small text box -->
+                <TextFlow style="-fx-padding: 11;" GridPane.columnSpan="2" GridPane.rowIndex="5">
+                    <!-- By default the loaded settings are not valid, therefore the message to display when opening this menu is the cannot save message -->
+                    <Text fx:id="preferencesText" text="ui_player_cannot_have_same"/>
+                </TextFlow>
+                <ComboBox fx:id="playerTwoShapeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+                <Label text="%ui_player_two_symbol" GridPane.rowIndex="4" wrapText="true" prefWidth="150.0"/>
+                <ColorPicker fx:id="playerTwoColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+                <Label text="%ui_player_two_color" GridPane.rowIndex="3" wrapText="true" prefWidth="150.0"/>
+                <ComboBox fx:id="playerOneShapeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+                <Label text="%ui_player_one_symbol" GridPane.rowIndex="2" wrapText="true" prefWidth="150.0"/>
+                <ColorPicker fx:id="playerOneColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+                <Label text="%ui_player_one_color" GridPane.rowIndex="1" wrapText="true" prefWidth="150.0"/>
+                <ComboBox fx:id="languageComboBox" GridPane.columnIndex="1"/>
+                <Label text="%ui_language" wrapText="true" prefWidth="150.0"/>
+            </children>
+        </GridPane>
+    </center>
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
+    </padding>
 </BorderPane>

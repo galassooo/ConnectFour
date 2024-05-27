@@ -70,7 +70,7 @@ public class PreferencesFrontendController {
 
             preferencesView.setOnCancelButton((e) -> stage.close());
 
-            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/preferences/wrench.png"))));
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/preferences/gear.png"))));
             stage.setScene(scene);
             stage.setTitle(this.translationsController.translate("label.preferences"));
 

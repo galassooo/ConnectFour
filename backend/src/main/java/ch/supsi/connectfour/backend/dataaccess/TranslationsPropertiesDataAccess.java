@@ -2,8 +2,11 @@ package ch.supsi.connectfour.backend.dataaccess;
 
 import ch.supsi.connectfour.backend.business.translations.TranslationsDataAccessInterface;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
 
 import static java.util.ResourceBundle.Control.FORMAT_DEFAULT;
@@ -11,6 +14,7 @@ import static java.util.ResourceBundle.Control.FORMAT_DEFAULT;
 public class TranslationsPropertiesDataAccess implements TranslationsDataAccessInterface {
 
     private static final String translationsResourceBundlePath = "i18n.labels";
+    private static final String LABELS_PATH = File.separator + "i18n";
 
     private static final String supportedLanguagesPath = "/supported-languages.properties";
 
@@ -58,6 +62,34 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
     @Override
     public Properties getTranslations(Locale locale) {
         final Properties translations = new Properties();
+
+        try {
+            Files.walk(Paths.get("C:\\Users\\alexr\\IdeaProjects\\Group10\\backend\\src\\main\\resources\\i18n\\labels"))
+                    .filter(Files::isRegularFile)
+                    .filter(path -> path.toString().endsWith(".properties"))
+                    .forEach(path -> {
+                        try {
+                            // Extract the base name and locale from the file path
+                            String[] parts = path.getFileName().toString().split("_");
+                            if (parts.length >= 3) {
+                                String baseName = "i18n\\labels." + parts[0] + "_" + path.getParent().getFileName().toString();
+
+                                ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale);
+                                for (String key : bundle.keySet()) {
+                                    translations.put(key, bundle.getString(key));
+                                }
+                            }
+                        } catch (MissingResourceException e) {
+                            // TODO: fallback to default language
+                            e.printStackTrace();
+                        }
+                    });
+        } catch (IOException e) {
+            // TODO: do something clever with this exception thrown by Files.walk
+            e.printStackTrace();
+        }
+        /*
+
         ResourceBundle bundle;
         try {
             bundle = ResourceBundle.getBundle(
@@ -83,6 +115,7 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
         for (String key : bundle.keySet()) {
             translations.put(key, bundle.getString(key));
         }
+        */
 
         return translations;
     }

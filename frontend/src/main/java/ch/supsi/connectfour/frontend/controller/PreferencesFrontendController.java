@@ -24,7 +24,7 @@ public class PreferencesFrontendController {
     private final TranslationsController translationsController = TranslationsController.getInstance();
     private final Stage stage = new Stage();
 
-    private final static String BUNDLE_NAME = "i18n/ui_labels";
+    private final static String BUNDLE_NAME = "i18n/UI/ui_labels";
 
     public static PreferencesFrontendController getInstance() {
         if (instance == null) {

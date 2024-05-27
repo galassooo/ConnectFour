@@ -78,10 +78,6 @@ public class PreferencesView {
         });
     }
 
-    public void setPreferencesText(String text) {
-        this.preferencesText.setText(text);
-    }
-
     public void setShapes(List<String> supportedShapes) {
         playerShapeBoxes.forEach((cBox) -> {
             // Adds all supported shapes to the combo boxes and automatically selects the first option, to avoid having a blank cell

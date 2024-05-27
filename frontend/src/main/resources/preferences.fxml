@@ -36,7 +36,7 @@
                 <!-- Additional row for the small text box -->
                 <TextFlow style="-fx-padding: 11;" GridPane.columnSpan="2" GridPane.rowIndex="5">
                     <!-- By default the loaded settings are not valid, therefore the message to display when opening this menu is the cannot save message -->
-                    <Text fx:id="preferencesText" text="ui_player_cannot_have_same"/>
+                    <Text fx:id="preferencesText" text="%ui_player_cannot_have_same"/>
                 </TextFlow>
                 <ComboBox fx:id="playerTwoShapeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
                 <Label text="%ui_player_two_symbol" GridPane.rowIndex="4" wrapText="true" prefWidth="150.0"/>

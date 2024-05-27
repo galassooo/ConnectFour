@@ -95,7 +95,9 @@ public class PreferencesView {
     public void setCancelButtonLabel(String text) {
         this.cancelButton.setText(text);
     }
-
+    public void setPreferencesText(String text) {
+        this.preferencesText.setText(text);
+    }
     public void setBoxLanguageLabel(String text) {
         this.boxLanguageLabel.setText(text);
     }

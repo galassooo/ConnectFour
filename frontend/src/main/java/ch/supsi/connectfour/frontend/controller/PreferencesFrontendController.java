@@ -12,7 +12,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.AbstractMap;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -93,6 +92,8 @@ public class PreferencesFrontendController {
         this.preferencesView.setPlayerTwoShapeLabel(this.translationsController.translate("label.player_two_shape"));
         this.preferencesView.setSaveButtonLabel(this.translationsController.translate("label.save"));
         this.preferencesView.setCancelButtonLabel(this.translationsController.translate("label.cancel"));
+        // TODO: maybe there's a cleaner way to do this, because this assumes that the default values do not allow the user to save, but if we were to change that we would have to change this too which is not optimal
+        this.preferencesView.setPreferencesText(this.translationsController.translate("label.preferences_cannot_save"));
     }
 
     public void managePreferences(){

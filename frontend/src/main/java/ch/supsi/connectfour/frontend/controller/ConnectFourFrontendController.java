@@ -34,8 +34,8 @@ public class ConnectFourFrontendController implements GameEventHandler {
     private final TranslationsController translations;
     private static MenuItem saveMenu;
 
-    private List<String> playerColors = new ArrayList<>();
-    private List<Symbol> playerSymbols = new ArrayList<>();
+    private final List<String> playerColors;
+    private final List<Symbol> playerSymbols;
 
 
     public static ConnectFourFrontendController getInstance() {

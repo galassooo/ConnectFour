@@ -314,12 +314,10 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
                 if (cell == null) {
                     sb.append("0 ");
                 } else if (cell.equals(player1)) {
-                    // TODO: EVENTUALLY uncomment and go back to 1s and 2s
-                    //sb.append("1 ");
-                    sb.append("P1").append(" ");
+                    sb.append("1 ");
                 } else if (cell.equals(player2)) {
-                    //sb.append("2 ");
-                    sb.append("P2").append(" ");
+                    sb.append("2 ");
+
                 }
             }
             sb.append("\n");  // Nuova linea alla fine di ogni riga

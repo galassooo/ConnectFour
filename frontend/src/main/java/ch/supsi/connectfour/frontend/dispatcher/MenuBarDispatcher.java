@@ -40,7 +40,7 @@ public class MenuBarDispatcher {
         //todo ha senso creare un controller per sta cosa?
         //secondo me non ha senso usare il gamecontroller, il ciclo di vita dell'applicazione non è relazionato
         // in alcun modo al gioco
-        MainFx.getInstance().stop();
+        //MainFx.getInstance().stop();
     }
 
     public void preferences(){ preferencesFrontendController.managePreferences(); }

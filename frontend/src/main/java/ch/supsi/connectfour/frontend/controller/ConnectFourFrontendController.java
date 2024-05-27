@@ -13,6 +13,7 @@ import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
 import ch.supsi.connectfour.frontend.view.SerializationView;
 import ch.supsi.connectfour.frontend.view.viewables.Viewable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import org.jetbrains.annotations.NotNull;
 
@@ -29,6 +30,8 @@ public class ConnectFourFrontendController implements GameEventHandler {
     private ColumnsSelectorDispatcher columnsSelectorDispatcher;
 
     private final List<Viewable> viewableItems = new ArrayList<>();
+
+    private final List<Button> buttonList = new ArrayList<>();
 
     private final SerializationView serializationView;
     private final TranslationsController translations;
@@ -54,8 +57,8 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
 
-    public ConnectFourFrontendController build(MenuItem saveMenuItem, ColumnsSelectorDispatcher btnDispatcher, Viewable... viewables) {
-        this.columnsSelectorDispatcher = btnDispatcher;
+    public ConnectFourFrontendController build(MenuItem saveMenuItem, List<Button> buttonList, Viewable... viewables) {
+        this.buttonList.addAll(buttonList);
         saveMenu = saveMenuItem;
         viewableItems.addAll(Arrays.stream(viewables).toList());
         InfoBarView.setDefaultMessage(this.translations.translate("label.infobar_welcome"));
@@ -100,7 +103,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
     public void newGame() {
         this.clearViews();
-        columnsSelectorDispatcher.disableButtons(false);
+        buttonList.forEach(btn -> btn.setDisable(false));
         backendController.createNewGame();
     }
 

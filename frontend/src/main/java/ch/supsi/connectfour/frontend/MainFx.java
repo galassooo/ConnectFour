@@ -1,6 +1,7 @@
 package ch.supsi.connectfour.frontend;
 
 
+import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
 import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher;
@@ -18,31 +19,24 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Locale;
 import java.util.Objects;
+import java.util.ResourceBundle;
+
+import static java.util.ResourceBundle.Control.FORMAT_DEFAULT;
 
 public class MainFx extends Application {
 
     public static final String APP_TITLE = "ConnectFour";
     public static Stage stage;
 
-    private MenuBarDispatcher menuBarDispatcher;
-    private ColumnsSelectorDispatcher columnsSelectorDispatcher;
-    private BoardView boardView;
-    private InfoBarView infoBarView;
     private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
-    private static MainFx instance;
-
-    //singleton
-    public static MainFx getInstance() {
-        return instance;
-    }
 
     public MainFx() throws InstantiationException {
     }
 
     @Override
     public void start(Stage primaryStage) {
-        instance = this;
         // handle the main window close request
         // in real life, this event should not be dealt with here!
         // it should actually be delegated to a suitable ExitController!
@@ -60,6 +54,7 @@ public class MainFx extends Application {
 
         // MENU BAR
         MenuBar menuBar;
+        MenuBarDispatcher menuBarDispatcher;
         try {
             URL fxmlUrl = getClass().getResource("/menubar.fxml");
             if (fxmlUrl == null) {
@@ -68,7 +63,7 @@ public class MainFx extends Application {
 
             FXMLLoader menuBarLoader = new FXMLLoader(fxmlUrl);
             menuBar = menuBarLoader.load();
-            this.menuBarDispatcher = menuBarLoader.getController();
+            menuBarDispatcher = menuBarLoader.getController();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -76,15 +71,17 @@ public class MainFx extends Application {
 
         // CONNECT-FOUR COLUMN SELECTORS
         Parent columnSelectors;
+        ColumnsSelectorDispatcher columnsSelectorDispatcher;
         try {
             URL fxmlUrl = getClass().getResource("/columnselectors.fxml");
             if (fxmlUrl == null) {
                 return;
             }
 
-            FXMLLoader columnSelectorsLoader = new FXMLLoader(fxmlUrl);
+            //TODO DA CAMBIAREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+            FXMLLoader columnSelectorsLoader = new FXMLLoader(fxmlUrl, ResourceBundle.getBundle("i18n/UI/ui_labels", Locale.forLanguageTag(String.valueOf(PreferencesController.getInstance().getPreference("language-tag"))), ResourceBundle.Control.getNoFallbackControl(FORMAT_DEFAULT)));
             columnSelectors = columnSelectorsLoader.load();
-            this.columnsSelectorDispatcher = columnSelectorsLoader.getController();
+            columnsSelectorDispatcher = columnSelectorsLoader.getController();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -92,6 +89,7 @@ public class MainFx extends Application {
 
         // CONNECT-FOUR BOARD
         Parent board;
+        BoardView boardView;
         try {
             URL fxmlUrl = getClass().getResource("/gameboard.fxml");
             if (fxmlUrl == null) {
@@ -100,7 +98,7 @@ public class MainFx extends Application {
 
             FXMLLoader boardLoader = new FXMLLoader(fxmlUrl);
             board = boardLoader.load();
-            this.boardView = boardLoader.getController();
+            boardView = boardLoader.getController();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -108,6 +106,7 @@ public class MainFx extends Application {
 
         // INFO BAR
         Parent infoBar;
+        InfoBarView infoBarView;
         try {
             URL fxmlUrl = getClass().getResource("/infobar.fxml");
             if (fxmlUrl == null) {
@@ -117,7 +116,7 @@ public class MainFx extends Application {
 
             FXMLLoader infoBarLoader = new FXMLLoader(fxmlUrl);
             infoBar = infoBarLoader.load();
-            this.infoBarView = infoBarLoader.getController();
+            infoBarView = infoBarLoader.getController();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -147,7 +146,7 @@ public class MainFx extends Application {
         primaryStage.show();
 
         stage = primaryStage;
-        connectFourFrontendController.build(this.menuBarDispatcher.saveMenuItem, this.columnsSelectorDispatcher, this.boardView, this.infoBarView);
+        connectFourFrontendController.build(menuBarDispatcher.saveMenuItem, columnsSelectorDispatcher.getButtons(), boardView, infoBarView);
     }
 
     @Override

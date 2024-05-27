@@ -11,50 +11,34 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ColumnsSelectorDispatcher {
     @FXML
     private GridPane pane;
 
     private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
-    private final TranslationsController translationsController = TranslationsController.getInstance();
-
     @FXML
     void initialize() {
-        disableButtons(true);
-        setTooltip(translationsController.translate("label.column_tooltip"));
     }
-
-    /**
-     * Set all buttons on disabled/enabled
-     *
-     * @param disable true for disabling buttons or false to enable them
-     */
-    public void disableButtons(boolean disable) {
+    public List<Button> getButtons(){
+        List<Button> buttonList = new ArrayList<>();
         for (javafx.scene.Node node : pane.getChildren()) {
             if (node instanceof AnchorPane anchorPane) {
                 for (javafx.scene.Node child : anchorPane.getChildren()) {
                     if (child instanceof Button btn) {
-                        btn.setDisable(disable);
+                        buttonList.add(btn);
                     }
                 }
             }
         }
+        return buttonList;
     }
 
-    private void setTooltip(String tooltip) {
-        for (javafx.scene.Node node : pane.getChildren()) {
-            if (node instanceof AnchorPane anchorPane) {
-                for (javafx.scene.Node child : anchorPane.getChildren()) {
-                    if (child instanceof Button btn) {
-                        btn.setTooltip(new Tooltip(tooltip));
-                    }
-                }
-            }
-        }
-    }
-
-    public void playerMove(ActionEvent actionEvent) {
+    public void playerMove(@NotNull ActionEvent actionEvent) {
         if (actionEvent.getSource() instanceof Button button) {
             connectFourFrontendController.manageColumnSelection(Integer.parseInt(button.getId()));
         }

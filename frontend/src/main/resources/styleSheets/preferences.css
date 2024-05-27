@@ -1,0 +1,62 @@
+.button {
+    -fx-background-color: #0063C9;
+    -fx-text-fill: #FFF;
+    -fx-font-size: 15px;
+    -fx-padding: 2px 2px;
+    -fx-pref-height: 25px;
+    -fx-pref-width: 70px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0, 0, 4);
+}
+
+.button:disabled{
+    -fx-effect:none;
+}
+.button:hover {
+    -fx-cursor: hand;
+}
+#pane {
+    -fx-background-color: #ced0d0;
+}
+.label{
+    -fx-font-size: 14;
+}
+
+.color-picker {
+    -fx-background-color: #ced0d0;
+    -fx-border-color: #0063C9;
+    -fx-border-width: 2;
+    -fx-border-radius: 3;
+    -fx-pref-width: 170;
+}
+
+.color-picker .button {
+    -fx-background-color: transparent;
+    -fx-background-radius: 0;
+}
+
+.color-picker .label {
+    -fx-text-fill: #000;
+}
+
+.color-picker .color-rect {
+    -fx-arc-width: 2;
+    -fx-arc-height: 2;
+    -fx-stroke: #0063C9;
+    -fx-stroke-width: 2;
+}
+
+.color-picker .split-menu-button {
+    -fx-background-color: #ced0d0;
+}
+
+.color-picker .split-menu-button .arrow-button {
+    -fx-padding: 4;
+}
+.combo-box {
+    -fx-background-color: #ced0d0;
+    -fx-border-color: #0063C9;
+    -fx-border-width: 2;
+    -fx-background-radius: 10;
+    -fx-border-radius: 3;
+    -fx-pref-width: 170;
+}

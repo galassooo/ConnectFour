@@ -84,13 +84,13 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
     }
 
     /**
-     * Checks if a player has won
+     * Checks if a player won
      *
      * @return true if one of the players won, false if none won yet
      */
-    //TODO trovare approccio migliore della brute force
     @Override
-    public boolean checkWin() {
+    public boolean isWin() {
+        //double start = System.currentTimeMillis();
         // Controlla orizzontali
         boolean won = false;
         for (int row = 0; row < GRID_HEIGHT; row++) {
@@ -143,6 +143,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
                 }
             }
         }
+        //System.out.println(System.currentTimeMillis()-start);
         return won;
     }
 

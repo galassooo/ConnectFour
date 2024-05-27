@@ -1,0 +1,17 @@
+.custom-alert {
+    -fx-background-color: #ced0d0;
+}
+
+.custom-button {
+    -fx-background-color: #0063C9;
+    -fx-text-fill: #FFF;
+    -fx-font-size: 15px;
+    -fx-padding: 2px 2px;
+    -fx-pref-height: 25px;
+    -fx-pref-width: 70px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0, 0, 4);
+}
+
+.custom-button:hover {
+    -fx-cursor: hand;
+}

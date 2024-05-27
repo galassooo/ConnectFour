@@ -72,12 +72,14 @@ public class PreferencesFrontendController {
             stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/preferences/wrench.png"))));
             stage.setScene(scene);
             stage.setTitle(this.translationsController.translate("label.preferences"));
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     void initViewChoices() {
         // TODO: not sure about this interaction. This frontend now depends both on its backend controller AND the translations contrller. Not sure if there's better ways to handle this
+        //risolviamo sistemando i simboli
         this.preferencesView.setLanguages(this.translationsController.getSupportedLanguages());
         List<String> validSymbols = Stream.of(Symbol.values()).map(Enum::toString).toList();
 
@@ -85,6 +87,8 @@ public class PreferencesFrontendController {
     }
     void initLabels() {
         // TODO: not sure if there's a cleaner way to do this :/
+        // no, penso non ci sia un modo migliore dato che le stringe sono 'hardcodate'
+        // al massimo si potrebbe pensare una lista di label e una lista di key e ciclarle insieme
         this.preferencesView.setBoxLanguageLabel(this.translationsController.translate("label.language_tag"));
         this.preferencesView.setPlayerOneColorLabel(this.translationsController.translate("label.player_one_color"));
         this.preferencesView.setPlayerOneShapeLabel(this.translationsController.translate("label.player_one_shape"));

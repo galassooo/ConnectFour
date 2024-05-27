@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
@@ -23,10 +24,13 @@ public class HelpView {
     private ImageView image;
 
     @FXML
-    private Button closeButton;
+    private Button previousButton;
 
     @FXML
     private Button nextButton;
+
+    @FXML
+    private HBox hbox;
 
     public void setHelpLabel(String content) {
         helpLabel.setText(content);
@@ -36,17 +40,30 @@ public class HelpView {
         HowToPlayLabel.setText(content);
     }
 
-    public void setCloseButtonText(String text) {
-        closeButton.setText(text);
+    public void setPreviousButtonText(String text) {
+        previousButton.setText(text);
     }
 
-    public void setCloseButtonAction(@NotNull Consumer<ActionEvent> eventConsumer) {
-        closeButton.setOnAction(eventConsumer::accept);
+    public void setPreviousButtonAction(@NotNull Consumer<ActionEvent> eventConsumer) {
+        previousButton.setOnAction(eventConsumer::accept);
     }
 
     public void setNextButtonAction(@NotNull Consumer<ActionEvent> eventConsumer) {
         nextButton.setOnAction(eventConsumer::accept);
     }
+    public void removePreviousButton(){
+        hbox.getChildren().remove(previousButton);
+    }
+
+    public void addPreviousButton(){
+        //rimuovo e aggiungo entrambi per avere ordine corretto
+        if(!hbox.getChildren().contains(previousButton)) { //duplicate children check
+            hbox.getChildren().remove(nextButton);
+            hbox.getChildren().add(previousButton);
+            hbox.getChildren().add(nextButton);
+        }
+    }
+
 
     public void setNextButtonLabel(String label) {
         nextButton.setText(label);

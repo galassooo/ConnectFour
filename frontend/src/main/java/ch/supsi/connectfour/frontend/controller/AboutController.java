@@ -48,6 +48,7 @@ public class AboutController {
 
             Scene scene = new Scene(content);
             stage.setScene(scene);
+            stage.setTitle(translations.translate("label.about"));
 
         } catch (IOException e) {
             e.printStackTrace();

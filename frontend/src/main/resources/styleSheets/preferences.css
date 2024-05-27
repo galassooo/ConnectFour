@@ -15,14 +15,14 @@
     -fx-cursor: hand;
 }
 #pane {
-    -fx-background-color: #ced0d0;
+    -fx-background-color: #e3e3e3;
 }
 .label{
     -fx-font-size: 14;
 }
 
 .color-picker {
-    -fx-background-color: #ced0d0;
+    -fx-background-color: #e3e3e3;
     -fx-border-color: #0063C9;
     -fx-border-width: 2;
     -fx-border-radius: 3;
@@ -46,14 +46,14 @@
 }
 
 .color-picker .split-menu-button {
-    -fx-background-color: #ced0d0;
+    -fx-background-color: #e3e3e3;
 }
 
 .color-picker .split-menu-button .arrow-button {
     -fx-padding: 4;
 }
 .combo-box {
-    -fx-background-color: #ced0d0;
+    -fx-background-color: #e3e3e3;
     -fx-border-color: #0063C9;
     -fx-border-width: 2;
     -fx-background-radius: 10;

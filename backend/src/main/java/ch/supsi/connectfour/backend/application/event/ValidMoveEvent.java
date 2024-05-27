@@ -3,6 +3,7 @@ package ch.supsi.connectfour.backend.application.event;
 import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.business.symbols.Symbol;
+import org.jetbrains.annotations.NotNull;
 
 public class ValidMoveEvent extends MoveEvent {
 
@@ -62,7 +63,7 @@ public class ValidMoveEvent extends MoveEvent {
     }
 
     @Override
-    public void handle(GameEventHandler handler) {
+    public void handle(@NotNull GameEventHandler handler) {
         handler.handle(this);
     }
 }

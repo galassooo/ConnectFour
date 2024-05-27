@@ -2,6 +2,7 @@ package ch.supsi.connectfour.backend.application.event;
 
 import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
+import org.jetbrains.annotations.NotNull;
 
 public class InvalidMoveEvent extends MoveEvent {
 
@@ -24,7 +25,7 @@ public class InvalidMoveEvent extends MoveEvent {
     }
 
     @Override
-    public void handle(GameEventHandler handler) {
+    public void handle(@NotNull GameEventHandler handler) {
         handler.handle(this);
     }
 }

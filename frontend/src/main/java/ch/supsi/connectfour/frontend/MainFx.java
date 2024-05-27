@@ -127,7 +127,7 @@ public class MainFx extends Application {
         BorderPane mainBorderPane = new BorderPane();
 
         mainBorderPane.setTop(menuBar);
-        mainBorderPane.setStyle("-fx-background-color: #ced0d0;");
+        mainBorderPane.setStyle("-fx-background-color: #e3e3e3;");
 
         BorderPane gameBoardBorderPane = new BorderPane();
         gameBoardBorderPane.setTop(columnSelectors);

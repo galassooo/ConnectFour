@@ -158,7 +158,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
                     break;
                 }
                 ConnectFourPlayerInterface player = newMatrix[row][column];
-                ValidMoveEvent move = new ValidMoveEvent(player, player, column, row, player.getSymbol(), player.getColor());
+                ValidMoveEvent move = new ValidMoveEvent(player, player, column, row);
                 viewableItems.forEach(item -> item.show(move));
             }
         }

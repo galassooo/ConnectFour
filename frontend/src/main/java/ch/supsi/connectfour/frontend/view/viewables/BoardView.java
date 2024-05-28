@@ -69,8 +69,9 @@ public class BoardView implements Viewable {
     @Override
     public void show(GameEvent event) {
         if (event instanceof ValidMoveEvent e) {
-            setCellBackground(e.getRow(), e.getColumn(), e.getPlayerColor());
             setCellSymbol(e.getRow(), e.getColumn(), e.getPlayerSymbol());
+            setCellBackground(e.getRow(), e.getColumn(), e.getPlayerColor());
+
         }
     }
 

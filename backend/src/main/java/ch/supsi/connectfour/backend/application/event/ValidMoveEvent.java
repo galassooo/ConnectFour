@@ -16,21 +16,12 @@ public class ValidMoveEvent extends MoveEvent {
     private SymbolInterface playerSymbol;
     private String playerColor;
 
-    public ValidMoveEvent(@NotNull ConnectFourPlayerInterface player, @NotNull ConnectFourPlayerInterface playerToPlay, int column, int row, @NotNull SymbolInterface symbol, String color) {
-        super(String.format(getTranslator().translate("label.player_moved"), player.getName(), playerToPlay.getName()),
-                String.format(getTranslator().translate("label.player_moved_successfully"), player.getName(), row, column)
-                , player);
-        this.playerSymbol = symbol;
-        this.playerColor = color;
-        this.playerToPlay = playerToPlay;
-        this.column = column;
-        this.row = row;
-    }
-
     public ValidMoveEvent(@NotNull ConnectFourPlayerInterface player, @NotNull ConnectFourPlayerInterface playerToPlay, int column, int row) {
         super(String.format(getTranslator().translate("label.player_moved"), player.getName(), playerToPlay.getName()),
                 String.format(getTranslator().translate("label.player_moved_successfully"), player.getName(), row, column)
                 , player);
+        this.playerSymbol = player.getSymbol();
+        this.playerColor = player.getColor();
         this.playerToPlay = playerToPlay;
         this.column = column;
         this.row = row;

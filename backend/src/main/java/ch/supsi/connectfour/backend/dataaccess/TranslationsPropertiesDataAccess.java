@@ -20,11 +20,13 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
     //TODO: implementare separator lol
     private static final String LABELS_PATH = "/i18n/labels";
 
+    private static final String UI_PATH = "/i18n/UI";
     private static final String supportedLanguagesPath = "/supported-languages.properties";
 
     public static TranslationsPropertiesDataAccess myself;
 
-    protected TranslationsPropertiesDataAccess() {}
+    protected TranslationsPropertiesDataAccess() {
+    }
 
     // singleton instantiation of this data access object
     // guarantees only a single instance exists in the life of the application
@@ -55,8 +57,8 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
         ArrayList<String> supportedLanguageTags = new ArrayList<>();
 
         Properties props = this.loadSupportedLanguageTags();
-        for (Object key: props.keySet()) {
-            supportedLanguageTags.add(props.getProperty((String)key));
+        for (Object key : props.keySet()) {
+            supportedLanguageTags.add(props.getProperty((String) key));
         }
 
         return supportedLanguageTags;
@@ -80,6 +82,12 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
             e.printStackTrace();
         }
         return translations;
+    }
+
+    @Override
+    public ResourceBundle getUIResourceBundle(Locale locale) {
+        String baseName = "i18n" + File.separator + "UI.ui_labels";
+        return ResourceBundle.getBundle(baseName,locale, ResourceBundle.Control.getNoFallbackControl(FORMAT_DEFAULT));
     }
 
     private void loadTranslationsFromFile(@NotNull Path path, Locale locale, Properties translations) {

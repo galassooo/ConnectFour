@@ -5,6 +5,8 @@ import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import ch.supsi.connectfour.backend.business.preferences.PreferencesModel;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public class TranslationsController {
 
@@ -44,5 +46,8 @@ public class TranslationsController {
         return this.translationsModel.translate(key);
     }
 
+    public ResourceBundle getTranslationBundle(Locale locale){
+        return this.translationsModel.getUIResourceBundle(locale);
+    }
 }
 

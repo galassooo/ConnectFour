@@ -1,6 +1,8 @@
 package ch.supsi.connectfour.backend.application.translations;
 
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
 public interface TranslationsBusinessInterface {
 
@@ -10,5 +12,7 @@ public interface TranslationsBusinessInterface {
     boolean changeLanguage(String languageTag);
 
     String translate(String key);
+
+    ResourceBundle getUIResourceBundle(Locale locale);
 
 }

@@ -6,6 +6,7 @@ import ch.supsi.connectfour.backend.dataaccess.TranslationsPropertiesDataAccess;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 public class TranslationsModel implements TranslationsBusinessInterface {
 
@@ -45,8 +46,14 @@ public class TranslationsModel implements TranslationsBusinessInterface {
         return this.translations != null;
     }
 
+
     @Override
     public String translate(String key) {
         return this.translations.getProperty(key);
+    }
+
+    @Override
+    public ResourceBundle getUIResourceBundle(Locale locale) {
+        return this.translationsDao.getUIResourceBundle(locale);
     }
 }

@@ -2,6 +2,7 @@ package ch.supsi.connectfour.frontend.controller;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
+import ch.supsi.connectfour.frontend.model.TranslationModel;
 import ch.supsi.connectfour.frontend.view.PreferencesView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -26,6 +27,8 @@ public class PreferencesFrontendController {
     private static PreferencesFrontendController instance;
     private final PreferencesController backendController = PreferencesController.getInstance();
     private final TranslationsController translationsController = TranslationsController.getInstance();
+
+    private final TranslationModel translationModel = TranslationModel.getInstance();
     private final Stage stage = new Stage();
 
     private final static String BUNDLE_NAME = "i18n/UI.ui_labels";
@@ -46,7 +49,7 @@ public class PreferencesFrontendController {
                 return;
             }
             // TODO: not sure if this should be loaded here (resource bundle)
-            FXMLLoader loader = new FXMLLoader(fxmlUrl, ResourceBundle.getBundle(BUNDLE_NAME, Locale.forLanguageTag(String.valueOf(this.backendController.getPreference("language-tag"))), ResourceBundle.Control.getNoFallbackControl(FORMAT_DEFAULT)));
+            FXMLLoader loader = new FXMLLoader(fxmlUrl, translationModel.getUiBundle());
             Scene scene = new Scene(loader.load());
             preferencesView = loader.getController();
 

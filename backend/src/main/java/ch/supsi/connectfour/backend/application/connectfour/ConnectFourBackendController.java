@@ -57,9 +57,8 @@ public class ConnectFourBackendController {
                 currentMatch.setFinished(true);
                 return new DrawEvent(currentMatch.getPlayer1(), currentMatch.getPlayer2(), column);
             }
-            return new InvalidMoveEvent(currentMatch.getCurrentPlayer(), column);
         }
-        return new GameFinishedEvent(currentMatch.getCurrentPlayer(), column);
+        return new InvalidMoveEvent(currentMatch.getCurrentPlayer(), column);
     }
 
     public void createNewGame() {

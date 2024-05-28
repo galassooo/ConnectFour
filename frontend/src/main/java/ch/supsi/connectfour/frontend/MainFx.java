@@ -2,7 +2,6 @@ package ch.supsi.connectfour.frontend;
 
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
-import ch.supsi.connectfour.frontend.controller.StageManager;
 import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher;
@@ -14,22 +13,34 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static java.util.ResourceBundle.Control.FORMAT_DEFAULT;
 
 public class MainFx extends Application {
 
+    public static final String APP_TITLE = "ConnectFour";
     private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
 
     @Override
     public void start(Stage primaryStage) {
+        primaryStage.setResizable(false);
+        primaryStage.setTitle(APP_TITLE);
+        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/application/board.png"))));
+        primaryStage.setOnCloseRequest(
+                windowEvent -> {
+                    windowEvent.consume();
+                    primaryStage.close();
+                }
+        );
 
         // MENU BAR
         MenuBar menuBar;
@@ -117,13 +128,7 @@ public class MainFx extends Application {
         // SCENE
         Scene scene = new Scene(mainBorderPane);
 
-        // PRIMARY STAGE
-
-        StageManager ac = StageManager.getInstance();
-        ac.initializeStage(primaryStage);
-        ac.showScene(scene);
-
-        connectFourFrontendController.build(menuBarDispatcher.saveMenuItem, columnsSelectorDispatcher.getButtons(), boardView, infoBarView);
+        connectFourFrontendController.build(menuBarDispatcher.saveMenuItem, columnsSelectorDispatcher.getButtons(),primaryStage, boardView, infoBarView);
     }
     public static void main(String[] args) {
         launch(args);

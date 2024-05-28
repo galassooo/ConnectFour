@@ -85,7 +85,7 @@ public class HelpController {
         helpView.setPreviousButtonAction(e -> showSecondScreen());
         helpView.setHelpLabel(translations.translate("label.help_column"));
         helpView.setNextButtonLabel(translations.translate("label.next"));
-        helpView.setNextButtonAction((e) -> showFifthScreen());
+        helpView.setNextButtonAction((e) -> showFourthScreen());
     }
 
     private void showFourthScreen() {

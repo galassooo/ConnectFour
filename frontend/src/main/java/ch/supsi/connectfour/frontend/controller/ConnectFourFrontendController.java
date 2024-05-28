@@ -7,6 +7,7 @@ import ch.supsi.connectfour.backend.application.event.*;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.business.symbols.Symbol;
+import ch.supsi.connectfour.frontend.MainFx;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
 import ch.supsi.connectfour.frontend.view.SerializationView;
@@ -14,6 +15,7 @@ import ch.supsi.connectfour.frontend.view.viewables.Viewable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
+import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -33,6 +35,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
     private final SerializationView serializationView;
     private final TranslationsController translations;
     private static MenuItem saveMenu;
+    private static Stage primaryStage;
 
     private final List<String> playerColors;
     private final List<Symbol> playerSymbols;
@@ -54,7 +57,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
 
-    public ConnectFourFrontendController build(MenuItem saveMenuItem, List<Button> buttonList, Viewable... viewables) {
+    public ConnectFourFrontendController build(MenuItem saveMenuItem, List<Button> buttonList, Stage stage, Viewable... viewables) {
         this.buttonList.addAll(buttonList);
         saveMenu = saveMenuItem;
         viewableItems.addAll(Arrays.stream(viewables).toList());
@@ -84,12 +87,12 @@ public class ConnectFourFrontendController implements GameEventHandler {
     public void manageNew() {
         if (this.backendController.getCurrentMatch() != null) {
             // If the user confirms their choice to open a new game
-            if (this.serializationView.showConfirmationDialog(translations.translate("label.overwrite_confirmation"), translations.translate("label.confirmation"), translations.translate("label.confirm"), translations.translate("label.cancel"))) {
+            if (this.serializationView.showConfirmationDialog(translations.translate("label.overwrite_confirmation"), translations.translate("label.confirmation"), translations.translate("label.confirm"), translations.translate("label.cancel"), primaryStage)) {
                 // Update the current game stored in the controller, null indicates that it will create a new, blank instance inside the method
                 this.backendController.createNewGame();
                 // Update the save button to prevent saving on new game
                 saveMenu.setDisable(true);
-                StageManager.getInstance().setStageTitle(StageManager.APP_TITLE);
+                primaryStage.setTitle(MainFx.APP_TITLE);
                 newGame();
             }
         } else {
@@ -105,28 +108,28 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
     public void manageSave() {
         if (this.backendController.persist()) {
-            this.serializationView.showMessage(translations.translate("label.correctly_saved"), null, Alert.AlertType.INFORMATION);
+            this.serializationView.showMessage(translations.translate("label.correctly_saved"), null, Alert.AlertType.INFORMATION, primaryStage);
         } else {
-            this.serializationView.showMessage(translations.translate("label.not_correctly_saved"), null, Alert.AlertType.ERROR);
+            this.serializationView.showMessage(translations.translate("label.not_correctly_saved"), null, Alert.AlertType.ERROR, primaryStage);
         }
     }
 
     private void updateTitle(final @NotNull String gameName) {
-        StageManager.getInstance().setStageTitle(StageManager.APP_TITLE + " - " + gameName.replace(".json", ""));
+        primaryStage.setTitle(MainFx.APP_TITLE + " - " + gameName.replace(".json", ""));
     }
 
     public void manageSaveAs() {
-        final File dir = this.serializationView.askForDirectory(new File(System.getProperty("user.home")), translations.translate("label.chosen_directory"));
+        final File dir = this.serializationView.askForDirectory(new File(System.getProperty("user.home")), translations.translate("label.chosen_directory"), primaryStage);
         // Check if the dir variable points to something, whether the directory exists on the filesystem and is a directory
         if (dir != null && dir.exists() && dir.isDirectory()) {
             final String fileName = this.serializationView.showInputDialog(translations.translate("label.insert_name"), translations.translate("label.insert_name_title"));
 
             if (fileName != null && this.backendController.persist(dir, fileName)) {
-                this.serializationView.showMessage(translations.translate("label.correctly_saved"), null, Alert.AlertType.INFORMATION);
+                this.serializationView.showMessage(translations.translate("label.correctly_saved"), null, Alert.AlertType.INFORMATION, primaryStage);
                 saveMenu.setDisable(false);
                 this.updateTitle(this.backendController.getSaveName());
             } else {
-                this.serializationView.showMessage(translations.translate("label.not_correctly_saved"), null, Alert.AlertType.ERROR);
+                this.serializationView.showMessage(translations.translate("label.not_correctly_saved"), null, Alert.AlertType.ERROR, primaryStage);
             }
         }
     }
@@ -166,7 +169,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
     public void manageOpen() {
-        final File file = this.serializationView.askForFile(translations.translate("label.select_file_to_load"));
+        final File file = this.serializationView.askForFile(translations.translate("label.select_file_to_load"), primaryStage);
         /*
         If it points to an instance of File, exists, is an actual file in the filesystem and can be read
          */
@@ -179,14 +182,14 @@ public class ConnectFourFrontendController implements GameEventHandler {
                 this.updateBoard(loadedGame.getGameMatrix());
 
                 // Success!
-                this.serializationView.showMessage(translations.translate("label.loading_confirmation"), translations.translate("label.confirm"), Alert.AlertType.INFORMATION);
+                this.serializationView.showMessage(translations.translate("label.loading_confirmation"), translations.translate("label.confirm"), Alert.AlertType.INFORMATION, primaryStage);
                 saveMenu.setDisable(false);
 
                 this.updateTitle(loadedGame.getSaveName());
                 buttonList.forEach(btn -> btn.setDisable(false));
             } else {
                 // Error while loading the game
-                this.serializationView.showMessage(translations.translate("label.loading_error"), translations.translate("label.error"), Alert.AlertType.ERROR);
+                this.serializationView.showMessage(translations.translate("label.loading_error"), translations.translate("label.error"), Alert.AlertType.ERROR, primaryStage);
             }
         }
     }

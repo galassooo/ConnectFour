@@ -1,6 +1,5 @@
 package ch.supsi.connectfour.frontend.view;
 
-import ch.supsi.connectfour.frontend.controller.StageManager;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -17,12 +16,13 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class SerializationView {
+
     public SerializationView() {
     }
 
-    public void showMessage(final String message, final String title, final Alert.AlertType type) {
+    public void showMessage(final String message, final String title, final Alert.AlertType type, Stage stage) {
         Alert alert = new Alert(type);
-        StageManager.getInstance().setRootAsOwner(alert);
+        alert.initOwner(stage);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);
@@ -46,23 +46,23 @@ public class SerializationView {
         });
     }
 
-    public File askForDirectory(final File initialDirectory, final String title) {
+    public File askForDirectory(final File initialDirectory, final String title, Stage stage) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(initialDirectory);
         directoryChooser.setTitle(title);
-        return StageManager.getInstance().showDirectoryChooserDialog(directoryChooser);
+        return directoryChooser.showDialog(stage);
     }
 
-    public File askForFile(final String title) {
+    public File askForFile(final String title, Stage stage) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(title);
-        return StageManager.getInstance().showFileChooserDialog(fileChooser);
+        return fileChooser.showOpenDialog(stage);
     }
 
-    public boolean showConfirmationDialog(final String message, final String title, final String confirmText, final String cancelText) {
+    public boolean showConfirmationDialog(final String message, final String title, final String confirmText, final String cancelText, Stage stage) {
         // Create a confirmation dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        StageManager.getInstance().setRootAsOwner(alert);
+        alert.initOwner(stage);
         alert.setTitle(title);
         alert.setHeaderText(null);
         alert.setContentText(message);

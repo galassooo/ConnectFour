@@ -2,119 +2,105 @@ package ch.supsi.connectfour.backend.dataaccess;
 
 import ch.supsi.connectfour.backend.business.translations.TranslationsDataAccessInterface;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 import static java.util.ResourceBundle.Control.FORMAT_DEFAULT;
 
 public class TranslationsPropertiesDataAccess implements TranslationsDataAccessInterface {
-    // TODO: figure out why this explodes with File.separator
-    private static final String LABELS_PATH = "/i18n/labels";
+    private static final String LABELS_PATH = "i18n/labels";
+    private static final String SUPPORTED_LANGUAGES_PATH = "/supported-languages.properties";
 
-    private static final String supportedLanguagesPath = "/supported-languages.properties";
+    private static TranslationsPropertiesDataAccess myself;
 
-    public static TranslationsPropertiesDataAccess myself;
+    protected TranslationsPropertiesDataAccess() {
+    }
 
-    protected TranslationsPropertiesDataAccess() {}
-
-    // singleton instantiation of this data access object
-    // guarantees only a single instance exists in the life of the application
     public static TranslationsPropertiesDataAccess getInstance() {
         if (myself == null) {
             myself = new TranslationsPropertiesDataAccess();
         }
-
         return myself;
     }
 
     private Properties loadSupportedLanguageTags() {
         Properties supportedLanguageTags = new Properties();
-        try {
-            InputStream supportedLanguageTagsStream = this.getClass().getResourceAsStream(supportedLanguagesPath);
-            supportedLanguageTags.load(supportedLanguageTagsStream);
-
+        try (InputStream supportedLanguageTagsStream = this.getClass().getResourceAsStream(SUPPORTED_LANGUAGES_PATH)) {
+            if (supportedLanguageTagsStream != null) {
+                supportedLanguageTags.load(supportedLanguageTagsStream);
+            }
         } catch (IOException ignored) {
-            ;
+            // Handle the exception appropriately if needed
         }
-
-        // return the properties object with the loaded preferences
         return supportedLanguageTags;
     }
 
     @Override
     public List<String> getSupportedLanguageTags() {
         ArrayList<String> supportedLanguageTags = new ArrayList<>();
-
         Properties props = this.loadSupportedLanguageTags();
-        for (Object key: props.keySet()) {
-            supportedLanguageTags.add(props.getProperty((String)key));
+        for (Object key : props.keySet()) {
+            supportedLanguageTags.add(props.getProperty((String) key));
         }
-
         return supportedLanguageTags;
     }
 
     @Override
     public Properties getTranslations(Locale locale) {
         final Properties translations = new Properties();
-
         try {
-            // Access resources using the class loader
-            URL resource = this.getClass().getResource(LABELS_PATH);
-            if (resource != null) {
-                Path path = Paths.get(resource.toURI());
-                Files.walk(path)
-                        .filter(Files::isRegularFile)
-                        .filter(p -> p.toString().endsWith(".properties"))
-                        .forEach(p -> loadTranslationsFromFile(p, locale, translations));
+            Enumeration<URL> resources = getClass().getClassLoader().getResources(LABELS_PATH);
+            // TODO: remove while, there's only one loop ever
+            while (resources.hasMoreElements()) {
+                URL resource = resources.nextElement();
+                if (resource.getProtocol().equals("jar")) {
+                    // connectfour-jar-with-dependencies.jar!/i18n/labels
+                    System.out.println(resource.toString());
+                    System.out.println("ciao");
+                    processJarResource(resource, locale, translations);
+                } else {
+                    System.out.println(resource.toString());
+                    System.out.println(":(");
+                    ;
+                }
             }
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return translations;
     }
 
-    private void loadTranslationsFromFile(Path path, Locale locale, Properties translations) {
-        String[] parts = path.getFileName().toString().split("_");
-        String baseName = "i18n" + File.separator + "labels." + parts[0] + "_" + parts[1];
-        try {
-            ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale, ResourceBundle.Control.getNoFallbackControl(FORMAT_DEFAULT));
-            for (String key : bundle.keySet()) {
-                translations.put(key, bundle.getString(key));
+    private void processJarResource(URL resource, Locale locale, Properties translations) throws IOException {
+        // The path of the jar is something like jar:file:/../../../connectfour-jar-with-dependencies.jar![path of the resource]
+        String jarPath = resource.getPath().substring(5, resource.getPath().indexOf("!")); // Getting the path of the jar
+        try (JarFile jarFile = new JarFile(jarPath)) {
+            Enumeration<JarEntry> entries = jarFile.entries();
+            while (entries.hasMoreElements()) {
+                // Extracting each entry inside the jar
+                JarEntry entry = entries.nextElement();
+                // Extracting its name
+                String entryName = entry.getName();
+                if (entryName.startsWith("i18n/labels/") && entryName.endsWith(".properties")) {
+                    // ex: i18n/labels/preferences_labels_it_CH.properties
+                    String[] parts = entryName.split("/");
+                    // Can't find bundle for base name i18n.labels.help_labels_en_US.
+                    String[] lastParts = parts[2].split("_");
+                    String baseName = parts[0] + "." + parts[1] + "." + (lastParts[0] + "_" + lastParts[1]);
+                    System.out.println(baseName);
+                    ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale, ResourceBundle.Control.getNoFallbackControl(FORMAT_DEFAULT));
+                    for (String key : bundle.keySet()) {
+                        translations.put(key, bundle.getString(key));
+                    }
+                }
             }
-        } catch (MissingResourceException e) {
-            handleMissingResourceException(locale, translations);
         }
     }
 
     private void handleMissingResourceException(Locale locale, Properties translations) {
-        System.err.println("Unsupported language tag: " + locale.toLanguageTag());
-        List<String> supportedLanguageTags = this.getSupportedLanguageTags();
-        if (!supportedLanguageTags.isEmpty()) {
-            String fallbackLanguageTag = supportedLanguageTags.get(0);
-            System.err.println("Falling back to: " + fallbackLanguageTag);
-            Locale fallbackLocale = Locale.forLanguageTag(fallbackLanguageTag);
-            try {
-                URL resource = this.getClass().getResource(LABELS_PATH);
-                if (resource != null) {
-                    Path path = Paths.get(resource.toURI());
-                    Files.walk(path)
-                            .filter(Files::isRegularFile)
-                            .filter(p -> p.toString().endsWith(".properties"))
-                            .forEach(p -> loadTranslationsFromFile(p, fallbackLocale, translations));
-                }
-            } catch (IOException | URISyntaxException e) {
-                e.printStackTrace();
-            }
-        }
+
     }
-
 }
-
-

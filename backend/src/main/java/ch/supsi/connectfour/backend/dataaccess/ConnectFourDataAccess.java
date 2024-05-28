@@ -22,6 +22,9 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
         return instance;
     }
 
+    protected ConnectFourDataAccess() {
+    }
+
     @Override
     public ConnectFourBusinessInterface getSave(@NotNull final File file) {
         // Check if the file is valid: exists, is a file and can be read

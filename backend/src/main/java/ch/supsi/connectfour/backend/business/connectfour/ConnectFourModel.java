@@ -13,14 +13,13 @@ import java.util.Arrays;
 import java.util.Random;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public final class ConnectFourModel implements ConnectFourBusinessInterface {
+public class ConnectFourModel implements ConnectFourBusinessInterface {
     /*
         While technically not essential because Jackson considers non-annoted fields as
         included by default, I decided to explicitly annotate both ignored and included
         fields for serialization to state as clearly as possible what is serialized and what
         is not
      */
-    // TODO: Does it make sense to implement the singleton pattern for the model????
     @JsonIgnore
     private static ConnectFourBusinessInterface instance;
     @JsonIgnore
@@ -221,8 +220,6 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
         }
         return cnt == GRID_LENGTH;
     }
-
-    // TODO: consider if it's worth doing... not sure if we are supposed to trust that the controller knows what it is doing or if we should be cautious and make defensive copies / prevent random modifications from the outside
     private PlayerModel[][] getGameMatrixDeepCopy() {
         // Get the dimensions of the original array
         int rows = this.gameMatrix.length;

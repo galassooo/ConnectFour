@@ -2,6 +2,7 @@ package ch.supsi.connectfour.frontend;
 
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
+import ch.supsi.connectfour.frontend.controller.StageManager;
 import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher;
@@ -13,44 +14,22 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuBar;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static java.util.ResourceBundle.Control.FORMAT_DEFAULT;
 
 public class MainFx extends Application {
 
-    public static final String APP_TITLE = "ConnectFour";
-    public static Stage stage;
-
     private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
-
-    public MainFx() throws InstantiationException {
-    }
 
     @Override
     public void start(Stage primaryStage) {
-        // handle the main window close request
-        // in real life, this event should not be dealt with here!
-        // it should actually be delegated to a suitable ExitController!
-        primaryStage.setOnCloseRequest(
-                windowEvent -> {
-                    // consume the window event (the main window would be closed otherwise no matter what)
-                    windowEvent.consume();
-
-                    // hard close the primary stage
-                    // javafx guarantees the clean exit of the javafx platform, when the last application stage is closed
-                    primaryStage.close();
-                }
-        );
-        primaryStage.setResizable(false);
 
         // MENU BAR
         MenuBar menuBar;
@@ -139,20 +118,12 @@ public class MainFx extends Application {
         Scene scene = new Scene(mainBorderPane);
 
         // PRIMARY STAGE
-        primaryStage.setTitle(MainFx.APP_TITLE);
-        primaryStage.setScene(scene);
-        primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/application/board.png"))));
 
-        primaryStage.show();
+        StageManager ac = StageManager.getInstance();
+        ac.initializeStage(primaryStage);
+        ac.showScene(scene);
 
-        stage = primaryStage;
         connectFourFrontendController.build(menuBarDispatcher.saveMenuItem, columnsSelectorDispatcher.getButtons(), boardView, infoBarView);
-    }
-
-    @Override
-    public void stop(){
-        //Se ci sono processi extra, come Executors eccetera vanno chiusi qui !!!!PRIMA DEL PLATFORM EXIT!!!!
-        Platform.exit();
     }
     public static void main(String[] args) {
         launch(args);

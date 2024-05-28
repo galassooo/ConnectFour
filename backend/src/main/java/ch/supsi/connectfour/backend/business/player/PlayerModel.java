@@ -1,14 +1,15 @@
 package ch.supsi.connectfour.backend.business.player;
 
-import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public final class PlayerModel implements Cloneable {
+public class PlayerModel implements Cloneable {
     @JsonInclude
     private String name;
     @JsonInclude
@@ -34,7 +35,7 @@ public final class PlayerModel implements Cloneable {
 
 
     @Override
-    public Object clone() {
+    public @Nullable Object clone() {
         try {
             PlayerModel cloned = (PlayerModel) super.clone();
             cloned.id = this.id;
@@ -47,21 +48,21 @@ public final class PlayerModel implements Cloneable {
     }
 
     //solo per test
+    @Contract(pure = true)
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return "name: " + name;
     }
 
-    //todo: considerare un modo per rendere univoco ogni player
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PlayerModel player)) return false;
-        return Objects.equals(getName(), player.getName());
+        if (!(o instanceof PlayerModel that)) return false;
+        return getId() == that.getId() && Objects.equals(getName(), that.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getName());
+        return Objects.hash(getName(), getId());
     }
 }

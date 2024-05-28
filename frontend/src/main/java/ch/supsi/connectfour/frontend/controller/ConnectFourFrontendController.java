@@ -7,7 +7,6 @@ import ch.supsi.connectfour.backend.application.event.*;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.business.symbols.Symbol;
-import ch.supsi.connectfour.frontend.MainFx;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
 import ch.supsi.connectfour.frontend.view.SerializationView;
@@ -26,8 +25,6 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
     private static ConnectFourFrontendController instance;
     private final ConnectFourBackendController backendController;
-
-    private ColumnsSelectorDispatcher columnsSelectorDispatcher;
 
     private final List<Viewable> viewableItems = new ArrayList<>();
 
@@ -50,7 +47,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
     private ConnectFourFrontendController() {
         this.backendController = ConnectFourBackendController.getInstance();
-        this.serializationView = new SerializationView(MainFx.stage);
+        this.serializationView = new SerializationView();
         this.translations = TranslationsController.getInstance();
         this.playerColors = this.backendController.getPlayerColors();
         this.playerSymbols = this.backendController.getPlayerSymbols();
@@ -92,8 +89,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
                 this.backendController.createNewGame();
                 // Update the save button to prevent saving on new game
                 saveMenu.setDisable(true);
-                // TODO: FA SCHIFO!!!!!
-                MainFx.stage.setTitle(MainFx.APP_TITLE);
+                StageManager.getInstance().setStageTitle(StageManager.APP_TITLE);
                 newGame();
             }
         } else {
@@ -116,12 +112,12 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
     private void updateTitle(final @NotNull String gameName) {
-        MainFx.stage.setTitle(MainFx.APP_TITLE + " - " + gameName.replace(".json", ""));
+        StageManager.getInstance().setStageTitle(StageManager.APP_TITLE + " - " + gameName.replace(".json", ""));
     }
 
     public void manageSaveAs() {
         final File dir = this.serializationView.askForDirectory(new File(System.getProperty("user.home")), translations.translate("label.chosen_directory"));
-        // Check if the dir variable points to something, wether the directory exists on the filesystem and is a directory
+        // Check if the dir variable points to something, whether the directory exists on the filesystem and is a directory
         if (dir != null && dir.exists() && dir.isDirectory()) {
             final String fileName = this.serializationView.showInputDialog(translations.translate("label.insert_name"), translations.translate("label.insert_name_title"));
 
@@ -141,9 +137,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
             e.setPlayerColor(this.playerColors.get(e.getPlayer().getId()));
             e.setPlayerSymbol(this.playerSymbols.get(e.getPlayer().getId()));
             viewableItems.forEach(item -> item.show(e));
-            return;
         }
-        viewableItems.forEach(item -> item.show(event));
     }
 
     private void clearViews() {
@@ -157,7 +151,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
      *
      * @param newMatrix the matrix representing the board
      */
-    private void updateBoard(final PlayerModel[][] newMatrix) {
+    private void updateBoard(@NotNull final PlayerModel[] @NotNull [] newMatrix) {
         for (int column = newMatrix[0].length - 1; column >= 0; column--) {
             for (int row = newMatrix.length - 1; row >= 0; row--) {
                 // As soon as it finds a null cell, it knows there can't be any more tokens so it skips to the next

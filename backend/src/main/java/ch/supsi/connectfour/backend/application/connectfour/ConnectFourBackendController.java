@@ -12,12 +12,13 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ConnectFourBackendController {
     private static ConnectFourBackendController instance;
     private final PreferencesBusinessInterface preferences;
     // The match currently linked to this controller
-    private static ConnectFourBusinessInterface currentMatch;
+    private ConnectFourBusinessInterface currentMatch;
 
     // Singleton instantiation of this class
     public static ConnectFourBackendController getInstance() {
@@ -27,7 +28,7 @@ public class ConnectFourBackendController {
         return instance;
     }
 
-    private ConnectFourBackendController() {
+    protected ConnectFourBackendController() {
         preferences = PreferencesModel.getInstance();
     }
 
@@ -123,5 +124,11 @@ public class ConnectFourBackendController {
         symbols.add(Symbol.valueOf(preferences.getPreference("player-one-shape").toString()));
         symbols.add(Symbol.valueOf(preferences.getPreference("player-two-shape").toString()));
         return symbols;
+    }
+
+    //L'equals non ha senso di esistere dato che è singleton oppure ha senso perche il costruttore è protected????
+    @Override
+    public int hashCode() {
+        return Objects.hash(preferences, getCurrentMatch());
     }
 }

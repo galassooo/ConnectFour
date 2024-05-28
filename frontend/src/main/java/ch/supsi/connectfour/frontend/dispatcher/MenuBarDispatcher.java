@@ -1,10 +1,7 @@
 package ch.supsi.connectfour.frontend.dispatcher;
 
 import ch.supsi.connectfour.frontend.MainFx;
-import ch.supsi.connectfour.frontend.controller.AboutController;
-import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
-import ch.supsi.connectfour.frontend.controller.PreferencesFrontendController;
-import ch.supsi.connectfour.frontend.controller.HelpController;
+import ch.supsi.connectfour.frontend.controller.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -15,7 +12,7 @@ public class MenuBarDispatcher {
     private final PreferencesFrontendController preferencesFrontendController = PreferencesFrontendController.getInstance();
 
     private final HelpController helpController = HelpController.getInstance();
-    // TODO: decide how to handle this
+    private final StageManager stageManager = StageManager.getInstance();
     @FXML
     public MenuItem saveMenuItem;
 
@@ -37,10 +34,7 @@ public class MenuBarDispatcher {
     }
 
     public void quit(ActionEvent actionEvent) {
-        //todo ha senso creare un controller per sta cosa?
-        //secondo me non ha senso usare il gamecontroller, il ciclo di vita dell'applicazione non è relazionato
-        // in alcun modo al gioco
-        //MainFx.getInstance().stop();
+        stageManager.requestApplicationShutDown();
     }
 
     public void preferences(){ preferencesFrontendController.managePreferences(); }

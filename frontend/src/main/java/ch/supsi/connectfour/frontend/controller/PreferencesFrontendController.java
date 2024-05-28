@@ -79,7 +79,7 @@ public class PreferencesFrontendController {
         }
     }
 
-    void initViewChoices() {
+    private void initViewChoices() {
         // TODO: not sure about this interaction. This frontend now depends both on its backend controller AND the translations contrller. Not sure if there's better ways to handle this
         //risolviamo sistemando i simboli
         this.preferencesView.setLanguages(this.translationsController.getSupportedLanguages());

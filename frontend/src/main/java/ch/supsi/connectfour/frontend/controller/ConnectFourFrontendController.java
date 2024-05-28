@@ -183,6 +183,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
                 saveMenu.setDisable(false);
 
                 this.updateTitle(loadedGame.getSaveName());
+                buttonList.forEach(btn -> btn.setDisable(false));
             } else {
                 // Error while loading the game
                 this.serializationView.showMessage(translations.translate("label.loading_error"), translations.translate("label.error"), Alert.AlertType.ERROR);

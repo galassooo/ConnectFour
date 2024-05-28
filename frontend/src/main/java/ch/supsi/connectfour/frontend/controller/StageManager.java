@@ -33,7 +33,10 @@ public class StageManager {
         );
     }
 
-    protected StageManager() {
+    private StageManager() {
+    }
+    protected StageManager(Stage stage){
+        initializeStage(stage); //forza le subclass a fornire uno stage
     }
 
     public void setRootAsOwner(@NotNull Dialog<?> dialog){
@@ -53,9 +56,6 @@ public class StageManager {
 
     protected Stage getStage(){
         return root;
-    }
-    protected void setStage(Stage stage){
-        root = stage;
     }
 
     /*

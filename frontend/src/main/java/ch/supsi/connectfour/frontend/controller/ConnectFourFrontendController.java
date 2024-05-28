@@ -26,8 +26,6 @@ public class ConnectFourFrontendController implements GameEventHandler {
     private static ConnectFourFrontendController instance;
     private final ConnectFourBackendController backendController;
 
-    private ColumnsSelectorDispatcher columnsSelectorDispatcher;
-
     private final List<Viewable> viewableItems = new ArrayList<>();
 
     private final List<Button> buttonList = new ArrayList<>();
@@ -91,7 +89,6 @@ public class ConnectFourFrontendController implements GameEventHandler {
                 this.backendController.createNewGame();
                 // Update the save button to prevent saving on new game
                 saveMenu.setDisable(true);
-                // TODO: FA SCHIFO!!!!!
                 StageManager.getInstance().setStageTitle(StageManager.APP_TITLE);
                 newGame();
             }
@@ -120,7 +117,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
     public void manageSaveAs() {
         final File dir = this.serializationView.askForDirectory(new File(System.getProperty("user.home")), translations.translate("label.chosen_directory"));
-        // Check if the dir variable points to something, wether the directory exists on the filesystem and is a directory
+        // Check if the dir variable points to something, whether the directory exists on the filesystem and is a directory
         if (dir != null && dir.exists() && dir.isDirectory()) {
             final String fileName = this.serializationView.showInputDialog(translations.translate("label.insert_name"), translations.translate("label.insert_name_title"));
 

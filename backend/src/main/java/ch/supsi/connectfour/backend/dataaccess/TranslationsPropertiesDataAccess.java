@@ -1,6 +1,7 @@
 package ch.supsi.connectfour.backend.dataaccess;
 
 import ch.supsi.connectfour.backend.business.translations.TranslationsDataAccessInterface;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,6 +17,7 @@ import static java.util.ResourceBundle.Control.FORMAT_DEFAULT;
 
 public class TranslationsPropertiesDataAccess implements TranslationsDataAccessInterface {
     // TODO: figure out why this explodes with File.separator
+    //TODO: implementare separator lol
     private static final String LABELS_PATH = "/i18n/labels";
 
     private static final String supportedLanguagesPath = "/supported-languages.properties";
@@ -34,7 +36,7 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
         return myself;
     }
 
-    private Properties loadSupportedLanguageTags() {
+    private @NotNull Properties loadSupportedLanguageTags() {
         Properties supportedLanguageTags = new Properties();
         try {
             InputStream supportedLanguageTagsStream = this.getClass().getResourceAsStream(supportedLanguagesPath);
@@ -80,7 +82,7 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
         return translations;
     }
 
-    private void loadTranslationsFromFile(Path path, Locale locale, Properties translations) {
+    private void loadTranslationsFromFile(@NotNull Path path, Locale locale, Properties translations) {
         String[] parts = path.getFileName().toString().split("_");
         String baseName = "i18n" + File.separator + "labels." + parts[0] + "_" + parts[1];
         try {
@@ -93,7 +95,7 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
         }
     }
 
-    private void handleMissingResourceException(Locale locale, Properties translations) {
+    private void handleMissingResourceException(@NotNull Locale locale, Properties translations) {
         System.err.println("Unsupported language tag: " + locale.toLanguageTag());
         List<String> supportedLanguageTags = this.getSupportedLanguageTags();
         if (!supportedLanguageTags.isEmpty()) {

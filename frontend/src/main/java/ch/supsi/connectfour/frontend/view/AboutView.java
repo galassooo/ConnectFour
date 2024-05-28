@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import org.jetbrains.annotations.NotNull;
 
 import java.net.URL;
 import java.util.function.Consumer;
@@ -65,7 +66,7 @@ public class AboutView {
      *
      * @param eventConsumer the action to be performed on press
      */
-    public void setOnActButton(Consumer<ActionEvent> eventConsumer) {
+    public void setOnActButton(@NotNull Consumer<ActionEvent> eventConsumer) {
         button.setOnAction(eventConsumer::accept);
     }
 }

@@ -20,8 +20,9 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
     //TODO: implementare separator lol
     private static final String LABELS_PATH = "/i18n/labels";
 
-    private static final String UI_PATH = "/i18n/UI";
     private static final String supportedLanguagesPath = "/supported-languages.properties";
+    private static final String UI_LABELS_PATH = "i18n%sUI.ui_labels";
+    private static final String LABELS_PATH_2 = "i18n%slabels.%s_%s";
 
     public static TranslationsPropertiesDataAccess myself;
 
@@ -86,13 +87,13 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
 
     @Override
     public ResourceBundle getUIResourceBundle(Locale locale) {
-        String baseName = "i18n" + File.separator + "UI.ui_labels";
+        String baseName = String.format(UI_LABELS_PATH, File.separator);
         return ResourceBundle.getBundle(baseName,locale, ResourceBundle.Control.getNoFallbackControl(FORMAT_DEFAULT));
     }
 
     private void loadTranslationsFromFile(@NotNull Path path, Locale locale, Properties translations) {
         String[] parts = path.getFileName().toString().split("_");
-        String baseName = "i18n" + File.separator + "labels." + parts[0] + "_" + parts[1];
+        String baseName = String.format(LABELS_PATH_2, File.separator, parts[0], parts[1]);
         try {
             ResourceBundle bundle = ResourceBundle.getBundle(baseName, locale, ResourceBundle.Control.getNoFallbackControl(FORMAT_DEFAULT));
             for (String key : bundle.keySet()) {

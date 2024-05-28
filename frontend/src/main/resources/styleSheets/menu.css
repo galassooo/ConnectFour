@@ -29,7 +29,7 @@
 }
 
 .menu-item:disabled {
-    -fx-background-color: #e3e3e3;
+    -fx-background-color: #b9b9b9;
     -fx-opacity: 0.4;
 }
 

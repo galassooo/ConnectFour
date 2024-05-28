@@ -303,7 +303,6 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
         currentPlayer = currentPlayer.equals(player2) ? player1 : player2;
     }
 
-    // TODO: get rid of this once the project is ready to be submitted
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

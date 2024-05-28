@@ -18,7 +18,6 @@ public class PreferencesController {
         if (myself == null) {
             myself = new PreferencesController();
         }
-
         return myself;
     }
 

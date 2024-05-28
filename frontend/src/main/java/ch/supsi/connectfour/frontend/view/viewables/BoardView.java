@@ -2,7 +2,9 @@ package ch.supsi.connectfour.frontend.view.viewables;
 
 import ch.supsi.connectfour.backend.application.event.GameEvent;
 import ch.supsi.connectfour.backend.application.event.ValidMoveEvent;
-import ch.supsi.connectfour.backend.business.symbols.Symbol;
+import ch.supsi.connectfour.backend.application.symbol.SymbolProvider;
+import ch.supsi.connectfour.backend.application.symbol.SymbolProviderApplication;
+import ch.supsi.connectfour.backend.business.symbols.SymbolInterface;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.image.Image;
@@ -23,6 +25,7 @@ public class BoardView implements Viewable {
     @FXML
     private ImageView boardLayer;
 
+    private final SymbolProviderApplication<URL> symbolProvider = new SymbolProvider<>();
     @FXML
     public void initialize() {
         gridPaneSymbols.setStyle("-fx-grid-lines-visible: true;");
@@ -36,12 +39,12 @@ public class BoardView implements Viewable {
         boardLayer.setImage(image);
     }
 
-    private void setCellSymbol(int row, int column, Symbol symbol) {
+    private void setCellSymbol(int row, int column, SymbolInterface symbol) {
         for (javafx.scene.Node node : gridPaneSymbols.getChildren()) {
             if (node instanceof AnchorPane anchorPane && GridPane.getRowIndex(node) == row && GridPane.getColumnIndex(node) == column) {
                 for (javafx.scene.Node child : anchorPane.getChildren()) {
                     if (child instanceof ImageView) {
-                        ((ImageView) child).setImage(new Image(symbol.getResource().toExternalForm()));
+                        ((ImageView) child).setImage(new Image(symbolProvider.translate(SymbolInterface::getAsResource, symbol).toExternalForm()));
                         return;
                     }
                 }

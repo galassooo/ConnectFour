@@ -1,8 +1,9 @@
 package ch.supsi.connectfour.backend.application.event;
 
 import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
-import ch.supsi.connectfour.backend.business.player.PlayerModel;
-import ch.supsi.connectfour.backend.business.symbols.Symbol;
+import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
+import ch.supsi.connectfour.backend.business.player.PlayerBusinessInterface;
+import ch.supsi.connectfour.backend.business.symbols.SymbolInterface;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -11,11 +12,11 @@ public class ValidMoveEvent extends MoveEvent {
 
     private final int column;
     private final int row;
-    private final PlayerModel playerToPlay;
-    private Symbol playerSymbol;
+    private final ConnectFourPlayerInterface playerToPlay;
+    private SymbolInterface playerSymbol;
     private String playerColor;
 
-    public ValidMoveEvent(@NotNull PlayerModel player, @NotNull PlayerModel playerToPlay, int column, int row, @NotNull Symbol symbol, String color) {
+    public ValidMoveEvent(@NotNull ConnectFourPlayerInterface player, @NotNull ConnectFourPlayerInterface playerToPlay, int column, int row, @NotNull SymbolInterface symbol, String color) {
         super(String.format(getTranslator().translate("label.player_moved"), player.getName(), playerToPlay.getName()),
                 String.format(getTranslator().translate("label.player_moved_successfully"), player.getName(), row, column)
                 , player);
@@ -26,7 +27,7 @@ public class ValidMoveEvent extends MoveEvent {
         this.row = row;
     }
 
-    public ValidMoveEvent(@NotNull PlayerModel player, @NotNull PlayerModel playerToPlay, int column, int row) {
+    public ValidMoveEvent(@NotNull ConnectFourPlayerInterface player, @NotNull ConnectFourPlayerInterface playerToPlay, int column, int row) {
         super(String.format(getTranslator().translate("label.player_moved"), player.getName(), playerToPlay.getName()),
                 String.format(getTranslator().translate("label.player_moved_successfully"), player.getName(), row, column)
                 , player);
@@ -35,14 +36,14 @@ public class ValidMoveEvent extends MoveEvent {
         this.row = row;
     }
 
-    protected ValidMoveEvent(String s, String logMessage,@NotNull PlayerModel playerWhoWon, int column, int row) {
+    protected ValidMoveEvent(String s, String logMessage,@NotNull ConnectFourPlayerInterface playerWhoWon, int column, int row) {
         super(s, logMessage, playerWhoWon);
         this.playerToPlay = null;
         this.column = column;
         this.row = row;
     }
 
-    public void setPlayerSymbol(Symbol symbol) {
+    public void setPlayerSymbol(SymbolInterface symbol) {
         this.playerSymbol = symbol;
     }
 
@@ -50,7 +51,7 @@ public class ValidMoveEvent extends MoveEvent {
         this.playerColor = color;
     }
 
-    public Symbol getPlayerSymbol() {
+    public SymbolInterface getPlayerSymbol() {
         return playerSymbol;
     }
 

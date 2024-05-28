@@ -1,15 +1,15 @@
 package ch.supsi.connectfour.backend.application.event;
 
 import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
-import ch.supsi.connectfour.backend.business.player.PlayerModel;
+import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 public class DrawEvent extends InvalidMoveEvent {
-    private final PlayerModel otherPlayer;
+    private final ConnectFourPlayerInterface otherPlayer;
 
-    public DrawEvent(@NotNull PlayerModel player1, @NotNull PlayerModel player2, int col) {
+    public DrawEvent(@NotNull ConnectFourPlayerInterface player1, @NotNull ConnectFourPlayerInterface player2, int col) {
         super(
                 String.format(getTranslator().translate("label.player_draw"), player1.getName(), player2.getName()),
                 String.format(getTranslator().translate("label.player_caused_draw"), player1.getName(), col),
@@ -17,7 +17,7 @@ public class DrawEvent extends InvalidMoveEvent {
         otherPlayer = player2;
     }
 
-    protected DrawEvent(String message, String logMessage, PlayerModel playerModel, PlayerModel playerModel2, int column) {
+    protected DrawEvent(String message, String logMessage, ConnectFourPlayerInterface playerModel, ConnectFourPlayerInterface playerModel2, int column) {
         super(message, logMessage, playerModel, column);
         otherPlayer = playerModel2;
     }

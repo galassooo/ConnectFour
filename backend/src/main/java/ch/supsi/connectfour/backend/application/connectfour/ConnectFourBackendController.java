@@ -3,9 +3,12 @@ package ch.supsi.connectfour.backend.application.connectfour;
 import ch.supsi.connectfour.backend.application.event.*;
 import ch.supsi.connectfour.backend.application.preferences.PreferencesBusinessInterface;
 import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
-import ch.supsi.connectfour.backend.business.player.PlayerModel;
+import ch.supsi.connectfour.backend.business.player.ConnectFourPlayer;
+import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
+import ch.supsi.connectfour.backend.business.player.PlayerBusinessInterface;
 import ch.supsi.connectfour.backend.business.preferences.PreferencesModel;
 import ch.supsi.connectfour.backend.business.symbols.Symbol;
+import ch.supsi.connectfour.backend.business.symbols.SymbolInterface;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,7 +47,7 @@ public class ConnectFourBackendController {
                 currentMatch.insert(column);
                 GameEvent data;
 
-                PlayerModel playerWhoMoved = currentMatch.getCurrentPlayer();
+                ConnectFourPlayerInterface playerWhoMoved = currentMatch.getCurrentPlayer();
                 currentMatch.switchCurrentPlayer();
                 if (currentMatch.isWin()) {
                     currentMatch.setFinished(true);
@@ -62,7 +65,9 @@ public class ConnectFourBackendController {
     }
 
     public void createNewGame() {
-        currentMatch = new ConnectFourModel(new PlayerModel("P1", 0), new PlayerModel("P2", 1));
+        ConnectFourPlayerInterface p1 = new ConnectFourPlayer("P1", preferences.getPreference("player-one-color").toString(), preferences.getPreference("player-one-shape").toString());
+        ConnectFourPlayerInterface p2 = new ConnectFourPlayer("P2", preferences.getPreference("player-two-color").toString(), preferences.getPreference("player-two-shape").toString());
+        currentMatch = new ConnectFourModel(p1, p2);
     }
 
     public @Nullable ConnectFourBusinessInterface getCurrentMatch() {
@@ -111,21 +116,6 @@ public class ConnectFourBackendController {
         return currentMatch.getSaveName();
     }
 
-    public List<String> getPlayerColors() {
-        List<String> colors = new ArrayList<>();
-        colors.add(String.valueOf(preferences.getPreference("player-one-color")));
-        colors.add(String.valueOf(preferences.getPreference("player-two-color")));
-        return colors;
-    }
-
-    public List<Symbol> getPlayerSymbols() {
-        List<Symbol> symbols = new ArrayList<>();
-        symbols.add(Symbol.valueOf(preferences.getPreference("player-one-shape").toString()));
-        symbols.add(Symbol.valueOf(preferences.getPreference("player-two-shape").toString()));
-        return symbols;
-    }
-
-    //L'equals non ha senso di esistere dato che è singleton oppure ha senso perche il costruttore è protected????
     @Override
     public int hashCode() {
         return Objects.hash(preferences, getCurrentMatch());

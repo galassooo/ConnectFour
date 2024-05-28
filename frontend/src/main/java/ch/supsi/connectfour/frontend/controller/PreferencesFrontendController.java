@@ -2,7 +2,6 @@ package ch.supsi.connectfour.frontend.controller;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
-import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import ch.supsi.connectfour.frontend.view.PreferencesView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -80,12 +79,12 @@ public class PreferencesFrontendController {
     }
 
     private void initViewChoices() {
-        // TODO: not sure about this interaction. This frontend now depends both on its backend controller AND the translations contrller. Not sure if there's better ways to handle this
-        //risolviamo sistemando i simboli
         this.preferencesView.setLanguages(this.translationsController.getSupportedLanguages());
-        List<String> validSymbols = Stream.of(Symbol.values()).map(Enum::toString).toList();
 
-        this.preferencesView.setShapes(validSymbols);
+        //Guardare nella directory images/symbols/.... e fare uno split e prendere solo la parte prima dell PNG
+        //<String> validSymbols = Stream.of(Symbol2.values()).map(Enum::toString).toList();
+
+        //this.preferencesView.setShapes(validSymbols);
     }
 
     public void managePreferences() {

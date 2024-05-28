@@ -127,11 +127,11 @@ public class MainFx extends Application {
 
         // SCENE
         Scene scene = new Scene(mainBorderPane);
-
+        primaryStage.setScene(scene);
+        primaryStage.show();
         connectFourFrontendController.build(menuBarDispatcher.saveMenuItem, columnsSelectorDispatcher.getButtons(),primaryStage, boardView, infoBarView);
     }
     public static void main(String[] args) {
         launch(args);
     }
-
 }

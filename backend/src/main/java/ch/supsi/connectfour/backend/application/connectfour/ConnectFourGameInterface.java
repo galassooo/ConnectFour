@@ -1,6 +1,6 @@
 package ch.supsi.connectfour.backend.application.connectfour;
 
-import ch.supsi.connectfour.backend.business.player.PlayerModel;
+import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 
 public interface ConnectFourGameInterface {
     int getLastPositioned(int column);
@@ -12,7 +12,7 @@ public interface ConnectFourGameInterface {
     void insert(int column);
     void setFinished(boolean finished);
 
-    PlayerModel getCurrentPlayer();
-    PlayerModel getPlayer1();
-    PlayerModel getPlayer2();
+    ConnectFourPlayerInterface getCurrentPlayer();
+    ConnectFourPlayerInterface getPlayer1();
+    ConnectFourPlayerInterface getPlayer2();
 }

@@ -4,11 +4,11 @@ import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBackendCo
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
 import ch.supsi.connectfour.backend.application.event.*;
+import ch.supsi.connectfour.backend.application.symbol.SymbolProvider;
+import ch.supsi.connectfour.backend.application.symbol.SymbolProviderApplication;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
-import ch.supsi.connectfour.backend.business.player.PlayerModel;
-import ch.supsi.connectfour.backend.business.symbols.Symbol;
+import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 import ch.supsi.connectfour.frontend.MainFx;
-import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
 import ch.supsi.connectfour.frontend.view.SerializationView;
 import ch.supsi.connectfour.frontend.view.viewables.Viewable;
@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,9 +37,8 @@ public class ConnectFourFrontendController implements GameEventHandler {
     private final TranslationsController translations;
     private static MenuItem saveMenu;
     private static Stage primaryStage;
+    private static final SymbolProviderApplication<URL> symbolProvider = new SymbolProvider<>();
 
-    private final List<String> playerColors;
-    private final List<Symbol> playerSymbols;
 
 
     public static ConnectFourFrontendController getInstance() {
@@ -52,8 +52,6 @@ public class ConnectFourFrontendController implements GameEventHandler {
         this.backendController = ConnectFourBackendController.getInstance();
         this.serializationView = new SerializationView();
         this.translations = TranslationsController.getInstance();
-        this.playerColors = this.backendController.getPlayerColors();
-        this.playerSymbols = this.backendController.getPlayerSymbols();
     }
 
 
@@ -137,8 +135,6 @@ public class ConnectFourFrontendController implements GameEventHandler {
     @Override
     public void handle(MoveEvent event) {
         if (event instanceof ValidMoveEvent e) {
-            e.setPlayerColor(this.playerColors.get(e.getPlayer().getId()));
-            e.setPlayerSymbol(this.playerSymbols.get(e.getPlayer().getId()));
             viewableItems.forEach(item -> item.show(e));
         }
     }
@@ -154,15 +150,15 @@ public class ConnectFourFrontendController implements GameEventHandler {
      *
      * @param newMatrix the matrix representing the board
      */
-    private void updateBoard(@NotNull final PlayerModel[] @NotNull [] newMatrix) {
+    private void updateBoard(@NotNull final ConnectFourPlayerInterface[] @NotNull [] newMatrix) {
         for (int column = newMatrix[0].length - 1; column >= 0; column--) {
             for (int row = newMatrix.length - 1; row >= 0; row--) {
                 // As soon as it finds a null cell, it knows there can't be any more tokens so it skips to the next
                 if (newMatrix[row][column] == null) {
                     break;
                 }
-                PlayerModel player = newMatrix[row][column];
-                ValidMoveEvent move = new ValidMoveEvent(player, player, column, row, playerSymbols.get(player.getId()), playerColors.get(player.getId()));
+                ConnectFourPlayerInterface player = newMatrix[row][column];
+                ValidMoveEvent move = new ValidMoveEvent(player, player, column, row, player.getSymbol(), player.getColor());
                 viewableItems.forEach(item -> item.show(move));
             }
         }

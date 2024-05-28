@@ -1,7 +1,8 @@
 package ch.supsi.connectfour.backend.business.connectfour;
 
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
-import ch.supsi.connectfour.backend.business.player.PlayerModel;
+import ch.supsi.connectfour.backend.business.player.ConnectFourPlayer;
+import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 import ch.supsi.connectfour.backend.dataaccess.ConnectFourDataAccess;
 import com.fasterxml.jackson.annotation.*;
 import org.jetbrains.annotations.NotNull;
@@ -43,19 +44,19 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
 
     // Represents the game board. Contains null if the cell is empty, or a reference to an instance of PlayerModel if a player is present
     @JsonInclude
-    private PlayerModel[][] gameMatrix;
+    private ConnectFourPlayerInterface[][] gameMatrix;
 
     // The first player
     @JsonInclude
-    private PlayerModel player1;
+    private ConnectFourPlayerInterface player1;
 
     // The second player
     @JsonInclude
-    private PlayerModel player2;
+    private ConnectFourPlayerInterface player2;
 
     // Player currently allowed to move
     @JsonInclude
-    private PlayerModel currentPlayer;
+    private ConnectFourPlayerInterface currentPlayer;
     // Gives information about wether or not the last move operation was valid or not
     @JsonInclude
     private boolean wasLastMoveValid;
@@ -70,14 +71,14 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
     }
 
     @JsonIgnore
-    public ConnectFourModel(PlayerModel player1, PlayerModel player2) {
+    public ConnectFourModel(ConnectFourPlayerInterface player1, ConnectFourPlayerInterface player2) {
         if (player2 == null || player1 == null)
             throw new IllegalArgumentException("Players cannot be null");
 
         this.player1 = player1;
         this.player2 = player2;
         currentPlayer = new Random().nextBoolean() ? player1 : player2;
-        this.gameMatrix = new PlayerModel[GRID_HEIGHT][GRID_LENGTH];
+        this.gameMatrix = new ConnectFourPlayer[GRID_HEIGHT][GRID_LENGTH];
         this.lastPositionOccupied = new int[GRID_LENGTH];
         this.dataAccess = ConnectFourDataAccess.getInstance();
     }
@@ -220,20 +221,20 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
         }
         return cnt == GRID_LENGTH;
     }
-    private PlayerModel[][] getGameMatrixDeepCopy() {
+    private ConnectFourPlayerInterface[][] getGameMatrixDeepCopy() {
         // Get the dimensions of the original array
         int rows = this.gameMatrix.length;
         int cols = gameMatrix[0].length;
 
         // Create a new array with the same dimensions
-        PlayerModel[][] copiedMatrix = new PlayerModel[rows][cols];
+        ConnectFourPlayerInterface[][] copiedMatrix = new ConnectFourPlayer[rows][cols];
 
         // Deep copy each element from the original array to the new array
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 // Perform a deep copy of the PlayerModel object
                 if (this.gameMatrix[i][j] != null) {
-                    copiedMatrix[i][j] = (PlayerModel) this.gameMatrix[i][j].clone();
+                    copiedMatrix[i][j] = (ConnectFourPlayerInterface) this.gameMatrix[i][j].clone();
                 }
             }
         }
@@ -241,18 +242,18 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
     }
 
     @Override
-    public PlayerModel getCurrentPlayer() {
+    public ConnectFourPlayerInterface getCurrentPlayer() {
         return currentPlayer;
     }
 
     @Override
-    public PlayerModel getPlayer1() {
-        return (PlayerModel) player1.clone();
+    public ConnectFourPlayerInterface getPlayer1() {
+        return (ConnectFourPlayerInterface) player1.clone();
     }
 
     @Override
-    public PlayerModel getPlayer2() {
-        return (PlayerModel) player2.clone();
+    public ConnectFourPlayerInterface getPlayer2() {
+        return (ConnectFourPlayerInterface) player2.clone();
     }
 
     /**
@@ -308,7 +309,7 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
         StringBuilder sb = new StringBuilder();
         for (int row = 0; row < GRID_HEIGHT; row++) {
             for (int col = 0; col < GRID_LENGTH; col++) {
-                PlayerModel cell = gameMatrix[row][col];
+                ConnectFourPlayerInterface cell = gameMatrix[row][col];
                 if (cell == null) {
                     sb.append("0 ");
                 } else if (cell.equals(player1)) {
@@ -354,7 +355,7 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
      */
     @JsonGetter
     @Override
-    public PlayerModel[][] getGameMatrix() {
+    public ConnectFourPlayerInterface[][] getGameMatrix() {
         return this.getGameMatrixDeepCopy();
     }
 
@@ -374,22 +375,22 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
     }
 
     @JsonSetter
-    private void setGameMatrix(PlayerModel[][] gameMatrix) {
+    private void setGameMatrix(ConnectFourPlayerInterface[][] gameMatrix) {
         this.gameMatrix = gameMatrix;
     }
 
     @JsonSetter
-    private void setPlayer1(PlayerModel player1) {
+    private void setPlayer1(ConnectFourPlayerInterface player1) {
         this.player1 = player1;
     }
 
     @JsonSetter
-    private void setPlayer2(PlayerModel player2) {
+    private void setPlayer2(ConnectFourPlayerInterface player2) {
         this.player2 = player2;
     }
 
     @JsonSetter
-    private void setCurrentPlayer(PlayerModel currentPlayer) {
+    private void setCurrentPlayer(ConnectFourPlayerInterface currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
 

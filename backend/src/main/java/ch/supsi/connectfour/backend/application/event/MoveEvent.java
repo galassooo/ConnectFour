@@ -1,19 +1,20 @@
 package ch.supsi.connectfour.backend.application.event;
 
-import ch.supsi.connectfour.backend.business.player.PlayerModel;
+import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
+import ch.supsi.connectfour.backend.business.player.PlayerBusinessInterface;
 
 import java.util.Objects;
 
 public abstract class MoveEvent extends GameEvent {
-    private final PlayerModel player;
+    private final ConnectFourPlayerInterface player;
 
-    protected MoveEvent(String message, String logMessage, PlayerModel player) {
+    protected MoveEvent(String message, String logMessage, ConnectFourPlayerInterface player) {
         super(message, logMessage);
         this.player = player;
     }
 
-    public PlayerModel getPlayer() {
-        return (PlayerModel) player.clone();
+    public ConnectFourPlayerInterface getPlayer() {
+        return (ConnectFourPlayerInterface) player.clone();
     }
 
     @Override

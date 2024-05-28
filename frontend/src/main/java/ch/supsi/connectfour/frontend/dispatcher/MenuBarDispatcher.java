@@ -12,7 +12,6 @@ public class MenuBarDispatcher {
     private final PreferencesFrontendController preferencesFrontendController = PreferencesFrontendController.getInstance();
 
     private final HelpController helpController = HelpController.getInstance();
-    private final StageManager stageManager = StageManager.getInstance();
     @FXML
     public MenuItem saveMenuItem;
 
@@ -34,7 +33,7 @@ public class MenuBarDispatcher {
     }
 
     public void quit(ActionEvent actionEvent) {
-        stageManager.requestApplicationShutDown();
+        //ecsit
     }
 
     public void preferences(){ preferencesFrontendController.managePreferences(); }

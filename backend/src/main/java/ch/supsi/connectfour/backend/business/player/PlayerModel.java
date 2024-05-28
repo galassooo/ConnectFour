@@ -9,16 +9,15 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class PlayerModel implements Cloneable {
+class PlayerModel implements Cloneable, PlayerBusinessInterface{
     @JsonInclude
     private String name;
     @JsonInclude
     private int id;
 
     @JsonCreator
-    public PlayerModel(@JsonProperty(value = "name") String name, @JsonProperty(value = "id") int id) {
+    public PlayerModel(@JsonProperty(value = "name") String name) {
         this.name = name;
-        this.id = id;
     }
 
     // Getters and setters
@@ -27,10 +26,6 @@ public class PlayerModel implements Cloneable {
     }
     public int getId() {
         return id;
-    }
-
-    public void setName(String name) {
-        this.name = name == null || name.isEmpty() || name.isBlank() ? "not available" : name;
     }
 
 

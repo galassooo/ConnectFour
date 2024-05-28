@@ -1,20 +1,27 @@
 package ch.supsi.connectfour.backend.business.symbols;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.InputStream;
 import java.net.URL;
 
-public enum Symbol {
-    STAR(Symbol.class.getResource("/images/symbols/star.PNG")),
-    HEART(Symbol.class.getResource("/images/symbols/heart.PNG")),
-    CIRCLE(Symbol.class.getResource("/images/symbols/circle.PNG")),
-    SQUARE(Symbol.class.getResource("/images/symbols/square.PNG"));
+public class Symbol implements SymbolInterface{
 
-    final URL resource;
+    private final String value;
 
-    Symbol(URL resourceURL) {
-        resource = resourceURL;
+    public Symbol(@NotNull String value) {
+        this.value = value;
     }
 
-    public URL getResource() {
-        return resource;
+    public URL getAsResource(){
+        return getClass().getResource(value);
+    }
+
+    public Character getAsChar(){
+        return value.charAt(0);
+    }
+
+    public InputStream getResourceStream(){
+        return getClass().getResourceAsStream(value);
     }
 }

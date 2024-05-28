@@ -1,11 +1,17 @@
 package ch.supsi.connectfour.frontend;
 
+import ch.supsi.connectfour.backend.application.symbol.SymbolProvider;
+import ch.supsi.connectfour.backend.business.symbols.Symbol;
+import ch.supsi.connectfour.backend.business.symbols.SymbolInterface;
+
+import java.net.URL;
+import java.util.List;
+
 public class Main {
 
     public static void main(String[] args) {
         MainFx.main(args);
     }
-
 }
 /*TODO
 

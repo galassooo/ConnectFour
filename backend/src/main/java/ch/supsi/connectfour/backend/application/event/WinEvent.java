@@ -1,24 +1,25 @@
 package ch.supsi.connectfour.backend.application.event;
 
 import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
-import ch.supsi.connectfour.backend.business.player.PlayerModel;
+import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
+import ch.supsi.connectfour.backend.business.player.PlayerBusinessInterface;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 
 public class WinEvent extends ValidMoveEvent {
 
-    private final PlayerModel playerWhoWon;
+    private final ConnectFourPlayerInterface playerWhoWon;
 
-    public WinEvent(PlayerModel playerWhoWon, int column, int row) {
+    public WinEvent(ConnectFourPlayerInterface playerWhoWon, int column, int row) {
         super(String.format(getTranslator().translate("label.player_won"), playerWhoWon.getName()),
                 String.format(getTranslator().translate("label.player_won_where"), playerWhoWon.getName(), column, row),
                 playerWhoWon, column, row);
         this.playerWhoWon = playerWhoWon;
     }
 
-    public PlayerModel getPlayerWhoWon() {
-        return (PlayerModel) playerWhoWon.clone(); //safety copy
+    public ConnectFourPlayerInterface getPlayerWhoWon() {
+        return (ConnectFourPlayerInterface) playerWhoWon.clone(); //safety copy
     }
 
     @Override

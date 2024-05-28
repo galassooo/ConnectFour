@@ -88,6 +88,7 @@ public final class ConnectFourModel implements ConnectFourBusinessInterface {
      *
      * @return true if one of the players won, false if none won yet
      */
+    @JsonIgnore
     @Override
     public boolean isWin() {
         //double start = System.currentTimeMillis();

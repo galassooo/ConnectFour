@@ -49,5 +49,4 @@ public class TranslationsModel implements TranslationsBusinessInterface {
     public String translate(String key) {
         return this.translations.getProperty(key);
     }
-
 }

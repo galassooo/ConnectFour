@@ -4,6 +4,7 @@ import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessI
 import ch.supsi.connectfour.backend.business.connectfour.ConnectFourDataAccessInterface;
 import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
 
+import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.jetbrains.annotations.NotNull;
@@ -33,8 +34,12 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
 
         try {
             loadedGame = mapper.readValue(file, ConnectFourModel.class);
+        } catch (StreamReadException e) {
+            System.err.println("Error while reading stream");
+            return null;
         } catch (final IOException e) {
             System.err.println("Error reading file: " + file.getAbsolutePath());
+            e.printStackTrace();
             return null;
         }
         return loadedGame;

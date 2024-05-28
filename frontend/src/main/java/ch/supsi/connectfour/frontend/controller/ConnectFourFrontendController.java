@@ -151,7 +151,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
      *
      * @param newMatrix the matrix representing the board
      */
-    private void updateBoard(@NotNull final PlayerModel[][] newMatrix) {
+    private void updateBoard(@NotNull final PlayerModel[] @NotNull [] newMatrix) {
         for (int column = newMatrix[0].length - 1; column >= 0; column--) {
             for (int row = newMatrix.length - 1; row >= 0; row--) {
                 // As soon as it finds a null cell, it knows there can't be any more tokens so it skips to the next

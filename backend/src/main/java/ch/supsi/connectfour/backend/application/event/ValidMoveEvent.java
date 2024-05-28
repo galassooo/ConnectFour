@@ -5,6 +5,8 @@ import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class ValidMoveEvent extends MoveEvent {
 
     private final int column;
@@ -13,7 +15,7 @@ public class ValidMoveEvent extends MoveEvent {
     private Symbol playerSymbol;
     private String playerColor;
 
-    public ValidMoveEvent(PlayerModel player, PlayerModel playerToPlay, int column, int row, Symbol symbol, String color) {
+    public ValidMoveEvent(@NotNull PlayerModel player, @NotNull PlayerModel playerToPlay, int column, int row, @NotNull Symbol symbol, String color) {
         super(String.format(getTranslator().translate("label.player_moved"), player.getName(), playerToPlay.getName()),
                 String.format(getTranslator().translate("label.player_moved_successfully"), player.getName(), row, column)
                 , player);
@@ -24,7 +26,7 @@ public class ValidMoveEvent extends MoveEvent {
         this.row = row;
     }
 
-    public ValidMoveEvent(PlayerModel player, PlayerModel playerToPlay, int column, int row) {
+    public ValidMoveEvent(@NotNull PlayerModel player, @NotNull PlayerModel playerToPlay, int column, int row) {
         super(String.format(getTranslator().translate("label.player_moved"), player.getName(), playerToPlay.getName()),
                 String.format(getTranslator().translate("label.player_moved_successfully"), player.getName(), row, column)
                 , player);
@@ -33,7 +35,7 @@ public class ValidMoveEvent extends MoveEvent {
         this.row = row;
     }
 
-    protected ValidMoveEvent(String s, String logMessage, PlayerModel playerWhoWon, int column, int row) {
+    protected ValidMoveEvent(String s, String logMessage,@NotNull PlayerModel playerWhoWon, int column, int row) {
         super(s, logMessage, playerWhoWon);
         this.playerToPlay = null;
         this.column = column;
@@ -67,5 +69,18 @@ public class ValidMoveEvent extends MoveEvent {
     @Override
     public void handle(@NotNull GameEventHandler handler) {
         handler.handle(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ValidMoveEvent that)) return false;
+        if (!super.equals(o)) return false;
+        return getColumn() == that.getColumn() && getRow() == that.getRow() && Objects.equals(playerToPlay, that.playerToPlay) && getPlayerSymbol() == that.getPlayerSymbol() && Objects.equals(getPlayerColor(), that.getPlayerColor());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getColumn(), getRow(), playerToPlay, getPlayerSymbol(), getPlayerColor());
     }
 }

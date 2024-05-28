@@ -4,6 +4,8 @@ import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
 import ch.supsi.connectfour.backend.business.player.PlayerModel;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public class WinEvent extends ValidMoveEvent {
 
     private final PlayerModel playerWhoWon;
@@ -22,5 +24,18 @@ public class WinEvent extends ValidMoveEvent {
     @Override
     public void handle(@NotNull GameEventHandler handler) {
         handler.handle(this);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof WinEvent winEvent)) return false;
+        if (!super.equals(o)) return false;
+        return Objects.equals(getPlayerWhoWon(), winEvent.getPlayerWhoWon());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), getPlayerWhoWon());
     }
 }

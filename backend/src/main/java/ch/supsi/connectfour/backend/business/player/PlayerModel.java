@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public final class PlayerModel implements Cloneable {
+public class PlayerModel implements Cloneable {
     @JsonInclude
     private String name;
     @JsonInclude

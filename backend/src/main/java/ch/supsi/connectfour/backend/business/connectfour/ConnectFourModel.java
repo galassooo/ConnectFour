@@ -291,6 +291,7 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
      * @param column colonna della quale si vuole ottenere l'ultima riga occupata
      * @return l'indice dell'ultima riga occupata in quella colonna
      */
+    @JsonIgnore
     @Override
     public int getLastPositioned(int column) {
         return GRID_HEIGHT - lastPositionOccupied[column];

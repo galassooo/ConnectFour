@@ -4,11 +4,10 @@ import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBackendCo
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
 import ch.supsi.connectfour.backend.application.event.*;
-import ch.supsi.connectfour.backend.application.symbol.SymbolProvider;
-import ch.supsi.connectfour.backend.application.symbol.SymbolProviderApplication;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 import ch.supsi.connectfour.frontend.MainFx;
+import ch.supsi.connectfour.frontend.model.ConnectFourModel;
 import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
 import ch.supsi.connectfour.frontend.view.SerializationView;
 import ch.supsi.connectfour.frontend.view.viewables.Viewable;
@@ -27,7 +26,7 @@ import java.util.List;
 public class ConnectFourFrontendController implements GameEventHandler {
 
     private static ConnectFourFrontendController instance;
-    private final ConnectFourBackendController backendController;
+    private final ConnectFourModel model;
 
     private final List<Viewable> viewableItems = new ArrayList<>();
 
@@ -37,7 +36,6 @@ public class ConnectFourFrontendController implements GameEventHandler {
     private final TranslationsController translations;
     private static MenuItem saveMenu;
     private static Stage primaryStage;
-    private static final SymbolProviderApplication<URL> symbolProvider = new SymbolProvider<>();
 
 
 
@@ -49,7 +47,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
     private ConnectFourFrontendController() {
-        this.backendController = ConnectFourBackendController.getInstance();
+        this.model = new ConnectFourModel();
         this.serializationView = new SerializationView();
         this.translations = TranslationsController.getInstance();
     }
@@ -57,8 +55,10 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
     public ConnectFourFrontendController build(MenuItem saveMenuItem, List<Button> buttonList, Stage stage, Viewable... viewables) {
         this.buttonList.addAll(buttonList);
+        primaryStage = stage;
         saveMenu = saveMenuItem;
         viewableItems.addAll(Arrays.stream(viewables).toList());
+        primaryStage = stage;
         InfoBarView.setDefaultMessage(this.translations.translate("label.infobar_welcome"));
         return getInstance();
     }
@@ -69,7 +69,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
      * @param column colonna nel quale il giocatore intende inserire la pedina
      */
     public void manageColumnSelection(int column) {
-        GameEvent data = backendController.playerMove(column);
+        GameEvent data = model.playerMove(column);
 
         data.handle(this);
     }
@@ -83,11 +83,9 @@ public class ConnectFourFrontendController implements GameEventHandler {
      */
 
     public void manageNew() {
-        if (this.backendController.getCurrentMatch() != null) {
+        if (!model.isCurrentMatchNull()) {
             // If the user confirms their choice to open a new game
             if (this.serializationView.showConfirmationDialog(translations.translate("label.overwrite_confirmation"), translations.translate("label.confirmation"), translations.translate("label.confirm"), translations.translate("label.cancel"), primaryStage)) {
-                // Update the current game stored in the controller, null indicates that it will create a new, blank instance inside the method
-                this.backendController.createNewGame();
                 // Update the save button to prevent saving on new game
                 saveMenu.setDisable(true);
                 primaryStage.setTitle(MainFx.APP_TITLE);
@@ -101,11 +99,11 @@ public class ConnectFourFrontendController implements GameEventHandler {
     public void newGame() {
         this.clearViews();
         buttonList.forEach(btn -> btn.setDisable(false));
-        backendController.createNewGame();
+        model.createNewGame();
     }
 
     public void manageSave() {
-        if (this.backendController.persist()) {
+        if (model.persist()) {
             this.serializationView.showMessage(translations.translate("label.correctly_saved"), null, Alert.AlertType.INFORMATION, primaryStage);
         } else {
             this.serializationView.showMessage(translations.translate("label.not_correctly_saved"), null, Alert.AlertType.ERROR, primaryStage);
@@ -122,10 +120,10 @@ public class ConnectFourFrontendController implements GameEventHandler {
         if (dir != null && dir.exists() && dir.isDirectory()) {
             final String fileName = this.serializationView.showInputDialog(translations.translate("label.insert_name"), translations.translate("label.insert_name_title"));
 
-            if (fileName != null && this.backendController.persist(dir, fileName)) {
+            if (fileName != null && model.persist(dir, fileName)) {
                 this.serializationView.showMessage(translations.translate("label.correctly_saved"), null, Alert.AlertType.INFORMATION, primaryStage);
                 saveMenu.setDisable(false);
-                this.updateTitle(this.backendController.getSaveName());
+                this.updateTitle(this.model.getSaveName());
             } else {
                 this.serializationView.showMessage(translations.translate("label.not_correctly_saved"), null, Alert.AlertType.ERROR, primaryStage);
             }
@@ -170,7 +168,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
         If it points to an instance of File, exists, is an actual file in the filesystem and can be read
          */
         if (file != null && file.exists() && file.isFile() && file.canRead()) {
-            final ConnectFourBusinessInterface loadedGame = this.backendController.tryLoadingSave(file);
+            final ConnectFourBusinessInterface loadedGame = model.tryLoadingSave(file);
             if (loadedGame != null) {
 
                 this.clearViews();

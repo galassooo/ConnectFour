@@ -86,6 +86,10 @@ public class ConnectFourBackendController {
      * @return true if the operation succeeded, false if it failed
      */
     public boolean persist(@Nullable final File outputDirectory, @Nullable final String saveName) {
+        // TODO: fix this otherwise NPE
+        if (currentMatch == null) {
+            return false;
+        }
         return currentMatch.persist(outputDirectory, saveName);
     }
 

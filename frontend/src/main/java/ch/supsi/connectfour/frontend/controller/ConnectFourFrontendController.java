@@ -61,6 +61,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
         primaryStage = stage;
         saveMenu = saveMenuItem;
         viewableItems.addAll(Arrays.stream(viewables).toList());
+        primaryStage = stage;
         InfoBarView.setDefaultMessage(this.translations.translate("label.infobar_welcome"));
         return getInstance();
     }

@@ -48,6 +48,7 @@ public class PreferencesFrontendController {
 
             this.initViewChoices();
             this.preferencesView.initSaveListener(this.translationsController.translate("label.preferences_please_choose"), this.translationsController.translate("label.preferences_cannot_save"));
+            this.preferencesView.setColorPickerLocale(model.getLanguage());
 
             // todo: è giusto che la view venga inizializzata qui dentro nel controller??
             preferencesView.setOnSaveButton((e) -> {

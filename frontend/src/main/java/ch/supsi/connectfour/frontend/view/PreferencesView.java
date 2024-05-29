@@ -10,6 +10,7 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.Consumer;
 
 public class PreferencesView {
@@ -87,13 +88,18 @@ public class PreferencesView {
             cBox.setVisibleRowCount(3);
         });
     }
+    public void setColorPickerLocale(Locale locale) {
+        Locale.setDefault(locale);
+    }
+
     public void setLanguages(List<String> supportedLanguages) {
         // TODO: this displays the whole language tag in the format IT-CH, not sure if we want to process the tag further and only display the language (IT). That would have to be done in the frontend controller
         languageComboBox.getItems().setAll(supportedLanguages);
         languageComboBox.getSelectionModel().selectFirst();
     }
 
-    public PreferencesView() {}
+    public PreferencesView() {
+    }
 
 
     // TODO: ?????

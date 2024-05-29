@@ -1,8 +1,6 @@
 package ch.supsi.connectfour.frontend.dispatcher;
 
-import ch.supsi.connectfour.frontend.MainFx;
 import ch.supsi.connectfour.frontend.controller.*;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 
@@ -12,6 +10,7 @@ public class MenuBarDispatcher {
     private final PreferencesFrontendController preferencesFrontendController = PreferencesFrontendController.getInstance();
 
     private final HelpController helpController = HelpController.getInstance();
+    private final ExitController exitController = new ExitController();
     @FXML
     public MenuItem saveMenuItem;
 
@@ -32,8 +31,8 @@ public class MenuBarDispatcher {
         connectFourFrontendController.manageSaveAs();
     }
 
-    public void quit(ActionEvent actionEvent) {
-        //ecsit
+    public void quit() {
+        exitController.manageExit();
     }
 
     public void preferences(){ preferencesFrontendController.managePreferences(); }

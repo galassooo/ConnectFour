@@ -3,13 +3,12 @@ package ch.supsi.connectfour.frontend;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
 import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
-import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
+import ch.supsi.connectfour.frontend.controller.*;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher;
 import ch.supsi.connectfour.frontend.view.viewables.BoardView;
 import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -22,14 +21,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.ResourceBundle;
-
-import static java.util.ResourceBundle.Control.FORMAT_DEFAULT;
 
 public class MainFx extends Application {
 
     public static final String APP_TITLE = "ConnectFour";
     private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
+    //private final ExitController exitController;
     // TODO: forse da cambiare...
     private final TranslationsModel translationsModel = TranslationsModel.getInstance();
 
@@ -77,6 +74,7 @@ public class MainFx extends Application {
             columnsSelectorDispatcher = columnSelectorsLoader.getController();
 
         } catch (IOException e) {
+            // TODO: anche no
             throw new RuntimeException(e);
         }
 

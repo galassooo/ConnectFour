@@ -2,6 +2,7 @@ package ch.supsi.connectfour.frontend.view;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
+import javafx.beans.binding.IntegerBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -47,6 +48,7 @@ public class PreferencesView {
 
         // TODO: not a fan of this because we are defining logic inside a view, but not sure how to handle this since otherwise I'd need to get access to UI elements from the outside (having references to the needed UI elements in the frontend controller) which is ehhhh
         // Binds this condition to the save button, enabling or disabling it depending on if the condition is met
+
         BooleanBinding saveButtonDisabledBinding = Bindings.createBooleanBinding(() -> {
                     Object playerOneColor = playerOneColorPicker.getValue();
                     Object playerTwoColor = playerTwoColorPicker.getValue();

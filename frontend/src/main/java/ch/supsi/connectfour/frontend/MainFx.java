@@ -2,6 +2,7 @@ package ch.supsi.connectfour.frontend;
 
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
+import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher;
@@ -29,6 +30,8 @@ public class MainFx extends Application {
 
     public static final String APP_TITLE = "ConnectFour";
     private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
+    // TODO: forse da cambiare...
+    private final TranslationsModel translationsModel = TranslationsModel.getInstance();
 
     @Override
     public void start(Stage primaryStage) {
@@ -68,8 +71,8 @@ public class MainFx extends Application {
                 return;
             }
 
-            //TODO DA CAMBIAREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
-            FXMLLoader columnSelectorsLoader = new FXMLLoader(fxmlUrl, ResourceBundle.getBundle("i18n/UI/ui_labels", Locale.forLanguageTag(String.valueOf(PreferencesController.getInstance().getPreference("language-tag"))), ResourceBundle.Control.getNoFallbackControl(FORMAT_DEFAULT)));
+            //TODO DA CAMBIAREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE -> ORA VA BENEEEEE??????
+            FXMLLoader columnSelectorsLoader = new FXMLLoader(fxmlUrl, translationsModel.getUIResourceBundle(Locale.forLanguageTag(String.valueOf(PreferencesController.getInstance().getPreference("language-tag")))));
             columnSelectors = columnSelectorsLoader.load();
             columnsSelectorDispatcher = columnSelectorsLoader.getController();
 

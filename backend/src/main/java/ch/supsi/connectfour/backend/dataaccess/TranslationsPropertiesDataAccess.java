@@ -27,7 +27,6 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
 
     private static final String supportedLanguagesPath = "/supported-languages.properties";
     private static final String UI_LABELS_PATH = "i18n/UI/ui_labels";
-    private static final String LABELS_PATH_2 = "i18n/labels.%s_%s";
 
     public static TranslationsPropertiesDataAccess myself;
 
@@ -68,12 +67,12 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
     public Properties getTranslations(Locale locale) {
         Properties translations = new Properties();
 
-        List<ResourceBundle> bundles = getResourceBundlesForLocale(locale);
+        List<ResourceBundle> bundles = getResourceBundlesForLocale(locale, "i18n/labels/"); // TODO: maybe use constants
         // It means it failed to load translations for the given locale, fallback to a default one
         if (bundles.isEmpty()) {
             Locale fallbackLocale = Locale.forLanguageTag(this.getSupportedLanguageTags().get(0));
-            System.err.printf("Invalid locale: %s. Loading new locale: %s\n", locale.toString(), fallbackLocale.toString());
-            bundles = getResourceBundlesForLocale(fallbackLocale);
+            // This assumes that the pathToResources is valid, and the only thing that's not valid is the locale
+            bundles = handleMissingResource(locale, fallbackLocale, "i18n/labels/");
         }
         bundles.forEach((b) -> {
             for (String key : b.keySet()) {
@@ -83,11 +82,12 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
 
         return translations;
     }
-    private List<ResourceBundle> getResourceBundlesForLocale(Locale locale) {
+
+    private List<ResourceBundle> getResourceBundlesForLocale(Locale locale, String pathToResources) {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         List<ResourceBundle> resourceBundles = new ArrayList<>();
         try {
-            Resource[] resources = resolver.getResources(String.format("classpath:%s*.properties", "i18n/labels/"));
+            Resource[] resources = resolver.getResources(String.format("classpath:%s*.properties", pathToResources));
             for (Resource resource : resources) {
                 String filename = resource.getFilename();
                 if (filename != null && filename.contains("_" + locale.toString() + ".properties")) {
@@ -103,11 +103,20 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
         }
         return resourceBundles;
     }
+    private List<ResourceBundle> handleMissingResource(Locale invalidLocale, Locale fallbackLocale, String pathToResources) {
+        System.err.printf("Invalid locale: %s. Loading new locale: %s\n", invalidLocale.toString(), fallbackLocale.toString());
+
+        return getResourceBundlesForLocale(fallbackLocale, pathToResources);
+    }
 
     // TODO: fix this. It does not work if the locale is not valid. Probably better to make the method above more generic so that same one can be used for these
     @Override
     public ResourceBundle getUIResourceBundle(Locale locale) {
-        String baseName = UI_LABELS_PATH;
-        return ResourceBundle.getBundle(baseName, locale, ResourceBundle.Control.getNoFallbackControl(FORMAT_DEFAULT));
+        List<ResourceBundle> bundles = getResourceBundlesForLocale(locale, UI_LABELS_PATH);
+        if (bundles.isEmpty()) {
+            Locale fallbackLocale = Locale.forLanguageTag(this.getSupportedLanguageTags().get(0));
+            bundles = handleMissingResource(locale, fallbackLocale, UI_LABELS_PATH);
+        }
+        return bundles.get(0);
     }
 }

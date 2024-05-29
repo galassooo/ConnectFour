@@ -95,7 +95,6 @@ public class PreferencesView {
     }
 
     public void setLanguages(List<String> supportedLanguages) {
-        // TODO: this displays the whole language tag in the format IT-CH, not sure if we want to process the tag further and only display the language (IT). That would have to be done in the frontend controller
         languageComboBox.getItems().setAll(supportedLanguages);
         languageComboBox.getSelectionModel().selectFirst();
     }

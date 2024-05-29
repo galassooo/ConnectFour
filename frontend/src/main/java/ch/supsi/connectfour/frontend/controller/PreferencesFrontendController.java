@@ -60,8 +60,8 @@ public class PreferencesFrontendController {
                         new AbstractMap.SimpleEntry<>("player-one-color", preferencesView.getPlayerOneColor()),
                         new AbstractMap.SimpleEntry<>("player-two-color", preferencesView.getPlayerTwoColor()),
                         // TODO: CHANGE SHAPE -> SYMBOL FOR CONSISTENCY
-                        new AbstractMap.SimpleEntry<>("player-one-shape", preferencesView.getPlayerOneShape()),
-                        new AbstractMap.SimpleEntry<>("player-two-shape", preferencesView.getPlayerTwoShape())
+                        new AbstractMap.SimpleEntry<>("player-one-symbol", preferencesView.getPlayerOneShape()),
+                        new AbstractMap.SimpleEntry<>("player-two-symbol", preferencesView.getPlayerTwoShape())
                 );
                 preferences.forEach((preference) -> model.setPreference(preference));
 
@@ -90,7 +90,8 @@ public class PreferencesFrontendController {
                             .map((resource -> {
                                 String rAsString = resource.toString();
                                 // Remove the .png
-                                return rAsString.substring(0, rAsString.length() - 4);
+                                // TODO: al momento sto map non ha nessun senso ma dovremmo capire come manipolare sti dati
+                                return rAsString;
                             })).toList(); // TODO: add constant for URL
         } catch (IOException e) {
             e.printStackTrace();

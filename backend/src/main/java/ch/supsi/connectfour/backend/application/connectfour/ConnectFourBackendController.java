@@ -60,8 +60,8 @@ public class ConnectFourBackendController {
     }
 
     public void createNewGame() {
-        ConnectFourPlayerInterface p1 = new ConnectFourPlayer("P1", preferences.getPreference("player-one-color").toString(), preferences.getPreference("player-one-shape").toString());
-        ConnectFourPlayerInterface p2 = new ConnectFourPlayer("P2", preferences.getPreference("player-two-color").toString(), preferences.getPreference("player-two-shape").toString());
+        ConnectFourPlayerInterface p1 = new ConnectFourPlayer("P1", preferences.getPreference("player-one-color").toString(), preferences.getPreference("player-one-symbol").toString());
+        ConnectFourPlayerInterface p2 = new ConnectFourPlayer("P2", preferences.getPreference("player-two-color").toString(), preferences.getPreference("player-two-symbol").toString());
         currentMatch = new ConnectFourModel(p1, p2);
     }
 

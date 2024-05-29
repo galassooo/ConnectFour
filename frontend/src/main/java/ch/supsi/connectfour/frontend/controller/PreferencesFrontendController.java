@@ -2,6 +2,7 @@ package ch.supsi.connectfour.frontend.controller;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
+import ch.supsi.connectfour.frontend.model.PreferencesModel;
 import ch.supsi.connectfour.frontend.model.TranslationModel;
 import ch.supsi.connectfour.frontend.view.PreferencesView;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +22,7 @@ public class PreferencesFrontendController {
 
     private PreferencesView preferencesView;
     private static PreferencesFrontendController instance;
-    private final PreferencesController backendController = PreferencesController.getInstance();
+    private PreferencesModel model;
     private final TranslationsController translationsController = TranslationsController.getInstance();
 
     private final TranslationModel translationModel = TranslationModel.getInstance();
@@ -46,27 +47,29 @@ public class PreferencesFrontendController {
             FXMLLoader loader = new FXMLLoader(fxmlUrl, translationModel.getUiBundle());
             Scene scene = new Scene(loader.load());
             preferencesView = loader.getController();
+            model = new PreferencesModel();
 
             this.initViewChoices();
             this.preferencesView.initSaveListener(this.translationsController.translate("label.preferences_please_choose"), this.translationsController.translate("label.preferences_cannot_save"));
 
+            // todo: è giusto che la view venga inizializzata qui dentro nel controller??
             preferencesView.setOnSaveButton((e) -> {
                 // Handle saving preferences
                 // todo: handle this in one method call (addALL)
                 String language = preferencesView.getSelectedLanguage();
-                backendController.setPreference(new AbstractMap.SimpleEntry<>("language-tag", language));
+                model.setPreference(new AbstractMap.SimpleEntry<>("language-tag", language));
 
                 String playerOneColor = preferencesView.getPlayerOneColor();
-                backendController.setPreference(new AbstractMap.SimpleEntry<>("player-one-color", playerOneColor));
+                model.setPreference(new AbstractMap.SimpleEntry<>("player-one-color", playerOneColor));
 
                 String playerTwoColor = preferencesView.getPlayerTwoColor();
-                backendController.setPreference(new AbstractMap.SimpleEntry<>("player-two-color", playerTwoColor));
+                model.setPreference(new AbstractMap.SimpleEntry<>("player-two-color", playerTwoColor));
 
                 String playerOneShape = preferencesView.getPlayerOneShape();
-                backendController.setPreference(new AbstractMap.SimpleEntry<>("player-one-shape",String.format(shapePreferencePattern,playerOneShape)));
+                model.setPreference(new AbstractMap.SimpleEntry<>("player-one-shape",String.format(shapePreferencePattern,playerOneShape)));
 
                 String playerTwoShape = preferencesView.getPlayerTwoShape();
-                backendController.setPreference(new AbstractMap.SimpleEntry<>("player-two-shape", String.format(shapePreferencePattern,playerTwoShape)));
+                model.setPreference(new AbstractMap.SimpleEntry<>("player-two-shape", String.format(shapePreferencePattern,playerTwoShape)));
 
                 stage.close();
             });

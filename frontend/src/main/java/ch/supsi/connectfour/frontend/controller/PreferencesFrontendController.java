@@ -2,6 +2,7 @@ package ch.supsi.connectfour.frontend.controller;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
+import ch.supsi.connectfour.frontend.model.PreferencesModel;
 import ch.supsi.connectfour.frontend.model.TranslationModel;
 import ch.supsi.connectfour.frontend.view.PreferencesView;
 import javafx.fxml.FXMLLoader;
@@ -9,29 +10,23 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
-
-import static java.util.ResourceBundle.Control.FORMAT_DEFAULT;
 
 public class PreferencesFrontendController {
 
     private PreferencesView preferencesView;
     private static PreferencesFrontendController instance;
-    private final PreferencesController backendController = PreferencesController.getInstance();
+    private PreferencesModel model;
     private final TranslationsController translationsController = TranslationsController.getInstance();
 
     private final TranslationModel translationModel = TranslationModel.getInstance();
     private final Stage stage = new Stage();
-
-    private final static String BUNDLE_NAME = "i18n/UI.ui_labels";
 
     private final static String shapePreferencePattern = "/images/symbols/%s.PNG";
 
@@ -48,31 +43,27 @@ public class PreferencesFrontendController {
             if (fxmlUrl == null) {
                 return;
             }
-            // TODO: not sure if this should be loaded here (resource bundle)
+            // TODO: fix implemenation of getUiBundle (see comment in there)
             FXMLLoader loader = new FXMLLoader(fxmlUrl, translationModel.getUiBundle());
             Scene scene = new Scene(loader.load());
             preferencesView = loader.getController();
+            model = new PreferencesModel();
 
             this.initViewChoices();
             this.preferencesView.initSaveListener(this.translationsController.translate("label.preferences_please_choose"), this.translationsController.translate("label.preferences_cannot_save"));
 
+            // todo: è giusto che la view venga inizializzata qui dentro nel controller??
             preferencesView.setOnSaveButton((e) -> {
-                // Handle saving preferences
-                // todo: handle this in one method call (addALL)
-                String language = preferencesView.getSelectedLanguage();
-                backendController.setPreference(new AbstractMap.SimpleEntry<>("language-tag", language));
-
-                String playerOneColor = preferencesView.getPlayerOneColor();
-                backendController.setPreference(new AbstractMap.SimpleEntry<>("player-one-color", playerOneColor));
-
-                String playerTwoColor = preferencesView.getPlayerTwoColor();
-                backendController.setPreference(new AbstractMap.SimpleEntry<>("player-two-color", playerTwoColor));
-
-                String playerOneShape = preferencesView.getPlayerOneShape();
-                backendController.setPreference(new AbstractMap.SimpleEntry<>("player-one-shape",String.format(shapePreferencePattern,playerOneShape)));
-
-                String playerTwoShape = preferencesView.getPlayerTwoShape();
-                backendController.setPreference(new AbstractMap.SimpleEntry<>("player-two-shape", String.format(shapePreferencePattern,playerTwoShape)));
+                List<AbstractMap.SimpleEntry<String, String>> preferences;
+                preferences = List.of(
+                        new AbstractMap.SimpleEntry<>("language-tag", preferencesView.getSelectedLanguage()),
+                        new AbstractMap.SimpleEntry<>("player-one-color", preferencesView.getPlayerOneColor()),
+                        new AbstractMap.SimpleEntry<>("player-two-color", preferencesView.getPlayerTwoColor()),
+                        // TODO: CHANGE SHAPE -> SYMBOL FOR CONSISTENCY
+                        new AbstractMap.SimpleEntry<>("player-one-shape", preferencesView.getPlayerOneShape()),
+                        new AbstractMap.SimpleEntry<>("player-two-shape", preferencesView.getPlayerTwoShape())
+                );
+                preferences.forEach((preference) -> model.setPreference(preference));
 
                 stage.close();
             });

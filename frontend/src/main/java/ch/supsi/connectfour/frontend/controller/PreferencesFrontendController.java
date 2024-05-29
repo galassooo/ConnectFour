@@ -8,11 +8,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.AbstractMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -26,8 +30,7 @@ public class PreferencesFrontendController {
 
     private final TranslationModel translationModel = TranslationModel.getInstance();
     private final Stage stage = new Stage();
-
-    private final static String shapePreferencePattern = "/images/symbols/%s.PNG";
+    private List<String> validSymbols;
 
     public static PreferencesFrontendController getInstance() {
         if (instance == null) {
@@ -83,16 +86,30 @@ public class PreferencesFrontendController {
         this.preferencesView.setLanguages(this.translationsController.getSupportedLanguages());
 
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        List<String> validSymbols = null;
         try {
-            validSymbols =
-                    Stream.of(resolver.getResources(String.format("classpath:%s*.PNG", "images/symbols/")))
-                            .map((resource -> {
-                                String rAsString = resource.toString();
-                                // Remove the .png
-                                // TODO: al momento sto map non ha nessun senso ma dovremmo capire come manipolare sti dati
-                                return rAsString;
-                            })).toList(); // TODO: add constant for URL
+            validSymbols = Arrays.stream(resolver.getResources(String.format("classpath:%s*.PNG", "images/symbols/")))
+                    .map((r) -> {
+                        Path fullPath = null;
+                        try {
+                            fullPath = Paths.get(r.getURI());
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                        Path basePath = Paths.get("/images/symbols/");
+
+                        // Find the index of the base directory in the full path
+                        int baseIndex = fullPath.toString().indexOf(basePath.toString());
+
+                        if (baseIndex != -1) {
+                            // Extract the relative path
+                            String relativePath = fullPath.toString().substring(baseIndex);
+                            // Convert to a string with forward slashes
+                            return relativePath.replace("\\", "/");
+                        } else {
+                            ;
+                        }
+                        return null;
+                    }).toList();
         } catch (IOException e) {
             e.printStackTrace();
         }

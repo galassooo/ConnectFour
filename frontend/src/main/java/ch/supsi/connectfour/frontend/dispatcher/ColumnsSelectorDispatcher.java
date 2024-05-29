@@ -1,14 +1,9 @@
 package ch.supsi.connectfour.frontend.dispatcher;
 
-import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import org.jetbrains.annotations.NotNull;

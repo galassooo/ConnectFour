@@ -13,8 +13,8 @@ public class ValidMoveEvent extends MoveEvent {
     private final int column;
     private final int row;
     private final ConnectFourPlayerInterface playerToPlay;
-    private SymbolInterface playerSymbol;
-    private String playerColor;
+    private final SymbolInterface playerSymbol;
+    private final String playerColor;
 
     public ValidMoveEvent(@NotNull ConnectFourPlayerInterface player, @NotNull ConnectFourPlayerInterface playerToPlay, int column, int row) {
         super(String.format(getTranslator().translate("label.player_moved"), player.getName(), playerToPlay.getName()),
@@ -30,16 +30,10 @@ public class ValidMoveEvent extends MoveEvent {
     protected ValidMoveEvent(String s, String logMessage,@NotNull ConnectFourPlayerInterface playerWhoWon, int column, int row) {
         super(s, logMessage, playerWhoWon);
         this.playerToPlay = null;
+        this.playerSymbol = playerWhoWon.getSymbol();
+        this.playerColor = playerWhoWon.getColor();
         this.column = column;
         this.row = row;
-    }
-
-    public void setPlayerSymbol(SymbolInterface symbol) {
-        this.playerSymbol = symbol;
-    }
-
-    public void setPlayerColor(String color) {
-        this.playerColor = color;
     }
 
     public SymbolInterface getPlayerSymbol() {

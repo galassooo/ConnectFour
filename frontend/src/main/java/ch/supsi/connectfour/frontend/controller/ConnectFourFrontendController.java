@@ -4,8 +4,6 @@ import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBackendCo
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
 import ch.supsi.connectfour.backend.application.event.*;
-import ch.supsi.connectfour.backend.application.symbol.SymbolProvider;
-import ch.supsi.connectfour.backend.application.symbol.SymbolProviderApplication;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 import ch.supsi.connectfour.frontend.MainFx;
@@ -37,7 +35,6 @@ public class ConnectFourFrontendController implements GameEventHandler {
     private final TranslationsController translations;
     private static MenuItem saveMenu;
     private static Stage primaryStage;
-    private static final SymbolProviderApplication<URL> symbolProvider = new SymbolProvider<>();
 
 
 

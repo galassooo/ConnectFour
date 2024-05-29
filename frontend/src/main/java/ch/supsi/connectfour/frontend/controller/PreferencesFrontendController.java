@@ -54,22 +54,16 @@ public class PreferencesFrontendController {
 
             // todo: è giusto che la view venga inizializzata qui dentro nel controller??
             preferencesView.setOnSaveButton((e) -> {
-                // Handle saving preferences
-                // todo: handle this in one method call (addALL)
-                String language = preferencesView.getSelectedLanguage();
-                model.setPreference(new AbstractMap.SimpleEntry<>("language-tag", language));
-
-                String playerOneColor = preferencesView.getPlayerOneColor();
-                model.setPreference(new AbstractMap.SimpleEntry<>("player-one-color", playerOneColor));
-
-                String playerTwoColor = preferencesView.getPlayerTwoColor();
-                model.setPreference(new AbstractMap.SimpleEntry<>("player-two-color", playerTwoColor));
-
-                String playerOneShape = preferencesView.getPlayerOneShape();
-                model.setPreference(new AbstractMap.SimpleEntry<>("player-one-shape",String.format(shapePreferencePattern,playerOneShape)));
-
-                String playerTwoShape = preferencesView.getPlayerTwoShape();
-                model.setPreference(new AbstractMap.SimpleEntry<>("player-two-shape", String.format(shapePreferencePattern,playerTwoShape)));
+                List<AbstractMap.SimpleEntry<String, String>> preferences;
+                preferences = List.of(
+                        new AbstractMap.SimpleEntry<>("language-tag", preferencesView.getSelectedLanguage()),
+                        new AbstractMap.SimpleEntry<>("player-one-color", preferencesView.getPlayerOneColor()),
+                        new AbstractMap.SimpleEntry<>("player-two-color", preferencesView.getPlayerTwoColor()),
+                        // TODO: CHANGE SHAPE -> SYMBOL FOR CONSISTENCY
+                        new AbstractMap.SimpleEntry<>("player-one-shape", preferencesView.getPlayerOneShape()),
+                        new AbstractMap.SimpleEntry<>("player-two-shape", preferencesView.getPlayerTwoShape())
+                );
+                preferences.forEach((preference) -> model.setPreference(preference));
 
                 stage.close();
             });

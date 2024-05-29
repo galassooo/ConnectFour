@@ -10,7 +10,8 @@ public class MenuBarDispatcher {
     private final PreferencesFrontendController preferencesFrontendController = PreferencesFrontendController.getInstance();
 
     private final HelpController helpController = HelpController.getInstance();
-    private final ExitController exitController = new ExitController();
+    // TODO: figure out hwy the getInstance does not work
+    private final ApplicationExitController exitController = ApplicationExitController.getInstance();
     @FXML
     public MenuItem saveMenuItem;
 

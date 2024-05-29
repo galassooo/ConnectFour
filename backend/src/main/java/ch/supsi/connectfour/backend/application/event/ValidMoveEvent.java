@@ -2,7 +2,6 @@ package ch.supsi.connectfour.backend.application.event;
 
 import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
-import ch.supsi.connectfour.backend.business.player.PlayerBusinessInterface;
 import ch.supsi.connectfour.backend.business.symbols.SymbolInterface;
 import org.jetbrains.annotations.NotNull;
 

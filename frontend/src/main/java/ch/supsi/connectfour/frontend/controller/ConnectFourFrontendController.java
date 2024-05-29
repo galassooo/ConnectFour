@@ -1,15 +1,16 @@
 package ch.supsi.connectfour.frontend.controller;
 
-import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBackendController;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
-import ch.supsi.connectfour.backend.application.event.*;
+import ch.supsi.connectfour.backend.application.event.GameEvent;
+import ch.supsi.connectfour.backend.application.event.MoveEvent;
+import ch.supsi.connectfour.backend.application.event.ValidMoveEvent;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 import ch.supsi.connectfour.frontend.MainFx;
 import ch.supsi.connectfour.frontend.model.ConnectFourModel;
-import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
 import ch.supsi.connectfour.frontend.view.SerializationView;
+import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
 import ch.supsi.connectfour.frontend.view.viewables.Viewable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -18,7 +19,6 @@ import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -36,9 +36,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
     private final TranslationsController translations;
     private static MenuItem saveMenu;
     private static Stage primaryStage;
-
-
-
+    
     public static ConnectFourFrontendController getInstance() {
         if (instance == null) {
             instance = new ConnectFourFrontendController();

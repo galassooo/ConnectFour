@@ -1,8 +1,8 @@
 package ch.supsi.connectfour.backend.application.translations;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesBusinessInterface;
-import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 import ch.supsi.connectfour.backend.business.preferences.PreferencesModel;
+import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
 
 import java.util.List;
 import java.util.Locale;

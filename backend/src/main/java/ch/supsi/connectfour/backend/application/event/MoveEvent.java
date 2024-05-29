@@ -1,7 +1,6 @@
 package ch.supsi.connectfour.backend.application.event;
 
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
-import ch.supsi.connectfour.backend.business.player.PlayerBusinessInterface;
 
 import java.util.Objects;
 

@@ -2,11 +2,11 @@ package ch.supsi.connectfour.frontend.view;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
-import javafx.beans.binding.IntegerBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Button;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.text.Text;
 
 import java.util.ArrayList;

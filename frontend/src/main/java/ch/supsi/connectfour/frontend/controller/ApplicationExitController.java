@@ -6,25 +6,25 @@ import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 // TODO: per ora non interagisce in nessun modo con il model... valutare
-public class ExitController {
-    private static ExitController instance;
+public class ApplicationExitController {
+    private static ApplicationExitController instance;
     private static TranslationsController translations;
-    private ExitView view;
+    private final ExitView view;
     private Stage primaryStage;
 
-    public static ExitController getInstance() {
+    public static ApplicationExitController getInstance() {
         if (instance == null) {
-            instance = new ExitController();
+            instance = new ApplicationExitController();
         }
         return instance;
     }
 
-    public ExitController() {
+    private ApplicationExitController() {
         view = new ExitView();
         translations = TranslationsController.getInstance();
     }
 
-    public ExitController build(@NotNull Stage primaryStage) {
+    public ApplicationExitController build(@NotNull Stage primaryStage) {
         this.primaryStage = primaryStage;
         return this;
     }

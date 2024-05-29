@@ -2,7 +2,10 @@ package ch.supsi.connectfour.backend.dataaccess;
 
 import ch.supsi.connectfour.backend.business.preferences.PreferencesDataAccessInterface;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
@@ -50,7 +53,6 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
             return Files.createDirectories(this.getUserPreferencesDirectoryPath());
 
         } catch (IOException ignoredForDemoPurposes) {
-            ;
         }
 
         return null;
@@ -99,7 +101,6 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
             defaultPreferences.load(defaultPreferencesStream);
 
         } catch (IOException ignored) {
-            ;
         }
 
         // return the properties object with the loaded preferences

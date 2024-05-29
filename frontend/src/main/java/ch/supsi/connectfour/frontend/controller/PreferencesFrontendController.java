@@ -12,7 +12,9 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.List;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 public class PreferencesFrontendController {

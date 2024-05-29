@@ -3,7 +3,6 @@ package ch.supsi.connectfour.frontend.model;
 import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
 
 import java.util.AbstractMap;
-import java.util.List;
 import java.util.Locale;
 
 public class PreferencesModel {

@@ -9,18 +9,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
-
-import static java.util.ResourceBundle.Control.FORMAT_DEFAULT;
 
 public class TranslationsPropertiesDataAccess implements TranslationsDataAccessInterface {
     private static final String LABELS_PATH = String.format("i18n%slabels%s", File.separator, File.separator);

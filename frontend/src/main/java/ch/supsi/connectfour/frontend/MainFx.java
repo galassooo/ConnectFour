@@ -3,7 +3,8 @@ package ch.supsi.connectfour.frontend;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
 import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
-import ch.supsi.connectfour.frontend.controller.*;
+import ch.supsi.connectfour.frontend.controller.ApplicationExitController;
+import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher;
 import ch.supsi.connectfour.frontend.view.viewables.BoardView;
@@ -26,7 +27,7 @@ public class MainFx extends Application {
 
     public static final String APP_TITLE = "ConnectFour";
     private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
-    //private final ExitController exitController;
+    private final ApplicationExitController exitController = ApplicationExitController.getInstance();
     // TODO: forse da cambiare...
     private final TranslationsModel translationsModel = TranslationsModel.getInstance();
 
@@ -131,6 +132,7 @@ public class MainFx extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         connectFourFrontendController.build(menuBarDispatcher.saveMenuItem, columnsSelectorDispatcher.getButtons(),primaryStage, boardView, infoBarView);
+        exitController.build(primaryStage);
     }
     public static void main(String[] args) {
         launch(args);

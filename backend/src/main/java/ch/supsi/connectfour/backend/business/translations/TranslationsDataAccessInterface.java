@@ -1,8 +1,5 @@
 package ch.supsi.connectfour.backend.business.translations;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Locale;
 import java.util.Properties;

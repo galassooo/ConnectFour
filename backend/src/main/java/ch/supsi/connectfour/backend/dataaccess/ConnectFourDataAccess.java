@@ -3,7 +3,6 @@ package ch.supsi.connectfour.backend.dataaccess;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.business.connectfour.ConnectFourDataAccessInterface;
 import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
-
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

@@ -6,5 +6,5 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 @JsonDeserialize(as = ConnectFourPlayer.class)
 public interface ConnectFourPlayerInterface extends PlayerBusinessInterface{
     SymbolInterface getSymbol();
-    public String getColor();
+    String getColor();
 }

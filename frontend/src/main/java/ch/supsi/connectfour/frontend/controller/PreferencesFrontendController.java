@@ -9,17 +9,13 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Stream;
-
-import static java.util.ResourceBundle.Control.FORMAT_DEFAULT;
 
 public class PreferencesFrontendController {
 
@@ -30,8 +26,6 @@ public class PreferencesFrontendController {
 
     private final TranslationModel translationModel = TranslationModel.getInstance();
     private final Stage stage = new Stage();
-
-    private final static String BUNDLE_NAME = "i18n/UI.ui_labels";
 
     private final static String shapePreferencePattern = "/images/symbols/%s.PNG";
 
@@ -48,7 +42,7 @@ public class PreferencesFrontendController {
             if (fxmlUrl == null) {
                 return;
             }
-            // TODO: not sure if this should be loaded here (resource bundle)
+            // TODO: fix implemenation of getUiBundle (see comment in there)
             FXMLLoader loader = new FXMLLoader(fxmlUrl, translationModel.getUiBundle());
             Scene scene = new Scene(loader.load());
             preferencesView = loader.getController();

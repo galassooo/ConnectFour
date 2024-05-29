@@ -109,7 +109,6 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
         return getResourceBundlesForLocale(fallbackLocale, pathToResources);
     }
 
-    // TODO: fix this. It does not work if the locale is not valid. Probably better to make the method above more generic so that same one can be used for these
     @Override
     public ResourceBundle getUIResourceBundle(Locale locale) {
         List<ResourceBundle> bundles = getResourceBundlesForLocale(locale, UI_LABELS_PATH);

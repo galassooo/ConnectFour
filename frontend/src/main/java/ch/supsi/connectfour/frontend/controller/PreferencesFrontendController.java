@@ -8,18 +8,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
-import java.net.URLDecoder;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.*;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
 import java.util.stream.Stream;
 
 public class PreferencesFrontendController {
@@ -47,7 +40,7 @@ public class PreferencesFrontendController {
             if (fxmlUrl == null) {
                 return;
             }
-            // TODO: fix implemenation of getUiBundle (see comment in there)
+
             FXMLLoader loader = new FXMLLoader(fxmlUrl, translationModel.getUiBundle());
             Scene scene = new Scene(loader.load());
             preferencesView = loader.getController();
@@ -86,47 +79,20 @@ public class PreferencesFrontendController {
     private void initViewChoices() {
         this.preferencesView.setLanguages(this.translationsController.getSupportedLanguages());
 
-        List<String> validSymbols = new ArrayList<>();
-        URL resource = getClass().getResource("/images/symbols");
-        if (resource != null) {
-            String protocol = resource.getProtocol();
-            if ("jar".equals(protocol)) {
-                processJarDirectory(resource, validSymbols);
-            } else if ("file".equals(protocol)) {
-                processFileDirectory(resource, validSymbols);
-            }
-        }
-        this.preferencesView.setShapes(validSymbols);
-    }
-
-    private void processJarDirectory(URL resource, List<String> validSymbols) {
-        String decodedPath = URLDecoder.decode(resource.getPath(), StandardCharsets.UTF_8);
-        String jarPath = decodedPath.substring(5, decodedPath.indexOf("!"));
-        try (JarFile jarFile = new JarFile(jarPath)) {
-            Enumeration<JarEntry> entries = jarFile.entries();
-            while (entries.hasMoreElements()) {
-                JarEntry entry = entries.nextElement();
-                String entryName = entry.getName();
-                if (entryName.startsWith("images/symbols") && entryName.endsWith(".png")) {
-                    String fileName = Paths.get(entryName).getFileName().toString();
-                    validSymbols.add(fileName.substring(0, fileName.length() - 4)); // remove the .png suffix
-                }
-            }
+        PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+        List<String> validSymbols = null;
+        try {
+            validSymbols =
+                    Stream.of(resolver.getResources(String.format("classpath:%s*.PNG", "images/symbols/")))
+                            .map((resource -> {
+                                String rAsString = resource.toString();
+                                // Remove the .png
+                                return rAsString.substring(0, rAsString.length() - 4);
+                            })).toList(); // TODO: add constant for URL
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private void processFileDirectory(URL resource, List<String> validSymbols) {
-        try (Stream<Path> paths = Files.walk(Paths.get(resource.toURI()))) {
-            paths.filter(Files::isRegularFile)
-                    .map(path -> path.getFileName().toString())
-                    .filter(fileName -> fileName.toLowerCase().endsWith(".png"))
-                    .map(fileName -> fileName.substring(0, fileName.length() - 4)) // remove the .png suffix
-                    .forEach(validSymbols::add);
-        } catch (IOException | URISyntaxException e) {
-            e.printStackTrace();
-        }
+        this.preferencesView.setShapes(validSymbols);
     }
 
     public void managePreferences() {

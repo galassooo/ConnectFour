@@ -5,16 +5,11 @@ import ch.supsi.connectfour.backend.application.preferences.PreferencesBusinessI
 import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayer;
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
-import ch.supsi.connectfour.backend.business.player.PlayerBusinessInterface;
 import ch.supsi.connectfour.backend.business.preferences.PreferencesModel;
-import ch.supsi.connectfour.backend.business.symbols.Symbol;
-import ch.supsi.connectfour.backend.business.symbols.SymbolInterface;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 public class ConnectFourBackendController {

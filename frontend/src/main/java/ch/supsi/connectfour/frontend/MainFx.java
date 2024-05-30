@@ -38,12 +38,6 @@ public class MainFx extends Application {
         primaryStage.setResizable(false);
         primaryStage.setTitle(APP_TITLE);
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/application/board.png"))));
-        primaryStage.setOnCloseRequest(
-                windowEvent -> {
-                    windowEvent.consume();
-                    primaryStage.close();
-                }
-        );
 
         // MENU BAR
         MenuBar menuBar;
@@ -59,7 +53,7 @@ public class MainFx extends Application {
             menuBarDispatcher = menuBarLoader.getController();
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return;
         }
 
         // CONNECT-FOUR COLUMN SELECTORS
@@ -76,8 +70,7 @@ public class MainFx extends Application {
             columnsSelectorDispatcher = columnSelectorsLoader.getController();
 
         } catch (IOException e) {
-            // TODO: anche no
-            throw new RuntimeException(e);
+            return;
         }
 
         // CONNECT-FOUR BOARD
@@ -94,7 +87,7 @@ public class MainFx extends Application {
             boardView = boardLoader.getController();
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return;
         }
 
         // INFO BAR
@@ -103,7 +96,6 @@ public class MainFx extends Application {
         try {
             URL fxmlUrl = getClass().getResource("/infobar.fxml");
             if (fxmlUrl == null) {
-                // resource file not found
                 return;
             }
 
@@ -112,7 +104,7 @@ public class MainFx extends Application {
             infoBarView = infoBarLoader.getController();
 
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            return;
         }
 
         // BORDER PANE

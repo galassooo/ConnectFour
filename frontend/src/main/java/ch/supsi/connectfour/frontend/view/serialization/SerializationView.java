@@ -1,4 +1,4 @@
-package ch.supsi.connectfour.frontend.view;
+package ch.supsi.connectfour.frontend.view.serialization;
 
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;

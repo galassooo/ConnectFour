@@ -3,7 +3,7 @@ package ch.supsi.connectfour.frontend.controller;
 import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import ch.supsi.connectfour.frontend.model.PreferencesModel;
 import ch.supsi.connectfour.frontend.model.TranslationModel;
-import ch.supsi.connectfour.frontend.view.IPreferencesView;
+import ch.supsi.connectfour.frontend.view.preferences.IPreferencesView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;

@@ -9,8 +9,8 @@ import ch.supsi.connectfour.backend.application.translations.TranslationsControl
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 import ch.supsi.connectfour.frontend.MainFx;
 import ch.supsi.connectfour.frontend.model.ConnectFourModel;
-import ch.supsi.connectfour.frontend.view.ISerializationView;
-import ch.supsi.connectfour.frontend.view.SerializationView;
+import ch.supsi.connectfour.frontend.view.serialization.ISerializationView;
+import ch.supsi.connectfour.frontend.view.serialization.SerializationView;
 import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
 import ch.supsi.connectfour.frontend.view.viewables.Viewable;
 import javafx.scene.control.Alert;

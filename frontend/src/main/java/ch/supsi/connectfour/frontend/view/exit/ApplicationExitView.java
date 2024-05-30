@@ -1,4 +1,4 @@
-package ch.supsi.connectfour.frontend.view;
+package ch.supsi.connectfour.frontend.view.exit;
 
 import ch.supsi.connectfour.frontend.model.ApplicationExitModel;
 import javafx.scene.Scene;

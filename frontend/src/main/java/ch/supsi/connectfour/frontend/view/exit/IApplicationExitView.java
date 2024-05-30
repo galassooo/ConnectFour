@@ -1,4 +1,4 @@
-package ch.supsi.connectfour.frontend.view;
+package ch.supsi.connectfour.frontend.view.exit;
 
 public interface IApplicationExitView {
     boolean showConfirmationDialog();

@@ -1,4 +1,4 @@
-package ch.supsi.connectfour.frontend.view;
+package ch.supsi.connectfour.frontend.view.help;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

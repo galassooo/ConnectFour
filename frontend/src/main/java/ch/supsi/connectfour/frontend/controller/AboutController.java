@@ -1,7 +1,7 @@
 package ch.supsi.connectfour.frontend.controller;
 
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
-import ch.supsi.connectfour.frontend.view.IAboutView;
+import ch.supsi.connectfour.frontend.view.about.IAboutView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;

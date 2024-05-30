@@ -1,4 +1,4 @@
-package ch.supsi.connectfour.frontend.view;
+package ch.supsi.connectfour.frontend.view.preferences;
 
 import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import ch.supsi.connectfour.frontend.model.PreferencesModel;

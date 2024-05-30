@@ -1,7 +1,7 @@
 package ch.supsi.connectfour.frontend.controller;
 
 import ch.supsi.connectfour.frontend.model.HelpModel;
-import ch.supsi.connectfour.frontend.view.IHelpView;
+import ch.supsi.connectfour.frontend.view.help.IHelpView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;

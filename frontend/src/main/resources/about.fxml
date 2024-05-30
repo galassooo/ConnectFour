@@ -8,7 +8,7 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" id="pane" stylesheets="styleSheets/about.css" maxHeight="-Infinity"
             maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0"
             prefWidth="300.0" xmlns="http://javafx.com/javafx/20.0.1"
-            fx:controller="ch.supsi.connectfour.frontend.view.AboutView">
+            fx:controller="ch.supsi.connectfour.frontend.view.about.AboutView">
     <top>
         <Label fx:id="aboutConnectFourLabel" text="About ConnectFour" BorderPane.alignment="CENTER">
             <BorderPane.margin>

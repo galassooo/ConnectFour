@@ -1,6 +1,9 @@
 package ch.supsi.connectfour.backend.dataaccess;
 
 import ch.supsi.connectfour.backend.business.preferences.PreferencesDataAccessInterface;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -11,6 +14,7 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.Properties;
 
+//ALEX tutta tu penso
 public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInterface {
 
     private static final String DEFAULT_USER_PREFERENCES_PROPERTIES = "/default-user-preferences.properties";
@@ -40,7 +44,8 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
         return dao;
     }
 
-    private Path getUserPreferencesDirectoryPath() {
+    @Contract(pure = true)
+    private @NotNull Path getUserPreferencesDirectoryPath() {
         return Path.of(USER_HOME_DIRECTORY, PREFERENCES_DIRECTORY);
     }
 
@@ -48,7 +53,7 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
         return Files.exists(this.getUserPreferencesDirectoryPath());
     }
 
-    private Path createUserPreferencesDirectory() {
+    private @Nullable Path createUserPreferencesDirectory() {
         try {
             return Files.createDirectories(this.getUserPreferencesDirectoryPath());
 
@@ -58,7 +63,8 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
         return null;
     }
 
-    private Path getUserPreferencesFilePath() {
+    @Contract(pure = true)
+    private @NotNull Path getUserPreferencesFilePath() {
         return Path.of(USER_HOME_DIRECTORY, PREFERENCES_DIRECTORY, PREFERENCES_FILE);
     }
 
@@ -94,7 +100,7 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
         return true;
     }
 
-    private Properties loadDefaultPreferences() {
+    private @NotNull Properties loadDefaultPreferences() {
         Properties defaultPreferences = new Properties();
         try {
             InputStream defaultPreferencesStream = this.getClass().getResourceAsStream(DEFAULT_USER_PREFERENCES_PROPERTIES);
@@ -107,7 +113,7 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
         return defaultPreferences;
     }
 
-    private Properties loadPreferences(Path path) {
+    private @Nullable Properties loadPreferences(Path path) {
         Properties preferences = new Properties();
         try {
             preferences.load(new FileInputStream(String.valueOf(path)));

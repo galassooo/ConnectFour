@@ -11,6 +11,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
+//ALEX
 public class TranslationsPropertiesDataAccess implements TranslationsDataAccessInterface {
     private static final String supportedLanguagesPath = "/supported-languages.properties";
     private static final String UI_LABELS_PATH = "i18n/UI/ui_labels";

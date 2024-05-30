@@ -12,8 +12,11 @@ import java.io.File;
 import java.io.IOException;
 
 public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
+
+    /* self reference */
     protected static ConnectFourDataAccess instance;
 
+    /* constructor */
     protected ConnectFourDataAccess() {
     }
 
@@ -24,6 +27,7 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
         return instance;
     }
 
+    //ALEX
     @Override
     public ConnectFourBusinessInterface getSave(@NotNull final File file) {
         // Check if the file is valid: exists, is a file and can be read
@@ -45,6 +49,7 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
         return loadedGame;
     }
 
+    //ALEX
     @Override
     public boolean persist(@NotNull final ConnectFourBusinessInterface game, @NotNull final File outputFile) {
         try {

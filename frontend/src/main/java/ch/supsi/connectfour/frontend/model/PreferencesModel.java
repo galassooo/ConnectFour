@@ -9,21 +9,24 @@ public class PreferencesModel {
     private static PreferencesModel instance;
     private static PreferencesController backendController;
 
-    public static PreferencesModel getInstance() {
-        if (instance == null) {
-            instance = new PreferencesModel();
-        }
-        return instance;
-    }
+    private String enableMessage;
+    private String disableMessage;
 
-    private PreferencesModel() {
+    public PreferencesModel(String enableMessage, String disableMessage) {
         backendController = PreferencesController.getInstance();
+        this.enableMessage = enableMessage;
+        this.disableMessage = disableMessage;
     }
 
     public void setPreference(AbstractMap.SimpleEntry<String, String> preference) {
         backendController.setPreference(preference);
     }
-    public Locale getLanguage() {
-        return Locale.forLanguageTag(String.valueOf(backendController.getPreference("language-tag")));
+
+    public String getEnableMessage() {
+        return enableMessage;
+    }
+
+    public String getDisableMessage() {
+        return disableMessage;
     }
 }

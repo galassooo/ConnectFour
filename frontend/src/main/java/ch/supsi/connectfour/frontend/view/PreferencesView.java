@@ -1,6 +1,7 @@
 package ch.supsi.connectfour.frontend.view;
 
 import ch.supsi.connectfour.backend.business.symbols.Symbol;
+import ch.supsi.connectfour.frontend.model.PreferencesModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
@@ -9,13 +10,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.text.Text;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
 
-public class PreferencesView {
+public class PreferencesView implements IPreferencesView {
     @FXML
     public Text preferencesText;
 
@@ -40,6 +43,7 @@ public class PreferencesView {
 
     @FXML
     private Button cancelButton;
+    private PreferencesModel model;
 
     @FXML
     void initialize() {
@@ -48,35 +52,35 @@ public class PreferencesView {
 
         // Binds this condition to the save button, enabling or disabling it depending on if the condition is met
         BooleanBinding saveButtonDisabledBinding = Bindings.createBooleanBinding(() -> {
-                    Object playerOneColor = playerOneColorPicker.getValue();
-                    Object playerTwoColor = playerTwoColorPicker.getValue();
-                    Object playerOneShape = playerOneShapeComboBox.getValue();
-                    Object playerTwoShape = playerTwoShapeComboBox.getValue();
+            Object playerOneColor = playerOneColorPicker.getValue();
+            Object playerTwoColor = playerTwoColorPicker.getValue();
+            Object playerOneShape = playerOneShapeComboBox.getValue();
+            Object playerTwoShape = playerTwoShapeComboBox.getValue();
 
-                    // Check for null values before comparing
-                    boolean colorsEqual = (playerOneColor == null && playerTwoColor == null) ||
-                            (playerOneColor != null && playerOneColor.equals(playerTwoColor));
-                    boolean shapesEqual = (playerOneShape == null && playerTwoShape == null) ||
-                            (playerOneShape != null && playerOneShape.equals(playerTwoShape));
+            // Check for null values before comparing
+            boolean colorsEqual = (playerOneColor == null && playerTwoColor == null) ||
+                    (playerOneColor != null && playerOneColor.equals(playerTwoColor));
+            boolean shapesEqual = (playerOneShape == null && playerTwoShape == null) ||
+                    (playerOneShape != null && playerOneShape.equals(playerTwoShape));
 
-                    return colorsEqual && shapesEqual;
-                }, playerOneColorPicker.valueProperty(),
-                playerTwoColorPicker.valueProperty(),
-                playerOneShapeComboBox.valueProperty(),
-                playerTwoShapeComboBox.valueProperty());
-
-        preferencesText.setText(" \n ");
+            return colorsEqual && shapesEqual;
+        }, playerOneColorPicker.valueProperty(), playerTwoColorPicker.valueProperty(), playerOneShapeComboBox.valueProperty(), playerTwoShapeComboBox.valueProperty());
         saveButton.disableProperty().bind(saveButtonDisabledBinding);
-    }
 
-    public void initSaveListener(String enableMessage, String disableMessage) {
         saveButton.disableProperty().addListener((observable, oldValue, newValue) -> {
             if (oldValue) {
-                this.preferencesText.setText(enableMessage);
+                this.preferencesText.setText(model.getEnableMessage());
             } else {
-                this.preferencesText.setText(disableMessage);
+                this.preferencesText.setText(model.getDisableMessage());
             }
         });
+        preferencesText.setText(" \n ");
+    }
+
+    public PreferencesView(){}
+
+    public void setModel(@NotNull PreferencesModel model) {
+        this.model = model;
     }
 
     public void setShapes(List<Symbol> supportedShapes) {
@@ -88,6 +92,7 @@ public class PreferencesView {
             cBox.setVisibleRowCount(3);
         });
     }
+
     public void setColorPickerLocale(Locale locale) {
         Locale.setDefault(locale);
     }
@@ -95,9 +100,6 @@ public class PreferencesView {
     public void setLanguages(List<String> supportedLanguages) {
         languageComboBox.getItems().setAll(supportedLanguages);
         languageComboBox.getSelectionModel().selectFirst();
-    }
-
-    public PreferencesView() {
     }
 
 

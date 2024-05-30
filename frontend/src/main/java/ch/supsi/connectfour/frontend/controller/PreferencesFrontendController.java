@@ -3,7 +3,7 @@ package ch.supsi.connectfour.frontend.controller;
 import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import ch.supsi.connectfour.frontend.model.PreferencesModel;
 import ch.supsi.connectfour.frontend.model.TranslationModel;
-import ch.supsi.connectfour.frontend.view.PreferencesView;
+import ch.supsi.connectfour.frontend.view.IPreferencesView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -21,7 +21,7 @@ import java.util.stream.Stream;
 
 public class PreferencesFrontendController {
 
-    private PreferencesView preferencesView;
+    private IPreferencesView preferencesView;
     private static PreferencesFrontendController instance;
     private final PreferencesModel model;
     private final TranslationModel translationModel;
@@ -38,7 +38,7 @@ public class PreferencesFrontendController {
 
     private PreferencesFrontendController() {
         translationModel = TranslationModel.getInstance();
-        model = PreferencesModel.getInstance();
+        model = new PreferencesModel(translationModel.translate("label.preferences_please_choose"), this.translationModel.translate("label.preferences_cannot_save"));
         stage = new Stage();
         try {
             URL fxmlUrl = getClass().getResource("/preferences.fxml");
@@ -49,12 +49,9 @@ public class PreferencesFrontendController {
             FXMLLoader loader = new FXMLLoader(fxmlUrl, translationModel.getUiBundle());
             Scene scene = new Scene(loader.load());
             preferencesView = loader.getController();
-
-            this.initViewChoices();
-            this.preferencesView.initSaveListener(this.translationModel.translate("label.preferences_please_choose"), this.translationModel.translate("label.preferences_cannot_save"));
-            this.preferencesView.setColorPickerLocale(model.getLanguage());
-
-            // todo: è giusto che la view venga inizializzata qui dentro nel controller??
+            preferencesView.setModel(model);
+            preferencesView.setColorPickerLocale(translationModel.getCurrentLanguage());
+            preferencesView.setOnCancelButton((e) -> stage.close());
             preferencesView.setOnSaveButton((e) -> {
                 List<AbstractMap.SimpleEntry<String, String>> preferences;
                 preferences = List.of(
@@ -65,15 +62,13 @@ public class PreferencesFrontendController {
                         new AbstractMap.SimpleEntry<>("player-two-symbol", String.valueOf(preferencesView.getPlayerTwoShape().getValue()))
                 );
                 preferences.forEach(model::setPreference);
-
                 stage.close();
             });
-
-            preferencesView.setOnCancelButton((e) -> stage.close());
+            this.initViewChoices();
 
             stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/preferences/gear.png"))));
             stage.setScene(scene);
-            stage.setTitle(this.translationModel.translate("label.preferences"));
+            stage.setTitle(translationModel.translate("label.preferences"));
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -50,4 +50,7 @@ public class TranslationModel {
     public List<String> getSupportedLanguages() {
         return translationsController.getSupportedLanguages();
     }
+    public Locale getCurrentLanguage() {
+        return Locale.forLanguageTag(String.valueOf(preferencesController.getPreference("language-tag")));
+    }
 }

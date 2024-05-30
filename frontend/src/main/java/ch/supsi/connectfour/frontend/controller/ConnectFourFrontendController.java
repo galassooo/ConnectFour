@@ -130,9 +130,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
     @Override
     public void handle(MoveEvent event) {
-        if (event instanceof ValidMoveEvent e) {
-            viewableItems.forEach(item -> item.show(e));
-        }
+            viewableItems.forEach(item -> item.show(event));
     }
 
     private void clearViews() {

@@ -10,12 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.AbstractMap;
 import java.util.List;
 import java.util.Objects;

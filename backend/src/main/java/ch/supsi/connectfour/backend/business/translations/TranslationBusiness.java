@@ -8,9 +8,9 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
-public class TranslationsModel implements TranslationsBusinessInterface {
+public class TranslationBusiness implements TranslationsBusinessInterface {
 
-    private static TranslationsModel myself;
+    private static TranslationBusiness myself;
 
     private final TranslationsDataAccessInterface translationsDao;
 
@@ -18,14 +18,14 @@ public class TranslationsModel implements TranslationsBusinessInterface {
 
     private Properties translations;
 
-    protected TranslationsModel() {
+    protected TranslationBusiness() {
         this.translationsDao = TranslationsPropertiesDataAccess.getInstance();
         this.supportedLanguageTags = translationsDao.getSupportedLanguageTags();
     }
 
-    public static TranslationsModel getInstance() {
+    public static TranslationBusiness getInstance() {
         if (myself == null) {
-            myself = new TranslationsModel();
+            myself = new TranslationBusiness();
         }
         return myself;
     }

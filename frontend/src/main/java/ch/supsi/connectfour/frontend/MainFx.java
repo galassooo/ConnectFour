@@ -1,12 +1,12 @@
 package ch.supsi.connectfour.frontend;
 
 
-import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
-import ch.supsi.connectfour.backend.business.translations.TranslationsModel;
+import ch.supsi.connectfour.backend.business.translations.TranslationBusiness;
 import ch.supsi.connectfour.frontend.controller.ApplicationExitController;
 import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher;
+import ch.supsi.connectfour.frontend.model.TranslationModel;
 import ch.supsi.connectfour.frontend.view.viewables.BoardView;
 import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
 import javafx.application.Application;
@@ -20,7 +20,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Locale;
 import java.util.Objects;
 
 public class MainFx extends Application {
@@ -29,7 +28,7 @@ public class MainFx extends Application {
     private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
     private final ApplicationExitController exitController = ApplicationExitController.getInstance();
     // TODO: forse da cambiare...
-    private final TranslationsModel translationsModel = TranslationsModel.getInstance();
+    private final TranslationModel translationsModel = TranslationModel.getInstance();
 
     @Override
     public void start(Stage primaryStage) {
@@ -52,7 +51,7 @@ public class MainFx extends Application {
                 return;
             }
 
-            FXMLLoader menuBarLoader = new FXMLLoader(fxmlUrl);
+            FXMLLoader menuBarLoader = new FXMLLoader(fxmlUrl, translationsModel.getUiBundle());
             menuBar = menuBarLoader.load();
             menuBarDispatcher = menuBarLoader.getController();
 
@@ -69,8 +68,7 @@ public class MainFx extends Application {
                 return;
             }
 
-            //TODO DA CAMBIAREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE -> ORA VA BENEEEEE??????
-            FXMLLoader columnSelectorsLoader = new FXMLLoader(fxmlUrl, translationsModel.getUIResourceBundle(Locale.forLanguageTag(String.valueOf(PreferencesController.getInstance().getPreference("language-tag")))));
+            FXMLLoader columnSelectorsLoader = new FXMLLoader(fxmlUrl, translationsModel.getUiBundle());
             columnSelectors = columnSelectorsLoader.load();
             columnsSelectorDispatcher = columnSelectorsLoader.getController();
 

@@ -1,5 +1,6 @@
 package ch.supsi.connectfour.frontend.view;
 
+import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
@@ -28,11 +29,11 @@ public class PreferencesView {
     private ColorPicker playerTwoColorPicker;
 
     @FXML
-    private ComboBox<String> playerOneShapeComboBox;
+    private ComboBox<Symbol> playerOneShapeComboBox;
 
     @FXML
-    private ComboBox<String> playerTwoShapeComboBox;
-    List<ComboBox<String>> playerShapeBoxes = new ArrayList<>();
+    private ComboBox<Symbol> playerTwoShapeComboBox;
+    List<ComboBox<Symbol>> playerShapeBoxes = new ArrayList<>();
 
     @FXML
     private Button saveButton;
@@ -81,7 +82,7 @@ public class PreferencesView {
         });
     }
 
-    public void setShapes(List<String> supportedShapes) {
+    public void setShapes(List<Symbol> supportedShapes) {
         playerShapeBoxes.forEach((cBox) -> {
             // Adds all supported shapes to the combo boxes and automatically selects the first option, to avoid having a blank cell
             cBox.getItems().addAll(supportedShapes);
@@ -124,11 +125,12 @@ public class PreferencesView {
         return playerTwoColorPicker.getValue().toString();
     }
 
-    public String getPlayerOneShape() {
+    public Symbol getPlayerOneShape() {
+        System.out.println(playerOneShapeComboBox.getValue());
         return playerOneShapeComboBox.getValue();
     }
 
-    public String getPlayerTwoShape() {
+    public Symbol getPlayerTwoShape() {
         return playerTwoShapeComboBox.getValue();
     }
 }

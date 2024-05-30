@@ -1,6 +1,7 @@
 package ch.supsi.connectfour.frontend.controller;
 
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
+import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import ch.supsi.connectfour.frontend.model.PreferencesModel;
 import ch.supsi.connectfour.frontend.model.TranslationModel;
 import ch.supsi.connectfour.frontend.view.PreferencesView;
@@ -10,11 +11,16 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.AbstractMap;
 import java.util.List;
 import java.util.Objects;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
 public class PreferencesFrontendController {
@@ -27,7 +33,7 @@ public class PreferencesFrontendController {
     private final TranslationModel translationModel = TranslationModel.getInstance();
     private final Stage stage = new Stage();
 
-    private final static String shapePreferencePattern = "/images/symbols/%s.PNG";
+    private final static String SYMBOL_REGEX = "/images/symbols/.*\\.PNG";
 
     public static PreferencesFrontendController getInstance() {
         if (instance == null) {
@@ -59,9 +65,8 @@ public class PreferencesFrontendController {
                         new AbstractMap.SimpleEntry<>("language-tag", preferencesView.getSelectedLanguage()),
                         new AbstractMap.SimpleEntry<>("player-one-color", preferencesView.getPlayerOneColor()),
                         new AbstractMap.SimpleEntry<>("player-two-color", preferencesView.getPlayerTwoColor()),
-                        // TODO: CHANGE SHAPE -> SYMBOL FOR CONSISTENCY
-                        new AbstractMap.SimpleEntry<>("player-one-symbol", preferencesView.getPlayerOneShape()),
-                        new AbstractMap.SimpleEntry<>("player-two-symbol", preferencesView.getPlayerTwoShape())
+                        new AbstractMap.SimpleEntry<>("player-one-symbol", String.valueOf(preferencesView.getPlayerOneShape().getValue())),
+                        new AbstractMap.SimpleEntry<>("player-two-symbol", String.valueOf(preferencesView.getPlayerTwoShape().getValue()))
                 );
                 preferences.forEach((preference) -> model.setPreference(preference));
 
@@ -78,21 +83,32 @@ public class PreferencesFrontendController {
             e.printStackTrace();
         }
     }
-
     private void initViewChoices() {
         this.preferencesView.setLanguages(this.translationsController.getSupportedLanguages());
 
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        List<String> validSymbols = null;
+        List<Symbol> validSymbols = null;
         try {
             validSymbols =
                     Stream.of(resolver.getResources(String.format("classpath:%s*.PNG", "images/symbols/")))
-                            .map((resource -> {
-                                String rAsString = resource.toString();
-                                // Remove the .png
-                                // TODO: al momento sto map non ha nessun senso ma dovremmo capire come manipolare sti dati
-                                return rAsString;
-                            })).toList(); // TODO: add constant for URL
+                            .map((r) -> {
+                                String absolutePath = "";
+                                try {
+                                     absolutePath = r.getURL().toString();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                                // For consistency across OSs, convert Windows-style separators into Unix-style file separators
+                                absolutePath = absolutePath.replace("\\", "/");
+
+                                Pattern pattern = Pattern.compile(SYMBOL_REGEX);
+                                Matcher matcher = pattern.matcher(absolutePath);
+
+                                if (matcher.find()) {
+                                    return new Symbol(matcher.group());
+                                }
+                                return null;
+                            }).toList(); // TODO: add constant for URL
         } catch (IOException e) {
             e.printStackTrace();
         }

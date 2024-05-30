@@ -13,13 +13,13 @@ import java.util.Properties;
 
 public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInterface {
 
-    private static final String defaultPreferencesPath = "/default-user-preferences.properties";
+    private static final String DEFAULT_USER_PREFERENCES_PROPERTIES = "/default-user-preferences.properties";
 
-    private static final String userHomeDirectory = System.getProperty("user.home");
+    private static final String USER_HOME_DIRECTORY = System.getProperty("user.home");
 
-    private static final String preferencesDirectory = ".connectfour";
+    private static final String PREFERENCES_DIRECTORY = ".connectfour";
 
-    private static final String preferencesFile = "/user-preferences.properties";
+    private static final String PREFERENCES_FILE = "/user-preferences.properties";
 
     public static PreferencesPropertiesDataAccess dao;
 
@@ -41,7 +41,7 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
     }
 
     private Path getUserPreferencesDirectoryPath() {
-        return Path.of(userHomeDirectory, preferencesDirectory);
+        return Path.of(USER_HOME_DIRECTORY, PREFERENCES_DIRECTORY);
     }
 
     private boolean userPreferencesDirectoryExists() {
@@ -59,7 +59,7 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
     }
 
     private Path getUserPreferencesFilePath() {
-        return Path.of(userHomeDirectory, preferencesDirectory, preferencesFile);
+        return Path.of(USER_HOME_DIRECTORY, PREFERENCES_DIRECTORY, PREFERENCES_FILE);
     }
 
     private boolean userPreferencesFileExists() {
@@ -97,7 +97,7 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
     private Properties loadDefaultPreferences() {
         Properties defaultPreferences = new Properties();
         try {
-            InputStream defaultPreferencesStream = this.getClass().getResourceAsStream(defaultPreferencesPath);
+            InputStream defaultPreferencesStream = this.getClass().getResourceAsStream(DEFAULT_USER_PREFERENCES_PROPERTIES);
             defaultPreferences.load(defaultPreferencesStream);
 
         } catch (IOException ignored) {

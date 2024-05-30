@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -15,6 +14,8 @@ import java.util.*;
 public class TranslationsPropertiesDataAccess implements TranslationsDataAccessInterface {
     private static final String supportedLanguagesPath = "/supported-languages.properties";
     private static final String UI_LABELS_PATH = "i18n/UI/ui_labels";
+    private static final String LABELS_PATH = "i18n/labels/";
+    private static final String LABELS_FORMAT = ".properties";
 
     public static TranslationsPropertiesDataAccess myself;
 
@@ -55,12 +56,12 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
     public Properties getTranslations(Locale locale) {
         Properties translations = new Properties();
 
-        List<ResourceBundle> bundles = getResourceBundlesForLocale(locale, "i18n/labels/"); // TODO: maybe use constants
+        List<ResourceBundle> bundles = getResourceBundlesForLocale(locale, LABELS_PATH);
         // It means it failed to load translations for the given locale, fallback to a default one
         if (bundles.isEmpty()) {
             Locale fallbackLocale = Locale.forLanguageTag(this.getSupportedLanguageTags().get(0));
             // This assumes that the pathToResources is valid, and the only thing that's not valid is the locale
-            bundles = handleMissingResource(locale, fallbackLocale, "i18n/labels/");
+            bundles = handleMissingResource(locale, fallbackLocale, LABELS_PATH);
         }
         bundles.forEach((b) -> {
             for (String key : b.keySet()) {
@@ -75,10 +76,10 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         List<ResourceBundle> resourceBundles = new ArrayList<>();
         try {
-            Resource[] resources = resolver.getResources(String.format("classpath:%s*.properties", pathToResources));
+            Resource[] resources = resolver.getResources(String.format("classpath:%s*%s", pathToResources, LABELS_FORMAT));
             for (Resource resource : resources) {
                 String filename = resource.getFilename();
-                if (filename != null && filename.contains("_" + locale.toString() + ".properties")) {
+                if (filename != null && filename.contains("_" + locale.toString() + LABELS_FORMAT)) {
                     try (InputStreamReader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8)) {
                         ResourceBundle resourceBundle = new PropertyResourceBundle(reader);
                         resourceBundles.add(resourceBundle);

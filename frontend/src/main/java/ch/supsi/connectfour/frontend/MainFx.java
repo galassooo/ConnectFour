@@ -23,11 +23,10 @@ import java.util.Objects;
 
 public class MainFx extends Application {
 
-    public static final String APP_TITLE = "ConnectFour";
-    private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
-    private final ApplicationExitController exitController = ApplicationExitController.getInstance();
-    // TODO: forse da cambiare...
-    private final TranslationModel translationsModel = TranslationModel.getInstance();
+    public static final String APP_TITLE;
+    static {
+        APP_TITLE = TranslationModel.getInstance().translate("label.game_name");
+    }
 
     public static void main(String[] args) {
         launch(args);
@@ -35,6 +34,10 @@ public class MainFx extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
+        final ApplicationExitController exitController = ApplicationExitController.getInstance();
+        final TranslationModel translationsModel = TranslationModel.getInstance();
+
         primaryStage.setResizable(false);
         primaryStage.setTitle(APP_TITLE);
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/application/board.png"))));

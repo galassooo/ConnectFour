@@ -10,7 +10,7 @@ public class Main {
 
 1) eliminare unused imports
 2) rendere tutte le classi estendibili ma non modificabili
-3) se sostituisco il modello della partita con ad esempio il gioco del tris funziona?
+3) se sostituisco il modello della partita con ad esempio il gioco del tris funziona? NO
 4) sistemare i simboli
 5) override dell'equals e del hashcode
 

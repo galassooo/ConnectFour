@@ -40,7 +40,6 @@ public class Symbol implements SymbolInterface {
         return getClass().getResourceAsStream(value);
     }
 
-    // TODO: non so se è legale per come l'abbiamo pensata. Il valore al suo interno rimarrà sempre una stringa in ogni caso, cambierebbe solo il modo in cui viene processata dall'esterno tramite i metodi sopra
     @JsonIgnore
     public String getValue() {
         return value;

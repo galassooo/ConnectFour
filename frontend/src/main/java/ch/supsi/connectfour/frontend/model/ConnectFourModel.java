@@ -3,6 +3,7 @@ package ch.supsi.connectfour.frontend.model;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBackendController;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.application.event.GameEvent;
+import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 
 import java.io.File;
 
@@ -47,5 +48,9 @@ public class ConnectFourModel {
 
     public ConnectFourBusinessInterface tryLoadingSave(File file) {
         return this.backendController.tryLoadingSave(file);
+    }
+
+    public ConnectFourPlayerInterface getOtherPlayer(ConnectFourPlayerInterface player) {
+        return this.backendController.getOtherPlayer(player);
     }
 }

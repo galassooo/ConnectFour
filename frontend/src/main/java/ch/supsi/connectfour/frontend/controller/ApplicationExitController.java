@@ -10,7 +10,6 @@ import org.jetbrains.annotations.NotNull;
 public class ApplicationExitController {
     private static ApplicationExitController instance;
     private static TranslationModel translationModel;
-    ;
     private final ApplicationExitModel model;
     private final IApplicationExitView view;
     private Stage primaryStage;
@@ -37,14 +36,6 @@ public class ApplicationExitController {
                 }
         );
         return this;
-    }
-    public void setOnCloseRequest() {
-        primaryStage.setOnCloseRequest(
-                windowEvent -> {
-                    windowEvent.consume();
-                    primaryStage.close();
-                }
-        );
     }
 
     public void manageExit() {

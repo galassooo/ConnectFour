@@ -82,7 +82,6 @@ public class ConnectFourBackendController {
      * @return true if the operation succeeded, false if it failed
      */
     public boolean persist(@Nullable final File outputDirectory, @Nullable final String saveName) {
-        // TODO: fix this otherwise NPE
         if (currentMatch == null) {
             return false;
         }
@@ -100,7 +99,7 @@ public class ConnectFourBackendController {
      * @return the deserialized game if the operation succeeded, null if it failed
      */
     public @Nullable ConnectFourBusinessInterface tryLoadingSave(@NotNull final File file) {
-        // TODO: fix NPE if currentmatch is null
+        // todo: fa un po' schifo ma mi sa che va lasciato così a sto punto
         if (currentMatch == null)
             this.createNewGame();
 
@@ -114,6 +113,12 @@ public class ConnectFourBackendController {
 
     public String getSaveName() {
         return currentMatch.getSaveName();
+    }
+    public ConnectFourPlayerInterface getOtherPlayer(@NotNull ConnectFourPlayerInterface player) {
+        if (player.equals(currentMatch.getPlayer1())) {
+            return currentMatch.getPlayer2();
+        }
+        return currentMatch.getPlayer1();
     }
 
     @Override

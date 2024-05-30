@@ -10,7 +10,7 @@ public class PreferencesController {
 
     private final PreferencesBusinessInterface preferencesModel;
 
-    protected PreferencesController() {
+    private PreferencesController() {
         this.preferencesModel = PreferencesModel.getInstance();
     }
 

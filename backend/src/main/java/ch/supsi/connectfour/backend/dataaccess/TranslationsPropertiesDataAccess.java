@@ -13,8 +13,6 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 public class TranslationsPropertiesDataAccess implements TranslationsDataAccessInterface {
-    private static final String LABELS_PATH = String.format("i18n%slabels%s", File.separator, File.separator);
-
     private static final String supportedLanguagesPath = "/supported-languages.properties";
     private static final String UI_LABELS_PATH = "i18n/UI/ui_labels";
 
@@ -96,7 +94,6 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
 
     private List<ResourceBundle> handleMissingResource(Locale invalidLocale, Locale fallbackLocale, String pathToResources) {
         System.err.printf("Invalid locale: %s. Loading new locale: %s\n", invalidLocale.toString(), fallbackLocale.toString());
-
         return getResourceBundlesForLocale(fallbackLocale, pathToResources);
     }
 

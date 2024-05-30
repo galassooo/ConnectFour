@@ -90,7 +90,6 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
     @JsonIgnore
     @Override
     public boolean isWin() {
-        //double start = System.currentTimeMillis();
         // Controlla orizzontali
         boolean won = false;
         for (int row = 0; row < GRID_HEIGHT; row++) {
@@ -143,7 +142,6 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
                 }
             }
         }
-        //System.out.println(System.currentTimeMillis()-start);
         return won;
     }
 
@@ -182,6 +180,7 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
         if (outputDirectory == null && saveName == null && this.pathToSave != null && this.pathToSave.toFile().exists()) {
             wasSaved = this.dataAccess.persist(this, this.pathToSave.toFile());
         } else {
+            // TODO: the model knows the format of the file it is working with...
             this.pathToSave = Path.of(outputDirectory + File.separator + saveName + ".json");
             wasSaved = this.dataAccess.persist(this, new File(String.valueOf(this.pathToSave)));
         }
@@ -320,33 +319,8 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
         currentPlayer = currentPlayer.equals(player2) ? player1 : player2;
     }
 
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (int row = 0; row < GRID_HEIGHT; row++) {
-            for (int col = 0; col < GRID_LENGTH; col++) {
-                ConnectFourPlayerInterface cell = gameMatrix[row][col];
-                if (cell == null) {
-                    sb.append("0 ");
-                } else if (cell.equals(player1)) {
-                    sb.append("1 ");
-                } else if (cell.equals(player2)) {
-                    sb.append("2 ");
-
-                }
-            }
-            sb.append("\n");  // Nuova linea alla fine di ogni riga
-        }
-        sb.append("isFinished:").append(this.isFinished);
-        sb.append("\nwasLastMoveValid:").append(this.wasLastMoveValid);
-        sb.append("\npathToSave:").append(this.pathToSave);
-        sb.append("\ncurrentPlayer:").append(this.currentPlayer);
-        return sb.toString();
-    }
-
     // Getter and setter methods
     public boolean isFinished() {
-        // TODO: FA SCHIFO
         if (this.isFinished)
             this.wasLastMoveValid = false;
 

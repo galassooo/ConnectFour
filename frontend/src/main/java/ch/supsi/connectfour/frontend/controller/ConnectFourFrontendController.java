@@ -99,7 +99,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
     private void updateTitle(final @NotNull String gameName) {
-        primaryStage.setTitle(MainFx.APP_TITLE + " - " + gameName.replace(".json", ""));
+        primaryStage.setTitle(String.format("%s - %s", MainFx.APP_TITLE, gameName));
     }
 
     public void manageSaveAs() {
@@ -142,7 +142,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
                     break;
                 }
                 ConnectFourPlayerInterface player = newMatrix[row][column];
-                ValidMoveEvent move = new ValidMoveEvent(player, player, column, row);
+                ValidMoveEvent move = new ValidMoveEvent(player, model.getOtherPlayer(player), column, row);
                 viewableItems.forEach(item -> item.show(move));
             }
         }

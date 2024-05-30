@@ -37,10 +37,8 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
         try {
             loadedGame = mapper.readValue(file, ConnectFourModel.class);
         } catch (StreamReadException e) {
-            System.err.println("Error while reading stream");
             return null;
-        } catch (final IOException e) {
-            System.err.println("Error reading file: " + file.getAbsolutePath());
+        } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
@@ -52,19 +50,17 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
         try {
             // If the file exists already then it means it was created already, so no need to try to create it again. If the creation fails then return an error
             if (!outputFile.exists() && !outputFile.createNewFile()) {
-                System.err.println("ERRORE nella creazione del file di salvataggio");
                 return false;
             }
-        } catch (final IOException e) {
-            // TODO: do something clever with this exception
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         final ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
             mapper.writeValue(outputFile, game);
         } catch (IOException e) {
-            System.err.println("ERRORE nella scrittura su file del salvataggio");
+            e.printStackTrace();
             return false;
-            // TODO: do something clever with this exception
         }
         return true;
     }

@@ -8,8 +8,8 @@ public class PreferencesModel {
     private static PreferencesModel instance;
     private static PreferencesController backendController;
 
-    private String enableMessage;
-    private String disableMessage;
+    private final String enableMessage;
+    private final String disableMessage;
 
     public PreferencesModel(String enableMessage, String disableMessage) {
         backendController = PreferencesController.getInstance();

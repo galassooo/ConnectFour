@@ -1,5 +1,6 @@
 package ch.supsi.connectfour.frontend.view.about;
 
+import ch.supsi.connectfour.frontend.model.AboutModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -30,7 +31,21 @@ public class AboutView implements IAboutView {
     private ImageView imageView;
 
     @FXML
+    private Label dateValue;
+
+    @FXML
+    private Label developersValue;
+
+    @FXML
+    private Label versionValue;
+
+    private AboutModel model;
+
+    @FXML
     void initialize() {
+
+        model = new AboutModel();
+
         URL imageUrl = getClass().getResource("/images/about/board.png");
         if (imageUrl == null) {
             System.err.println("Error while loading board image");
@@ -38,26 +53,16 @@ public class AboutView implements IAboutView {
         }
         Image image = new Image(imageUrl.toExternalForm());
         imageView.setImage(image);
-    }
 
-    public void setAboutConnectFourLabel(String content) {
-        aboutConnectFourLabel.setText(content);
-    }
+        poweredByLabel.setText(model.getPoweredByLabel());
+        button.setText(model.getCloseText());
+        builtOnLabel.setText(model.getBuiltOnLabel());
+        runtimeVersionLabel.setText(model.getRuntimeVersionLabel());
+        dateValue.setText(model.getDate());
+        versionValue.setText(model.getVersion());
+        developersValue.setText(model.getDevelopers());
+        this.aboutConnectFourLabel.setText(model.getAboutConnectFourLabel());
 
-    public void setBuiltOnLabel(String content) {
-        builtOnLabel.setText(content);
-    }
-
-    public void setRuntimeVersionLabel(String content) {
-        runtimeVersionLabel.setText(content);
-    }
-
-    public void setPoweredByLabel(String content) {
-        poweredByLabel.setText(content);
-    }
-
-    public void setButtonText(String content) {
-        button.setText(content);
     }
 
     /**

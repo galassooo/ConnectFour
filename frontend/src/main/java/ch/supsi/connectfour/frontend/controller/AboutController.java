@@ -1,6 +1,7 @@
 package ch.supsi.connectfour.frontend.controller;
 
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
+import ch.supsi.connectfour.frontend.model.AboutModel;
 import ch.supsi.connectfour.frontend.view.about.IAboutView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,16 +12,11 @@ import java.io.IOException;
 import java.net.URL;
 
 public class AboutController {
-    private final static TranslationsController translations;
     private static AboutController instance;
-
-    static {
-        translations = TranslationsController.getInstance();
-    }
-
     private final Stage stage;
     private IAboutView aboutView;
 
+    private AboutModel model;
 
     /*Anche se la logica per caricare i componenti dell applicazione è tutta in MainFX
         credo sia meglio caricare il contenuto del popup qui perchè:
@@ -43,7 +39,6 @@ public class AboutController {
 
             Scene scene = new Scene(content);
             stage.setScene(scene);
-            stage.setTitle(translations.translate("label.about"));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -64,12 +59,8 @@ public class AboutController {
      * Shows the popup
      */
     public void showAboutPopUp() {
-        aboutView.setOnActButton((e) -> stage.close());
-        aboutView.setPoweredByLabel(translations.translate("label.powered_by"));
-        aboutView.setButtonText(translations.translate("label.close"));
-        aboutView.setBuiltOnLabel(translations.translate("label.built_on"));
-        aboutView.setRuntimeVersionLabel(translations.translate("label.runtime_version"));
         stage.setResizable(false);
+        aboutView.setOnActButton(e-> stage.close());
         stage.show();
     }
 }

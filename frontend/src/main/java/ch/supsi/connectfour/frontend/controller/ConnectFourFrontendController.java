@@ -31,6 +31,8 @@ public class ConnectFourFrontendController implements GameEventHandler {
     private static Stage primaryStage;
 
     private final ISerializationView serializationView;
+
+    //DA CAMBIARE COL MODEL!!!!!
     private final TranslationsController translations;
     private final ConnectFourModel model;
     private final List<Viewable> viewableItems = new ArrayList<>();

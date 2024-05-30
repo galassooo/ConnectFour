@@ -18,9 +18,9 @@ public class HelpController {
 
     private static HelpController instance;
 
-    private final Stage stage = new Stage();
+    private final Stage stage;
 
-    private final TranslationsController translations = TranslationsController.getInstance();
+    private final TranslationsController translations;
 
     /**
      * @return the istance of this class
@@ -33,6 +33,8 @@ public class HelpController {
     }
 
     private HelpController() {
+        stage = new Stage();
+        translations = TranslationsController.getInstance();
         try {
             URL fxmlUrl = getClass().getResource("/help.fxml");
             if (fxmlUrl == null) {

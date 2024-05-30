@@ -21,14 +21,12 @@ public class ConnectFourPlayer extends PlayerModel implements ConnectFourPlayerI
     }
 
     @JsonIgnore
-    public ConnectFourPlayer(
-            @JsonProperty("name") String name,
-            @JsonProperty("color") String color,
-            @JsonProperty("symbol") SymbolInterface symbol) {
+    public ConnectFourPlayer(String name, String color, SymbolInterface symbol) {
         super(name);
         this.color = color;
         this.symbol = symbol;
     }
+
     @JsonCreator
     private ConnectFourPlayer(@JsonProperty("name") String name,
                               @JsonProperty("color") String color,

@@ -5,15 +5,21 @@ import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 
 public class MenuBarDispatcher {
-    private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
-    private final AboutController aboutController = AboutController.getInstance();
-    private final PreferencesFrontendController preferencesFrontendController = PreferencesFrontendController.getInstance();
-
-    private final HelpController helpController = HelpController.getInstance();
-    // TODO: figure out hwy the getInstance does not work
-    private final ApplicationExitController exitController = ApplicationExitController.getInstance();
+    private static final ConnectFourFrontendController connectFourFrontendController;
+    private static final AboutController aboutController;
+    private static final PreferencesFrontendController preferencesFrontendController;
+    private static final HelpController helpController;
+    private static final ApplicationExitController exitController;
     @FXML
     public MenuItem saveMenuItem;
+
+    static {
+        connectFourFrontendController = ConnectFourFrontendController.getInstance();
+        aboutController = AboutController.getInstance();
+        preferencesFrontendController = PreferencesFrontendController.getInstance();
+        helpController = HelpController.getInstance();
+        exitController = ApplicationExitController.getInstance();
+    }
 
 
     public void newGame() {

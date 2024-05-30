@@ -6,13 +6,12 @@ import javafx.scene.control.Label;
 import javafx.scene.text.TextFlow;
 
 public class InfoBarView implements Viewable {
-    // TODO: llo stato attuale questo viene caricato solo quando viene iniziato un nuovo gioco, eventualmente bisognerebbe chiamare il clear per aggiornarlo quando viene lanciato il gioco o trovare un altro modo
-    private static String defaultMessage;
     @FXML
     public Label infoBarText;
 
     @FXML
     private TextFlow textLabel;
+    private static String defaultMessage;
 
     @FXML
     private void initialize() {

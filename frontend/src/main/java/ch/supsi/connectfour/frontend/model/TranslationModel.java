@@ -3,6 +3,7 @@ package ch.supsi.connectfour.frontend.model;
 import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 
+import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
@@ -38,5 +39,13 @@ public class TranslationModel {
             locale = Locale.forLanguageTag(preferencesController.getPreference("language-tag").toString());
         }
         return locale;
+    }
+
+    public String translate(String s) {
+        return translationsController.translate(s);
+    }
+
+    public List<String> getSupportedLanguages() {
+        return translationsController.getSupportedLanguages();
     }
 }

@@ -12,11 +12,14 @@ import java.net.URL;
 
 public class AboutController {
     private AboutView aboutView;
+    private final Stage stage;
 
     private static AboutController instance;
-    private final static TranslationsController translations = TranslationsController.getInstance();
+    private final static TranslationsController translations;
+    static {
+        translations = TranslationsController.getInstance();
+    }
 
-    private final Stage stage = new Stage();
 
     /**
      * @return the istance of this class
@@ -36,6 +39,7 @@ public class AboutController {
            è come il controller della partita che crea la partita eccetera
      */
     private AboutController() {
+        stage = new Stage();
         try {
             URL fxmlUrl = getClass().getResource("/about.fxml");
             if (fxmlUrl == null) {

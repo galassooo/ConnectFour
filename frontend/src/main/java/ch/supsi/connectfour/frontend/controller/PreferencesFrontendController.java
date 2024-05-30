@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.AbstractMap;
@@ -23,11 +24,9 @@ public class PreferencesFrontendController {
 
     private PreferencesView preferencesView;
     private static PreferencesFrontendController instance;
-    private PreferencesModel model;
-    private final TranslationsController translationsController = TranslationsController.getInstance();
-
-    private final TranslationModel translationModel = TranslationModel.getInstance();
-    private final Stage stage = new Stage();
+    private final PreferencesModel model;
+    private final TranslationModel translationModel;
+    private final Stage stage;
 
     private final static String SYMBOL_REGEX = "/images/symbols/.*\\.PNG";
 
@@ -39,6 +38,9 @@ public class PreferencesFrontendController {
     }
 
     private PreferencesFrontendController() {
+        translationModel = TranslationModel.getInstance();
+        model = new PreferencesModel();
+        stage = new Stage();
         try {
             URL fxmlUrl = getClass().getResource("/preferences.fxml");
             if (fxmlUrl == null) {
@@ -48,10 +50,9 @@ public class PreferencesFrontendController {
             FXMLLoader loader = new FXMLLoader(fxmlUrl, translationModel.getUiBundle());
             Scene scene = new Scene(loader.load());
             preferencesView = loader.getController();
-            model = new PreferencesModel();
 
             this.initViewChoices();
-            this.preferencesView.initSaveListener(this.translationsController.translate("label.preferences_please_choose"), this.translationsController.translate("label.preferences_cannot_save"));
+            this.preferencesView.initSaveListener(this.translationModel.translate("label.preferences_please_choose"), this.translationModel.translate("label.preferences_cannot_save"));
             this.preferencesView.setColorPickerLocale(model.getLanguage());
 
             // todo: è giusto che la view venga inizializzata qui dentro nel controller??
@@ -73,7 +74,7 @@ public class PreferencesFrontendController {
 
             stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/preferences/gear.png"))));
             stage.setScene(scene);
-            stage.setTitle(this.translationsController.translate("label.preferences"));
+            stage.setTitle(this.translationModel.translate("label.preferences"));
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -81,7 +82,7 @@ public class PreferencesFrontendController {
     }
 
     private void initViewChoices() {
-        this.preferencesView.setLanguages(this.translationsController.getSupportedLanguages());
+        this.preferencesView.setLanguages(this.translationModel.getSupportedLanguages());
 
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         List<Symbol> validSymbols = null;

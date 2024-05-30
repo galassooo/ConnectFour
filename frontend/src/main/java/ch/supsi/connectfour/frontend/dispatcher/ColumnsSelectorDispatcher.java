@@ -14,8 +14,12 @@ import java.util.List;
 public class ColumnsSelectorDispatcher {
     @FXML
     private GridPane pane;
+    // It's a singleton so might aswell share the reference across the whole class
+    private static final ConnectFourFrontendController connectFourFrontendController;
 
-    private final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
+    static {
+        connectFourFrontendController = ConnectFourFrontendController.getInstance();
+    }
     @FXML
     void initialize() {
     }

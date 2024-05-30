@@ -23,7 +23,7 @@ public class HelpController {
     private static final int NUM_SCREENS = 6;
 
     /* formatters */
-    private static final String imagesResourceFormat = "/images/help/%d.jpg";
+    private static final String imagesResourceFormat = "%d.jpg";
     private static final String labelsFormat = "label.help_%d";
 
     /* stage */

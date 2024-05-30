@@ -1,7 +1,9 @@
 package ch.supsi.connectfour.frontend.model;
 
+import ch.supsi.connectfour.backend.application.preferences.PreferencesApplication;
 import ch.supsi.connectfour.backend.application.translations.TranslationsApplication;
 import javafx.event.ActionEvent;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import java.util.function.Consumer;
 
@@ -9,11 +11,13 @@ import java.util.function.Consumer;
 public class HelpModel {
     /* backend controllers */
     private static final TranslationsApplication translations = TranslationsApplication.getInstance();
+    private static final PreferencesApplication preferencesApplication = PreferencesApplication.getInstance();
 
     /* popup title */
     private static final String title = translations.translate("label.help");
 
     /* data */
+    private final static String imagePathFormat = "/images/help/%s/%s";
     private final String imagePath;
     private final String howToPlay;
     private final String helpText;
@@ -21,7 +25,6 @@ public class HelpModel {
     private final String previousBtnText;
     private final Consumer<ActionEvent> previousBtnAction;
     private final Consumer<ActionEvent> nextBtnAction;
-
     private final boolean showPreviousBtn;
 
 
@@ -37,7 +40,8 @@ public class HelpModel {
      * @param showPreviousBtn if true shows the previous button, otherwise no
      */
     public HelpModel(String imagePath, String howToPlay, String helpText, String nextBtnLabel, String previousBtnText, Consumer<ActionEvent> previousBtnAction, Consumer<ActionEvent> nextBtnAction, boolean showPreviousBtn) {
-        this.imagePath = imagePath;
+        String locale = (String) preferencesApplication.getPreference("language-tag");
+        this.imagePath = String.format(imagePathFormat, locale, imagePath);
         this.howToPlay = translations.translate(howToPlay);
         this.helpText = translations.translate(helpText);
         this.nextBtnLabel = translations.translate(nextBtnLabel);

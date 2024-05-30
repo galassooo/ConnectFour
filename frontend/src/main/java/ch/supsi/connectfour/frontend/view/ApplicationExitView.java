@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ExitView {
+public class ApplicationExitView {
 
     public boolean showConfirmationDialog(final String message, final String title, final String confirmText, final String cancelText, Stage stage) {
         // Create a confirmation dialog

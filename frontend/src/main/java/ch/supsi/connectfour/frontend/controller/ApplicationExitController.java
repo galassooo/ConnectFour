@@ -1,15 +1,14 @@
 package ch.supsi.connectfour.frontend.controller;
 
-import ch.supsi.connectfour.backend.application.translations.TranslationsController;
-import ch.supsi.connectfour.frontend.view.ExitView;
+import ch.supsi.connectfour.frontend.model.ApplicationExitModel;
+import ch.supsi.connectfour.frontend.view.ApplicationExitView;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
-// TODO: per ora non interagisce in nessun modo con il model... valutare
 public class ApplicationExitController {
     private static ApplicationExitController instance;
-    private static TranslationsController translations;
-    private final ExitView view;
+    private final ApplicationExitModel model;
+    private final ApplicationExitView view;
     private Stage primaryStage;
 
     public static ApplicationExitController getInstance() {
@@ -20,8 +19,8 @@ public class ApplicationExitController {
     }
 
     private ApplicationExitController() {
-        view = new ExitView();
-        translations = TranslationsController.getInstance();
+        view = new ApplicationExitView();
+        model = new ApplicationExitModel();
     }
 
     public ApplicationExitController build(@NotNull Stage primaryStage) {
@@ -30,7 +29,7 @@ public class ApplicationExitController {
     }
 
     public void manageExit() {
-        if (view.showConfirmationDialog(translations.translate("label.close_confirmation"), translations.translate("label.confirmation"), translations.translate("label.confirm"), translations.translate("label.cancel"), null)) {
+        if (view.showConfirmationDialog(model.translate("label.close_confirmation"), model.translate("label.confirmation"), model.translate("label.confirm"), model.translate("label.cancel"), null)) {
             this.primaryStage.close();
         }
     }

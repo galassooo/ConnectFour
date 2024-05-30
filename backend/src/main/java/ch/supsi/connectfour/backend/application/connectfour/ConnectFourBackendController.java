@@ -6,6 +6,7 @@ import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayer;
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 import ch.supsi.connectfour.backend.business.preferences.PreferencesModel;
+import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -60,8 +61,8 @@ public class ConnectFourBackendController {
     }
 
     public void createNewGame() {
-        ConnectFourPlayerInterface p1 = new ConnectFourPlayer("P1", preferences.getPreference("player-one-color").toString(), preferences.getPreference("player-one-symbol").toString());
-        ConnectFourPlayerInterface p2 = new ConnectFourPlayer("P2", preferences.getPreference("player-two-color").toString(), preferences.getPreference("player-two-symbol").toString());
+        ConnectFourPlayerInterface p1 = new ConnectFourPlayer("P1", preferences.getPreference("player-one-color").toString(), new Symbol(preferences.getPreference("player-one-symbol").toString()));
+        ConnectFourPlayerInterface p2 = new ConnectFourPlayer("P2", preferences.getPreference("player-two-color").toString(), new Symbol(preferences.getPreference("player-two-symbol").toString()));
         currentMatch = new ConnectFourModel(p1, p2);
     }
 

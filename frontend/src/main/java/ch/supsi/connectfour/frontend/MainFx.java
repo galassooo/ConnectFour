@@ -7,6 +7,7 @@ import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher;
 import ch.supsi.connectfour.frontend.model.TranslationModel;
+import ch.supsi.connectfour.frontend.view.PreferencesView;
 import ch.supsi.connectfour.frontend.view.viewables.BoardView;
 import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
 import javafx.application.Application;

@@ -9,6 +9,5 @@ public interface PreferencesBusinessInterface {
     Object getPreference(String key);
 
     void setPreference(Map.Entry<String, String> preference);
-
 }
 

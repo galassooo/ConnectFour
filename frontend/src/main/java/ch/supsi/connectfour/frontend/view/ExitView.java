@@ -32,12 +32,11 @@ public class ExitView {
         // Return true if OK button is clicked, false otherwise
         return result.isPresent() && result.get() == okButton;
     }
-    private void loadCssForAlert(@NotNull Alert alert){
+
+    private void loadCssForAlert(@NotNull Alert alert) {
 
         Scene scene = alert.getDialogPane().getScene();
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styleSheets/genericScreen.css")).toExternalForm());
-
-        //System.out.println("AAAAAAAAAAA " + Objects.requireNonNull(getClass().getResource("/styleSheets/genericScreen.css")).toExternalForm());
 
         alert.getDialogPane().getStyleClass().add("custom-alert");
 

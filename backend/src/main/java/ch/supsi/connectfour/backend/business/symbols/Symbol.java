@@ -10,9 +10,17 @@ import java.net.URL;
 public class Symbol implements SymbolInterface{
     @JsonInclude
     private final String value;
+    @JsonIgnore
+    private final String name;
     @JsonCreator
     public Symbol(@NotNull @JsonProperty(value = "value") String value) {
         this.value = value;
+        this.name = "";
+    }
+    @JsonIgnore
+    public Symbol(@NotNull String value, String name) {
+        this.value = value;
+        this.name = name;
     }
 
     @JsonIgnore
@@ -33,11 +41,13 @@ public class Symbol implements SymbolInterface{
     public String getValue() {
         return value;
     }
+    @JsonIgnore
+    public String getName() {
+        return name;
+    }
 
     @Override
     public String toString() {
-        return "Symbol{" +
-                "value='" + value + '\'' +
-                '}';
+        return this.name;
     }
 }

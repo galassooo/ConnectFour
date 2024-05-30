@@ -79,6 +79,7 @@ public class PreferencesFrontendController {
             e.printStackTrace();
         }
     }
+
     private void initViewChoices() {
         this.preferencesView.setLanguages(this.translationsController.getSupportedLanguages());
 
@@ -90,7 +91,7 @@ public class PreferencesFrontendController {
                             .map((r) -> {
                                 String absolutePath = "";
                                 try {
-                                     absolutePath = r.getURL().toString();
+                                    absolutePath = r.getURL().toString();
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -101,10 +102,16 @@ public class PreferencesFrontendController {
                                 Matcher matcher = pattern.matcher(absolutePath);
 
                                 if (matcher.find()) {
-                                    return new Symbol(matcher.group());
+                                    // Il percorso relativo
+                                    String value = matcher.group();
+                                    // Separo in [] / [images] / [symbol] / [...png]
+                                    String name = value.split("/")[3];
+                                    // Tolgo il .png
+                                    name = name.substring(0, name.length() - 4).toUpperCase();
+                                    return new Symbol(value, name);
                                 }
                                 return null;
-                            }).toList(); // TODO: add constant for URL
+                            }).toList();
         } catch (IOException e) {
             e.printStackTrace();
         }

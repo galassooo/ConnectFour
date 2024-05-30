@@ -126,7 +126,6 @@ public class PreferencesView {
     }
 
     public Symbol getPlayerOneShape() {
-        System.out.println(playerOneShapeComboBox.getValue());
         return playerOneShapeComboBox.getValue();
     }
 

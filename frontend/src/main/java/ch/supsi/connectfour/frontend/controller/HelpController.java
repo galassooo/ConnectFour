@@ -1,6 +1,7 @@
 package ch.supsi.connectfour.frontend.controller;
 
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
+import ch.supsi.connectfour.frontend.model.HelpModel;
 import ch.supsi.connectfour.frontend.view.HelpView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,6 +11,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class HelpController {
@@ -22,6 +25,12 @@ public class HelpController {
 
     private final TranslationsController translations;
 
+    private static final int NUM_SCREENS = 6;
+
+    private final List<HelpModel> models = new ArrayList<>();
+
+    private static final String imagesResourceFormat = "/images/help/%d.jpg";
+    private static final String labelsFormat = "label.help_%d";
     /**
      * @return the istance of this class
      */
@@ -56,60 +65,48 @@ public class HelpController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        buildScreens();
     }
 
+    void buildScreens(){
+        for(int i = 1; i <= NUM_SCREENS; i++){
+            int finalI = i;
+            models.add(new HelpModel(
+                    String.format(imagesResourceFormat, i),
+                    "label.help_title",
+                    String.format(labelsFormat, i),
+                    i == NUM_SCREENS ? "label.play" : "label.next",
+                    "label.previous",
+                    (e) -> show(finalI - 2),
+                    i != NUM_SCREENS ? (e) -> show(finalI) : (e) -> stage.close(),
+                    i != 1
+            ));
+        }
+    }
+
+    void show(int index){
+        HelpModel model = models.get(index);
+        helpView.loadImage(model.getImagePath());
+
+        helpView.setHowToPlayLabel(model.getHowToPlay());
+        helpView.setHelpLabel(model.getHelpText());
+        if(!model.isShowPreviousBtn()){
+            helpView.removePreviousButton();
+        }else{
+            helpView.addPreviousButton();
+            helpView.setPreviousButtonText(model.getPreviousBtnText());
+            helpView.setPreviousButtonAction(model.getPreviousBtnAction());
+        }
+
+        helpView.setNextButtonLabel(model.getNextBtnLabel());
+        helpView.setNextButtonAction(model.getNextBtnAction());
+        if(index == 0)
+            stage.show();
+    }
     /**
      * Shows the popup
      */
     public void showHelpPopUp() {
-        helpView.loadImage("/images/help/new.jpg");
-
-        helpView.setHowToPlayLabel(translations.translate("label.help_title"));
-        helpView.setHelpLabel(translations.translate("label.help_start"));
-        helpView.removePreviousButton();
-        helpView.setNextButtonLabel(translations.translate("label.next"));
-        helpView.setNextButtonAction((e) -> showSecondScreen());
-        stage.show();
-    }
-
-    private void showSecondScreen() {
-        helpView.addPreviousButton();
-        helpView.setPreviousButtonAction(e -> showHelpPopUp());
-        helpView.setPreviousButtonText(translations.translate("label.previous"));
-        helpView.loadImage("/images/help/open.jpg");
-        helpView.setHelpLabel(translations.translate("label.help_load"));
-        helpView.setNextButtonLabel(translations.translate("label.next"));
-        helpView.setNextButtonAction((e) -> showThirdScreen());
-    }
-
-    private void showThirdScreen() {
-        helpView.loadImage("/images/help/columns.jpg");
-        helpView.setPreviousButtonAction(e -> showSecondScreen());
-        helpView.setHelpLabel(translations.translate("label.help_column"));
-        helpView.setNextButtonLabel(translations.translate("label.next"));
-        helpView.setNextButtonAction((e) -> showFourthScreen());
-    }
-
-    private void showFourthScreen() {
-        helpView.loadImage("/images/help/save.jpg");
-        helpView.setPreviousButtonAction(e -> showThirdScreen());
-        helpView.setHelpLabel(translations.translate("label.help_save"));
-        helpView.setNextButtonLabel(translations.translate("label.next"));
-        helpView.setNextButtonAction((e) -> showFifthScreen());
-    }
-
-    private void showFifthScreen() {
-        helpView.loadImage("/images/help/preferences.jpg");
-        helpView.setPreviousButtonAction(e -> showFourthScreen());
-        helpView.setHelpLabel(translations.translate("label.help_preferences"));
-        helpView.setNextButtonLabel(translations.translate("label.next"));
-        helpView.setNextButtonAction((e) -> showSixthScreen());
-    }
-    private void showSixthScreen() {
-        helpView.loadImage("/images/help/play.jpg");
-        helpView.setPreviousButtonAction(e -> showFifthScreen());
-        helpView.setHelpLabel(translations.translate("label.help_finished"));
-        helpView.setNextButtonLabel(translations.translate("label.play"));
-        helpView.setNextButtonAction((e) -> stage.close());
+        show(0);
     }
 }

@@ -12,7 +12,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -21,29 +20,26 @@ import java.util.function.Consumer;
 public class PreferencesView implements IPreferencesView {
     @FXML
     public Text preferencesText;
-
+    List<ComboBox<Symbol>> playerShapeBoxes = new ArrayList<>();
     @FXML
     private ComboBox<String> languageComboBox;
-
     @FXML
     private ColorPicker playerOneColorPicker;
-
     @FXML
     private ColorPicker playerTwoColorPicker;
-
     @FXML
     private ComboBox<Symbol> playerOneShapeComboBox;
-
     @FXML
     private ComboBox<Symbol> playerTwoShapeComboBox;
-    List<ComboBox<Symbol>> playerShapeBoxes = new ArrayList<>();
-
     @FXML
     private Button saveButton;
 
     @FXML
     private Button cancelButton;
     private PreferencesModel model;
+
+    public PreferencesView() {
+    }
 
     @FXML
     void initialize() {
@@ -76,8 +72,6 @@ public class PreferencesView implements IPreferencesView {
         });
         preferencesText.setText(" \n ");
     }
-
-    public PreferencesView(){}
 
     public void setModel(@NotNull PreferencesModel model) {
         this.model = model;

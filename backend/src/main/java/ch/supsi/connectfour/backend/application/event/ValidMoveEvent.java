@@ -26,7 +26,7 @@ public class ValidMoveEvent extends MoveEvent {
         this.row = row;
     }
 
-    protected ValidMoveEvent(String s, String logMessage,@NotNull ConnectFourPlayerInterface playerWhoWon, int column, int row) {
+    protected ValidMoveEvent(String s, String logMessage, @NotNull ConnectFourPlayerInterface playerWhoWon, int column, int row) {
         super(s, logMessage, playerWhoWon);
         this.playerToPlay = null;
         this.playerSymbol = playerWhoWon.getSymbol();

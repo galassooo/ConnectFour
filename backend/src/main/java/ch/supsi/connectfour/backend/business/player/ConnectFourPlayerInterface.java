@@ -4,7 +4,8 @@ import ch.supsi.connectfour.backend.business.symbols.SymbolInterface;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 @JsonDeserialize(as = ConnectFourPlayer.class)
-public interface ConnectFourPlayerInterface extends PlayerBusinessInterface{
+public interface ConnectFourPlayerInterface extends PlayerBusinessInterface {
     SymbolInterface getSymbol();
+
     String getColor();
 }

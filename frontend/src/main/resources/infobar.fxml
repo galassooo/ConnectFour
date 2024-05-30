@@ -4,8 +4,10 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.TextFlow?>
-<HBox alignment="CENTER" stylesheets="styleSheets/mainScreen.css" style="-fx-padding: 15;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.supsi.connectfour.frontend.view.viewables.InfoBarView">
-     <TextFlow fx:id="textLabel" id="textFlow" textAlignment="CENTER">
-         <Label fx:id="infoBarText"/>
-     </TextFlow>
- </HBox>
+<HBox xmlns:fx="http://javafx.com/fxml/1" alignment="CENTER" stylesheets="styleSheets/mainScreen.css"
+      style="-fx-padding: 15;" xmlns="http://javafx.com/javafx/20.0.1"
+      fx:controller="ch.supsi.connectfour.frontend.view.viewables.InfoBarView">
+    <TextFlow fx:id="textLabel" id="textFlow" textAlignment="CENTER">
+        <Label fx:id="infoBarText"/>
+    </TextFlow>
+</HBox>

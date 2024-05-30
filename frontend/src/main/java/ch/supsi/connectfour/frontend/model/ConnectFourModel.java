@@ -10,15 +10,15 @@ public class ConnectFourModel {
     private static ConnectFourModel instance;
     private final ConnectFourBackendController backendController;
 
+    private ConnectFourModel() {
+        this.backendController = ConnectFourBackendController.getInstance();
+    }
+
     public static ConnectFourModel getInstance() {
         if (instance == null) {
             instance = new ConnectFourModel();
         }
         return instance;
-    }
-
-    private ConnectFourModel() {
-        this.backendController = ConnectFourBackendController.getInstance();
     }
 
     public GameEvent playerMove(int column) {

@@ -15,12 +15,12 @@ public abstract class GameEvent implements GameEventInterface {
         this.eventLogMessage = eventLogMessage;
     }
 
-    public final String getEventMessage() {
-        return eventMessage;
-    }
-
     protected static TranslationsController getTranslator() {
         return translations;
+    }
+
+    public final String getEventMessage() {
+        return eventMessage;
     }
 
     public final String getEventLogMessage() {

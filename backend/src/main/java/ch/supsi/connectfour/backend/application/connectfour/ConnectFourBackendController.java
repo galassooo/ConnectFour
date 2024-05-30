@@ -19,16 +19,16 @@ public class ConnectFourBackendController {
     // The match currently linked to this controller
     private ConnectFourBusinessInterface currentMatch;
 
+    protected ConnectFourBackendController() {
+        preferences = PreferencesModel.getInstance();
+    }
+
     // Singleton instantiation of this class
     public static ConnectFourBackendController getInstance() {
         if (instance == null) {
             instance = new ConnectFourBackendController();
         }
         return instance;
-    }
-
-    protected ConnectFourBackendController() {
-        preferences = PreferencesModel.getInstance();
     }
 
     /**

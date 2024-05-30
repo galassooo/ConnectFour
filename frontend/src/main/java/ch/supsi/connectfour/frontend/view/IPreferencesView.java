@@ -14,8 +14,11 @@ public interface IPreferencesView {
     void setColorPickerLocale(Locale locale);
 
     void setLanguages(List<String> supportedLanguages);
+
     void setOnCancelButton(Consumer<ActionEvent> eventConsumer);
+
     void setOnSaveButton(Consumer<ActionEvent> eventConsumer);
+
     void setModel(PreferencesModel model);
 
     String getSelectedLanguage();

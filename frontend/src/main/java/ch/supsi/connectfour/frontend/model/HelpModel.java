@@ -3,6 +3,7 @@ package ch.supsi.connectfour.frontend.model;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import javafx.event.ActionEvent;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.function.Consumer;
 
 public class HelpModel {
@@ -30,9 +31,10 @@ public class HelpModel {
         this.showPreviousBtn = showPreviousBtn;
     }
 
-    public static String getTitle(){
+    public static String getTitle() {
         return title;
     }
+
     public String getHowToPlay() {
         return howToPlay;
     }

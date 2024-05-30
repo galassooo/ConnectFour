@@ -36,19 +36,18 @@ public class ConnectFourFrontendController implements GameEventHandler {
     private final List<Viewable> viewableItems = new ArrayList<>();
     private final List<Button> buttonList = new ArrayList<>();
 
-    public static ConnectFourFrontendController getInstance() {
-        if (instance == null) {
-            instance = new ConnectFourFrontendController();
-        }
-        return instance;
-    }
-
     private ConnectFourFrontendController() {
         this.model = ConnectFourModel.getInstance();
         this.serializationView = new SerializationView();
         this.translations = TranslationsController.getInstance();
     }
 
+    public static ConnectFourFrontendController getInstance() {
+        if (instance == null) {
+            instance = new ConnectFourFrontendController();
+        }
+        return instance;
+    }
 
     public ConnectFourFrontendController build(MenuItem saveMenuItem, List<Button> buttonList, Stage stage, Viewable... viewables) {
         this.buttonList.addAll(buttonList);

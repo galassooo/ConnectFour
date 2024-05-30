@@ -1,7 +1,6 @@
 package ch.supsi.connectfour.backend.dataaccess;
 
 import ch.supsi.connectfour.backend.business.preferences.PreferencesDataAccessInterface;
-import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -9,8 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -141,6 +138,7 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
         // return the properties object with the loaded preferences
         return userPreferences;
     }
+
     // This method works on a copy of the user preferences to only have an impact on the actual
     // file in the filesystem and the copy, so that the current settings are not affected until
     // an application restart

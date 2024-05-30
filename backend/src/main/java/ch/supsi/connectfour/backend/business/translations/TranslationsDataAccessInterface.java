@@ -10,5 +10,6 @@ public interface TranslationsDataAccessInterface {
     List<String> getSupportedLanguageTags();
 
     Properties getTranslations(Locale locale);
+
     ResourceBundle getUIResourceBundle(Locale locale);
 }

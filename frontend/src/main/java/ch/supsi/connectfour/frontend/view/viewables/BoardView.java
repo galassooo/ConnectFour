@@ -15,15 +15,14 @@ import javafx.scene.paint.Color;
 import java.net.URL;
 
 public class BoardView implements Viewable {
+    private final SymbolProviderApplication<URL> symbolProvider = new SymbolProvider<>();
     @FXML
     private GridPane gridPaneSymbols;
     @FXML
     private GridPane gridPaneColor;
-
     @FXML
     private ImageView boardLayer;
 
-    private final SymbolProviderApplication<URL> symbolProvider = new SymbolProvider<>();
     @FXML
     public void initialize() {
         gridPaneSymbols.setStyle("-fx-grid-lines-visible: true;");

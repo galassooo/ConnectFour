@@ -15,6 +15,10 @@ import java.util.Random;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ConnectFourModel implements ConnectFourBusinessInterface {
+    @JsonIgnore
+    private static final int GRID_LENGTH = 7;
+    @JsonIgnore
+    private static final int GRID_HEIGHT = 6;
     /*
         While technically not essential because Jackson considers non-annoted fields as
         included by default, I decided to explicitly annotate both ignored and included
@@ -25,11 +29,6 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
     private static ConnectFourBusinessInterface instance;
     @JsonIgnore
     private final ConnectFourDataAccessInterface dataAccess;
-
-    @JsonIgnore
-    private static final int GRID_LENGTH = 7;
-    @JsonIgnore
-    private static final int GRID_HEIGHT = 6;
     // A Path object representing the path - if available - of a save of this game
     @JsonInclude
     private Path pathToSave;
@@ -221,6 +220,7 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
         }
         return cnt == GRID_LENGTH;
     }
+
     private ConnectFourPlayerInterface[][] getGameMatrixDeepCopy() {
         // Get the dimensions of the original array
         int rows = this.gameMatrix.length;
@@ -246,14 +246,29 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
         return currentPlayer;
     }
 
+    @JsonSetter
+    private void setCurrentPlayer(ConnectFourPlayerInterface currentPlayer) {
+        this.currentPlayer = currentPlayer;
+    }
+
     @Override
     public ConnectFourPlayerInterface getPlayer1() {
         return (ConnectFourPlayerInterface) player1.clone();
     }
 
+    @JsonSetter
+    private void setPlayer1(ConnectFourPlayerInterface player1) {
+        this.player1 = player1;
+    }
+
     @Override
     public ConnectFourPlayerInterface getPlayer2() {
         return (ConnectFourPlayerInterface) player2.clone();
+    }
+
+    @JsonSetter
+    private void setPlayer2(ConnectFourPlayerInterface player2) {
+        this.player2 = player2;
     }
 
     /**
@@ -349,6 +364,11 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
         return Arrays.copyOf(lastPositionOccupied, lastPositionOccupied.length);
     }
 
+    @JsonSetter
+    private void setLastPositionOccupied(int[] lastPositionOccupied) {
+        this.lastPositionOccupied = lastPositionOccupied;
+    }
+
     /**
      * Getter method for the gameMatrix field
      *
@@ -360,6 +380,11 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
         return this.getGameMatrixDeepCopy();
     }
 
+    @JsonSetter
+    private void setGameMatrix(ConnectFourPlayerInterface[][] gameMatrix) {
+        this.gameMatrix = gameMatrix;
+    }
+
     @JsonGetter
     private Path getPathToSave() {
         return pathToSave;
@@ -368,31 +393,6 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
     @JsonSetter
     private void setPathToSave(Path pathToSave) {
         this.pathToSave = pathToSave;
-    }
-
-    @JsonSetter
-    private void setLastPositionOccupied(int[] lastPositionOccupied) {
-        this.lastPositionOccupied = lastPositionOccupied;
-    }
-
-    @JsonSetter
-    private void setGameMatrix(ConnectFourPlayerInterface[][] gameMatrix) {
-        this.gameMatrix = gameMatrix;
-    }
-
-    @JsonSetter
-    private void setPlayer1(ConnectFourPlayerInterface player1) {
-        this.player1 = player1;
-    }
-
-    @JsonSetter
-    private void setPlayer2(ConnectFourPlayerInterface player2) {
-        this.player2 = player2;
-    }
-
-    @JsonSetter
-    private void setCurrentPlayer(ConnectFourPlayerInterface currentPlayer) {
-        this.currentPlayer = currentPlayer;
     }
 
     @JsonGetter

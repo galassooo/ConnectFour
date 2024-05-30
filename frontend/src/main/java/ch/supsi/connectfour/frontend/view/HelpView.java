@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.net.URL;
 import java.util.function.Consumer;
 
-public class HelpView implements IHelpView{
+public class HelpView implements IHelpView {
 
     @FXML
     private Label helpLabel;
@@ -51,13 +51,14 @@ public class HelpView implements IHelpView{
     public void setNextButtonAction(@NotNull Consumer<ActionEvent> eventConsumer) {
         nextButton.setOnAction(eventConsumer::accept);
     }
-    public void removePreviousButton(){
+
+    public void removePreviousButton() {
         hbox.getChildren().remove(previousButton);
     }
 
-    public void addPreviousButton(){
+    public void addPreviousButton() {
         //rimuovo e aggiungo entrambi per avere ordine corretto
-        if(!hbox.getChildren().contains(previousButton)) { //duplicate children check
+        if (!hbox.getChildren().contains(previousButton)) { //duplicate children check
             hbox.getChildren().remove(nextButton);
             hbox.getChildren().add(previousButton);
             hbox.getChildren().add(nextButton);

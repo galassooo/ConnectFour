@@ -31,7 +31,8 @@ public class SerializationView implements ISerializationView {
         loadCssForAlert(alert);
         alert.showAndWait();
     }
-    private void loadCssForAlert(@NotNull Alert alert){
+
+    private void loadCssForAlert(@NotNull Alert alert) {
 
         Scene scene = alert.getDialogPane().getScene();
         scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styleSheets/genericScreen.css")).toExternalForm());

@@ -3,307 +3,314 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<StackPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.supsi.connectfour.frontend.view.viewables.BoardView">
-    <padding><Insets bottom="5" left="11" right="11" top="5" /></padding>
+<StackPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/20.0.1"
+           fx:controller="ch.supsi.connectfour.frontend.view.viewables.BoardView">
+    <padding>
+        <Insets bottom="5" left="11" right="11" top="5"/>
+    </padding>
 
-    <GridPane fx:id="gridPaneColor" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
-        <padding><Insets bottom="5" left="11" right="11" top="5" /></padding>
+    <GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="gridPaneColor" xmlns="http://javafx.com/javafx/20.0.1">
+        <padding>
+            <Insets bottom="5" left="11" right="11" top="5"/>
+        </padding>
 
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES"/>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+            <ColumnConstraints hgrow="SOMETIMES"/>
         </columnConstraints>
 
         <rowConstraints>
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
         </rowConstraints>
 
         <children>
             <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="0">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="0">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="0">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="0">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="0">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="0">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="0">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="1">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="1">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="1">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="1">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="1">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="1">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="1">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="2">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="2">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="2">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="2">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="2">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="2">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="2">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="3">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="3">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="3">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="3">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="3">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="3">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="3">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="4">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="4">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="4">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="4">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="4">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="4">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="4">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="0" GridPane.rowIndex="5">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="1" GridPane.rowIndex="5">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="2" GridPane.rowIndex="5">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="3" GridPane.rowIndex="5">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="4" GridPane.rowIndex="5">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="5" GridPane.rowIndex="5">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
             <AnchorPane GridPane.columnIndex="6" GridPane.rowIndex="5">
                 <children>
-                    <Pane prefHeight="55.0" prefWidth="55.0" />
+                    <Pane prefHeight="55.0" prefWidth="55.0"/>
                 </children>
             </AnchorPane>
 
         </children>
     </GridPane>
 
-    <GridPane fx:id="gridPaneSymbols" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
-        <padding><Insets bottom="5" left="11" right="11" top="5" /></padding>
+    <GridPane xmlns:fx="http://javafx.com/fxml/1" fx:id="gridPaneSymbols" xmlns="http://javafx.com/javafx/20.0.1">
+        <padding>
+            <Insets bottom="5" left="11" right="11" top="5"/>
+        </padding>
 
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" />
-            <ColumnConstraints hgrow="SOMETIMES" />
+            <ColumnConstraints hgrow="SOMETIMES"/>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+            <ColumnConstraints hgrow="SOMETIMES"/>
+            <ColumnConstraints hgrow="SOMETIMES"/>
         </columnConstraints>
 
         <rowConstraints>
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
-            <RowConstraints vgrow="SOMETIMES" />
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
+            <RowConstraints vgrow="SOMETIMES"/>
         </rowConstraints>
 
         <children>

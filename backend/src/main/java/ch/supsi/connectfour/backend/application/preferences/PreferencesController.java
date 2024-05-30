@@ -31,7 +31,7 @@ public class PreferencesController {
         return this.preferencesModel.getPreference(key);
     }
 
-    public void setPreference(Map.Entry<String, String> preference){
+    public void setPreference(Map.Entry<String, String> preference) {
         preferencesModel.setPreference(preference);
     }
 }

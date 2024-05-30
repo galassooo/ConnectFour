@@ -6,5 +6,6 @@ import java.io.File;
 
 public interface ConnectFourDataAccessInterface {
     ConnectFourBusinessInterface getSave(final File file);
+
     boolean persist(final ConnectFourBusinessInterface game, final File outputFile);
 }

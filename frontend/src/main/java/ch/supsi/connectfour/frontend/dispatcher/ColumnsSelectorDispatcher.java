@@ -12,18 +12,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ColumnsSelectorDispatcher {
-    @FXML
-    private GridPane pane;
     // It's a singleton so might aswell share the reference across the whole class
     private static final ConnectFourFrontendController connectFourFrontendController;
 
     static {
         connectFourFrontendController = ConnectFourFrontendController.getInstance();
     }
+
+    @FXML
+    private GridPane pane;
+
     @FXML
     void initialize() {
     }
-    public List<Button> getButtons(){
+
+    public List<Button> getButtons() {
         List<Button> buttonList = new ArrayList<>();
         for (javafx.scene.Node node : pane.getChildren()) {
             if (node instanceof AnchorPane anchorPane) {

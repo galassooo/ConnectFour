@@ -14,14 +14,14 @@ import java.io.IOException;
 public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
     protected static ConnectFourDataAccess instance;
 
+    protected ConnectFourDataAccess() {
+    }
+
     public static ConnectFourDataAccess getInstance() {
         if (instance == null) {
             instance = new ConnectFourDataAccess();
         }
         return instance;
-    }
-
-    protected ConnectFourDataAccess() {
     }
 
     @Override

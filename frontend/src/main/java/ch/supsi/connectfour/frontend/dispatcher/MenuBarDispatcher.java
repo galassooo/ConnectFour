@@ -10,8 +10,6 @@ public class MenuBarDispatcher {
     private static final PreferencesFrontendController preferencesFrontendController;
     private static final HelpController helpController;
     private static final ApplicationExitController exitController;
-    @FXML
-    public MenuItem saveMenuItem;
 
     static {
         connectFourFrontendController = ConnectFourFrontendController.getInstance();
@@ -21,6 +19,8 @@ public class MenuBarDispatcher {
         exitController = ApplicationExitController.getInstance();
     }
 
+    @FXML
+    public MenuItem saveMenuItem;
 
     public void newGame() {
         connectFourFrontendController.manageNew();
@@ -42,7 +42,9 @@ public class MenuBarDispatcher {
         exitController.manageExit();
     }
 
-    public void preferences(){ preferencesFrontendController.managePreferences(); }
+    public void preferences() {
+        preferencesFrontendController.managePreferences();
+    }
 
     public void showAbout() {
         aboutController.showAboutPopUp();

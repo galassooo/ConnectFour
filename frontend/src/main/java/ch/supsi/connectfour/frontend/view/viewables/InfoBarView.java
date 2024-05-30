@@ -6,21 +6,19 @@ import javafx.scene.control.Label;
 import javafx.scene.text.TextFlow;
 
 public class InfoBarView implements Viewable {
+    private static String defaultMessage;
     @FXML
     public Label infoBarText;
-
     @FXML
     private TextFlow textLabel;
-    private static String defaultMessage;
-
-    @FXML
-    private void initialize() {
-    }
 
     public static void setDefaultMessage(String message) {
         defaultMessage = message;
     }
 
+    @FXML
+    private void initialize() {
+    }
 
     private void setText(String text) {
         textLabel.getChildren().clear(); // se voglio pulire il precedente

@@ -1,8 +1,6 @@
 package ch.supsi.connectfour.frontend.controller;
 
-import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.frontend.model.HelpModel;
-import ch.supsi.connectfour.frontend.view.HelpView;
 import ch.supsi.connectfour.frontend.view.IHelpView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,27 +16,13 @@ import java.util.Objects;
 
 public class HelpController {
 
-    private IHelpView helpView;
-
-    private static HelpController instance;
-
-    private final Stage stage;
-
     private static final int NUM_SCREENS = 6;
-
-    private final List<HelpModel> models = new ArrayList<>();
-
     private static final String imagesResourceFormat = "/images/help/%d.jpg";
     private static final String labelsFormat = "label.help_%d";
-    /**
-     * @return the istance of this class
-     */
-    public static HelpController getInstance() {
-        if (instance == null) {
-            instance = new HelpController();
-        }
-        return instance;
-    }
+    private static HelpController instance;
+    private final Stage stage;
+    private final List<HelpModel> models = new ArrayList<>();
+    private IHelpView helpView;
 
     private HelpController() {
         stage = new Stage();
@@ -66,8 +50,18 @@ public class HelpController {
         buildScreens();
     }
 
-    void buildScreens(){
-        for(int i = 1; i <= NUM_SCREENS; i++){
+    /**
+     * @return the istance of this class
+     */
+    public static HelpController getInstance() {
+        if (instance == null) {
+            instance = new HelpController();
+        }
+        return instance;
+    }
+
+    void buildScreens() {
+        for (int i = 1; i <= NUM_SCREENS; i++) {
             int finalI = i;
             models.add(new HelpModel(
                     String.format(imagesResourceFormat, i),
@@ -82,15 +76,15 @@ public class HelpController {
         }
     }
 
-    void show(int index){
+    void show(int index) {
         HelpModel model = models.get(index);
         helpView.loadImage(model.getImagePath());
 
         helpView.setHowToPlayLabel(model.getHowToPlay());
         helpView.setHelpLabel(model.getHelpText());
-        if(!model.isShowPreviousBtn()){
+        if (!model.isShowPreviousBtn()) {
             helpView.removePreviousButton();
-        }else{
+        } else {
             helpView.addPreviousButton();
             helpView.setPreviousButtonText(model.getPreviousBtnText());
             helpView.setPreviousButtonAction(model.getPreviousBtnAction());
@@ -98,9 +92,10 @@ public class HelpController {
 
         helpView.setNextButtonLabel(model.getNextBtnLabel());
         helpView.setNextButtonAction(model.getNextBtnAction());
-        if(index == 0)
+        if (index == 0)
             stage.show();
     }
+
     /**
      * Shows the popup
      */

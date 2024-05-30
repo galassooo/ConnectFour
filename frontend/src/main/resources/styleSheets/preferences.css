@@ -8,16 +8,19 @@
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0, 0, 4);
 }
 
-.button:disabled{
-    -fx-effect:none;
+.button:disabled {
+    -fx-effect: none;
 }
+
 .button:hover {
     -fx-cursor: hand;
 }
+
 #pane {
     -fx-background-color: #e3e3e3;
 }
-.label{
+
+.label {
     -fx-font-size: 14;
 }
 
@@ -52,6 +55,7 @@
 .color-picker .split-menu-button .arrow-button {
     -fx-padding: 4;
 }
+
 .combo-box {
     -fx-background-color: #e3e3e3;
     -fx-border-color: #0063C9;

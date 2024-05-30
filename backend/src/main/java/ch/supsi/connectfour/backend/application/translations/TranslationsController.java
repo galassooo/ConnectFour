@@ -31,6 +31,7 @@ public class TranslationsController {
 
         return myself;
     }
+
     public List<String> getSupportedLanguages() {
         return this.translationsModel.getSupportedLanguages();
     }
@@ -39,14 +40,13 @@ public class TranslationsController {
      * Translate the given key
      *
      * @param key
-     *
      * @return String
      */
     public String translate(String key) {
         return this.translationsModel.translate(key);
     }
 
-    public ResourceBundle getTranslationBundle(Locale locale){
+    public ResourceBundle getTranslationBundle(Locale locale) {
         return this.translationsModel.getUIResourceBundle(locale);
     }
 }

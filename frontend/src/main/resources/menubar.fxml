@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<MenuBar stylesheets="styleSheets/menu.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher">
+<MenuBar xmlns:fx="http://javafx.com/fxml/1" stylesheets="styleSheets/menu.css"
+         fx:controller="ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher">
     <Menu mnemonicParsing="false" text="%ui_file">
         <MenuItem fx:id="newMenuItem" mnemonicParsing="false" onAction="#newGame" text="%ui_new"/>
         <MenuItem fx:id="openMenuItem" mnemonicParsing="false" onAction="#openGame" text="%ui_open"/>

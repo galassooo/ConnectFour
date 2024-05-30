@@ -21,20 +21,12 @@ import java.util.stream.Stream;
 
 public class PreferencesFrontendController {
 
-    private IPreferencesView preferencesView;
+    private final static String SYMBOL_REGEX = "/images/symbols/.*\\.PNG";
     private static PreferencesFrontendController instance;
     private final PreferencesModel model;
     private final TranslationModel translationModel;
     private final Stage stage;
-
-    private final static String SYMBOL_REGEX = "/images/symbols/.*\\.PNG";
-
-    public static PreferencesFrontendController getInstance() {
-        if (instance == null) {
-            instance = new PreferencesFrontendController();
-        }
-        return instance;
-    }
+    private IPreferencesView preferencesView;
 
     private PreferencesFrontendController() {
         translationModel = TranslationModel.getInstance();
@@ -73,6 +65,13 @@ public class PreferencesFrontendController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static PreferencesFrontendController getInstance() {
+        if (instance == null) {
+            instance = new PreferencesFrontendController();
+        }
+        return instance;
     }
 
     private void initViewChoices() {

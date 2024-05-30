@@ -8,16 +8,19 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class TranslationModel {
-    private static TranslationModel instance;
     private static final TranslationsController translationsController;
     private static final PreferencesController preferencesController;
-
-    private ResourceBundle uiBundle;
-    private Locale locale;
+    private static TranslationModel instance;
 
     static {
         translationsController = TranslationsController.getInstance();
         preferencesController = PreferencesController.getInstance();
+    }
+
+    private ResourceBundle uiBundle;
+    private Locale locale;
+
+    private TranslationModel() {
     }
 
     public static TranslationModel getInstance() {
@@ -26,8 +29,6 @@ public class TranslationModel {
         }
         return instance;
     }
-
-    private TranslationModel() {}
 
     public ResourceBundle getUiBundle() {
         if (uiBundle == null) { //load only once
@@ -50,6 +51,7 @@ public class TranslationModel {
     public List<String> getSupportedLanguages() {
         return translationsController.getSupportedLanguages();
     }
+
     public Locale getCurrentLanguage() {
         return Locale.forLanguageTag(String.valueOf(preferencesController.getPreference("language-tag")));
     }

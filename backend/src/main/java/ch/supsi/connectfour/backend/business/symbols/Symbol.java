@@ -7,16 +7,18 @@ import java.io.InputStream;
 import java.net.URL;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class Symbol implements SymbolInterface{
+public class Symbol implements SymbolInterface {
     @JsonInclude
     private final String value;
     @JsonIgnore
     private final String name;
+
     @JsonCreator
     public Symbol(@NotNull @JsonProperty(value = "value") String value) {
         this.value = value;
         this.name = "";
     }
+
     @JsonIgnore
     public Symbol(@NotNull String value, String name) {
         this.value = value;
@@ -24,15 +26,17 @@ public class Symbol implements SymbolInterface{
     }
 
     @JsonIgnore
-    public URL getAsResource(){
+    public URL getAsResource() {
         return getClass().getResource(value);
     }
+
     @JsonIgnore
-    public Character getAsChar(){
+    public Character getAsChar() {
         return value.charAt(0);
     }
+
     @JsonIgnore
-    public InputStream getResourceStream(){
+    public InputStream getResourceStream() {
         return getClass().getResourceAsStream(value);
     }
 
@@ -41,6 +45,7 @@ public class Symbol implements SymbolInterface{
     public String getValue() {
         return value;
     }
+
     @JsonIgnore
     public String getName() {
         return name;

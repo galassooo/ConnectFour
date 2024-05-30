@@ -93,6 +93,7 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
         }
         return resourceBundles;
     }
+
     private List<ResourceBundle> handleMissingResource(Locale invalidLocale, Locale fallbackLocale, String pathToResources) {
         System.err.printf("Invalid locale: %s. Loading new locale: %s\n", invalidLocale.toString(), fallbackLocale.toString());
 

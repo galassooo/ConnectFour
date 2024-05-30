@@ -1,13 +1,11 @@
 package ch.supsi.connectfour.frontend;
 
 
-import ch.supsi.connectfour.backend.business.translations.TranslationBusiness;
 import ch.supsi.connectfour.frontend.controller.ApplicationExitController;
 import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher;
 import ch.supsi.connectfour.frontend.model.TranslationModel;
-import ch.supsi.connectfour.frontend.view.PreferencesView;
 import ch.supsi.connectfour.frontend.view.viewables.BoardView;
 import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
 import javafx.application.Application;
@@ -30,6 +28,10 @@ public class MainFx extends Application {
     private final ApplicationExitController exitController = ApplicationExitController.getInstance();
     // TODO: forse da cambiare...
     private final TranslationModel translationsModel = TranslationModel.getInstance();
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     @Override
     public void start(Stage primaryStage) {
@@ -130,10 +132,7 @@ public class MainFx extends Application {
         Scene scene = new Scene(mainBorderPane);
         primaryStage.setScene(scene);
         primaryStage.show();
-        connectFourFrontendController.build(menuBarDispatcher.saveMenuItem, columnsSelectorDispatcher.getButtons(),primaryStage, boardView, infoBarView);
+        connectFourFrontendController.build(menuBarDispatcher.saveMenuItem, columnsSelectorDispatcher.getButtons(), primaryStage, boardView, infoBarView);
         exitController.build(primaryStage);
-    }
-    public static void main(String[] args) {
-        launch(args);
     }
 }

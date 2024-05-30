@@ -7,18 +7,21 @@
     -fx-pref-width: 100px;
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 4, 0, 0, 4);
 }
+
 .button:hover {
     -fx-cursor: hand;
 }
+
 #pane {
     -fx-background-color: #e3e3e3;
 }
-.label{
+
+.label {
     -fx-font-size: 14;
     -fx-font-family: Helvetica;
 }
 
-#HowToPlayLabel{
+#HowToPlayLabel {
     -fx-font-size: 20;
     -fx-font-weight: bold;
     -fx-font-family: Helvetica;

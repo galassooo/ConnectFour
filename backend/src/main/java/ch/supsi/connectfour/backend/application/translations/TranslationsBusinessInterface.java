@@ -7,6 +7,7 @@ import java.util.ResourceBundle;
 public interface TranslationsBusinessInterface {
 
     boolean isSupportedLanguageTag(String languageTag);
+
     List<String> getSupportedLanguages();
 
     boolean changeLanguage(String languageTag);

@@ -9,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-class PlayerModel implements Cloneable, PlayerBusinessInterface{
+class PlayerModel implements Cloneable, PlayerBusinessInterface {
     @JsonInclude
     private String name;
     @JsonInclude
@@ -24,6 +24,7 @@ class PlayerModel implements Cloneable, PlayerBusinessInterface{
     public String getName() {
         return name;
     }
+
     public int getId() {
         return id;
     }

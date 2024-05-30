@@ -11,7 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import java.net.URL;
 import java.util.function.Consumer;
 
-public class AboutView {
+public class AboutView implements IAboutView {
     @FXML
     private Label aboutConnectFourLabel;
 

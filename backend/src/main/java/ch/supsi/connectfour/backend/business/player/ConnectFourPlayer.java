@@ -1,13 +1,13 @@
 package ch.supsi.connectfour.backend.business.player;
 
-import ch.supsi.connectfour.backend.business.symbols.Symbol;
+import ch.supsi.connectfour.backend.business.symbols.SymbolBusiness;
 import ch.supsi.connectfour.backend.business.symbols.SymbolInterface;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ConnectFourPlayer extends PlayerModel implements ConnectFourPlayerInterface {
+public class ConnectFourPlayer extends PlayerBusiness implements ConnectFourPlayerInterface {
 
     @JsonInclude
     private SymbolInterface symbol;
@@ -30,7 +30,7 @@ public class ConnectFourPlayer extends PlayerModel implements ConnectFourPlayerI
     @JsonCreator
     private ConnectFourPlayer(@JsonProperty("name") String name,
                               @JsonProperty("color") String color,
-                              @JsonProperty("symbol") Symbol symbol) {
+                              @JsonProperty("symbol") SymbolBusiness symbol) {
         super(name);
         this.color = color;
         this.symbol = symbol;

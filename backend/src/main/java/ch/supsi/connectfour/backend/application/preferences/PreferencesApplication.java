@@ -1,6 +1,6 @@
 package ch.supsi.connectfour.backend.application.preferences;
 
-import ch.supsi.connectfour.backend.business.preferences.PreferencesModel;
+import ch.supsi.connectfour.backend.business.preferences.PreferencesBusiness;
 
 import java.util.Map;
 
@@ -14,7 +14,7 @@ public class PreferencesApplication {
 
 
     private PreferencesApplication() {
-        this.preferencesModel = PreferencesModel.getInstance();
+        this.preferencesModel = PreferencesBusiness.getInstance();
     }
 
     public static PreferencesApplication getInstance() {

@@ -2,11 +2,11 @@ package ch.supsi.connectfour.backend.application.connectfour;
 
 import ch.supsi.connectfour.backend.application.event.*;
 import ch.supsi.connectfour.backend.application.preferences.PreferencesBusinessInterface;
-import ch.supsi.connectfour.backend.business.connectfour.ConnectFourModel;
+import ch.supsi.connectfour.backend.business.connectfour.ConnectFourBusiness;
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayer;
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
-import ch.supsi.connectfour.backend.business.preferences.PreferencesModel;
-import ch.supsi.connectfour.backend.business.symbols.Symbol;
+import ch.supsi.connectfour.backend.business.preferences.PreferencesBusiness;
+import ch.supsi.connectfour.backend.business.symbols.SymbolBusiness;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,7 +25,7 @@ public class ConnectFourApplication {
 
 
     protected ConnectFourApplication() {
-        preferences = PreferencesModel.getInstance();
+        preferences = PreferencesBusiness.getInstance();
     }
 
     // Singleton instantiation of this class
@@ -76,9 +76,9 @@ public class ConnectFourApplication {
      * creates a new game
      */
     public void createNewGame() {
-        ConnectFourPlayerInterface p1 = new ConnectFourPlayer("P1", preferences.getPreference("player-one-color").toString(), new Symbol(preferences.getPreference("player-one-symbol").toString()));
-        ConnectFourPlayerInterface p2 = new ConnectFourPlayer("P2", preferences.getPreference("player-two-color").toString(), new Symbol(preferences.getPreference("player-two-symbol").toString()));
-        currentMatch = new ConnectFourModel(p1, p2);
+        ConnectFourPlayerInterface p1 = new ConnectFourPlayer("P1", preferences.getPreference("player-one-color").toString(), new SymbolBusiness(preferences.getPreference("player-one-symbol").toString()));
+        ConnectFourPlayerInterface p2 = new ConnectFourPlayer("P2", preferences.getPreference("player-two-color").toString(), new SymbolBusiness(preferences.getPreference("player-two-symbol").toString()));
+        currentMatch = new ConnectFourBusiness(p1, p2);
     }
 
 

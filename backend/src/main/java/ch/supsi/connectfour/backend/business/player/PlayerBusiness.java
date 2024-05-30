@@ -9,14 +9,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public abstract class PlayerModel implements Cloneable, PlayerBusinessInterface {
+public abstract class PlayerBusiness implements Cloneable, PlayerBusinessInterface {
     @JsonInclude
     private String name;
     @JsonInclude
     private int id;
 
     @JsonCreator
-    public PlayerModel(@JsonProperty(value = "name") String name) {
+    public PlayerBusiness(@JsonProperty(value = "name") String name) {
         this.name = name;
     }
 
@@ -33,7 +33,7 @@ public abstract class PlayerModel implements Cloneable, PlayerBusinessInterface 
     @Override
     public @Nullable Object clone() {
         try {
-            PlayerModel cloned = (PlayerModel) super.clone();
+            PlayerBusiness cloned = (PlayerBusiness) super.clone();
             cloned.id = this.id;
             cloned.name = this.name;
             return cloned;
@@ -53,7 +53,7 @@ public abstract class PlayerModel implements Cloneable, PlayerBusinessInterface 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof PlayerModel that)) return false;
+        if (!(o instanceof PlayerBusiness that)) return false;
         return getId() == that.getId() && Objects.equals(getName(), that.getName());
     }
 

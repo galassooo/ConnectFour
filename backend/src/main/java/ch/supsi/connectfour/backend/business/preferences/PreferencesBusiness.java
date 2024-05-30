@@ -7,22 +7,22 @@ import ch.supsi.connectfour.backend.dataaccess.PreferencesPropertiesDataAccess;
 import java.util.Map;
 import java.util.Properties;
 
-public class PreferencesModel implements PreferencesBusinessInterface {
+public class PreferencesBusiness implements PreferencesBusinessInterface {
 
-    private static PreferencesModel myself;
+    private static PreferencesBusiness myself;
 
     private final PreferencesDataAccessInterface preferencesDao;
 
     private final Properties userPreferences;
 
-    protected PreferencesModel() {
+    protected PreferencesBusiness() {
         this.preferencesDao = PreferencesPropertiesDataAccess.getInstance();
         this.userPreferences = preferencesDao.getPreferences();
     }
 
-    public static PreferencesModel getInstance() {
+    public static PreferencesBusiness getInstance() {
         if (myself == null) {
-            myself = new PreferencesModel();
+            myself = new PreferencesBusiness();
         }
 
         return myself;

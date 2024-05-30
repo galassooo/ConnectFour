@@ -1,6 +1,6 @@
 package ch.supsi.connectfour.frontend.view.preferences;
 
-import ch.supsi.connectfour.backend.business.symbols.Symbol;
+import ch.supsi.connectfour.backend.business.symbols.SymbolBusiness;
 import ch.supsi.connectfour.frontend.model.PreferencesModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
@@ -29,9 +29,9 @@ public class PreferencesView implements IPreferencesView {
     @FXML
     private ColorPicker playerTwoColorPicker;
     @FXML
-    private ComboBox<Symbol> playerOneShapeComboBox;
+    private ComboBox<SymbolBusiness> playerOneShapeComboBox;
     @FXML
-    private ComboBox<Symbol> playerTwoShapeComboBox;
+    private ComboBox<SymbolBusiness> playerTwoShapeComboBox;
     @FXML
     private Button saveButton;
     @FXML
@@ -41,7 +41,7 @@ public class PreferencesView implements IPreferencesView {
     private PreferencesModel model;
 
     /* symbol list - field */
-    List<ComboBox<Symbol>> playerShapeBoxes = new ArrayList<>();
+    List<ComboBox<SymbolBusiness>> playerShapeBoxes = new ArrayList<>();
 
     public PreferencesView() {
     }
@@ -87,7 +87,7 @@ public class PreferencesView implements IPreferencesView {
     }
 
     @Override
-    public void setShapes(List<Symbol> supportedShapes) {
+    public void setShapes(List<SymbolBusiness> supportedShapes) {
         playerShapeBoxes.forEach((cBox) -> {
             // Adds all supported shapes to the combo boxes and automatically selects the first option, to avoid having a blank cell
             cBox.getItems().addAll(supportedShapes);
@@ -135,12 +135,12 @@ public class PreferencesView implements IPreferencesView {
     }
 
     @Override
-    public Symbol getPlayerOneShape() {
+    public SymbolBusiness getPlayerOneShape() {
         return playerOneShapeComboBox.getValue();
     }
     @Override
 
-    public Symbol getPlayerTwoShape() {
+    public SymbolBusiness getPlayerTwoShape() {
         return playerTwoShapeComboBox.getValue();
     }
 }

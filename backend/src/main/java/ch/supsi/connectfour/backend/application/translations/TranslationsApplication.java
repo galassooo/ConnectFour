@@ -1,7 +1,7 @@
 package ch.supsi.connectfour.backend.application.translations;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesBusinessInterface;
-import ch.supsi.connectfour.backend.business.preferences.PreferencesModel;
+import ch.supsi.connectfour.backend.business.preferences.PreferencesBusiness;
 import ch.supsi.connectfour.backend.business.translations.TranslationBusiness;
 
 import java.util.List;
@@ -19,7 +19,7 @@ public class TranslationsApplication {
     private final PreferencesBusinessInterface preferencesModel;
 
     private TranslationsApplication() {
-        this.preferencesModel = PreferencesModel.getInstance();
+        this.preferencesModel = PreferencesBusiness.getInstance();
         this.translationsModel = TranslationBusiness.getInstance();
 
         String currentLanguage = preferencesModel.getCurrentLanguage();

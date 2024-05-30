@@ -1,6 +1,6 @@
 package ch.supsi.connectfour.frontend.controller;
 
-import ch.supsi.connectfour.backend.business.symbols.Symbol;
+import ch.supsi.connectfour.backend.business.symbols.SymbolBusiness;
 import ch.supsi.connectfour.frontend.model.PreferencesModel;
 import ch.supsi.connectfour.frontend.model.TranslationModel;
 import ch.supsi.connectfour.frontend.view.preferences.IPreferencesView;
@@ -94,7 +94,7 @@ public class PreferencesFrontendController {
         this.preferencesView.setLanguages(this.translationModel.getSupportedLanguages());
 
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
-        List<Symbol> validSymbols = null;
+        List<SymbolBusiness> validSymbols = null;
         try {
             validSymbols =
                     Stream.of(resolver.getResources(String.format("classpath:%s*.PNG", "images/symbols/")))
@@ -118,7 +118,7 @@ public class PreferencesFrontendController {
                                     String name = value.split("/")[3];
                                     // Tolgo il .png
                                     name = name.substring(0, name.length() - 4).toUpperCase();
-                                    return new Symbol(value, name);
+                                    return new SymbolBusiness(value, name);
                                 }
                                 return null;
                             }).toList();

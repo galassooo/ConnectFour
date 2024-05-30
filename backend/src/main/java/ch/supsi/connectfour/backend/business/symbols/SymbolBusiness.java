@@ -7,20 +7,20 @@ import java.io.InputStream;
 import java.net.URL;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class Symbol implements SymbolInterface {
+public class SymbolBusiness implements SymbolInterface {
     @JsonInclude
     private final String value;
     @JsonIgnore
     private final String name;
 
     @JsonCreator
-    public Symbol(@NotNull @JsonProperty(value = "value") String value) {
+    public SymbolBusiness(@NotNull @JsonProperty(value = "value") String value) {
         this.value = value;
         this.name = "";
     }
 
     @JsonIgnore
-    public Symbol(@NotNull String value, String name) {
+    public SymbolBusiness(@NotNull String value, String name) {
         this.value = value;
         this.name = name;
     }

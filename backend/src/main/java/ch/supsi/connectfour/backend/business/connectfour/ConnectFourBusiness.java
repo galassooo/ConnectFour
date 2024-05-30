@@ -14,7 +14,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
-public class ConnectFourModel implements ConnectFourBusinessInterface {
+public class ConnectFourBusiness implements ConnectFourBusinessInterface {
     @JsonIgnore
     private static final int GRID_LENGTH = 7;
     @JsonIgnore
@@ -65,12 +65,12 @@ public class ConnectFourModel implements ConnectFourBusinessInterface {
     All components that are not serialized must be initialized here.
     */
     @JsonCreator
-    private ConnectFourModel() {
+    private ConnectFourBusiness() {
         this.dataAccess = ConnectFourDataAccess.getInstance();
     }
 
     @JsonIgnore
-    public ConnectFourModel(ConnectFourPlayerInterface player1, ConnectFourPlayerInterface player2) {
+    public ConnectFourBusiness(ConnectFourPlayerInterface player1, ConnectFourPlayerInterface player2) {
         if (player2 == null || player1 == null)
             throw new IllegalArgumentException("Players cannot be null");
 

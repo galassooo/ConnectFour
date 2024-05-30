@@ -51,7 +51,7 @@ public class HelpController {
     }
 
     /**
-     * @return the istance of this class
+     * @return the instance of this class
      */
     public static HelpController getInstance() {
         if (instance == null) {
@@ -60,7 +60,7 @@ public class HelpController {
         return instance;
     }
 
-    void buildScreens() {
+    private void buildScreens() {
         for (int i = 1; i <= NUM_SCREENS; i++) {
             int finalI = i;
             models.add(new HelpModel(
@@ -76,7 +76,7 @@ public class HelpController {
         }
     }
 
-    void show(int index) {
+    private void show(int index) {
         HelpModel model = models.get(index);
         helpView.loadImage(model.getImagePath());
 

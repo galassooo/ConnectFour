@@ -37,7 +37,12 @@ public class MainFx extends Application {
         final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();
         final ApplicationExitController exitController = ApplicationExitController.getInstance();
         final TranslationModel translationsModel = TranslationModel.getInstance();
+        exitController.build(primaryStage);
 
+        primaryStage.setOnCloseRequest(event -> {
+            event.consume(); //VA CHIAMATO PER GESTIRE L'EVENTO 'MANUALMENTE'
+            exitController.manageExit();
+        });
         primaryStage.setResizable(false);
         primaryStage.setTitle(APP_TITLE);
         primaryStage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/application/board.png"))));
@@ -128,6 +133,5 @@ public class MainFx extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
         connectFourFrontendController.build(menuBarDispatcher.saveMenuItem, columnsSelectorDispatcher.getButtons(), primaryStage, boardView, infoBarView);
-        exitController.build(primaryStage);
     }
 }

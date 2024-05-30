@@ -12,7 +12,10 @@ import org.jetbrains.annotations.NotNull;
 import java.net.URL;
 import java.util.function.Consumer;
 
+//OK
 public class AboutView implements IAboutView {
+
+    /* components */
     @FXML
     private Label aboutConnectFourLabel;
 
@@ -39,12 +42,14 @@ public class AboutView implements IAboutView {
     @FXML
     private Label versionValue;
 
-    private AboutModel model;
-
+    /**
+     * Initializes the view by loading the necessary components through queries to the model class
+     * and loads the board image
+     */
     @FXML
     void initialize() {
 
-        model = new AboutModel();
+        AboutModel model = new AboutModel(); //model class
 
         URL imageUrl = getClass().getResource("/images/about/board.png");
         if (imageUrl == null) {
@@ -54,6 +59,7 @@ public class AboutView implements IAboutView {
         Image image = new Image(imageUrl.toExternalForm());
         imageView.setImage(image);
 
+        //query data
         poweredByLabel.setText(model.getPoweredByLabel());
         button.setText(model.getCloseText());
         builtOnLabel.setText(model.getBuiltOnLabel());

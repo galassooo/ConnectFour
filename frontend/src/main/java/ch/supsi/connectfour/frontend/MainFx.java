@@ -16,7 +16,6 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -32,6 +31,10 @@ public class MainFx extends Application {
         launch(args);
     }
 
+    /**
+     * loads application components
+     * @param primaryStage root
+     */
     @Override
     public void start(Stage primaryStage) {
         final ConnectFourFrontendController connectFourFrontendController = ConnectFourFrontendController.getInstance();

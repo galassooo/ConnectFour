@@ -20,6 +20,8 @@ public class SerializationView implements ISerializationView {
     public SerializationView() {
     }
 
+    //ALEX
+    @Override
     public void showMessage(final String message, final String title, final Alert.AlertType type, Stage stage) {
         Alert alert = new Alert(type);
         alert.initOwner(stage);
@@ -32,21 +34,32 @@ public class SerializationView implements ISerializationView {
         alert.showAndWait();
     }
 
+    /**
+     * Loads a CSS stylesheet for the popup
+     * @param alert alert popup
+     */
     private void loadCssForAlert(@NotNull Alert alert) {
-
+        //retrieve the scene
         Scene scene = alert.getDialogPane().getScene();
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styleSheets/genericScreen.css")).toExternalForm());
 
-        //System.out.println("AAAAAAAAAAA " + Objects.requireNonNull(getClass().getResource("/styleSheets/genericScreen.css")).toExternalForm());
+        //load stylesheet
+        String style = Objects.requireNonNull(getClass().getResource("/styleSheets/genericScreen.css")).toExternalForm();
 
+        //add stylesheet to the scene styles
+        scene.getStylesheets().add(style);
+
+        //set the custom-alert (declared in the css file)  values to alert
         alert.getDialogPane().getStyleClass().add("custom-alert");
 
+        //set the custom-button (declared in the css file) values to all buttons
         alert.getDialogPane().getButtonTypes().forEach(buttonType -> {
             Button button = (Button) alert.getDialogPane().lookupButton(buttonType);
             button.getStyleClass().add("custom-button");
         });
     }
 
+    //ALEX
+    @Override
     public File askForDirectory(final File initialDirectory, final String title, Stage stage) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(initialDirectory);
@@ -54,12 +67,16 @@ public class SerializationView implements ISerializationView {
         return directoryChooser.showDialog(stage);
     }
 
+    //ALEX
+    @Override
     public File askForFile(final String title, Stage stage) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle(title);
         return fileChooser.showOpenDialog(stage);
     }
 
+    //ALEX
+    @Override
     public boolean showConfirmationDialog(final String message, final String title, final String confirmText, final String cancelText, Stage stage) {
         // Create a confirmation dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -81,6 +98,8 @@ public class SerializationView implements ISerializationView {
         return result.isPresent() && result.get() == okButton;
     }
 
+    //ALEX
+    @Override
     public String showInputDialog(final String message, final String title) {
         // Create a TextInputDialog
         TextInputDialog dialog = new TextInputDialog();

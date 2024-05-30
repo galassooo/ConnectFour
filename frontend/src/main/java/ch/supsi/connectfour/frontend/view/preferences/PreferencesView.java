@@ -18,9 +18,10 @@ import java.util.Locale;
 import java.util.function.Consumer;
 
 public class PreferencesView implements IPreferencesView {
+
+    /* components */
     @FXML
     public Text preferencesText;
-    List<ComboBox<Symbol>> playerShapeBoxes = new ArrayList<>();
     @FXML
     private ComboBox<String> languageComboBox;
     @FXML
@@ -33,14 +34,19 @@ public class PreferencesView implements IPreferencesView {
     private ComboBox<Symbol> playerTwoShapeComboBox;
     @FXML
     private Button saveButton;
-
     @FXML
     private Button cancelButton;
+
+    /* model */
     private PreferencesModel model;
 
-    public PreferencesView() {
+    /* symbol list - field */
+    List<ComboBox<Symbol>> playerShapeBoxes = new ArrayList<>();
+
+    protected PreferencesView() {
     }
 
+    //ALEX (magari fai un commento dettagliato dentro)
     @FXML
     void initialize() {
         playerShapeBoxes.add(playerOneShapeComboBox);
@@ -60,6 +66,7 @@ public class PreferencesView implements IPreferencesView {
                     (playerOneShape != null && playerOneShape.equals(playerTwoShape));
 
             return colorsEqual && shapesEqual;
+            // vedi se riesci a splittare le dichiarazioni
         }, playerOneColorPicker.valueProperty(), playerTwoColorPicker.valueProperty(), playerOneShapeComboBox.valueProperty(), playerTwoShapeComboBox.valueProperty());
         saveButton.disableProperty().bind(saveButtonDisabledBinding);
 
@@ -73,10 +80,13 @@ public class PreferencesView implements IPreferencesView {
         preferencesText.setText(" \n ");
     }
 
+    /* setters */
+    @Override
     public void setModel(@NotNull PreferencesModel model) {
         this.model = model;
     }
 
+    @Override
     public void setShapes(List<Symbol> supportedShapes) {
         playerShapeBoxes.forEach((cBox) -> {
             // Adds all supported shapes to the combo boxes and automatically selects the first option, to avoid having a blank cell
@@ -87,38 +97,48 @@ public class PreferencesView implements IPreferencesView {
         });
     }
 
+    @Override
     public void setColorPickerLocale(Locale locale) {
         Locale.setDefault(locale);
     }
 
+    @Override
     public void setLanguages(List<String> supportedLanguages) {
         languageComboBox.getItems().setAll(supportedLanguages);
         languageComboBox.getSelectionModel().selectFirst();
     }
 
-    public void setOnSaveButton(Consumer<ActionEvent> eventConsumer) {
+    @Override
+    public void setOnSaveButton(@NotNull Consumer<ActionEvent> eventConsumer) {
         saveButton.setOnAction(eventConsumer::accept);
     }
 
-    public void setOnCancelButton(Consumer<ActionEvent> eventConsumer) {
+    @Override
+    public void setOnCancelButton(@NotNull Consumer<ActionEvent> eventConsumer) {
         cancelButton.setOnAction(eventConsumer::accept);
     }
 
+    /* getters */
+    @Override
     public String getSelectedLanguage() {
         return languageComboBox.getValue();
     }
 
+    @Override
     public String getPlayerOneColor() {
         return playerOneColorPicker.getValue().toString();
     }
 
+    @Override
     public String getPlayerTwoColor() {
         return playerTwoColorPicker.getValue().toString();
     }
 
+    @Override
     public Symbol getPlayerOneShape() {
         return playerOneShapeComboBox.getValue();
     }
+    @Override
 
     public Symbol getPlayerTwoShape() {
         return playerTwoShapeComboBox.getValue();

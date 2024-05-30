@@ -12,8 +12,10 @@ import org.jetbrains.annotations.NotNull;
 import java.net.URL;
 import java.util.function.Consumer;
 
+//OK
 public class HelpView implements IHelpView {
 
+    /* components */
     @FXML
     private Label helpLabel;
 
@@ -32,30 +34,48 @@ public class HelpView implements IHelpView {
     @FXML
     private HBox hbox;
 
+    /* setters */
+    @Override
     public void setHelpLabel(String content) {
         helpLabel.setText(content);
     }
 
+    @Override
     public void setHowToPlayLabel(String content) {
         HowToPlayLabel.setText(content);
     }
 
+    @Override
     public void setPreviousButtonText(String text) {
         previousButton.setText(text);
     }
 
+    @Override
     public void setPreviousButtonAction(@NotNull Consumer<ActionEvent> eventConsumer) {
         previousButton.setOnAction(eventConsumer::accept);
     }
 
+    @Override
     public void setNextButtonAction(@NotNull Consumer<ActionEvent> eventConsumer) {
         nextButton.setOnAction(eventConsumer::accept);
     }
+    @Override
+    public void setNextButtonLabel(String label) {
+        nextButton.setText(label);
+    }
 
+    /**
+     * remove previous button
+     */
+    @Override
     public void removePreviousButton() {
         hbox.getChildren().remove(previousButton);
     }
 
+    /**
+     * add the previous button
+     */
+    @Override
     public void addPreviousButton() {
         //rimuovo e aggiungo entrambi per avere ordine corretto
         if (!hbox.getChildren().contains(previousButton)) { //duplicate children check
@@ -65,11 +85,11 @@ public class HelpView implements IHelpView {
         }
     }
 
-
-    public void setNextButtonLabel(String label) {
-        nextButton.setText(label);
-    }
-
+    /**
+     * attempts to load and display an image with the given path
+     * @param path image's path
+     */
+    @Override
     public void loadImage(String path) {
         URL imageUrl = getClass().getResource(path);
         if (imageUrl == null) {

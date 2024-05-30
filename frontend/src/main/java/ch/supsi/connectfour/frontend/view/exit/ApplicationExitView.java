@@ -10,13 +10,20 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.Optional;
 
+//OK
 public class ApplicationExitView implements IApplicationExitView {
+    /* model */
     private static ApplicationExitModel model;
 
+    /**
+     * construct the object
+     * @param model the associated model
+     */
     public ApplicationExitView(ApplicationExitModel model) {
         ApplicationExitView.model = model;
     }
 
+    //ALEX
     public boolean showConfirmationDialog() {
         // Create a confirmation dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -37,13 +44,24 @@ public class ApplicationExitView implements IApplicationExitView {
         return result.isPresent() && result.get() == okButton;
     }
 
+    /**
+     * Loads a CSS stylesheet for the popup
+     * @param alert alert popup
+     */
     private void loadCssForAlert(@NotNull Alert alert) {
-
+        //retrieve the scene
         Scene scene = alert.getDialogPane().getScene();
-        scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/styleSheets/genericScreen.css")).toExternalForm());
 
+        //load stylesheet
+        String style = Objects.requireNonNull(getClass().getResource("/styleSheets/genericScreen.css")).toExternalForm();
+
+        //add stylesheet to the scene styles
+        scene.getStylesheets().add(style);
+
+        //set the custom-alert (declared in the css file)  values to alert
         alert.getDialogPane().getStyleClass().add("custom-alert");
 
+        //set the custom-button (declared in the css file) values to all buttons
         alert.getDialogPane().getButtonTypes().forEach(buttonType -> {
             Button button = (Button) alert.getDialogPane().lookupButton(buttonType);
             button.getStyleClass().add("custom-button");

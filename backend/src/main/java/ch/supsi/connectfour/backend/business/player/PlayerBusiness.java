@@ -10,17 +10,20 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 
 public abstract class PlayerBusiness implements Cloneable, PlayerBusinessInterface {
+
+    /* fields */
     @JsonInclude
     private String name;
     @JsonInclude
     private int id;
 
+    /* constructors */
     @JsonCreator
     public PlayerBusiness(@JsonProperty(value = "name") String name) {
         this.name = name;
     }
 
-    // Getters and setters
+    /* getters */
     public String getName() {
         return name;
     }
@@ -30,6 +33,7 @@ public abstract class PlayerBusiness implements Cloneable, PlayerBusinessInterfa
     }
 
 
+    /* overrides */
     @Override
     public @Nullable Object clone() {
         try {

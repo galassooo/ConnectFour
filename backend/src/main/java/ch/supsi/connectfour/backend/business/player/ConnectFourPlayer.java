@@ -7,19 +7,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class ConnectFourPlayer extends PlayerBusiness implements ConnectFourPlayerInterface {
+public class ConnectFourPlayer extends PlayerBusiness implements ConnectFourPlayerInterface, Cloneable {
 
     @JsonInclude
     private SymbolInterface symbol;
 
     @JsonInclude
-    private String color;
+    private final String color;
 
-    @JsonIgnore
-    public ConnectFourPlayer(String name) {
-        super(name);
-    }
-
+    /* constructor */
     @JsonIgnore
     public ConnectFourPlayer(String name, String color, SymbolInterface symbol) {
         super(name);
@@ -36,15 +32,25 @@ public class ConnectFourPlayer extends PlayerBusiness implements ConnectFourPlay
         this.symbol = symbol;
     }
 
+    /* getters */
+
+    @Override
     public SymbolInterface getSymbol() {
-        return symbol;
+        return ((SymbolBusiness)symbol).clone();
     }
 
-    public void setSymbol(SymbolInterface symbol) {
-        this.symbol = symbol;
-    }
-
+    @Override
     public String getColor() {
         return color;
+    }
+
+    @Override
+    public ConnectFourPlayer clone() {
+        ConnectFourPlayer clone = (ConnectFourPlayer) super.clone();
+        if( clone != null) {
+            clone.symbol = (symbol != null) ? ((SymbolBusiness) symbol).clone() : null;
+            return clone;
+        }
+        return null;
     }
 }

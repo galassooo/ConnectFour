@@ -10,14 +10,18 @@ import java.util.ResourceBundle;
 
 public class TranslationBusiness implements TranslationsBusinessInterface {
 
+    /* self reference */
     private static TranslationBusiness myself;
 
+    /* data access reference */
     private final TranslationsDataAccessInterface translationsDao;
 
+    /* fields */
     private final List<String> supportedLanguageTags;
 
     private Properties translations;
 
+    /* constructor */
     protected TranslationBusiness() {
         this.translationsDao = TranslationsPropertiesDataAccess.getInstance();
         this.supportedLanguageTags = translationsDao.getSupportedLanguageTags();
@@ -30,16 +34,19 @@ public class TranslationBusiness implements TranslationsBusinessInterface {
         return myself;
     }
 
+    //ALEX
     @Override
     public boolean isSupportedLanguageTag(String languageTag) {
         return this.supportedLanguageTags.contains(languageTag);
     }
 
+    //ALEX
     @Override
     public List<String> getSupportedLanguages() {
         return List.copyOf(this.supportedLanguageTags); // Defensive copy
     }
 
+    //ALEX
     @Override
     public boolean changeLanguage(String languageTag) {
         this.translations = translationsDao.getTranslations(Locale.forLanguageTag(languageTag));
@@ -47,11 +54,13 @@ public class TranslationBusiness implements TranslationsBusinessInterface {
     }
 
 
+    //ALEX
     @Override
     public String translate(String key) {
         return this.translations.getProperty(key);
     }
 
+    //ALEX
     @Override
     public ResourceBundle getUIResourceBundle(Locale locale) {
         return this.translationsDao.getUIResourceBundle(locale);

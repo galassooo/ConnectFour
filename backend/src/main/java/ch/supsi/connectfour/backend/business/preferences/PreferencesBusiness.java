@@ -9,12 +9,16 @@ import java.util.Properties;
 
 public class PreferencesBusiness implements PreferencesBusinessInterface {
 
+    /* self reference */
     private static PreferencesBusiness myself;
 
+    /* data access reference */
     private final PreferencesDataAccessInterface preferencesDao;
 
+    /* field */
     private final Properties userPreferences;
 
+    /* constructor */
     protected PreferencesBusiness() {
         this.preferencesDao = PreferencesPropertiesDataAccess.getInstance();
         this.userPreferences = preferencesDao.getPreferences();
@@ -28,11 +32,13 @@ public class PreferencesBusiness implements PreferencesBusinessInterface {
         return myself;
     }
 
+    //ALEX
     @Override
     public String getCurrentLanguage() {
         return userPreferences.getProperty("language-tag");
     }
 
+    //ALEX
     @Override
     public Object getPreference(String key) {
         if (key == null || key.isEmpty()) {
@@ -46,6 +52,7 @@ public class PreferencesBusiness implements PreferencesBusinessInterface {
         return userPreferences.get(key);
     }
 
+    //ALEX
     @Override
     public void setPreference(Map.Entry<String, String> preference) {
         this.preferencesDao.storePreference(preference);

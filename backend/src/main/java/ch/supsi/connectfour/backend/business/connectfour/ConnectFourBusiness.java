@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Random;
 
+//OK
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ConnectFourBusiness implements ConnectFourBusinessInterface {
     @JsonIgnore
@@ -220,10 +221,14 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         return cnt == GRID_LENGTH;
     }
 
-    private ConnectFourPlayerInterface[][] getGameMatrixDeepCopy() {
+    /**
+     *
+     * @return a deep copy of the game matrix
+     */
+    private ConnectFourPlayerInterface[] @NotNull [] getGameMatrixDeepCopy(ConnectFourPlayerInterface[][] matrix) {
         // Get the dimensions of the original array
-        int rows = this.gameMatrix.length;
-        int cols = gameMatrix[0].length;
+        int rows = matrix.length;
+        int cols = matrix[0].length;
 
         // Create a new array with the same dimensions
         ConnectFourPlayerInterface[][] copiedMatrix = new ConnectFourPlayer[rows][cols];
@@ -232,49 +237,19 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 // Perform a deep copy of the PlayerModel object
-                if (this.gameMatrix[i][j] != null) {
-                    copiedMatrix[i][j] = (ConnectFourPlayerInterface) this.gameMatrix[i][j].clone();
+                if (matrix[i][j] != null) {
+                    copiedMatrix[i][j] = (ConnectFourPlayerInterface) matrix[i][j].clone();
                 }
             }
         }
         return copiedMatrix;
     }
 
-    @Override
-    public ConnectFourPlayerInterface getCurrentPlayer() {
-        return currentPlayer;
-    }
-
-    @JsonSetter
-    private void setCurrentPlayer(ConnectFourPlayerInterface currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
-
-    @Override
-    public ConnectFourPlayerInterface getPlayer1() {
-        return (ConnectFourPlayerInterface) player1.clone();
-    }
-
-    @JsonSetter
-    private void setPlayer1(ConnectFourPlayerInterface player1) {
-        this.player1 = player1;
-    }
-
-    @Override
-    public ConnectFourPlayerInterface getPlayer2() {
-        return (ConnectFourPlayerInterface) player2.clone();
-    }
-
-    @JsonSetter
-    private void setPlayer2(ConnectFourPlayerInterface player2) {
-        this.player2 = player2;
-    }
-
     /**
-     * Controlla se è possibile inserire la pedina nella colonna selezionata
+     * Checks if it is possible to insert the token into the selected column
      *
-     * @param column colonna nel quale si vuole controllare se l'inserimento è possibile
-     * @return true se è possibile inserire nella colonna, altrimenti false
+     * @param column the column in which to check if insertion is possible
+     * @return true if it is possible to insert into the column, otherwise false
      */
     @Override
     public boolean canInsert(int column) {
@@ -284,7 +259,7 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         if (column < 0 || column >= GRID_LENGTH) {
             return false;
         }
-        int firstFreeCell = GRID_HEIGHT - 1 - lastPositionOccupied[column]; //post increment
+        int firstFreeCell = GRID_HEIGHT - 1 - lastPositionOccupied[column];
         this.wasLastMoveValid = firstFreeCell < GRID_HEIGHT && firstFreeCell >= 0;
         return this.wasLastMoveValid;
     }
@@ -327,21 +302,69 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         return isFinished;
     }
 
+
+    /* setters */
+    @JsonSetter
+    private void setCurrentPlayer(@NotNull ConnectFourPlayerInterface currentPlayer) {
+        // Clone because the reference to the player is coming from the outside and could be manipulated
+        this.currentPlayer = (ConnectFourPlayerInterface) currentPlayer.clone();
+    }
+
+    @JsonSetter
+    private void setPlayer1(@NotNull ConnectFourPlayerInterface player1) {
+        // Clone because the reference to the player is coming from the outside and could be manipulated
+        this.player1 = (ConnectFourPlayer) player1.clone();
+    }
+
+    @JsonSetter
+    private void setPlayer2(@NotNull ConnectFourPlayerInterface player2) {
+        // Clone because the reference to the player is coming from the outside and could be manipulated
+        this.player2 = (ConnectFourPlayer) player2.clone();
+    }
+
     @JsonSetter
     @JsonIgnore
     public void setFinished(boolean finished) {
         isFinished = finished;
     }
 
-    @JsonGetter
-    public int[] getLastPositionOccupied() {
-        return Arrays.copyOf(lastPositionOccupied, lastPositionOccupied.length);
-    }
-
     @JsonSetter
     private void setLastPositionOccupied(int[] lastPositionOccupied) {
         this.lastPositionOccupied = lastPositionOccupied;
     }
+
+    @JsonSetter
+    private void setGameMatrix(ConnectFourPlayerInterface[][] gameMatrix) {
+        this.gameMatrix =gameMatrix; //deep copy is useless, (private am)
+    }
+
+    @JsonSetter
+    private void setPathToSave(Path pathToSave) {
+        this.pathToSave = pathToSave;
+    }
+
+    @JsonSetter
+    private void setWasLastMoveValid(boolean wasLastMoveValid) {
+        this.wasLastMoveValid = wasLastMoveValid;
+    }
+
+
+    /* getters */
+    @Override
+    public ConnectFourPlayerInterface getCurrentPlayer() {
+        return (ConnectFourPlayerInterface) currentPlayer.clone(); //safety copy
+    }
+
+    @Override
+    public ConnectFourPlayerInterface getPlayer1() {
+        return (ConnectFourPlayerInterface) player1.clone(); // safety copy
+    }
+
+    @Override
+    public ConnectFourPlayerInterface getPlayer2() {
+        return (ConnectFourPlayerInterface) player2.clone(); // safety copy
+    }
+
 
     /**
      * Getter method for the gameMatrix field
@@ -351,31 +374,22 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
     @JsonGetter
     @Override
     public ConnectFourPlayerInterface[][] getGameMatrix() {
-        return this.getGameMatrixDeepCopy();
+        return getGameMatrixDeepCopy(this.gameMatrix); //safety copy
     }
 
-    @JsonSetter
-    private void setGameMatrix(ConnectFourPlayerInterface[][] gameMatrix) {
-        this.gameMatrix = gameMatrix;
+    @JsonGetter
+    public int[] getLastPositionOccupied() {
+        return Arrays.copyOf(lastPositionOccupied, lastPositionOccupied.length); //safety copy
     }
-
     @JsonGetter
     private Path getPathToSave() {
         return pathToSave;
     }
 
-    @JsonSetter
-    private void setPathToSave(Path pathToSave) {
-        this.pathToSave = pathToSave;
-    }
 
     @JsonGetter
     private boolean isWasLastMoveValid() {
         return wasLastMoveValid;
     }
 
-    @JsonSetter
-    private void setWasLastMoveValid(boolean wasLastMoveValid) {
-        this.wasLastMoveValid = wasLastMoveValid;
-    }
 }

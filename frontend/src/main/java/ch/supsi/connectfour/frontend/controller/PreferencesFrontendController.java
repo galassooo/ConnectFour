@@ -9,7 +9,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.AbstractMap;
@@ -21,16 +20,28 @@ import java.util.stream.Stream;
 
 public class PreferencesFrontendController {
 
-    private final static String SYMBOL_REGEX = "/images/symbols/.*\\.PNG";
+    /* self reference */
     private static PreferencesFrontendController instance;
+
+    /* regex */
+    private final static String SYMBOL_REGEX = "/images/symbols/.*\\.PNG";
+
+    /* models */
     private final PreferencesModel model;
     private final TranslationModel translationModel;
+
+    /* stage */
     private final Stage stage;
+
+    /* view */
     private IPreferencesView preferencesView;
 
+    //ALEX
     private PreferencesFrontendController() {
         translationModel = TranslationModel.getInstance();
-        model = new PreferencesModel(translationModel.translate("label.preferences_please_choose"), this.translationModel.translate("label.preferences_cannot_save"));
+        String pleaseChoose = translationModel.translate("label.preferences_please_choose");
+        String cannotSave = translationModel.translate("label.preferences_cannot_save");
+        model = new PreferencesModel(pleaseChoose, cannotSave);
         stage = new Stage();
         try {
             URL fxmlUrl = getClass().getResource("/preferences.fxml");
@@ -67,6 +78,10 @@ public class PreferencesFrontendController {
         }
     }
 
+    /**
+     *
+     * @return an instance of this class
+     */
     public static PreferencesFrontendController getInstance() {
         if (instance == null) {
             instance = new PreferencesFrontendController();
@@ -74,6 +89,7 @@ public class PreferencesFrontendController {
         return instance;
     }
 
+    //ALEX
     private void initViewChoices() {
         this.preferencesView.setLanguages(this.translationModel.getSupportedLanguages());
 
@@ -112,6 +128,9 @@ public class PreferencesFrontendController {
         this.preferencesView.setShapes(validSymbols);
     }
 
+    /**
+     * shows the preferences popup
+     */
     public void managePreferences() {
         stage.setResizable(false);
         stage.show();

@@ -7,19 +7,29 @@ import ch.supsi.connectfour.frontend.view.exit.IApplicationExitView;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
+//NOT OK
 public class ApplicationExitController {
+
+    /* self reference */
     private static ApplicationExitController instance;
-    private static TranslationModel translationModel;
-    private final ApplicationExitModel model;
-    private final IApplicationExitView view;
+
+    /* stage */
     private Stage primaryStage;
 
+    /* view */
+    private final IApplicationExitView view;
+
     private ApplicationExitController() {
-        translationModel = TranslationModel.getInstance();
-        model = ApplicationExitModel.getInstance(translationModel.translate("label.close_confirmation"), translationModel.translate("label.confirmation"), translationModel.translate("label.confirm"), translationModel.translate("label.cancel"));
+        TranslationModel translationModel = TranslationModel.getInstance();
+        //tradurre label direttamente nel model?
+        ApplicationExitModel model = ApplicationExitModel.getInstance(translationModel.translate("label.close_confirmation"), translationModel.translate("label.confirmation"), translationModel.translate("label.confirm"), translationModel.translate("label.cancel"));
         view = new ApplicationExitView(model);
     }
 
+    /**
+     *
+     * @return an instance of this class
+     */
     public static ApplicationExitController getInstance() {
         if (instance == null) {
             instance = new ApplicationExitController();
@@ -27,11 +37,17 @@ public class ApplicationExitController {
         return instance;
     }
 
-    public ApplicationExitController build(@NotNull Stage primaryStage) {
+    /**
+     * initialize instance's field
+     * @param primaryStage root stage
+     */
+    public void build(@NotNull Stage primaryStage) {
         this.primaryStage = primaryStage;
-        return this;
     }
 
+    /**
+     * handle exit request
+     */
     public void manageExit() {
         if (view.showConfirmationDialog()) {
             this.primaryStage.close();

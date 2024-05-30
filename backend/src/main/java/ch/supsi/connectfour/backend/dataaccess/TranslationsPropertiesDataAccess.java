@@ -72,7 +72,7 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
         return translations;
     }
 
-    private List<ResourceBundle> getResourceBundlesForLocale(Locale locale, String pathToResources) {
+    private @NotNull List<ResourceBundle> getResourceBundlesForLocale(Locale locale, String pathToResources) {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         List<ResourceBundle> resourceBundles = new ArrayList<>();
         try {
@@ -93,8 +93,8 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
         return resourceBundles;
     }
 
-    private List<ResourceBundle> handleMissingResource(Locale invalidLocale, Locale fallbackLocale, String pathToResources) {
-        System.err.printf("Invalid locale: %s. Loading new locale: %s\n", invalidLocale.toString(), fallbackLocale.toString());
+    private @NotNull List<ResourceBundle> handleMissingResource(@NotNull Locale invalidLocale, @NotNull Locale fallbackLocale, String pathToResources) {
+        System.err.printf("Invalid locale: %s. Loading new locale: %s\n", invalidLocale, fallbackLocale);
         return getResourceBundlesForLocale(fallbackLocale, pathToResources);
     }
 

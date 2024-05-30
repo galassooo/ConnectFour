@@ -9,11 +9,16 @@ import java.util.ResourceBundle;
 
 public class TranslationModel {
     private static TranslationModel instance;
-    private final TranslationsController translationsController;
-    private final PreferencesController preferencesController;
+    private static final TranslationsController translationsController;
+    private static final PreferencesController preferencesController;
 
     private ResourceBundle uiBundle;
     private Locale locale;
+
+    static {
+        translationsController = TranslationsController.getInstance();
+        preferencesController = PreferencesController.getInstance();
+    }
 
     public static TranslationModel getInstance() {
         if (instance == null) {
@@ -22,10 +27,7 @@ public class TranslationModel {
         return instance;
     }
 
-    private TranslationModel() {
-        translationsController = TranslationsController.getInstance();
-        preferencesController = PreferencesController.getInstance();
-    }
+    private TranslationModel() {}
 
     public ResourceBundle getUiBundle() {
         if (uiBundle == null) { //load only once

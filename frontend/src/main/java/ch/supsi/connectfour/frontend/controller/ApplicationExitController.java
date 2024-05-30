@@ -20,7 +20,7 @@ public class ApplicationExitController {
 
     private ApplicationExitController() {
         view = new ApplicationExitView();
-        model = new ApplicationExitModel();
+        model = ApplicationExitModel.getInstance();
     }
 
     public ApplicationExitController build(@NotNull Stage primaryStage) {

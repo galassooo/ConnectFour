@@ -9,6 +9,7 @@ import ch.supsi.connectfour.backend.application.translations.TranslationsControl
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 import ch.supsi.connectfour.frontend.MainFx;
 import ch.supsi.connectfour.frontend.model.ConnectFourModel;
+import ch.supsi.connectfour.frontend.view.ISerializationView;
 import ch.supsi.connectfour.frontend.view.SerializationView;
 import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
 import ch.supsi.connectfour.frontend.view.viewables.Viewable;
@@ -26,17 +27,15 @@ import java.util.List;
 public class ConnectFourFrontendController implements GameEventHandler {
 
     private static ConnectFourFrontendController instance;
-    private final ConnectFourModel model;
-
-    private final List<Viewable> viewableItems = new ArrayList<>();
-
-    private final List<Button> buttonList = new ArrayList<>();
-
-    private final SerializationView serializationView;
-    private final TranslationsController translations;
     private static MenuItem saveMenu;
     private static Stage primaryStage;
-    
+
+    private final ISerializationView serializationView;
+    private final TranslationsController translations;
+    private final ConnectFourModel model;
+    private final List<Viewable> viewableItems = new ArrayList<>();
+    private final List<Button> buttonList = new ArrayList<>();
+
     public static ConnectFourFrontendController getInstance() {
         if (instance == null) {
             instance = new ConnectFourFrontendController();
@@ -45,7 +44,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
     }
 
     private ConnectFourFrontendController() {
-        this.model = new ConnectFourModel();
+        this.model = ConnectFourModel.getInstance();
         this.serializationView = new SerializationView();
         this.translations = TranslationsController.getInstance();
     }
@@ -71,14 +70,6 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
         data.handle(this);
     }
-
-    /**
-     * All serialization actions have some elements in common:
-     * - Either enable or disable the saveMenu button
-     * - Update the application title
-     * - Clear all the views
-     * It would be neat if we managed to generalize this behaviour and find a way to standardize it
-     */
 
     public void manageNew() {
         if (!model.isCurrentMatchNull()) {
@@ -130,7 +121,7 @@ public class ConnectFourFrontendController implements GameEventHandler {
 
     @Override
     public void handle(MoveEvent event) {
-            viewableItems.forEach(item -> item.show(event));
+        viewableItems.forEach(item -> item.show(event));
     }
 
     private void clearViews() {

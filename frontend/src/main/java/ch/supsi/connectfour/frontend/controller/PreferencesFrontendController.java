@@ -1,6 +1,5 @@
 package ch.supsi.connectfour.frontend.controller;
 
-import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.backend.business.symbols.Symbol;
 import ch.supsi.connectfour.frontend.model.PreferencesModel;
 import ch.supsi.connectfour.frontend.model.TranslationModel;
@@ -39,7 +38,7 @@ public class PreferencesFrontendController {
 
     private PreferencesFrontendController() {
         translationModel = TranslationModel.getInstance();
-        model = new PreferencesModel();
+        model = PreferencesModel.getInstance();
         stage = new Stage();
         try {
             URL fxmlUrl = getClass().getResource("/preferences.fxml");
@@ -65,7 +64,7 @@ public class PreferencesFrontendController {
                         new AbstractMap.SimpleEntry<>("player-one-symbol", String.valueOf(preferencesView.getPlayerOneShape().getValue())),
                         new AbstractMap.SimpleEntry<>("player-two-symbol", String.valueOf(preferencesView.getPlayerTwoShape().getValue()))
                 );
-                preferences.forEach((preference) -> model.setPreference(preference));
+                preferences.forEach(model::setPreference);
 
                 stage.close();
             });

@@ -15,7 +15,7 @@ import java.io.File;
 import java.util.Objects;
 import java.util.Optional;
 
-public class SerializationView {
+public class SerializationView implements ISerializationView {
 
     public SerializationView() {
     }

@@ -43,13 +43,10 @@ public class PreferencesView {
 
     @FXML
     void initialize() {
-        // TODO: not sure if this is worth doing, especially considering that in this context, we will only ever have two players
         playerShapeBoxes.add(playerOneShapeComboBox);
         playerShapeBoxes.add(playerTwoShapeComboBox);
 
-        // TODO: not a fan of this because we are defining logic inside a view, but not sure how to handle this since otherwise I'd need to get access to UI elements from the outside (having references to the needed UI elements in the frontend controller) which is ehhhh
         // Binds this condition to the save button, enabling or disabling it depending on if the condition is met
-
         BooleanBinding saveButtonDisabledBinding = Bindings.createBooleanBinding(() -> {
                     Object playerOneColor = playerOneColorPicker.getValue();
                     Object playerTwoColor = playerTwoColorPicker.getValue();

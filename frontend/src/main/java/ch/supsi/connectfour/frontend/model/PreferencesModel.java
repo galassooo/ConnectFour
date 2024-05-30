@@ -6,9 +6,17 @@ import java.util.AbstractMap;
 import java.util.Locale;
 
 public class PreferencesModel {
-    private final PreferencesController backendController;
+    private static PreferencesModel instance;
+    private static PreferencesController backendController;
 
-    public PreferencesModel() {
+    public static PreferencesModel getInstance() {
+        if (instance == null) {
+            instance = new PreferencesModel();
+        }
+        return instance;
+    }
+
+    private PreferencesModel() {
         backendController = PreferencesController.getInstance();
     }
 

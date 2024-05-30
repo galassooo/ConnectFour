@@ -1,6 +1,6 @@
 package ch.supsi.connectfour.frontend.model;
 
-import ch.supsi.connectfour.backend.application.translations.TranslationsController;
+import ch.supsi.connectfour.backend.application.translations.TranslationsApplication;
 
 //NOT OK
 public class ApplicationExitModel {
@@ -11,10 +11,10 @@ public class ApplicationExitModel {
     /* backend controller*/
 
     //NON VIENE MAI USATO... RIMUOVERE? (vedi controller)
-    private static final TranslationsController translations;
+    private static final TranslationsApplication translations;
 
     static {
-        translations = TranslationsController.getInstance();
+        translations = TranslationsApplication.getInstance();
     }
 
     /* Data used by the view */

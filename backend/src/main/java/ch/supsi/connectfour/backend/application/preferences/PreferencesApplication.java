@@ -4,19 +4,19 @@ import ch.supsi.connectfour.backend.business.preferences.PreferencesModel;
 
 import java.util.Map;
 
-public class PreferencesController {
+public class PreferencesApplication {
 
-    private static PreferencesController myself;
+    private static PreferencesApplication myself;
 
     private final PreferencesBusinessInterface preferencesModel;
 
-    private PreferencesController() {
+    private PreferencesApplication() {
         this.preferencesModel = PreferencesModel.getInstance();
     }
 
-    public static PreferencesController getInstance() {
+    public static PreferencesApplication getInstance() {
         if (myself == null) {
-            myself = new PreferencesController();
+            myself = new PreferencesApplication();
         }
         return myself;
     }

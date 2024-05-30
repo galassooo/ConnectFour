@@ -13,20 +13,20 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.util.Objects;
 
-public class ConnectFourBackendController {
-    private static ConnectFourBackendController instance;
+public class ConnectFourApplication {
+    private static ConnectFourApplication instance;
     private final PreferencesBusinessInterface preferences;
     // The match currently linked to this controller
     private ConnectFourBusinessInterface currentMatch;
 
-    protected ConnectFourBackendController() {
+    protected ConnectFourApplication() {
         preferences = PreferencesModel.getInstance();
     }
 
     // Singleton instantiation of this class
-    public static ConnectFourBackendController getInstance() {
+    public static ConnectFourApplication getInstance() {
         if (instance == null) {
-            instance = new ConnectFourBackendController();
+            instance = new ConnectFourApplication();
         }
         return instance;
     }

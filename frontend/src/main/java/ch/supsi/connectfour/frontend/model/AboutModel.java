@@ -1,7 +1,7 @@
 package ch.supsi.connectfour.frontend.model;
 
-import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
-import ch.supsi.connectfour.backend.application.translations.TranslationsController;
+import ch.supsi.connectfour.backend.application.preferences.PreferencesApplication;
+import ch.supsi.connectfour.backend.application.translations.TranslationsApplication;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -14,8 +14,8 @@ import java.util.Properties;
 public class AboutModel {
 
     /* backend controllers */
-    private static final TranslationsController translator;
-    private static final PreferencesController preferences;
+    private static final TranslationsApplication translator;
+    private static final PreferencesApplication preferences;
 
     /* data */
     private final String aboutConnectFourLabel;
@@ -29,8 +29,8 @@ public class AboutModel {
 
     //initialize static fields
     static {
-        translator = TranslationsController.getInstance();
-        preferences = PreferencesController.getInstance();
+        translator = TranslationsApplication.getInstance();
+        preferences = PreferencesApplication.getInstance();
     }
 
     /**

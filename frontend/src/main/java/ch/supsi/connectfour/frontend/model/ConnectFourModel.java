@@ -1,6 +1,6 @@
 package ch.supsi.connectfour.frontend.model;
 
-import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBackendController;
+import ch.supsi.connectfour.backend.application.connectfour.ConnectFourApplication;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.application.event.GameEvent;
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
@@ -14,10 +14,10 @@ public class ConnectFourModel {
     private static ConnectFourModel instance;
 
     /* backend controller */
-    private final ConnectFourBackendController backendController;
+    private final ConnectFourApplication backendController;
 
     private ConnectFourModel() {
-        this.backendController = ConnectFourBackendController.getInstance();
+        this.backendController = ConnectFourApplication.getInstance();
     }
 
     /**

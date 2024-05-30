@@ -8,15 +8,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class TranslationsController {
+public class TranslationsApplication {
 
-    private static TranslationsController myself;
+    private static TranslationsApplication myself;
 
     private final TranslationsBusinessInterface translationsModel;
 
     private final PreferencesBusinessInterface preferencesModel;
 
-    private TranslationsController() {
+    private TranslationsApplication() {
         this.preferencesModel = PreferencesModel.getInstance();
         this.translationsModel = TranslationBusiness.getInstance();
 
@@ -24,9 +24,9 @@ public class TranslationsController {
         this.translationsModel.changeLanguage(currentLanguage);
     }
 
-    public static TranslationsController getInstance() {
+    public static TranslationsApplication getInstance() {
         if (myself == null) {
-            myself = new TranslationsController();
+            myself = new TranslationsApplication();
         }
 
         return myself;

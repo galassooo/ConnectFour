@@ -1,6 +1,6 @@
 package ch.supsi.connectfour.frontend.model;
 
-import ch.supsi.connectfour.backend.application.translations.TranslationsController;
+import ch.supsi.connectfour.backend.application.translations.TranslationsApplication;
 import javafx.event.ActionEvent;
 import org.jetbrains.annotations.NotNull;
 import java.util.function.Consumer;
@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 //OK
 public class HelpModel {
     /* backend controllers */
-    private static final TranslationsController translations = TranslationsController.getInstance();
+    private static final TranslationsApplication translations = TranslationsApplication.getInstance();
 
     /* popup title */
     private static final String title = translations.translate("label.help");

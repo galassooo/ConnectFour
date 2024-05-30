@@ -1,7 +1,7 @@
 package ch.supsi.connectfour.frontend.model;
 
-import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
-import ch.supsi.connectfour.backend.application.translations.TranslationsController;
+import ch.supsi.connectfour.backend.application.preferences.PreferencesApplication;
+import ch.supsi.connectfour.backend.application.translations.TranslationsApplication;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -14,13 +14,13 @@ public class TranslationModel {
     private static TranslationModel instance;
 
     /* backend controllers */
-    private static final TranslationsController translationsController;
-    private static final PreferencesController preferencesController;
+    private static final TranslationsApplication translationsController;
+    private static final PreferencesApplication preferencesController;
 
     //initialize controllers
     static {
-        translationsController = TranslationsController.getInstance();
-        preferencesController = PreferencesController.getInstance();
+        translationsController = TranslationsApplication.getInstance();
+        preferencesController = PreferencesApplication.getInstance();
     }
 
     /* data */

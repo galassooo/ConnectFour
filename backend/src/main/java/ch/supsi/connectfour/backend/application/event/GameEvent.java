@@ -1,11 +1,11 @@
 package ch.supsi.connectfour.backend.application.event;
 
-import ch.supsi.connectfour.backend.application.translations.TranslationsController;
+import ch.supsi.connectfour.backend.application.translations.TranslationsApplication;
 
 import java.util.Objects;
 
 public abstract class GameEvent implements GameEventInterface {
-    private final static TranslationsController translations = TranslationsController.getInstance();
+    private final static TranslationsApplication translations = TranslationsApplication.getInstance();
     private final String eventMessage;
 
     private final String eventLogMessage;
@@ -15,7 +15,7 @@ public abstract class GameEvent implements GameEventInterface {
         this.eventLogMessage = eventLogMessage;
     }
 
-    protected static TranslationsController getTranslator() {
+    protected static TranslationsApplication getTranslator() {
         return translations;
     }
 

@@ -1,6 +1,6 @@
 package ch.supsi.connectfour.frontend.model;
 
-import ch.supsi.connectfour.backend.application.preferences.PreferencesController;
+import ch.supsi.connectfour.backend.application.preferences.PreferencesApplication;
 
 import java.util.AbstractMap;
 
@@ -8,7 +8,7 @@ import java.util.AbstractMap;
 public class PreferencesModel {
 
     /* backend controller */
-    private static PreferencesController backendController;
+    private static PreferencesApplication backendController;
 
     /* data */
     private final String enableMessage;
@@ -21,7 +21,7 @@ public class PreferencesModel {
      * @param disableMessage message to be displayed for disable
      */
     public PreferencesModel(String enableMessage, String disableMessage) {
-        backendController = PreferencesController.getInstance();
+        backendController = PreferencesApplication.getInstance();
         this.enableMessage = enableMessage;
         this.disableMessage = disableMessage;
     }

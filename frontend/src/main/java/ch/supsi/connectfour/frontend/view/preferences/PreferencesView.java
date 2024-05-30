@@ -43,7 +43,7 @@ public class PreferencesView implements IPreferencesView {
     /* symbol list - field */
     List<ComboBox<Symbol>> playerShapeBoxes = new ArrayList<>();
 
-    protected PreferencesView() {
+    public PreferencesView() {
     }
 
     //ALEX (magari fai un commento dettagliato dentro)

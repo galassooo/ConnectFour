@@ -3,12 +3,17 @@ package ch.supsi.connectfour.frontend.model;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import javafx.event.ActionEvent;
 import org.jetbrains.annotations.NotNull;
-
 import java.util.function.Consumer;
 
+//OK
 public class HelpModel {
+    /* backend controllers */
     private static final TranslationsController translations = TranslationsController.getInstance();
+
+    /* popup title */
     private static final String title = translations.translate("label.help");
+
+    /* data */
     private final String imagePath;
     private final String howToPlay;
     private final String helpText;
@@ -20,6 +25,17 @@ public class HelpModel {
     private final boolean showPreviousBtn;
 
 
+    /**
+     * Constructs the object using the backend controller for any translations
+     * @param imagePath path to the image to be displayed
+     * @param howToPlay screen title label
+     * @param helpText help text
+     * @param nextBtnLabel next button text
+     * @param previousBtnText previous button text
+     * @param previousBtnAction previous button action
+     * @param nextBtnAction next button action
+     * @param showPreviousBtn if true shows the previous button, otherwise no
+     */
     public HelpModel(String imagePath, String howToPlay, String helpText, String nextBtnLabel, String previousBtnText, Consumer<ActionEvent> previousBtnAction, Consumer<ActionEvent> nextBtnAction, boolean showPreviousBtn) {
         this.imagePath = imagePath;
         this.howToPlay = translations.translate(howToPlay);
@@ -31,6 +47,7 @@ public class HelpModel {
         this.showPreviousBtn = showPreviousBtn;
     }
 
+    /* getters */
     public static String getTitle() {
         return title;
     }

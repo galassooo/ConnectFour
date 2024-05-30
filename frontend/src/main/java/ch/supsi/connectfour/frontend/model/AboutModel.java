@@ -10,29 +10,32 @@ import java.time.format.FormatStyle;
 import java.util.Locale;
 import java.util.Properties;
 
+//OK
 public class AboutModel {
 
+    /* backend controllers */
     private static final TranslationsController translator;
     private static final PreferencesController preferences;
 
+    /* data */
     private final String aboutConnectFourLabel;
-
     private final String builtOnLabel;
-
     private final String runtimeVersionLabel;
-
     private final String poweredByLabel;
     private final String closeText;
-
     private String developers;
     private String version;
     private String date;
 
+    //initialize static fields
     static {
         translator = TranslationsController.getInstance();
         preferences = PreferencesController.getInstance();
     }
 
+    /**
+     * construct the object
+     */
     public AboutModel(){
         aboutConnectFourLabel = translator.translate("label.title");
         closeText = translator.translate("label.close");
@@ -42,22 +45,36 @@ public class AboutModel {
         getProp();
     }
 
+    /**
+     * Retrieves the values for date, developers, and version dynamically from the POM file
+     */
     private void getProp(){
         Properties properties = new Properties();
+
+        //try to retrieve the properties file
         try (InputStream input = AboutModel.class.getClassLoader().getResourceAsStream("infoProperties/about.properties")) {
             if (input == null) {
-                System.out.println("Sorry, unable to find app.properties");
+                System.err.println("Sorry, unable to find app.properties");
                 return;
             }
+            //load properties
             properties.load(input);
+
+            //save properties into fields
             version =  properties.getProperty("app.version");
             developers = properties.getProperty("app.developers");
             formatDate(properties.getProperty("app.releaseDate"));
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
+    /**
+     *
+     Creates a formatted string based on the current locale that represents a date
+     * @param dateString date in format dd/mm/yyyy
+     */
     private void formatDate(String dateString) {
         //create a formatter based on the label in the pom
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -78,6 +95,7 @@ public class AboutModel {
 
     }
 
+    /* getters */
     public String getAboutConnectFourLabel() {
         return aboutConnectFourLabel;
     }

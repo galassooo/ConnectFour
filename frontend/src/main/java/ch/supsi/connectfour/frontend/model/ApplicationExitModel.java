@@ -2,9 +2,16 @@ package ch.supsi.connectfour.frontend.model;
 
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 
+//NOT OK
 public class ApplicationExitModel {
-    private static final TranslationsController translations;
+
+    /* self reference */
     private static ApplicationExitModel instance;
+
+    /* backend controller*/
+
+    //NON VIENE MAI USATO... RIMUOVERE? (vedi controller)
+    private static final TranslationsController translations;
 
     static {
         translations = TranslationsController.getInstance();
@@ -16,6 +23,7 @@ public class ApplicationExitModel {
     private final String confirmText;
     private final String cancelText;
 
+    //ALEX
     private ApplicationExitModel(String message, String title, String confirmText, String cancelText) {
         this.message = message;
         this.title = title;
@@ -23,6 +31,7 @@ public class ApplicationExitModel {
         this.cancelText = cancelText;
     }
 
+    //ALEX
     public static ApplicationExitModel getInstance(String message, String title, String confirmText, String cancelText) {
         if (instance == null) {
             instance = new ApplicationExitModel(message, title, confirmText, cancelText);
@@ -30,9 +39,7 @@ public class ApplicationExitModel {
         return instance;
     }
 
-    public String translate(String s) {
-        return translations.translate(s);
-    }
+    /* getters */
 
     public String getMessage() {
         return message;

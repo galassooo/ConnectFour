@@ -29,12 +29,6 @@ public class ApplicationExitController {
 
     public ApplicationExitController build(@NotNull Stage primaryStage) {
         this.primaryStage = primaryStage;
-        primaryStage.setOnCloseRequest(
-                windowEvent -> {
-                    windowEvent.consume();
-                    primaryStage.close();
-                }
-        );
         return this;
     }
 

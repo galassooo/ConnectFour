@@ -23,8 +23,6 @@ public class HelpController {
 
     private final Stage stage;
 
-    private final TranslationsController translations;
-
     private static final int NUM_SCREENS = 6;
 
     private final List<HelpModel> models = new ArrayList<>();
@@ -43,7 +41,6 @@ public class HelpController {
 
     private HelpController() {
         stage = new Stage();
-        translations = TranslationsController.getInstance();
         try {
             URL fxmlUrl = getClass().getResource("/help.fxml");
             if (fxmlUrl == null) {
@@ -59,7 +56,7 @@ public class HelpController {
             stage.setScene(scene);
 
             stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/help/questionMark.png"))));
-            stage.setTitle(translations.translate("label.help"));
+            stage.setTitle(HelpModel.getTitle());
             stage.setResizable(false);
 
         } catch (IOException e) {

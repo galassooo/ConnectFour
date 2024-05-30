@@ -7,6 +7,7 @@ import java.util.function.Consumer;
 
 public class HelpModel {
     private static final TranslationsController translations = TranslationsController.getInstance();
+    private static final String title = translations.translate("label.help");
     private final String imagePath;
     private final String howToPlay;
     private final String helpText;
@@ -29,6 +30,9 @@ public class HelpModel {
         this.showPreviousBtn = showPreviousBtn;
     }
 
+    public static String getTitle(){
+        return title;
+    }
     public String getHowToPlay() {
         return howToPlay;
     }

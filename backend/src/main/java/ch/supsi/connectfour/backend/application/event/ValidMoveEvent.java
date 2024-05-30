@@ -9,12 +9,14 @@ import java.util.Objects;
 
 public class ValidMoveEvent extends MoveEvent {
 
+    /* fields */
     private final int column;
     private final int row;
     private final ConnectFourPlayerInterface playerToPlay;
     private final SymbolInterface playerSymbol;
     private final String playerColor;
 
+    /* constructors */
     public ValidMoveEvent(@NotNull ConnectFourPlayerInterface player, @NotNull ConnectFourPlayerInterface playerToPlay, int column, int row) {
         super(String.format(getTranslator().translate("label.player_moved"), player.getName(), playerToPlay.getName()),
                 String.format(getTranslator().translate("label.player_moved_successfully"), player.getName(), row, column)
@@ -35,6 +37,7 @@ public class ValidMoveEvent extends MoveEvent {
         this.row = row;
     }
 
+    /* getters */
     public SymbolInterface getPlayerSymbol() {
         return playerSymbol;
     }
@@ -51,6 +54,7 @@ public class ValidMoveEvent extends MoveEvent {
         return row;
     }
 
+    /* overrides */
     @Override
     public void handle(@NotNull GameEventHandler handler) {
         handler.handle(this);

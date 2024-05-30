@@ -5,17 +5,21 @@ import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 import java.util.Objects;
 
 public abstract class MoveEvent extends GameEvent {
+    /* fields */
     private final ConnectFourPlayerInterface player;
 
+    /* constructors */
     protected MoveEvent(String message, String logMessage, ConnectFourPlayerInterface player) {
         super(message, logMessage);
         this.player = player;
     }
 
+    /* getter */
     public ConnectFourPlayerInterface getPlayer() {
         return (ConnectFourPlayerInterface) player.clone();
     }
 
+    /* overrides */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

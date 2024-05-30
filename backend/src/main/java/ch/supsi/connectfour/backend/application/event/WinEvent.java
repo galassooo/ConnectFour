@@ -8,8 +8,10 @@ import java.util.Objects;
 
 public class WinEvent extends ValidMoveEvent {
 
+    /* field */
     private final ConnectFourPlayerInterface playerWhoWon;
 
+    /* constructor */
     public WinEvent(ConnectFourPlayerInterface playerWhoWon, int column, int row) {
         super(String.format(getTranslator().translate("label.player_won"), playerWhoWon.getName()),
                 String.format(getTranslator().translate("label.player_won_where"), playerWhoWon.getName(), column, row),
@@ -17,10 +19,12 @@ public class WinEvent extends ValidMoveEvent {
         this.playerWhoWon = playerWhoWon;
     }
 
+    /* getters */
     public ConnectFourPlayerInterface getPlayerWhoWon() {
         return (ConnectFourPlayerInterface) playerWhoWon.clone(); //safety copy
     }
 
+    /* overrides*/
     @Override
     public void handle(@NotNull GameEventHandler handler) {
         handler.handle(this);

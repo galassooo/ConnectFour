@@ -13,11 +13,16 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.util.Objects;
 
+//OK
 public class ConnectFourApplication {
+
+    /* self reference */
     private static ConnectFourApplication instance;
+
+    /* business references */
     private final PreferencesBusinessInterface preferences;
-    // The match currently linked to this controller
-    private ConnectFourBusinessInterface currentMatch;
+    private ConnectFourBusinessInterface currentMatch; //match linked to controller
+
 
     protected ConnectFourApplication() {
         preferences = PreferencesModel.getInstance();
@@ -32,44 +37,55 @@ public class ConnectFourApplication {
     }
 
     /**
-     * Serve per gestire la mossa del giocatore
+     * Handles the player's move
      *
-     * @param column colonna nel quale il giocatore intende inserire la pedina
-     * @return un oggetto contenente i dati relativi alla mossa, null se la partita è finita
+     * @param column Column in which the player intends to insert the token
+     * @return An event object containing the data related to the move, null if the game is over
      */
     public GameEvent playerMove(int column) {
         if (!currentMatch.isFinished()) {
-            if (currentMatch.canInsert(column)) {
-                currentMatch.insert(column);
+            //se la partita è in corso
+            if (currentMatch.canInsert(column)) { // e posso inserire la pedina
+                currentMatch.insert(column); //allora la inserisco
                 GameEvent data;
 
                 ConnectFourPlayerInterface playerWhoMoved = currentMatch.getCurrentPlayer();
-                currentMatch.switchCurrentPlayer();
-                if (currentMatch.isWin()) {
-                    currentMatch.setFinished(true);
+                currentMatch.switchCurrentPlayer(); //cambio il turno
+
+                if (currentMatch.isWin()) { //se questa mossa è stata quella vincente
+
+                    currentMatch.setFinished(true);  //allora avrò un win event
                     data = new WinEvent(playerWhoMoved, column, currentMatch.getLastPositioned(column));
-                } else {
+
+                } else if (currentMatch.isDraw()) { // altrimenti se la mossa ha portato a uno stallo...
+                    currentMatch.setFinished(true);
+                    data =  new DrawEvent(currentMatch.getPlayer1(), currentMatch.getPlayer2(), column);
+
+                }else {
+                    //altrimenti avrò semplicemente una mossa valida
                     data = new ValidMoveEvent(playerWhoMoved, currentMatch.getCurrentPlayer(), column, currentMatch.getLastPositioned(column));
                 }
                 return data;
-            } else if (currentMatch.isDraw()) {
-                currentMatch.setFinished(true);
-                return new DrawEvent(currentMatch.getPlayer1(), currentMatch.getPlayer2(), column);
             }
         }
+        //in caso non posso inserire allora avrò una mossa invalida
         return new InvalidMoveEvent(currentMatch.getCurrentPlayer(), column);
     }
 
+    /**
+     * creates a new game
+     */
     public void createNewGame() {
         ConnectFourPlayerInterface p1 = new ConnectFourPlayer("P1", preferences.getPreference("player-one-color").toString(), new Symbol(preferences.getPreference("player-one-symbol").toString()));
         ConnectFourPlayerInterface p2 = new ConnectFourPlayer("P2", preferences.getPreference("player-two-color").toString(), new Symbol(preferences.getPreference("player-two-symbol").toString()));
         currentMatch = new ConnectFourModel(p1, p2);
     }
 
-    public @Nullable ConnectFourBusinessInterface getCurrentMatch() {
-        return currentMatch;
-    }
 
+    /**
+     * Replaces the current game with the provided one
+     * @param newMatch new match
+     */
     public void overrideCurrentMatch(@Nullable final ConnectFourBusinessInterface newMatch) {
         currentMatch = newMatch;
     }
@@ -88,6 +104,10 @@ public class ConnectFourApplication {
         return currentMatch.persist(outputDirectory, saveName);
     }
 
+    /**
+     * attempts to persist the current match
+     * @return true if the game was successfully saved, false otherwise
+     */
     public boolean persist() {
         return currentMatch.persist();
     }
@@ -99,7 +119,7 @@ public class ConnectFourApplication {
      * @return the deserialized game if the operation succeeded, null if it failed
      */
     public @Nullable ConnectFourBusinessInterface tryLoadingSave(@NotNull final File file) {
-        // todo: fa un po' schifo ma mi sa che va lasciato così a sto punto
+
         if (currentMatch == null)
             this.createNewGame();
 
@@ -111,6 +131,7 @@ public class ConnectFourApplication {
         return loadedGame;
     }
 
+    /* getters */
     public String getSaveName() {
         return currentMatch.getSaveName();
     }
@@ -121,6 +142,11 @@ public class ConnectFourApplication {
         return currentMatch.getPlayer1();
     }
 
+    public @Nullable ConnectFourBusinessInterface getCurrentMatch() {
+        return currentMatch;
+    }
+
+    /* object override */
     @Override
     public int hashCode() {
         return Objects.hash(preferences, getCurrentMatch());

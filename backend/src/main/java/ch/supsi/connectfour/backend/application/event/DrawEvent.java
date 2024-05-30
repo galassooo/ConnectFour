@@ -7,8 +7,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public class DrawEvent extends InvalidMoveEvent {
+
+    /* field */
     private final ConnectFourPlayerInterface otherPlayer;
 
+    /* constructors */
     public DrawEvent(@NotNull ConnectFourPlayerInterface player1, @NotNull ConnectFourPlayerInterface player2, int col) {
         super(
                 String.format(getTranslator().translate("label.player_draw"), player1.getName(), player2.getName()),
@@ -22,6 +25,7 @@ public class DrawEvent extends InvalidMoveEvent {
         otherPlayer = playerModel2;
     }
 
+    /* overrides */
     @Override
     public void handle(@NotNull GameEventHandler handler) {
         handler.handle(this);

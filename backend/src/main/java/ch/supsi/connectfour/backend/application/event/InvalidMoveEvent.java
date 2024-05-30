@@ -8,8 +8,10 @@ import java.util.Objects;
 
 public class InvalidMoveEvent extends MoveEvent {
 
+    /* field */
     private final int column;
 
+    /* constructors */
     public InvalidMoveEvent(ConnectFourPlayerInterface player, int column) {
         super(getTranslator().translate("label.invalid_move"),
                 String.format(getTranslator().translate("label.player_failed_move"), player.getName(), column)
@@ -22,10 +24,12 @@ public class InvalidMoveEvent extends MoveEvent {
         this.column = column;
     }
 
+    /* getters */
     public int getColumn() {
         return column;
     }
 
+    /* overrides */
     @Override
     public void handle(@NotNull GameEventHandler handler) {
         handler.handle(this);

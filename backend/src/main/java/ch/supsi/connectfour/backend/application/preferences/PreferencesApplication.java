@@ -6,9 +6,12 @@ import java.util.Map;
 
 public class PreferencesApplication {
 
+    /* self reference */
     private static PreferencesApplication myself;
 
+    /* business references */
     private final PreferencesBusinessInterface preferencesModel;
+
 
     private PreferencesApplication() {
         this.preferencesModel = PreferencesModel.getInstance();
@@ -21,16 +24,13 @@ public class PreferencesApplication {
         return myself;
     }
 
-    /**
-     * Return the value for the given key
-     *
-     * @param key
-     * @return String
-     */
+
+    //ALEX
     public Object getPreference(String key) {
         return this.preferencesModel.getPreference(key);
     }
 
+    //ALEX
     public void setPreference(Map.Entry<String, String> preference) {
         preferencesModel.setPreference(preference);
     }

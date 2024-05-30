@@ -5,11 +5,13 @@ import ch.supsi.connectfour.backend.application.translations.TranslationsApplica
 import java.util.Objects;
 
 public abstract class GameEvent implements GameEventInterface {
+
+    /* fields */
     private final static TranslationsApplication translations = TranslationsApplication.getInstance();
     private final String eventMessage;
-
     private final String eventLogMessage;
 
+    /* constructors */
     public GameEvent(String eventName, String eventLogMessage) {
         this.eventMessage = eventName;
         this.eventLogMessage = eventLogMessage;
@@ -19,6 +21,7 @@ public abstract class GameEvent implements GameEventInterface {
         return translations;
     }
 
+    /* getters */
     public final String getEventMessage() {
         return eventMessage;
     }
@@ -27,6 +30,7 @@ public abstract class GameEvent implements GameEventInterface {
         return eventLogMessage;
     }
 
+    /* overrides */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

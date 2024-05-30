@@ -10,8 +10,10 @@ import java.util.ResourceBundle;
 
 public class TranslationsApplication {
 
+    /* self reference */
     private static TranslationsApplication myself;
 
+    /* business references */
     private final TranslationsBusinessInterface translationsModel;
 
     private final PreferencesBusinessInterface preferencesModel;
@@ -32,20 +34,22 @@ public class TranslationsApplication {
         return myself;
     }
 
+    //ALEX
     public List<String> getSupportedLanguages() {
         return this.translationsModel.getSupportedLanguages();
     }
 
-    /**
-     * Translate the given key
-     *
-     * @param key
-     * @return String
-     */
+
+    //ALEX
     public String translate(String key) {
         return this.translationsModel.translate(key);
     }
 
+    /**
+     * return the UI translation bundle with the given locale
+     * @param locale selected locale
+     * @return UI resource bundle
+     */
     public ResourceBundle getTranslationBundle(Locale locale) {
         return this.translationsModel.getUIResourceBundle(locale);
     }

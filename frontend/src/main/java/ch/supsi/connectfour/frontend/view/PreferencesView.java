@@ -102,8 +102,6 @@ public class PreferencesView implements IPreferencesView {
         languageComboBox.getSelectionModel().selectFirst();
     }
 
-
-    // TODO: ?????
     public void setOnSaveButton(Consumer<ActionEvent> eventConsumer) {
         saveButton.setOnAction(eventConsumer::accept);
     }

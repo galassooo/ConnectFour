@@ -1,28 +1,32 @@
 package ch.supsi.connectfour.frontend.view;
 
+import ch.supsi.connectfour.frontend.model.ApplicationExitModel;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.Optional;
 
-public class ApplicationExitView {
+public class ApplicationExitView implements IApplicationExitView {
+    private static ApplicationExitModel model;
 
-    public boolean showConfirmationDialog(final String message, final String title, final String confirmText, final String cancelText, Stage stage) {
+    public ApplicationExitView(ApplicationExitModel model) {
+        ApplicationExitView.model = model;
+    }
+
+    public boolean showConfirmationDialog() {
         // Create a confirmation dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.initOwner(stage);
-        alert.setTitle(title);
+        alert.setTitle(model.getTitle());
         alert.setHeaderText(null);
-        alert.setContentText(message);
+        alert.setContentText(model.getMessage());
 
         // Set OK and Cancel buttons
-        ButtonType okButton = new ButtonType(confirmText);
-        ButtonType cancelButton = new ButtonType(cancelText, ButtonType.CANCEL.getButtonData());
+        ButtonType okButton = new ButtonType(model.getConfirmText());
+        ButtonType cancelButton = new ButtonType(model.getCancelText(), ButtonType.CANCEL.getButtonData());
         alert.getButtonTypes().setAll(okButton, cancelButton);
 
         loadCssForAlert(alert);

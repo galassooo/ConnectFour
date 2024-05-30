@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.net.URL;
 import java.util.function.Consumer;
 
-public class HelpView {
+public class HelpView implements IHelpView{
 
     @FXML
     private Label helpLabel;

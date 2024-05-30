@@ -3,6 +3,7 @@ package ch.supsi.connectfour.frontend.controller;
 import ch.supsi.connectfour.backend.application.translations.TranslationsController;
 import ch.supsi.connectfour.frontend.model.HelpModel;
 import ch.supsi.connectfour.frontend.view.HelpView;
+import ch.supsi.connectfour.frontend.view.IHelpView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -17,7 +18,7 @@ import java.util.Objects;
 
 public class HelpController {
 
-    private HelpView helpView;
+    private IHelpView helpView;
 
     private static HelpController instance;
 

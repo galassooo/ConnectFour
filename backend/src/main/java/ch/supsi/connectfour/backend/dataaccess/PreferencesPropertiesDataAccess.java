@@ -196,7 +196,7 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
      * @return true if the operation succeeded, false otherwise
      */
     @Override
-    public boolean storePreference(Map.Entry<String, String> preference) {
+    public boolean storePreference(Map.@NotNull Entry<String, String> preference) {
         // Sets the specified preference
         newProperties.setProperty(preference.getKey(), preference.getValue());
         try {

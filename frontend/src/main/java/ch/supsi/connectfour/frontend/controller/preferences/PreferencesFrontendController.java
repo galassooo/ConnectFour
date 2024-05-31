@@ -1,9 +1,11 @@
 package ch.supsi.connectfour.frontend.controller.preferences;
 
 import ch.supsi.connectfour.backend.business.symbols.SymbolBusiness;
+import ch.supsi.connectfour.frontend.model.preferences.LanguageOnlyRequired;
 import ch.supsi.connectfour.frontend.model.preferences.PreferencesModel;
 import ch.supsi.connectfour.frontend.model.translations.TranslationModel;
 import ch.supsi.connectfour.frontend.view.preferences.IPreferencesView;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -11,6 +13,8 @@ import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.AbstractMap;
@@ -20,7 +24,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-public class PreferencesFrontendController implements IPreferencesController {
+public class PreferencesFrontendController implements IPreferencesController, EventHandler<LanguageOnlyRequired> {
 
     public static final String IMAGES_SYMBOLS = "images/symbols/";
     /* self reference */
@@ -43,6 +47,7 @@ public class PreferencesFrontendController implements IPreferencesController {
      * Constructor handling the initialization of the components needed
      */
     private PreferencesFrontendController() {
+
         translationModel = TranslationModel.getInstance();
         String pleaseChoose = translationModel.translate("label.preferences_please_choose");
         String cannotSave = translationModel.translate("label.preferences_cannot_save");
@@ -50,6 +55,8 @@ public class PreferencesFrontendController implements IPreferencesController {
         // Instantiate the model and provide the translations it needs
         model = new PreferencesModel(pleaseChoose, cannotSave, languageOnly);
         stage = new Stage();
+        stage.addEventHandler(LanguageOnlyRequired.LANGUAGE_CHANGE, this);
+
         try {
             URL fxmlUrl = getClass().getResource("/preferences.fxml");
             if (fxmlUrl == null) {
@@ -61,6 +68,7 @@ public class PreferencesFrontendController implements IPreferencesController {
             preferencesView = loader.getController();
             // Provides the model to the view
             preferencesView.setModel(model);
+            preferencesView.setStage(stage);
             // This is not ideal but unfortunately the color picker uses the default locale to
             // determine the labels for the languages it displays, so to fully translate every
             // aspect of the application, this approach was needed.
@@ -171,5 +179,10 @@ public class PreferencesFrontendController implements IPreferencesController {
     public void managePreferences() {
         stage.setResizable(false);
         stage.show();
+    }
+
+    @Override
+    public void handle(@NotNull LanguageOnlyRequired languageOnlyRequired) {
+        model.setLanguageOnlyRequested(languageOnlyRequired.isLanguageOnlyRequired());
     }
 }

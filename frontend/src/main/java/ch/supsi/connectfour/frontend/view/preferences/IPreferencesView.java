@@ -3,6 +3,7 @@ package ch.supsi.connectfour.frontend.view.preferences;
 import ch.supsi.connectfour.backend.business.symbols.SymbolBusiness;
 import ch.supsi.connectfour.frontend.model.preferences.IPreferencesModel;
 import javafx.event.ActionEvent;
+import javafx.stage.Stage;
 
 import java.util.List;
 import java.util.Locale;
@@ -24,6 +25,8 @@ public interface IPreferencesView {
     void setOnSaveButton(Consumer<ActionEvent> eventConsumer);
 
     void setModel(IPreferencesModel model);
+
+    void setStage(Stage stage);
 
     String getSelectedLanguage();
 

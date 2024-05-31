@@ -2,18 +2,21 @@ package ch.supsi.connectfour.frontend.view.preferences;
 
 import ch.supsi.connectfour.backend.business.symbols.SymbolBusiness;
 import ch.supsi.connectfour.frontend.model.preferences.IPreferencesModel;
+import ch.supsi.connectfour.frontend.model.preferences.LanguageOnlyRequired;
 import ch.supsi.connectfour.frontend.model.preferences.PreferencesModel;
 import ch.supsi.connectfour.frontend.model.translations.ITranslationsModel;
 import ch.supsi.connectfour.frontend.model.translations.TranslationModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ComboBoxBase;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -47,9 +50,11 @@ public class PreferencesView implements IPreferencesView {
     private final ITranslationsModel translationModel;
 
     /* symbol list - field */
-    List<ComboBox<SymbolBusiness>> playerShapeBoxes = new ArrayList<>();
-    List<ColorPicker> colorPickers = new ArrayList<>();
-    List<ComboBoxBase<?>> comboBoxes = new ArrayList<>();
+    private final List<ComboBox<SymbolBusiness>> playerShapeBoxes = new ArrayList<>();
+    private final List<ColorPicker> colorPickers = new ArrayList<>();
+    private final List<ComboBoxBase<?>> comboBoxes = new ArrayList<>();
+    private Stage root;
+
 
     public PreferencesView() {
         translationModel = TranslationModel.getInstance();
@@ -106,23 +111,29 @@ public class PreferencesView implements IPreferencesView {
 
         // Function to update preferencesText based on current state
 
-        /*
-         * TODO: This interaction is flawed. The view should not directly modify the model. Instead, the controller should coordinate operations between model and view.
-         */
+
         Runnable updatePreferencesText = () -> {
             boolean colorsEqual = colorsEqualBinding.get();
             boolean shapesEqual = shapesEqualBinding.get();
             boolean languageEqual = languageEqualBinding.get();
 
+            /* Gli eventi sono stati creati per far si che il controller possa gestire l'evento per cui solo la lingua è valida.
+             * In caso contrario avremmo dovuto settare da qui il campo model.languageOnlyRequired ma la view non dovrebbe
+             * modificare direttamente i campi del model. dunque:
+             *
+             * viene generato un evento -> il controller lo cattura -> setta il campo del model in base all'evento generato
+             */
             if (!languageEqual && colorsEqual && shapesEqual) {
                 this.preferencesText.setText(model.getLanguageOnlyMessage());
-                model.setLanguageOnlyRequested(true);
+                Event.fireEvent(root, new LanguageOnlyRequired(true));
+
             } else if (colorsEqual && shapesEqual) {
                 this.preferencesText.setText(model.getDisableMessage());
-                model.setLanguageOnlyRequested(false);
+                Event.fireEvent(root, new LanguageOnlyRequired(false));
+
             } else {
                 this.preferencesText.setText(model.getEnableMessage());
-                model.setLanguageOnlyRequested(false);
+                Event.fireEvent(root, new LanguageOnlyRequired(false));
             }
         };
 
@@ -136,6 +147,11 @@ public class PreferencesView implements IPreferencesView {
     @Override
     public void setModel(@NotNull IPreferencesModel model) {
         this.model = model;
+    }
+
+    @Override
+    public void setStage(Stage stage) {
+        root = stage;
     }
 
     @Override

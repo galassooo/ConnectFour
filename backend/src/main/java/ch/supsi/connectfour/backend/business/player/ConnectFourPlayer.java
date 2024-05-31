@@ -4,15 +4,13 @@ import ch.supsi.connectfour.backend.business.symbols.SymbolBusiness;
 import ch.supsi.connectfour.backend.business.symbols.SymbolInterface;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ConnectFourPlayer extends PlayerBusiness implements ConnectFourPlayerInterface, Cloneable {
-
-    @JsonInclude
+    @JsonIgnore
     private SymbolInterface symbol;
 
-    @JsonInclude
+    @JsonIgnore
     private final String color;
 
     /* constructor */
@@ -25,21 +23,21 @@ public class ConnectFourPlayer extends PlayerBusiness implements ConnectFourPlay
 
     @JsonCreator
     private ConnectFourPlayer(@JsonProperty("name") String name,
-                              @JsonProperty("color") String color,
-                              @JsonProperty("symbol") SymbolBusiness symbol) {
+                              @JsonProperty("color") String color) {
         super(name);
         this.color = color;
-        this.symbol = symbol;
     }
 
     /* getters */
 
     @Override
+    @JsonIgnore // For getters, this tells Jackson not to use it to serialize whatever the getter is getting
     public SymbolInterface getSymbol() {
         return ((SymbolBusiness)symbol).clone();
     }
 
     @Override
+    @JsonIgnore
     public String getColor() {
         return color;
     }

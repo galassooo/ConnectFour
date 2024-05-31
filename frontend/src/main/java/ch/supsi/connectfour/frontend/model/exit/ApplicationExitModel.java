@@ -12,7 +12,6 @@ public class ApplicationExitModel implements IExitModel {
     private final String confirmText;
     private final String cancelText;
 
-    //ALEX
     private ApplicationExitModel(String message, String title, String confirmText, String cancelText) {
         this.message = message;
         this.title = title;
@@ -20,7 +19,6 @@ public class ApplicationExitModel implements IExitModel {
         this.cancelText = cancelText;
     }
 
-    //ALEX
     public static ApplicationExitModel getInstance(String message, String title, String confirmText, String cancelText) {
         if (instance == null) {
             instance = new ApplicationExitModel(message, title, confirmText, cancelText);

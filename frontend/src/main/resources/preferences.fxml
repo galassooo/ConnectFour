@@ -1,50 +1,124 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
-<?import javafx.scene.text.TextFlow?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" id="pane" stylesheets="styleSheets/preferences.css" prefHeight="350.0"
-            prefWidth="300.0" xmlns="http://javafx.com/javafx/20.0.1"
-            fx:controller="ch.supsi.connectfour.frontend.view.preferences.PreferencesView">
-    <center>
-        <GridPane BorderPane.alignment="CENTER">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-            </rowConstraints>
-            <children>
-                <Button fx:id="saveButton" text="%ui_save_button" GridPane.rowIndex="6"/>
-                <Button fx:id="cancelButton" text="%ui_cancel_button" GridPane.columnIndex="1" GridPane.rowIndex="6"/>
-                <!-- Additional row for the small text box -->
-                <TextFlow style="-fx-padding: 11;" GridPane.columnSpan="2" GridPane.rowIndex="5">
-                    <!-- By default the loaded settings are not valid, therefore the message to display when opening this menu is the cannot save message -->
-                    <Text fx:id="preferencesText" text="%ui_player_cannot_have_same"/>
-                </TextFlow>
-                <ComboBox fx:id="playerTwoShapeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
-                <Label text="%ui_player_two_symbol" GridPane.rowIndex="4" wrapText="true" prefWidth="150.0"/>
-                <ColorPicker fx:id="playerTwoColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
-                <Label text="%ui_player_two_color" GridPane.rowIndex="3" wrapText="true" prefWidth="150.0"/>
-                <ComboBox fx:id="playerOneShapeComboBox" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-                <Label text="%ui_player_one_symbol" GridPane.rowIndex="2" wrapText="true" prefWidth="150.0"/>
-                <ColorPicker fx:id="playerOneColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
-                <Label text="%ui_player_one_color" GridPane.rowIndex="1" wrapText="true" prefWidth="150.0"/>
-                <ComboBox fx:id="languageComboBox" GridPane.columnIndex="1"/>
-                <Label text="%ui_language" wrapText="true" prefWidth="150.0"/>
-            </children>
-        </GridPane>
-    </center>
-    <padding>
-        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
-    </padding>
+
+<BorderPane prefHeight="340.0" prefWidth="450.0" styleClass="pane" stylesheets="styleSheets/preferences.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.supsi.connectfour.frontend.view.preferences.PreferencesView">
+   <top>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER" prefHeight="70.0" prefWidth="200.0">
+               <children>
+                      <Label prefHeight="17.0" prefWidth="92.0" text="%ui_language" wrapText="true" />
+                      <ComboBox fx:id="languageComboBox" />
+               </children>
+            </HBox>
+            <Pane prefHeight="1.0" prefWidth="200.0" styleClass="divider">
+               <padding>
+                  <Insets left="30.0" right="30.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets left="30.0" right="30.0" />
+               </VBox.margin></Pane>
+         </children>
+      </VBox>
+   </top>
+   <center>
+      <GridPane prefHeight="150.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="10.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+               <children>
+                      <Label prefWidth="150.0" text="%ui_player_color" wrapText="true" />
+                      <ColorPicker fx:id="playerOneColorPicker" />
+               </children>
+               <GridPane.margin>
+                  <Insets right="30.0" />
+               </GridPane.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <children>
+                      <Label prefWidth="150.0" text="%ui_player_symbol" wrapText="true" />
+                      <ComboBox fx:id="playerOneShapeComboBox" />
+               </children>
+               <GridPane.margin>
+                  <Insets right="30.0" />
+               </GridPane.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <children>
+                      <Label prefWidth="150.0" text="%ui_player_color" wrapText="true" />
+                      <ColorPicker fx:id="playerTwoColorPicker" />
+               </children>
+               <GridPane.margin>
+                  <Insets left="30.0" />
+               </GridPane.margin>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <children>
+                      <Label prefWidth="150.0" text="%ui_player_symbol" wrapText="true" />
+                      <ComboBox fx:id="playerTwoShapeComboBox" />
+               </children>
+               <GridPane.margin>
+                  <Insets left="30.0" />
+               </GridPane.margin>
+            </HBox>
+            <Label text="%ui_player1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets right="25.0" top="15.0" />
+               </GridPane.margin></Label>
+            <Label text="%ui_player2" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+               <GridPane.margin>
+                  <Insets left="25.0" top="15.0" />
+               </GridPane.margin></Label>
+         </children>
+         <BorderPane.margin>
+            <Insets left="20.0" right="20.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets left="15.0" right="15.0" />
+         </padding>
+      </GridPane>
+   </center>
+   <bottom>
+      <VBox alignment="CENTER" prefHeight="70.0" prefWidth="100.0" spacing="20.0" BorderPane.alignment="CENTER">
+         <children>
+            <Pane prefHeight="1.0" styleClass="divider" prefWidth="200.0">
+               <VBox.margin>
+                  <Insets left="30.0" right="30.0" />
+               </VBox.margin>
+            </Pane>
+                 <!-- By default the loaded settings are not valid, therefore the message to display when opening this menu is the cannot save message -->
+                 <Text fx:id="preferencesText" text="%ui_player_cannot_have_same" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="30.0">
+               <children>
+                      <Button fx:id="saveButton" text="%ui_save_button" />
+                      <Button fx:id="cancelButton" text="%ui_cancel_button" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
+            </HBox>
+         </children>
+      </VBox>
+   </bottom>
 </BorderPane>

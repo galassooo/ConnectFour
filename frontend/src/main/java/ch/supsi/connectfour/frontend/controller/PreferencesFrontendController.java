@@ -41,7 +41,8 @@ public class PreferencesFrontendController {
         translationModel = TranslationModel.getInstance();
         String pleaseChoose = translationModel.translate("label.preferences_please_choose");
         String cannotSave = translationModel.translate("label.preferences_cannot_save");
-        model = new PreferencesModel(pleaseChoose, cannotSave);
+        String languageOnly = translationModel.translate("label.preferences_language_only");
+        model = new PreferencesModel(pleaseChoose, cannotSave, languageOnly);
         stage = new Stage();
         try {
             URL fxmlUrl = getClass().getResource("/preferences.fxml");
@@ -55,7 +56,16 @@ public class PreferencesFrontendController {
             preferencesView.setModel(model);
             preferencesView.setColorPickerLocale(translationModel.getCurrentLanguage());
             preferencesView.setOnCancelButton((e) -> stage.close());
+
             preferencesView.setOnSaveButton((e) -> {
+
+                if(model.isLanguageOnlyRequested()){
+                    var value =  new AbstractMap.SimpleEntry<>("language-tag", preferencesView.getSelectedLanguage());
+                    model.setPreference(value);
+                    stage.close();
+                    return;
+                }
+
                 List<AbstractMap.SimpleEntry<String, String>> preferences;
                 preferences = List.of(
                         new AbstractMap.SimpleEntry<>("language-tag", preferencesView.getSelectedLanguage()),

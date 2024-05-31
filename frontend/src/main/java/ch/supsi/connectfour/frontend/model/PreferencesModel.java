@@ -13,17 +13,21 @@ public class PreferencesModel {
     /* data */
     private final String enableMessage;
     private final String disableMessage;
+    private final String languageOnlyMessage;
 
+    private boolean languageOnlyRequested;
 
     /**
      * construct an instance
      * @param enableMessage message to be displayed for enable
      * @param disableMessage message to be displayed for disable
      */
-    public PreferencesModel(String enableMessage, String disableMessage) {
+    public PreferencesModel(String enableMessage, String disableMessage, String languageOnlyMessage) {
         backendController = PreferencesApplication.getInstance();
         this.enableMessage = enableMessage;
         this.disableMessage = disableMessage;
+        this.languageOnlyMessage = languageOnlyMessage;
+        languageOnlyRequested = false;
     }
 
     /* setter */
@@ -38,5 +42,17 @@ public class PreferencesModel {
 
     public String getDisableMessage() {
         return disableMessage;
+    }
+
+    public String getLanguageOnlyMessage() {
+        return languageOnlyMessage;
+    }
+
+    public boolean isLanguageOnlyRequested() {
+        return languageOnlyRequested;
+    }
+
+    public void setLanguageOnlyRequested(boolean languageOnlyRequested) {
+        this.languageOnlyRequested = languageOnlyRequested;
     }
 }

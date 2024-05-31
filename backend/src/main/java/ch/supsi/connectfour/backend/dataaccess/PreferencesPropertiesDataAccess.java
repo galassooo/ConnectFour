@@ -69,7 +69,9 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
         try {
             return Files.createDirectories(this.getUserPreferencesDirectoryPath());
 
-        } catch (IOException ignoredForDemoPurposes) {
+        } catch (IOException e) {
+            System.err.printf("Unable to create user preferences directory: %s\n", e.getMessage());
+            e.printStackTrace();
         }
 
         return null;
@@ -117,7 +119,9 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
                 defaultPreferences.store(outputStream, null);
                 return true;
 
-            } catch (IOException ignoredForDemoPurposes) {
+            } catch (IOException e) {
+                System.err.printf("Unable to create user preferences file: %s\n", getUserPreferencesFilePath());
+                e.printStackTrace();
                 return false;
             }
         }
@@ -136,7 +140,9 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
             InputStream defaultPreferencesStream = this.getClass().getResourceAsStream(DEFAULT_USER_PREFERENCES_PROPERTIES);
             defaultPreferences.load(defaultPreferencesStream);
 
-        } catch (IOException ignored) {
+        } catch (IOException e) {
+            System.err.printf("Unable to load user preferences file: %s\n", getUserPreferencesFilePath());
+            e.printStackTrace();
         }
 
         // return the properties object with the loaded preferences
@@ -154,7 +160,9 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
         try {
             preferences.load(new FileInputStream(String.valueOf(path)));
 
-        } catch (IOException ignoredForDemoPurposes) {
+        } catch (IOException e) {
+            System.err.printf("Unable to load user preferences file from the specified path: %s\n", path.toString());
+            e.printStackTrace();
             return null;
         }
 
@@ -204,7 +212,8 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
             FileOutputStream outputStream = new FileOutputStream(String.valueOf(this.getUserPreferencesFilePath()));
             newProperties.store(outputStream, null);
             return true;
-        } catch (IOException ignoredForDemoPurposes) {
+        } catch (IOException e) {
+            System.err.printf("Unable to store preference %s to file: %s\n", preference, getUserPreferencesFilePath());
             return false;
         }
     }

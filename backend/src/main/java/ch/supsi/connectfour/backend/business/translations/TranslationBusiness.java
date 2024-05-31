@@ -37,8 +37,8 @@ public class TranslationBusiness implements TranslationsBusinessInterface {
     /**
      * Checks if a given language (provided in the form of a language tag) is supported
      *
-     * @param languageTag   the language tag associated with the language
-     * @return  wether or not the given language is supported
+     * @param languageTag the language tag associated with the language
+     * @return wether or not the given language is supported
      */
     @Override
     public boolean isSupportedLanguageTag(String languageTag) {
@@ -48,7 +48,7 @@ public class TranslationBusiness implements TranslationsBusinessInterface {
     /**
      * Retrieves all supported languages of this application
      *
-     * @return  a list containing all supported languages
+     * @return a list containing all supported languages
      */
     @Override
     public List<String> getSupportedLanguages() {
@@ -58,8 +58,8 @@ public class TranslationBusiness implements TranslationsBusinessInterface {
     /**
      * Changes the language of this application
      *
-     * @param languageTag   the language tag associated with the language to switch to
-     * @return  wether or not the language was successfully changed
+     * @param languageTag the language tag associated with the language to switch to
+     * @return wether or not the language was successfully changed
      */
     @Override
     public boolean changeLanguage(String languageTag) {

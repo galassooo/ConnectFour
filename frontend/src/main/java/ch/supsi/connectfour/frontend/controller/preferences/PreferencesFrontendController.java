@@ -168,6 +168,7 @@ public class PreferencesFrontendController implements IPreferencesController, Ev
                                 return null;
                             }).toList();
         } catch (IOException e) {
+            System.err.printf("Could not load symbols from %s%n" + IMAGES_SYMBOLS);
             e.printStackTrace();
         }
         this.preferencesView.setSymbols(validSymbols);

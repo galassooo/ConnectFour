@@ -59,9 +59,9 @@ public class ConnectFourApplication {
 
                 } else if (currentMatch.isDraw()) { // altrimenti se la mossa ha portato a uno stallo...
                     currentMatch.setFinished(true);
-                    data =  new DrawEvent(currentMatch.getPlayer1(), currentMatch.getPlayer2(), column);
+                    data = new DrawEvent(currentMatch.getPlayer1(), currentMatch.getPlayer2(), column);
 
-                }else {
+                } else {
                     //altrimenti avrò semplicemente una mossa valida
                     data = new ValidMoveEvent(playerWhoMoved, currentMatch.getCurrentPlayer(), column, currentMatch.getLastPositioned(column));
                 }
@@ -84,6 +84,7 @@ public class ConnectFourApplication {
 
     /**
      * Replaces the current game with the provided one
+     *
      * @param newMatch new match
      */
     public void overrideCurrentMatch(@Nullable final ConnectFourBusinessInterface newMatch) {
@@ -106,6 +107,7 @@ public class ConnectFourApplication {
 
     /**
      * attempts to persist the current match
+     *
      * @return true if the game was successfully saved, false otherwise
      */
     public boolean persist() {
@@ -135,6 +137,7 @@ public class ConnectFourApplication {
     public String getSaveName() {
         return currentMatch.getSaveName();
     }
+
     public ConnectFourPlayerInterface getOtherPlayer(@NotNull ConnectFourPlayerInterface player) {
         if (player.equals(currentMatch.getPlayer1())) {
             return currentMatch.getPlayer2();

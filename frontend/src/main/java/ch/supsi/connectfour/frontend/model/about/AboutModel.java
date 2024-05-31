@@ -67,6 +67,7 @@ public class AboutModel implements IAboutModel {
             formatDate(properties.getProperty("app.releaseDate"));
 
         } catch (IOException ex) {
+            System.err.println("Error while loading input properties for the about!");
             ex.printStackTrace();
         }
     }

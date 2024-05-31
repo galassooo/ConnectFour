@@ -76,13 +76,18 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
             if (!outputFile.exists() && !outputFile.createNewFile()) {
                 return false;
             }
+        } catch (SecurityException e) {
+            System.err.printf("An error occurred while trying to check if file %s exists%n", outputFile);
+            e.printStackTrace();
         } catch (IOException e) {
+            System.err.printf("An error occurred while trying to create file %s%n", outputFile);
             e.printStackTrace();
         }
         final ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
         try {
             mapper.writeValue(outputFile, game);
         } catch (IOException e) {
+            System.err.printf("An error occurred while trying to write to file %s with an ObjectMapper%n", outputFile);
             e.printStackTrace();
             return false;
         }

@@ -57,6 +57,7 @@ public class SymbolBusiness implements SymbolInterface, Cloneable {
         try {
             return (SymbolBusiness) super.clone();
         } catch (CloneNotSupportedException e) {
+            System.err.println("An error occurred while trying to clone a Symbol object!");
             throw new AssertionError();
         }
     }

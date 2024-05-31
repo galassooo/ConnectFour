@@ -8,6 +8,7 @@ public class LanguageOnlyRequired extends Event {
             new EventType<>(Event.ANY, "LANGUAGE_CHANGE");
 
     private final boolean isLanguageOnlyRequired;
+
     public LanguageOnlyRequired(boolean value) {
         super(LANGUAGE_CHANGE);
         isLanguageOnlyRequired = value;

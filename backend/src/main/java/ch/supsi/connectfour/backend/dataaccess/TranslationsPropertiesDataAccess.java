@@ -11,7 +11,6 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-//ALEX
 public class TranslationsPropertiesDataAccess implements TranslationsDataAccessInterface {
     /* where the supported languages are stored */
     private static final String SUPPORTED_LANGUAGES_PROPERTIES = "/supported-languages.properties";
@@ -49,7 +48,9 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
             if (supportedLanguageTagsStream != null) {
                 supportedLanguageTags.load(supportedLanguageTagsStream);
             }
-        } catch (IOException ignored) {
+        } catch (IOException e) {
+            System.err.printf("Error while loading file %s%n", SUPPORTED_LANGUAGES_PROPERTIES);
+            e.printStackTrace();
         }
 
         return supportedLanguageTags;
@@ -74,7 +75,7 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
      * Tries loading the translations for the given locale. If the locale is not valid, this method has a fallback
      * mechanism that loads a default, valid language if the provided locale is not valid
      *
-     * @param locale the locale //todo: fix
+     * @param locale the locale that we want to load the translations for
      * @return a properties object representing all the translations for the given locale, or for the fallback locale if the
      * provided locale was not valid
      */
@@ -102,9 +103,9 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
      * Retrieves all the resource bundles associated with the provided locale, located in the provided path.
      * This method is supposed to work correctly across filesystems.
      *
-     * @param locale    the locale //todo fix
-     * @param pathToResources   the path to the resources folder
-     * @return  a list of resource bundles associated with the given locale, or an empty list in case an exception was thrown
+     * @param locale          the locale that we want to load the translations for
+     * @param pathToResources the path to the resources folder
+     * @return a list of resource bundles associated with the given locale, or an empty list in case an exception was thrown
      */
     private @NotNull List<ResourceBundle> getResourceBundlesForLocale(Locale locale, String pathToResources) {
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
@@ -113,7 +114,7 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
             Resource[] resources = resolver.getResources(String.format("classpath:%s*%s", pathToResources, LABELS_FORMAT));
             for (Resource resource : resources) {
                 String filename = resource.getFilename();
-                if (filename != null && filename.contains("_" + locale.toString() + LABELS_FORMAT)) {
+                if (filename != null && filename.contains(String.format("_%s%s", locale, LABELS_FORMAT))) {
                     try (InputStreamReader reader = new InputStreamReader(resource.getInputStream(), StandardCharsets.UTF_8)) {
                         ResourceBundle resourceBundle = new PropertyResourceBundle(reader);
                         resourceBundles.add(resourceBundle);
@@ -122,6 +123,7 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
             }
 
         } catch (IOException e) {
+            System.err.printf("Error while loading file %s for locale %s%n", pathToResources, locale);
             e.printStackTrace();
         }
         return resourceBundles;
@@ -130,10 +132,10 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
     /**
      * This method handles loading resources in case of an invalid locale
      *
-     * @param invalidLocale the invalid locale
-     * @param fallbackLocale    a new locale
-     * @param pathToResources   the path to the resources to be loaded
-     * @return  a list of resource bundles associated with the given fallbackLocale
+     * @param invalidLocale   the invalid locale
+     * @param fallbackLocale  a new locale
+     * @param pathToResources the path to the resources to be loaded
+     * @return a list of resource bundles associated with the given fallbackLocale
      */
     private @NotNull List<ResourceBundle> handleMissingResource(@NotNull Locale invalidLocale, @NotNull Locale fallbackLocale, String pathToResources) {
         System.err.printf("Invalid locale: %s. Loading new locale: %s\n", invalidLocale, fallbackLocale);
@@ -143,8 +145,8 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
     /**
      * Retrieves the resource bundle containing the UI labels
      *
-     * @param locale    the locale //todo: fix
-     * @return  a resource bundle containing the UI labels
+     * @param locale the locale that we want to load the translations for
+     * @return a resource bundle containing the UI labels
      */
     @Override
     public ResourceBundle getUIResourceBundle(Locale locale) {

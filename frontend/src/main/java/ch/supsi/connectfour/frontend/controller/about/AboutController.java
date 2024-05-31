@@ -42,6 +42,7 @@ public class AboutController implements IAboutController {
             stage.setScene(scene);
 
         } catch (IOException e) {
+            System.err.printf("Unable to load about view: %s\n", e.getMessage());
             e.printStackTrace();
         }
     }
@@ -61,7 +62,7 @@ public class AboutController implements IAboutController {
      */
     public void manageAbout() {
         stage.setResizable(false);
-        aboutView.setOnActButton(e-> stage.close());
+        aboutView.setOnActButton(e -> stage.close());
         stage.show();
     }
 }

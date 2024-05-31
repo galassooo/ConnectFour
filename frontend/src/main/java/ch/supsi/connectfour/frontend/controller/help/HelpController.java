@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ public class HelpController implements IHelpController {
             stage.setResizable(false);
 
         } catch (IOException e) {
+            System.err.println("An error occurred while loading help fxml\n");
             e.printStackTrace();
         }
         buildScreens();
@@ -112,6 +114,7 @@ public class HelpController implements IHelpController {
 
     /**
      * update the current screen content
+     *
      * @param index page to be shown
      */
     private void show(int index) {

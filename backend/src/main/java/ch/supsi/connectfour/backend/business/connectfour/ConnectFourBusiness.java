@@ -344,17 +344,17 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
     /* getters */
     @Override
     public ConnectFourPlayerInterface getCurrentPlayer() {
-        return currentPlayer;
+        return (ConnectFourPlayerInterface) currentPlayer.clone();
     }
 
     @Override
     public ConnectFourPlayerInterface getPlayer1() {
-        return player1;
+        return (ConnectFourPlayerInterface) player1.clone();
     }
 
     @Override
     public ConnectFourPlayerInterface getPlayer2() {
-        return player2; // safety copy
+        return (ConnectFourPlayerInterface) player2.clone(); // safety copy
     }
 
     /**

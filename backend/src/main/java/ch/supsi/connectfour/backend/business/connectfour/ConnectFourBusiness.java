@@ -158,8 +158,8 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         if (outputDirectory == null && saveName == null && this.pathToSave != null && this.pathToSave.toFile().exists()) {
             wasSaved = this.dataAccess.persist(this, this.pathToSave.toFile());
         } else {
-            // TODO: the model knows the format of the file it is working with...
-            this.pathToSave = Path.of(outputDirectory + File.separator + saveName + ".json");
+
+            this.pathToSave = Path.of(outputDirectory + File.separator + saveName + dataAccess.getFileExtension());
             wasSaved = this.dataAccess.persist(this, new File(String.valueOf(this.pathToSave)));
         }
         /*

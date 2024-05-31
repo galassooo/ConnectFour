@@ -16,6 +16,9 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
     /* self reference */
     protected static ConnectFourDataAccess instance;
 
+    /* field */
+    private static final String EXTENSION = ".json";
+
     /* constructor */
     protected ConnectFourDataAccess() {
     }
@@ -52,6 +55,11 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
             return null;
         }
         return loadedGame;
+    }
+
+    @Override
+    public String getFileExtension() {
+        return EXTENSION;
     }
 
     /**

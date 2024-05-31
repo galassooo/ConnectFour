@@ -2,6 +2,7 @@ package ch.supsi.connectfour.frontend.model.about;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesApplication;
 import ch.supsi.connectfour.backend.application.translations.TranslationsApplication;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
@@ -27,16 +28,16 @@ public class AboutModel implements IAboutModel {
     private String version;
     private String date;
 
-    //initialize static fields
+    /* static initializer for static fields */
     static {
         translator = TranslationsApplication.getInstance();
         preferences = PreferencesApplication.getInstance();
     }
 
     /**
-     * construct the object
+     * Construct the object
      */
-    public AboutModel(){
+    public AboutModel() {
         aboutConnectFourLabel = translator.translate("label.title");
         closeText = translator.translate("label.close");
         builtOnLabel = translator.translate("label.built_on");
@@ -48,7 +49,7 @@ public class AboutModel implements IAboutModel {
     /**
      * Retrieves the values for date, developers, and version dynamically from the POM file
      */
-    private void getProp(){
+    private void getProp() {
         Properties properties = new Properties();
 
         //try to retrieve the properties file
@@ -61,7 +62,7 @@ public class AboutModel implements IAboutModel {
             properties.load(input);
 
             //save properties into fields
-            version =  properties.getProperty("app.version");
+            version = properties.getProperty("app.version");
             developers = properties.getProperty("app.developers");
             formatDate(properties.getProperty("app.releaseDate"));
 
@@ -71,8 +72,8 @@ public class AboutModel implements IAboutModel {
     }
 
     /**
+     * Creates a formatted string based on the current locale that represents a date
      *
-     Creates a formatted string based on the current locale that represents a date
      * @param dateString date in format dd/mm/yyyy
      */
     private void formatDate(String dateString) {

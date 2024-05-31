@@ -1,6 +1,7 @@
 package ch.supsi.connectfour.frontend.dispatcher;
 
 import ch.supsi.connectfour.frontend.controller.game.ConnectFourFrontendController;
+import ch.supsi.connectfour.frontend.controller.game.IGameController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -15,7 +16,7 @@ import java.util.List;
 public class ColumnsSelectorDispatcher {
 
     /* controller */
-    private static final ConnectFourFrontendController connectFourFrontendController;
+    private static final IGameController connectFourFrontendController;
 
     static {
         connectFourFrontendController = ConnectFourFrontendController.getInstance();

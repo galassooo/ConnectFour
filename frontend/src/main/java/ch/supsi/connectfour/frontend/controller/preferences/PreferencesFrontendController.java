@@ -8,7 +8,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.AbstractMap;
@@ -20,6 +22,7 @@ import java.util.stream.Stream;
 
 public class PreferencesFrontendController implements IPreferencesController {
 
+    public static final String IMAGES_SYMBOLS = "images/symbols/";
     /* self reference */
     private static PreferencesFrontendController instance;
 
@@ -36,12 +39,15 @@ public class PreferencesFrontendController implements IPreferencesController {
     /* view */
     private IPreferencesView preferencesView;
 
-    //ALEX
+    /**
+     * Constructor handling the initialization of the components needed
+     */
     private PreferencesFrontendController() {
         translationModel = TranslationModel.getInstance();
         String pleaseChoose = translationModel.translate("label.preferences_please_choose");
         String cannotSave = translationModel.translate("label.preferences_cannot_save");
         String languageOnly = translationModel.translate("label.preferences_language_only");
+        // Instantiate the model and provide the translations it needs
         model = new PreferencesModel(pleaseChoose, cannotSave, languageOnly);
         stage = new Stage();
         try {
@@ -53,30 +59,31 @@ public class PreferencesFrontendController implements IPreferencesController {
             FXMLLoader loader = new FXMLLoader(fxmlUrl, translationModel.getUiBundle());
             Scene scene = new Scene(loader.load());
             preferencesView = loader.getController();
+            // Provides the model to the view
             preferencesView.setModel(model);
+            // This is not ideal but unfortunately the color picker uses the default locale to
+            // determine the labels for the languages it displays, so to fully translate every
+            // aspect of the application, this approach was needed.
             preferencesView.setColorPickerLocale(translationModel.getCurrentLanguage());
             preferencesView.setOnCancelButton((e) -> stage.close());
 
+            // How the view should behave if the save button is pressed
             preferencesView.setOnSaveButton((e) -> {
-
-                if(model.isLanguageOnlyRequested()){
-                    var value =  new AbstractMap.SimpleEntry<>("language-tag", preferencesView.getSelectedLanguage());
+                // This was done to allow the user to save language preferences independently of the color - symbol choices.
+                // If the color - symbol combination is not valid, the user is still allowed to save the preferences, but it will only save the new language.
+                if (model.isOnlyLanguageRequested()) {
+                    var value = new AbstractMap.SimpleEntry<>("language-tag", preferencesView.getSelectedLanguage());
                     model.setPreference(value);
                     stage.close();
                     return;
                 }
-
-                List<AbstractMap.SimpleEntry<String, String>> preferences;
-                preferences = List.of(
-                        new AbstractMap.SimpleEntry<>("language-tag", preferencesView.getSelectedLanguage()),
-                        new AbstractMap.SimpleEntry<>("player-one-color", preferencesView.getPlayerOneColor()),
-                        new AbstractMap.SimpleEntry<>("player-two-color", preferencesView.getPlayerTwoColor()),
-                        new AbstractMap.SimpleEntry<>("player-one-symbol", String.valueOf(preferencesView.getPlayerOneShape().getValue())),
-                        new AbstractMap.SimpleEntry<>("player-two-symbol", String.valueOf(preferencesView.getPlayerTwoShape().getValue()))
-                );
+                // Retrieves the preferences selected by the user
+                List<AbstractMap.SimpleEntry<String, String>> preferences = getPreferences();
                 preferences.forEach(model::setPreference);
                 stage.close();
             });
+            // Provide the view with the information on supported languages
+            preferencesView.setLanguages(this.translationModel.getSupportedLanguages());
             this.initViewChoices();
 
             stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/preferences/gear.png"))));
@@ -89,7 +96,21 @@ public class PreferencesFrontendController implements IPreferencesController {
     }
 
     /**
-     *
+     * @return a list of key-value pairs representing the preferences selected by the user in the preferences menu
+     */
+    private @NotNull List<AbstractMap.SimpleEntry<String, String>> getPreferences() {
+        List<AbstractMap.SimpleEntry<String, String>> preferences;
+        preferences = List.of(
+                new AbstractMap.SimpleEntry<>("language-tag", preferencesView.getSelectedLanguage()),
+                new AbstractMap.SimpleEntry<>("player-one-color", preferencesView.getPlayerOneColor()),
+                new AbstractMap.SimpleEntry<>("player-two-color", preferencesView.getPlayerTwoColor()),
+                new AbstractMap.SimpleEntry<>("player-one-symbol", String.valueOf(preferencesView.getPlayerOneShape().getValue())),
+                new AbstractMap.SimpleEntry<>("player-two-symbol", String.valueOf(preferencesView.getPlayerTwoShape().getValue()))
+        );
+        return preferences;
+    }
+
+    /**
      * @return an instance of this class
      */
     public static PreferencesFrontendController getInstance() {
@@ -99,15 +120,16 @@ public class PreferencesFrontendController implements IPreferencesController {
         return instance;
     }
 
-    //ALEX
+    /**
+     * Initializes the choices in the symbol combo boxes in the preferences views. This method first loads all available symbols
+     * from the resources, then provides the list of retrieved symbols to the view for initialization
+     */
     private void initViewChoices() {
-        this.preferencesView.setLanguages(this.translationModel.getSupportedLanguages());
-
         PathMatchingResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
         List<SymbolBusiness> validSymbols = null;
         try {
             validSymbols =
-                    Stream.of(resolver.getResources(String.format("classpath:%s*.PNG", "images/symbols/")))
+                    Stream.of(resolver.getResources(String.format("classpath:%s*.PNG", IMAGES_SYMBOLS))) // First load all resources from where the symbols are located
                             .map((r) -> {
                                 String absolutePath = "";
                                 try {
@@ -118,28 +140,33 @@ public class PreferencesFrontendController implements IPreferencesController {
                                 // For consistency across OSs, convert Windows-style separators into Unix-style file separators
                                 absolutePath = absolutePath.replace("\\", "/");
 
+                                // We are using regexes to match the part of the absolute path we are interested in.
+                                // This is done because we want to have a relative path from the images directory "onwards"
+                                // instead of the full absolute path, for portability reasons.
                                 Pattern pattern = Pattern.compile(SYMBOL_REGEX);
                                 Matcher matcher = pattern.matcher(absolutePath);
 
                                 if (matcher.find()) {
-                                    // Il percorso relativo
-                                    String value = matcher.group();
-                                    // Separo in [] / [images] / [symbol] / [...png]
-                                    String name = value.split("/")[3];
-                                    // Tolgo il .png
-                                    name = name.substring(0, name.length() - 4).toUpperCase();
-                                    return new SymbolBusiness(value, name);
+                                    // Get the relative path
+                                    String relativePath = matcher.group();
+                                    // At this point, value should be in the form ... / images / symbol / ...png
+                                    // so this splits around the occurrences of / and only takes the last element
+                                    String fileName = relativePath.split("/")[3];
+                                    // Removes the extension. This approach is a bit flawed as it relies on the images being pngs, so it could be improved
+                                    fileName = fileName.substring(0, fileName.length() - 4).toUpperCase();
+                                    // The relative path and the filename are wrapped in a Symbol object and returned
+                                    return new SymbolBusiness(relativePath, fileName);
                                 }
                                 return null;
                             }).toList();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.preferencesView.setShapes(validSymbols);
+        this.preferencesView.setSymbols(validSymbols);
     }
 
     /**
-     * shows the preferences popup
+     * Shows the preferences popup
      */
     public void managePreferences() {
         stage.setResizable(false);

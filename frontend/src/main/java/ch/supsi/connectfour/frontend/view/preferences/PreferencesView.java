@@ -91,7 +91,7 @@ public class PreferencesView implements IPreferencesView {
             String oldLanguage = translationModel.getCurrentLanguage().toString();
             String newLanguage = languageComboBox.getValue();
 
-            if(newLanguage!= null){
+            if (newLanguage != null) {
                 newLanguage = newLanguage.replace('-', '_');
             }
 
@@ -117,10 +117,10 @@ public class PreferencesView implements IPreferencesView {
             if (!languageEqual && colorsEqual && shapesEqual) {
                 this.preferencesText.setText(model.getLanguageOnlyMessage());
                 model.setLanguageOnlyRequested(true);
-            } else if(colorsEqual && shapesEqual) {
+            } else if (colorsEqual && shapesEqual) {
                 this.preferencesText.setText(model.getDisableMessage());
                 model.setLanguageOnlyRequested(false);
-            }else{
+            } else {
                 this.preferencesText.setText(model.getEnableMessage());
                 model.setLanguageOnlyRequested(false);
             }
@@ -139,7 +139,7 @@ public class PreferencesView implements IPreferencesView {
     }
 
     @Override
-    public void setShapes(List<SymbolBusiness> supportedShapes) {
+    public void setSymbols(List<SymbolBusiness> supportedShapes) {
         playerShapeBoxes.forEach((cBox) -> {
             // Adds all supported shapes to the combo boxes and automatically selects the first option, to avoid having a blank cell
             cBox.getItems().addAll(supportedShapes);
@@ -190,6 +190,7 @@ public class PreferencesView implements IPreferencesView {
     public SymbolBusiness getPlayerOneShape() {
         return playerOneShapeComboBox.getValue();
     }
+
     @Override
 
     public SymbolBusiness getPlayerTwoShape() {

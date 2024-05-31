@@ -59,13 +59,14 @@ public class HelpView implements IHelpView {
     public void setNextButtonAction(@NotNull Consumer<ActionEvent> eventConsumer) {
         nextButton.setOnAction(eventConsumer::accept);
     }
+
     @Override
     public void setNextButtonLabel(String label) {
         nextButton.setText(label);
     }
 
     /**
-     * remove previous button
+     * Remove previous button
      */
     @Override
     public void removePreviousButton() {
@@ -73,7 +74,7 @@ public class HelpView implements IHelpView {
     }
 
     /**
-     * add the previous button
+     * Add the previous button
      */
     @Override
     public void addPreviousButton() {
@@ -86,7 +87,8 @@ public class HelpView implements IHelpView {
     }
 
     /**
-     * attempts to load and display an image with the given path
+     * Attempts to load and display an image with the given path
+     *
      * @param path image's path
      */
     @Override

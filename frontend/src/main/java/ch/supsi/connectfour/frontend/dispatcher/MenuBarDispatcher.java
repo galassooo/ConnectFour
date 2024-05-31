@@ -22,7 +22,7 @@ public class MenuBarDispatcher {
     private static final IHelpController helpController;
     private static final IExitController exitController;
 
-    //initialize fields
+    /* static initializer for static fields */
     static {
         connectFourFrontendController = ConnectFourFrontendController.getInstance();
         aboutController = AboutController.getInstance();
@@ -55,6 +55,7 @@ public class MenuBarDispatcher {
     public void saveGame() {
         connectFourFrontendController.manageSave();
     }
+
     /**
      * handle 'save as' request by delegating it to a suitable controller
      */
@@ -75,17 +76,18 @@ public class MenuBarDispatcher {
     public void preferences() {
         preferencesFrontendController.managePreferences();
     }
+
     /**
      * handle 'about' request by delegating it to a suitable controller
      */
     public void showAbout() {
         aboutController.manageAbout();
     }
+
     /**
      * handle 'help' request by delegating it to a suitable controller
      */
     public void showHelp() {
         helpController.manageHelp();
     }
-
 }

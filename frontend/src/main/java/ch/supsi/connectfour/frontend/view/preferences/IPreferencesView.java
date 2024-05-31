@@ -13,7 +13,7 @@ import java.util.function.Consumer;
  * Defines the behaviour that a generic preferences view should expose to the controller
  */
 public interface IPreferencesView {
-    void setShapes(List<SymbolBusiness> supportedShapes);
+    void setSymbols(List<SymbolBusiness> supportedShapes);
 
     void setColorPickerLocale(Locale locale);
 

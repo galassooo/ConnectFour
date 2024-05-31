@@ -1,7 +1,5 @@
 package ch.supsi.connectfour.frontend.model.exit;
 
-import ch.supsi.connectfour.backend.application.translations.TranslationsApplication;
-
 //NOT OK
 public class ApplicationExitModel implements IExitModel {
 

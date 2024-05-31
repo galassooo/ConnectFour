@@ -17,7 +17,7 @@ public class TranslationModel implements ITranslationsModel {
     private static final TranslationsApplication translationsController;
     private static final PreferencesApplication preferencesController;
 
-    //initialize controllers
+    // Initialize controllers
     static {
         translationsController = TranslationsApplication.getInstance();
         preferencesController = PreferencesApplication.getInstance();
@@ -31,7 +31,6 @@ public class TranslationModel implements ITranslationsModel {
     }
 
     /**
-     *
      * @return an instance of this class
      */
     public static TranslationModel getInstance() {
@@ -43,16 +42,19 @@ public class TranslationModel implements ITranslationsModel {
 
     /**
      * Attempts to load the resource bundle containing the labels useful for the FXML components of the frontend
+     *
      * @return The bundle, null if it wasn't found
      */
-    public @Nullable  ResourceBundle getUiBundle() {
+    public @Nullable ResourceBundle getUiBundle() {
         if (uiBundle == null) { //load only once
             uiBundle = translationsController.getTranslationBundle(getLocale());
         }
         return uiBundle;
     }
+
     /**
      * Attempts to load the current locale based on user's preferences
+     *
      * @return The Locale, null if it wasn't found
      */
     private Locale getLocale() {
@@ -64,6 +66,7 @@ public class TranslationModel implements ITranslationsModel {
 
     /**
      * Returns a translated string in the selected language given the associated key
+     *
      * @param s string key
      * @return translated string
      */
@@ -74,6 +77,7 @@ public class TranslationModel implements ITranslationsModel {
 
     /**
      * Retrieves the list of supported languages available for translation.
+     *
      * @return A list of language tags representing supported languages.
      */
     public List<String> getSupportedLanguages() {
@@ -82,6 +86,7 @@ public class TranslationModel implements ITranslationsModel {
 
     /**
      * Retrieves the current language selected by the user based on preferences.
+     *
      * @return The Locale object representing the current language.
      */
     public Locale getCurrentLanguage() {

@@ -11,4 +11,6 @@ public interface IGameController {
     void manageSave();
 
     void manageSaveAs();
+
+    void manageColumnSelection(int i);
 }

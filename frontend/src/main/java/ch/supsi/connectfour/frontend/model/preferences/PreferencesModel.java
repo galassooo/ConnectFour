@@ -19,7 +19,8 @@ public class PreferencesModel implements IPreferencesModel {
 
     /**
      * construct an instance
-     * @param enableMessage message to be displayed for enable
+     *
+     * @param enableMessage  message to be displayed for enable
      * @param disableMessage message to be displayed for disable
      */
     public PreferencesModel(String enableMessage, String disableMessage, String languageOnlyMessage) {
@@ -35,6 +36,10 @@ public class PreferencesModel implements IPreferencesModel {
         backendController.setPreference(preference);
     }
 
+    public void setLanguageOnlyRequested(boolean languageOnlyRequested) {
+        this.languageOnlyRequested = languageOnlyRequested;
+    }
+
     /* getters */
     public String getEnableMessage() {
         return enableMessage;
@@ -48,11 +53,7 @@ public class PreferencesModel implements IPreferencesModel {
         return languageOnlyMessage;
     }
 
-    public boolean isLanguageOnlyRequested() {
+    public boolean isOnlyLanguageRequested() {
         return languageOnlyRequested;
-    }
-
-    public void setLanguageOnlyRequested(boolean languageOnlyRequested) {
-        this.languageOnlyRequested = languageOnlyRequested;
     }
 }

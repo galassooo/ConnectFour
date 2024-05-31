@@ -18,13 +18,18 @@ public class ApplicationExitView implements IApplicationExitView {
 
     /**
      * construct the object
+     *
      * @param model the associated model
      */
     public ApplicationExitView(ApplicationExitModel model) {
         ApplicationExitView.model = model;
     }
 
-    //ALEX
+    /**
+     * Builds and displays a confirmation dialog
+     *
+     * @return true if the user confirmed, false otherwise
+     */
     public boolean showConfirmationDialog() {
         // Create a confirmation dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -32,7 +37,7 @@ public class ApplicationExitView implements IApplicationExitView {
         alert.setHeaderText(null);
         alert.setContentText(model.getMessage());
 
-        // Set OK and Cancel buttons
+        // Set OK and Cancel button text
         ButtonType okButton = new ButtonType(model.getConfirmText());
         ButtonType cancelButton = new ButtonType(model.getCancelText(), ButtonType.CANCEL.getButtonData());
         alert.getButtonTypes().setAll(okButton, cancelButton);
@@ -47,6 +52,7 @@ public class ApplicationExitView implements IApplicationExitView {
 
     /**
      * Loads a CSS stylesheet for the popup
+     *
      * @param alert alert popup
      */
     private void loadCssForAlert(@NotNull Alert alert) {

@@ -126,6 +126,27 @@ public class ConnectFourApplication {
         final ConnectFourBusinessInterface loadedGame = currentMatch.getSave(file);
         // Override the current match if a match was successfully loaded & return it, else just return (null)
         if (loadedGame != null) {
+            // Get copies of the actual players in the loaded game...
+            final ConnectFourPlayerInterface currentPlayer = loadedGame.getCurrentPlayer();
+            final ConnectFourPlayerInterface player1 = loadedGame.getPlayer1();
+            final ConnectFourPlayerInterface player2 = loadedGame.getPlayer2();
+            boolean isCurrentPlayerPlayer1 = currentPlayer.equals(player1);
+
+            player1.setColor(preferences.getPreference("player-one-color").toString());
+            player1.setSymbol(new SymbolBusiness(preferences.getPreference("player-one-symbol").toString()));
+
+            player2.setColor(preferences.getPreference("player-two-color").toString());
+            player2.setSymbol(new SymbolBusiness(preferences.getPreference("player-two-symbol").toString()));
+
+            loadedGame.setPlayer1(player1);
+            loadedGame.setPlayer2(player2);
+
+            if (isCurrentPlayerPlayer1) {
+                loadedGame.setCurrentPlayer(player1);
+            } else {
+                loadedGame.setCurrentPlayer(player2);
+            }
+
             this.overrideCurrentMatch(loadedGame);
         }
         return loadedGame;

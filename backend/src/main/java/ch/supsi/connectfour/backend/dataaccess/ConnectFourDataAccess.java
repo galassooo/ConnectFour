@@ -30,8 +30,8 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
     /**
      * Tries to retrieve the game save associated with a file
      *
-     * @param file  the file representing the game save
-     * @return  the loaded game if the retrieval completed successfully, null otherwise
+     * @param file the file representing the game save
+     * @return the loaded game if the retrieval completed successfully, null otherwise
      */
     @Override
     public ConnectFourBusinessInterface getSave(@NotNull final File file) {
@@ -57,9 +57,9 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
     /**
      * Tries to persist a game object to a file in the filesystem
      *
-     * @param game  an object representing the game to persist
-     * @param outputFile    the file to serialize the game to
-     * @return  wether or not the persistence operation completed successfully
+     * @param game       an object representing the game to persist
+     * @param outputFile the file to serialize the game to
+     * @return wether or not the persistence operation completed successfully
      */
     @Override
     public boolean persist(@NotNull final ConnectFourBusinessInterface game, @NotNull final File outputFile) {

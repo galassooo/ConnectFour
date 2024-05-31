@@ -11,7 +11,7 @@ public class ConnectFourPlayer extends PlayerBusiness implements ConnectFourPlay
     private SymbolInterface symbol;
 
     @JsonIgnore
-    private final String color;
+    private String color;
 
     /* constructor */
     @JsonIgnore
@@ -40,6 +40,22 @@ public class ConnectFourPlayer extends PlayerBusiness implements ConnectFourPlay
     @JsonIgnore
     public String getColor() {
         return color;
+    }
+
+    /* setters */
+
+    @Override
+    @JsonIgnore
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    @Override
+    @JsonIgnore
+    public void setSymbol(SymbolInterface symbol) {
+        if (symbol == null)
+            return;
+        this.symbol = ((SymbolBusiness)symbol).clone();
     }
 
     @Override

@@ -15,4 +15,5 @@ public interface ConnectFourBusinessInterface extends ConnectFourGameInterface {
     boolean persist(final File outputDirectory, final String saveName);
 
     boolean persist();
+
 }

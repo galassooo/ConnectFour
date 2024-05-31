@@ -5,6 +5,7 @@ import ch.supsi.connectfour.backend.business.player.ConnectFourPlayer;
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 import ch.supsi.connectfour.backend.dataaccess.ConnectFourDataAccess;
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,64 +15,40 @@ import java.util.Arrays;
 import java.util.Random;
 
 //OK
-// Tells Jackson to not care about field visibility when performing its operations
-@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
+// Tells Jackson to use our custom deserializer
+@JsonDeserialize(using = ConnectFourBusinessDeserializer.class)
 public class ConnectFourBusiness implements ConnectFourBusinessInterface {
-    /*
-    While technically not essential because Jackson considers non-annoted fields as
-    included by default, I decided to explicitly annotate both ignored and included
-    fields for serialization to state as clearly as possible what is serialized and what
-    is not
-    */
-    @JsonIgnore
     private static final int GRID_LENGTH = 7;
-    @JsonIgnore
+
     private static final int GRID_HEIGHT = 6;
-    @JsonIgnore
+
     private static ConnectFourBusinessInterface instance;
-    @JsonIgnore
+
     private final ConnectFourDataAccessInterface dataAccess;
     // A Path object representing the path - if available - of a save of this game
-    @JsonInclude
+
     private Path pathToSave;
 
     // True if the game is finished, false otherwise
-    @JsonInclude
     private boolean isFinished = false;
 
     // Stores information about the first available row in any given column
-    @JsonInclude
     private int[] lastPositionOccupied;
 
     // Represents the game board. Contains null if the cell is empty, or a reference to an instance of PlayerModel if a player is present
-    @JsonInclude
     private ConnectFourPlayerInterface[][] gameMatrix;
 
     // The first player
-    @JsonInclude
     private ConnectFourPlayerInterface player1;
 
     // The second player
-    @JsonInclude
     private ConnectFourPlayerInterface player2;
 
     // Player currently allowed to move
-    @JsonInclude
     private ConnectFourPlayerInterface currentPlayer;
     // Gives information about wether or not the last move operation was valid or not
-    @JsonInclude
     private boolean wasLastMoveValid;
 
-    /*
-    This constructor is required in order for the Jackson library to serialize the game. It should not be used elsewhere nor modified.
-    All components that are not serialized must be initialized here.
-    */
-    @JsonCreator
-    private ConnectFourBusiness() {
-        this.dataAccess = ConnectFourDataAccess.getInstance();
-    }
-
-    @JsonIgnore
     public ConnectFourBusiness(ConnectFourPlayerInterface player1, ConnectFourPlayerInterface player2) {
         if (player2 == null || player1 == null)
             throw new IllegalArgumentException("Players cannot be null");
@@ -158,7 +135,6 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         return this.dataAccess.getSave(file);
     }
 
-    @JsonIgnore
     @Override
     public @NotNull String getSaveName() {
         return this.pathToSave.getFileName().toString();
@@ -210,7 +186,6 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         return this.persist(null, null);
     }
 
-    @JsonIgnore
     @Override
     public boolean isDraw() {
         int cnt = 0;
@@ -282,7 +257,6 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
      * @param column colonna della quale si vuole ottenere l'ultima riga occupata
      * @return l'indice dell'ultima riga occupata in quella colonna
      */
-    @JsonIgnore
     @Override
     public int getLastPositioned(int column) {
         return GRID_HEIGHT - lastPositionOccupied[column];
@@ -306,47 +280,35 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
 
 
     /* setters */
-    @JsonSetter
-    private void setCurrentPlayer(@NotNull ConnectFourPlayerInterface currentPlayer) {
-        // Clone because the reference to the player is coming from the outside and could be manipulated
-        this.currentPlayer = (ConnectFourPlayerInterface) currentPlayer.clone();
+    public void setCurrentPlayer(@NotNull ConnectFourPlayerInterface currentPlayer) {
+        this.currentPlayer = currentPlayer;
     }
 
-    @JsonSetter
-    private void setPlayer1(@NotNull ConnectFourPlayerInterface player1) {
-        // Clone because the reference to the player is coming from the outside and could be manipulated
-        this.player1 = (ConnectFourPlayer) player1.clone();
+    public void setPlayer1(@NotNull ConnectFourPlayerInterface player1) {
+        this.player1 = player1;
     }
 
-    @JsonSetter
-    private void setPlayer2(@NotNull ConnectFourPlayerInterface player2) {
-        // Clone because the reference to the player is coming from the outside and could be manipulated
-        this.player2 = (ConnectFourPlayer) player2.clone();
+    public void setPlayer2(@NotNull ConnectFourPlayerInterface player2) {
+        this.player2 = player2;
     }
 
-    @JsonSetter
-    @JsonIgnore
     public void setFinished(boolean finished) {
         isFinished = finished;
     }
 
-    @JsonSetter
-    private void setLastPositionOccupied(int[] lastPositionOccupied) {
+    void setLastPositionOccupied(int[] lastPositionOccupied) {
         this.lastPositionOccupied = lastPositionOccupied;
     }
 
-    @JsonSetter
-    private void setGameMatrix(ConnectFourPlayerInterface[][] gameMatrix) {
-        this.gameMatrix =gameMatrix; //deep copy is useless, (private am)
+    void setGameMatrix(ConnectFourPlayerInterface[][] gameMatrix) {
+        this.gameMatrix = gameMatrix; //deep copy is useless, (private am)
     }
 
-    @JsonSetter
-    private void setPathToSave(Path pathToSave) {
+    void setPathToSave(Path pathToSave) {
         this.pathToSave = pathToSave;
     }
 
-    @JsonSetter
-    private void setWasLastMoveValid(boolean wasLastMoveValid) {
+    void setWasLastMoveValid(boolean wasLastMoveValid) {
         this.wasLastMoveValid = wasLastMoveValid;
     }
 
@@ -354,17 +316,17 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
     /* getters */
     @Override
     public ConnectFourPlayerInterface getCurrentPlayer() {
-        return (ConnectFourPlayerInterface) currentPlayer.clone(); //safety copy
+        return currentPlayer;
     }
 
     @Override
     public ConnectFourPlayerInterface getPlayer1() {
-        return (ConnectFourPlayerInterface) player1.clone(); // safety copy
+        return player1;
     }
 
     @Override
     public ConnectFourPlayerInterface getPlayer2() {
-        return (ConnectFourPlayerInterface) player2.clone(); // safety copy
+        return player2; // safety copy
     }
 
 
@@ -373,23 +335,19 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
      *
      * @return a deep copy of the original matrix
      */
-    @JsonGetter
     @Override
     public ConnectFourPlayerInterface[][] getGameMatrix() {
         return getGameMatrixDeepCopy(this.gameMatrix); //safety copy
     }
 
-    @JsonGetter
     public int[] getLastPositionOccupied() {
         return Arrays.copyOf(lastPositionOccupied, lastPositionOccupied.length); //safety copy
     }
-    @JsonGetter
+
     private Path getPathToSave() {
         return pathToSave;
     }
 
-
-    @JsonGetter
     private boolean isWasLastMoveValid() {
         return wasLastMoveValid;
     }

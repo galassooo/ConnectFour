@@ -13,4 +13,8 @@ public interface ConnectFourPlayerInterface extends PlayerBusinessInterface {
     SymbolInterface getSymbol();
 
     String getColor();
+
+    void setColor(String color);
+
+    void setSymbol(SymbolInterface symbol);
 }

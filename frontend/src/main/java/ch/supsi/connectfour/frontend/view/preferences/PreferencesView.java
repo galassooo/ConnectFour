@@ -92,26 +92,31 @@ public class PreferencesView implements IPreferencesView {
         //bind the button to the booleanBinding
         saveButton.disableProperty().bind(saveButtonDisabledBinding);
 
-        saveButton.disableProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue) {
+        // Function to update preferencesText based on current state
+        Runnable updatePreferencesText = () -> {
+            boolean colorsEqual = colorsEqualBinding.get();
+            boolean shapesEqual = shapesEqualBinding.get();
+            boolean languageEqual = languageEqualBinding.get();
+
+            if (!languageEqual && colorsEqual && shapesEqual) {
+                this.preferencesText.setText(model.getLanguageOnlyMessage());
+                model.setLanguageOnlyRequested(true);
+            } else if(colorsEqual && shapesEqual) {
                 this.preferencesText.setText(model.getDisableMessage());
-            } else {
-
-                // Check if only the language has changed
-                boolean colorsEqual = colorsEqualBinding.get();
-                boolean shapesEqual = shapesEqualBinding.get();
-                boolean languageEqual = languageEqualBinding.get();
-
-                //ALEX dimmi se per te va bene che la view aggiorni lo stato del model in base all'input... non saprei io..
-                if (!languageEqual && colorsEqual && shapesEqual) {
-                    this.preferencesText.setText(model.getLanguageOnlyMessage());
-                    model.setLanguageOnlyRequested(true);
-                } else {
-                    this.preferencesText.setText(model.getEnableMessage());
-                    model.setLanguageOnlyRequested(false);
-                }
+                model.setLanguageOnlyRequested(false);
+            }else{
+                this.preferencesText.setText(model.getEnableMessage());
+                model.setLanguageOnlyRequested(false);
             }
-        });
+        };
+
+        //TODO magari mettiamo tutto in una lista e facciamo foreach
+        // Add listeners to color and shape pickers to update preferences text
+        playerOneColorPicker.valueProperty().addListener((observable, oldValue, newValue) -> updatePreferencesText.run());
+        playerTwoColorPicker.valueProperty().addListener((observable, oldValue, newValue) -> updatePreferencesText.run());
+        playerOneShapeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> updatePreferencesText.run());
+        playerTwoShapeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> updatePreferencesText.run());
+        languageComboBox.valueProperty().addListener((observable, oldValue, newValue) -> updatePreferencesText.run());
 
         preferencesText.setText(" \n ");
     }

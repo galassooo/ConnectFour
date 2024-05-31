@@ -14,23 +14,24 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.Properties;
 
-//ALEX tutta tu penso
 public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInterface {
 
+    /* where the default user preferences are located */
     private static final String DEFAULT_USER_PREFERENCES_PROPERTIES = "/default-user-preferences.properties";
-
+    /* the user home directory */
     private static final String USER_HOME_DIRECTORY = System.getProperty("user.home");
-
+    /* the default directory that will be created on the user's filesystem */
     private static final String PREFERENCES_DIRECTORY = ".connectfour";
-
+    /* the name of the preferences file that will be created on the user's filesystem */
     private static final String PREFERENCES_FILE = "/user-preferences.properties";
-
+    /* self reference */
     public static PreferencesPropertiesDataAccess dao;
-
+    /* an object representation of the user preferences in the filesystem */
     private static Properties userPreferences;
+    /* an object representation of the user preferences modified at runtime */
     private Properties newProperties;
 
-    // protected default constructor to avoid a new instance being requested from clients
+    // Protected default constructor to avoid a new instance being requested from clients
     protected PreferencesPropertiesDataAccess() {
     }
 
@@ -44,15 +45,26 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
         return dao;
     }
 
+    /**
+     * Builds the path associated with the preferences directory in the user's filesystem
+     *
+     * @return a path associated with the preferences directory in the user's filesystem
+     */
     @Contract(pure = true)
     private @NotNull Path getUserPreferencesDirectoryPath() {
         return Path.of(USER_HOME_DIRECTORY, PREFERENCES_DIRECTORY);
     }
 
+
     private boolean userPreferencesDirectoryExists() {
         return Files.exists(this.getUserPreferencesDirectoryPath());
     }
 
+    /**
+     * Tries to create the user preferences directory
+     *
+     * @return a path to the user preferences directory, or null if an exception was thrown
+     */
     private @Nullable Path createUserPreferencesDirectory() {
         try {
             return Files.createDirectories(this.getUserPreferencesDirectoryPath());
@@ -63,15 +75,28 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
         return null;
     }
 
+
+    /**
+     * Builds the path associated with the preferences file in the user's filesystem
+     *
+     * @return a path associated with the preferences file in the user's filesystem
+     */
     @Contract(pure = true)
     private @NotNull Path getUserPreferencesFilePath() {
         return Path.of(USER_HOME_DIRECTORY, PREFERENCES_DIRECTORY, PREFERENCES_FILE);
     }
 
+    // Wether or not the user preferences file exists
     private boolean userPreferencesFileExists() {
         return Files.exists(this.getUserPreferencesFilePath());
     }
 
+    /**
+     * Tries to create a user preferences file in the users filesystem
+     *
+     * @param defaultPreferences a properties file representing the default preferences
+     * @return true if it created the file, false otherwise
+     */
     private boolean createUserPreferencesFile(Properties defaultPreferences) {
         if (defaultPreferences == null) {
             return false;
@@ -100,6 +125,11 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
         return true;
     }
 
+    /**
+     * Tries loading the default user preferences
+     *
+     * @return a properties object representing the default preferences
+     */
     private @NotNull Properties loadDefaultPreferences() {
         Properties defaultPreferences = new Properties();
         try {
@@ -113,6 +143,12 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
         return defaultPreferences;
     }
 
+    /**
+     * Loads and returns the preferences stored in the preferences file
+     *
+     * @param path the path to the preferences file
+     * @return a properties file representing the preferences, null if an exception was thrown
+     */
     private @Nullable Properties loadPreferences(Path path) {
         Properties preferences = new Properties();
         try {
@@ -125,6 +161,12 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
         return preferences;
     }
 
+    /**
+     * Retrieves the properties object associated with the user's preferences. If no preferences file
+     * exists yet, a new one is created.
+     *
+     * @return a properties object representing the user preferences
+     */
     @Override
     public Properties getPreferences() {
         if (userPreferences != null) {
@@ -145,9 +187,14 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
         return userPreferences;
     }
 
-    // This method works on a copy of the user preferences to only have an impact on the actual
-    // file in the filesystem and the copy, so that the current settings are not affected until
-    // an application restart
+    /**
+     * Stores the preference in the user preferences. Thid method works on a copy of the user preferences
+     * stored in newProperties to only have an impact on the actual properties file in the filesystem and the copy
+     * so that the current settings are not affected until an application restart
+     *
+     * @param preference the key-value pair representing the preference to be stored
+     * @return true if the operation succeeded, false otherwise
+     */
     @Override
     public boolean storePreference(Map.Entry<String, String> preference) {
         // Sets the specified preference

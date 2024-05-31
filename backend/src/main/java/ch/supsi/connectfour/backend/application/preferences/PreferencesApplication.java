@@ -25,12 +25,21 @@ public class PreferencesApplication {
     }
 
 
-    //ALEX
+    /**
+     * Delegates the retrieval of the value associated with a given key to the model
+     *
+     * @param key the key of the key - value pair of the requested preference
+     * @return an object representing the value of the preference
+     */
     public Object getPreference(String key) {
         return this.preferencesModel.getPreference(key);
     }
 
-    //ALEX
+    /**
+     * Delegates the storage of the key-value pair associated with a preference to the model
+     *
+     * @param preference the key-value pair representing the preference to be stored
+     */
     public void setPreference(Map.Entry<String, String> preference) {
         preferencesModel.setPreference(preference);
     }

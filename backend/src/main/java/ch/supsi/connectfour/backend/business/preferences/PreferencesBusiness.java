@@ -32,13 +32,22 @@ public class PreferencesBusiness implements PreferencesBusinessInterface {
         return myself;
     }
 
-    //ALEX
+    /**
+     * Delegates the retrieval of the current language to the data access layer
+     *
+     * @return the current language of the program
+     */
     @Override
     public String getCurrentLanguage() {
         return userPreferences.getProperty("language-tag");
     }
 
-    //ALEX
+    /**
+     * Delegates the retrieval of the preference associated with a given key
+     *
+     * @param key   the key associated with the preference in a key-value pair
+     * @return  the value associated with the given key
+     */
     @Override
     public Object getPreference(String key) {
         if (key == null || key.isEmpty()) {
@@ -52,7 +61,11 @@ public class PreferencesBusiness implements PreferencesBusinessInterface {
         return userPreferences.get(key);
     }
 
-    //ALEX
+    /**
+     * Delegates the storage of the key-value pair associated with a preference to the data access layer
+     *
+     * @param preference the key-value pair representing the preference to be stored
+     */
     @Override
     public void setPreference(Map.Entry<String, String> preference) {
         this.preferencesDao.storePreference(preference);

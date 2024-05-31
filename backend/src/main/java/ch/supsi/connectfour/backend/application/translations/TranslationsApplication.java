@@ -34,19 +34,29 @@ public class TranslationsApplication {
         return myself;
     }
 
-    //ALEX
+    /**
+     * Delegates the retrieval of all supported languages to the model.
+     *
+     * @return a list representing all supported languages in this application
+     */
     public List<String> getSupportedLanguages() {
         return this.translationsModel.getSupportedLanguages();
     }
 
 
-    //ALEX
+    /**
+     * Delegates the retrieval of the translation associated with the given key to the model
+     *
+     * @param key the key associated with a key-value pair representing the translation
+     * @return the translation associated with the given key (the value in the key-value pair)
+     */
     public String translate(String key) {
         return this.translationsModel.translate(key);
     }
 
     /**
-     * return the UI translation bundle with the given locale
+     * Return the UI translation bundle with the given locale
+     *
      * @param locale selected locale
      * @return UI resource bundle
      */

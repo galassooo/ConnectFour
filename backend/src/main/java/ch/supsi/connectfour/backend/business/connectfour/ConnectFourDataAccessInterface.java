@@ -4,6 +4,9 @@ import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessI
 
 import java.io.File;
 
+/**
+ * Defines the behaviour that a generic translations model should expose to the controller
+ */
 public interface ConnectFourDataAccessInterface {
     ConnectFourBusinessInterface getSave(final File file);
 

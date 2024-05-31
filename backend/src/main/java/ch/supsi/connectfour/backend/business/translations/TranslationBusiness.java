@@ -34,19 +34,33 @@ public class TranslationBusiness implements TranslationsBusinessInterface {
         return myself;
     }
 
-    //ALEX
+    /**
+     * Checks if a given language (provided in the form of a language tag) is supported
+     *
+     * @param languageTag   the language tag associated with the language
+     * @return  wether or not the given language is supported
+     */
     @Override
     public boolean isSupportedLanguageTag(String languageTag) {
         return this.supportedLanguageTags.contains(languageTag);
     }
 
-    //ALEX
+    /**
+     * Retrieves all supported languages of this application
+     *
+     * @return  a list containing all supported languages
+     */
     @Override
     public List<String> getSupportedLanguages() {
         return List.copyOf(this.supportedLanguageTags); // Defensive copy
     }
 
-    //ALEX
+    /**
+     * Changes the language of this application
+     *
+     * @param languageTag   the language tag associated with the language to switch to
+     * @return  wether or not the language was successfully changed
+     */
     @Override
     public boolean changeLanguage(String languageTag) {
         this.translations = translationsDao.getTranslations(Locale.forLanguageTag(languageTag));
@@ -54,13 +68,23 @@ public class TranslationBusiness implements TranslationsBusinessInterface {
     }
 
 
-    //ALEX
+    /**
+     * Retrieves the translation associated with the given key
+     *
+     * @param key the key associated with a key-value pair representing the translation
+     * @return the translation associated with the given key (the value in the key-value pair)
+     */
     @Override
     public String translate(String key) {
         return this.translations.getProperty(key);
     }
 
-    //ALEX
+    /**
+     * Return the UI translation bundle with the given locale
+     *
+     * @param locale selected locale
+     * @return UI resource bundle
+     */
     @Override
     public ResourceBundle getUIResourceBundle(Locale locale) {
         return this.translationsDao.getUIResourceBundle(locale);

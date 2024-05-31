@@ -14,18 +14,19 @@ import java.util.Arrays;
 import java.util.Random;
 
 //OK
+// Tells Jackson to not care about field visibility when performing its operations
 @JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class ConnectFourBusiness implements ConnectFourBusinessInterface {
+    /*
+    While technically not essential because Jackson considers non-annoted fields as
+    included by default, I decided to explicitly annotate both ignored and included
+    fields for serialization to state as clearly as possible what is serialized and what
+    is not
+    */
     @JsonIgnore
     private static final int GRID_LENGTH = 7;
     @JsonIgnore
     private static final int GRID_HEIGHT = 6;
-    /*
-        While technically not essential because Jackson considers non-annoted fields as
-        included by default, I decided to explicitly annotate both ignored and included
-        fields for serialization to state as clearly as possible what is serialized and what
-        is not
-     */
     @JsonIgnore
     private static ConnectFourBusinessInterface instance;
     @JsonIgnore
@@ -222,8 +223,9 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
     }
 
     /**
+     * Performs a deep copy of the board associated with this game
      *
-     * @return a deep copy of the game matrix
+     * @return a deep copy of the game board
      */
     private ConnectFourPlayerInterface[] @NotNull [] getGameMatrixDeepCopy(ConnectFourPlayerInterface[][] matrix) {
         // Get the dimensions of the original array

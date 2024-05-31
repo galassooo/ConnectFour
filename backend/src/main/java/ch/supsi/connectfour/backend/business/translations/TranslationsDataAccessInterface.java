@@ -5,6 +5,9 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+/**
+ * Defines the behaviour that a generic translations data access should expose to the model
+ */
 public interface TranslationsDataAccessInterface {
 
     List<String> getSupportedLanguageTags();

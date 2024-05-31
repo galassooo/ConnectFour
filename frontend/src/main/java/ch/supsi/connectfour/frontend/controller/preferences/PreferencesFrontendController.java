@@ -1,8 +1,8 @@
-package ch.supsi.connectfour.frontend.controller;
+package ch.supsi.connectfour.frontend.controller.preferences;
 
 import ch.supsi.connectfour.backend.business.symbols.SymbolBusiness;
-import ch.supsi.connectfour.frontend.model.PreferencesModel;
-import ch.supsi.connectfour.frontend.model.TranslationModel;
+import ch.supsi.connectfour.frontend.model.preferences.PreferencesModel;
+import ch.supsi.connectfour.frontend.model.translations.TranslationModel;
 import ch.supsi.connectfour.frontend.view.preferences.IPreferencesView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,7 +18,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-public class PreferencesFrontendController {
+public class PreferencesFrontendController implements IPreferencesController {
 
     /* self reference */
     private static PreferencesFrontendController instance;

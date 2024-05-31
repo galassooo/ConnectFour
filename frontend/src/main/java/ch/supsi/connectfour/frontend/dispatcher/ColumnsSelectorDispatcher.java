@@ -1,6 +1,6 @@
 package ch.supsi.connectfour.frontend.dispatcher;
 
-import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
+import ch.supsi.connectfour.frontend.controller.game.ConnectFourFrontendController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

@@ -1,11 +1,11 @@
 package ch.supsi.connectfour.frontend;
 
 
-import ch.supsi.connectfour.frontend.controller.ApplicationExitController;
-import ch.supsi.connectfour.frontend.controller.ConnectFourFrontendController;
+import ch.supsi.connectfour.frontend.controller.exit.ApplicationExitController;
+import ch.supsi.connectfour.frontend.controller.game.ConnectFourFrontendController;
 import ch.supsi.connectfour.frontend.dispatcher.ColumnsSelectorDispatcher;
 import ch.supsi.connectfour.frontend.dispatcher.MenuBarDispatcher;
-import ch.supsi.connectfour.frontend.model.TranslationModel;
+import ch.supsi.connectfour.frontend.model.translations.TranslationModel;
 import ch.supsi.connectfour.frontend.view.viewables.BoardView;
 import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
 import javafx.application.Application;

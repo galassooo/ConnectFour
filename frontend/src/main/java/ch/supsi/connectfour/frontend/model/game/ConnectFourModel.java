@@ -1,4 +1,4 @@
-package ch.supsi.connectfour.frontend.model;
+package ch.supsi.connectfour.frontend.model.game;
 
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourApplication;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 
-public class ConnectFourModel {
+public class ConnectFourModel implements IConnectFourModel {
 
     /* self reference */
     private static ConnectFourModel instance;

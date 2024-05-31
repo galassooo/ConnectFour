@@ -1,4 +1,4 @@
-package ch.supsi.connectfour.frontend.model;
+package ch.supsi.connectfour.frontend.model.about;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesApplication;
 import ch.supsi.connectfour.backend.application.translations.TranslationsApplication;
@@ -11,7 +11,7 @@ import java.util.Locale;
 import java.util.Properties;
 
 //OK
-public class AboutModel {
+public class AboutModel implements IAboutModel {
 
     /* backend controllers */
     private static final TranslationsApplication translator;

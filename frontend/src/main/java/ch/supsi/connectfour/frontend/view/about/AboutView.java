@@ -1,6 +1,7 @@
 package ch.supsi.connectfour.frontend.view.about;
 
-import ch.supsi.connectfour.frontend.model.AboutModel;
+import ch.supsi.connectfour.frontend.model.about.AboutModel;
+import ch.supsi.connectfour.frontend.model.about.IAboutModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -49,7 +50,7 @@ public class AboutView implements IAboutView {
     @FXML
     void initialize() {
 
-        AboutModel model = new AboutModel(); //model class
+        IAboutModel model = new AboutModel(); //model class
 
         URL imageUrl = getClass().getResource("/images/about/board.png");
         if (imageUrl == null) {

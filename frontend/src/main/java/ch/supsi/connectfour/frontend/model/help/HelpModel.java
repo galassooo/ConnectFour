@@ -1,9 +1,8 @@
-package ch.supsi.connectfour.frontend.model;
+package ch.supsi.connectfour.frontend.model.help;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesApplication;
 import ch.supsi.connectfour.backend.application.translations.TranslationsApplication;
 import javafx.event.ActionEvent;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import java.util.function.Consumer;
 
@@ -17,7 +16,7 @@ public class HelpModel {
     private static final String title = translations.translate("label.help");
 
     /* data */
-    private final static String imagePathFormat = "/images/help/%s/%s";
+    private final static String IMAGE_PATH_FORMAT = "/images/help/%s/%s";
     private final String imagePath;
     private final String howToPlay;
     private final String helpText;
@@ -41,7 +40,7 @@ public class HelpModel {
      */
     public HelpModel(String imagePath, String howToPlay, String helpText, String nextBtnLabel, String previousBtnText, Consumer<ActionEvent> previousBtnAction, Consumer<ActionEvent> nextBtnAction, boolean showPreviousBtn) {
         String locale = (String) preferencesApplication.getPreference("language-tag");
-        this.imagePath = String.format(imagePathFormat, locale, imagePath);
+        this.imagePath = String.format(IMAGE_PATH_FORMAT, locale, imagePath);
         this.howToPlay = translations.translate(howToPlay);
         this.helpText = translations.translate(helpText);
         this.nextBtnLabel = translations.translate(nextBtnLabel);

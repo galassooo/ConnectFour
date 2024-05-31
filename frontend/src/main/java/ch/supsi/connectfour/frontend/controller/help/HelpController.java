@@ -1,6 +1,6 @@
-package ch.supsi.connectfour.frontend.controller;
+package ch.supsi.connectfour.frontend.controller.help;
 
-import ch.supsi.connectfour.frontend.model.HelpModel;
+import ch.supsi.connectfour.frontend.model.help.HelpModel;
 import ch.supsi.connectfour.frontend.view.help.IHelpView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 //OK
-public class HelpController {
+public class HelpController implements IHelpController {
 
     /* self reference */
     private static HelpController instance;
@@ -23,8 +23,8 @@ public class HelpController {
     private static final int NUM_SCREENS = 6;
 
     /* formatters */
-    private static final String imagesResourceFormat = "%d.jpg";
-    private static final String labelsFormat = "label.help_%d";
+    private static final String IMAGES_RESOURCE_FORMAT = "%d.jpg";
+    private static final String LABELS_FORMAT = "label.help_%d";
 
     /* stage */
     private final Stage stage;
@@ -84,13 +84,13 @@ public class HelpController {
             models.add(new HelpModel(
 
                     /* image resource URL */
-                    String.format(imagesResourceFormat, i),
+                    String.format(IMAGES_RESOURCE_FORMAT, i),
 
                     /* how to play label */
                     "label.help_title",
 
                     /* help content translation */
-                    String.format(labelsFormat, i),
+                    String.format(LABELS_FORMAT, i),
                     /* if it's constructing the last screen it'll set next button as a 'play button' */
                     i == NUM_SCREENS ? "label.play" : "label.next",
 
@@ -136,7 +136,7 @@ public class HelpController {
     /**
      * Shows the popup
      */
-    public void showHelpPopUp() {
+    public void manageHelp() {
         show(0);
     }
 }

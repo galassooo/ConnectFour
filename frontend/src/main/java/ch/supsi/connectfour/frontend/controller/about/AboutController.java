@@ -1,4 +1,4 @@
-package ch.supsi.connectfour.frontend.controller;
+package ch.supsi.connectfour.frontend.controller.about;
 
 import ch.supsi.connectfour.frontend.view.about.IAboutView;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.net.URL;
 
 //OK
-public class AboutController {
+public class AboutController implements IAboutController {
 
     /* self reference */
     private static AboutController instance;
@@ -59,7 +59,7 @@ public class AboutController {
     /**
      * Shows the popup
      */
-    public void showAboutPopUp() {
+    public void manageAbout() {
         stage.setResizable(false);
         aboutView.setOnActButton(e-> stage.close());
         stage.show();

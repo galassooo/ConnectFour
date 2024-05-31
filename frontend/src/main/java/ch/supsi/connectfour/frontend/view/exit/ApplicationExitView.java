@@ -1,6 +1,7 @@
 package ch.supsi.connectfour.frontend.view.exit;
 
-import ch.supsi.connectfour.frontend.model.ApplicationExitModel;
+import ch.supsi.connectfour.frontend.model.exit.ApplicationExitModel;
+import ch.supsi.connectfour.frontend.model.exit.IExitModel;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -13,7 +14,7 @@ import java.util.Optional;
 //OK
 public class ApplicationExitView implements IApplicationExitView {
     /* model */
-    private static ApplicationExitModel model;
+    private static IExitModel model;
 
     /**
      * construct the object

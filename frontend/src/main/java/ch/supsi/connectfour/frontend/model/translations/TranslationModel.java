@@ -1,4 +1,4 @@
-package ch.supsi.connectfour.frontend.model;
+package ch.supsi.connectfour.frontend.model.translations;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesApplication;
 import ch.supsi.connectfour.backend.application.translations.TranslationsApplication;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class TranslationModel {
+public class TranslationModel implements ITranslationsModel {
 
     /* self reference */
     private static TranslationModel instance;

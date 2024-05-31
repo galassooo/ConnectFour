@@ -1,8 +1,10 @@
 package ch.supsi.connectfour.frontend.view.preferences;
 
 import ch.supsi.connectfour.backend.business.symbols.SymbolBusiness;
-import ch.supsi.connectfour.frontend.model.PreferencesModel;
-import ch.supsi.connectfour.frontend.model.TranslationModel;
+import ch.supsi.connectfour.frontend.model.preferences.IPreferencesModel;
+import ch.supsi.connectfour.frontend.model.preferences.PreferencesModel;
+import ch.supsi.connectfour.frontend.model.translations.ITranslationsModel;
+import ch.supsi.connectfour.frontend.model.translations.TranslationModel;
 import javafx.beans.binding.Bindings;
 import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
@@ -10,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ComboBoxBase;
 import javafx.scene.text.Text;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,11 +43,13 @@ public class PreferencesView implements IPreferencesView {
     private Button cancelButton;
 
     /* model */
-    private PreferencesModel model;
-    private final TranslationModel translationModel;
+    private IPreferencesModel model;
+    private final ITranslationsModel translationModel;
 
     /* symbol list - field */
     List<ComboBox<SymbolBusiness>> playerShapeBoxes = new ArrayList<>();
+    List<ColorPicker> colorPickers = new ArrayList<>();
+    List<ComboBoxBase<?>> comboBoxes = new ArrayList<>();
 
     public PreferencesView() {
         translationModel = TranslationModel.getInstance();
@@ -55,6 +60,13 @@ public class PreferencesView implements IPreferencesView {
     void initialize() {
         playerShapeBoxes.add(playerOneShapeComboBox);
         playerShapeBoxes.add(playerTwoShapeComboBox);
+
+        colorPickers.add(playerOneColorPicker);
+        colorPickers.add(playerTwoColorPicker);
+
+        comboBoxes.addAll(playerShapeBoxes);
+        comboBoxes.addAll(colorPickers);
+        comboBoxes.add(languageComboBox);
 
         //colors equal binding
         BooleanBinding colorsEqualBinding = Bindings.createBooleanBinding(() -> {
@@ -93,6 +105,10 @@ public class PreferencesView implements IPreferencesView {
         saveButton.disableProperty().bind(saveButtonDisabledBinding);
 
         // Function to update preferencesText based on current state
+
+        /*
+         * TODO: This interaction is flawed. The view should not directly modify the model. Instead, the controller should coordinate operations between model and view.
+         */
         Runnable updatePreferencesText = () -> {
             boolean colorsEqual = colorsEqualBinding.get();
             boolean shapesEqual = shapesEqualBinding.get();
@@ -110,20 +126,15 @@ public class PreferencesView implements IPreferencesView {
             }
         };
 
-        //TODO magari mettiamo tutto in una lista e facciamo foreach
         // Add listeners to color and shape pickers to update preferences text
-        playerOneColorPicker.valueProperty().addListener((observable, oldValue, newValue) -> updatePreferencesText.run());
-        playerTwoColorPicker.valueProperty().addListener((observable, oldValue, newValue) -> updatePreferencesText.run());
-        playerOneShapeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> updatePreferencesText.run());
-        playerTwoShapeComboBox.valueProperty().addListener((observable, oldValue, newValue) -> updatePreferencesText.run());
-        languageComboBox.valueProperty().addListener((observable, oldValue, newValue) -> updatePreferencesText.run());
+        comboBoxes.forEach((cBox) -> cBox.valueProperty().addListener((observable, oldValue, newValue) -> updatePreferencesText.run()));
 
         preferencesText.setText(" \n ");
     }
 
     /* setters */
     @Override
-    public void setModel(@NotNull PreferencesModel model) {
+    public void setModel(@NotNull IPreferencesModel model) {
         this.model = model;
     }
 

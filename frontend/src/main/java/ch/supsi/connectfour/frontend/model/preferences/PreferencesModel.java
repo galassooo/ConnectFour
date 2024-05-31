@@ -1,11 +1,11 @@
-package ch.supsi.connectfour.frontend.model;
+package ch.supsi.connectfour.frontend.model.preferences;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesApplication;
 
 import java.util.AbstractMap;
 
 //OK
-public class PreferencesModel {
+public class PreferencesModel implements IPreferencesModel {
 
     /* backend controller */
     private static PreferencesApplication backendController;

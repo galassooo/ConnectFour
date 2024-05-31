@@ -1,7 +1,8 @@
 package ch.supsi.connectfour.frontend.view.preferences;
 
 import ch.supsi.connectfour.backend.business.symbols.SymbolBusiness;
-import ch.supsi.connectfour.frontend.model.PreferencesModel;
+import ch.supsi.connectfour.frontend.model.preferences.IPreferencesModel;
+import ch.supsi.connectfour.frontend.model.preferences.PreferencesModel;
 import javafx.event.ActionEvent;
 
 import java.util.List;
@@ -19,7 +20,7 @@ public interface IPreferencesView {
 
     void setOnSaveButton(Consumer<ActionEvent> eventConsumer);
 
-    void setModel(PreferencesModel model);
+    void setModel(IPreferencesModel model);
 
     String getSelectedLanguage();
 

@@ -1,17 +1,26 @@
 package ch.supsi.connectfour.frontend.dispatcher;
 
-import ch.supsi.connectfour.frontend.controller.*;
+import ch.supsi.connectfour.frontend.controller.about.AboutController;
+import ch.supsi.connectfour.frontend.controller.about.IAboutController;
+import ch.supsi.connectfour.frontend.controller.exit.ApplicationExitController;
+import ch.supsi.connectfour.frontend.controller.exit.IExitController;
+import ch.supsi.connectfour.frontend.controller.game.ConnectFourFrontendController;
+import ch.supsi.connectfour.frontend.controller.game.IGameController;
+import ch.supsi.connectfour.frontend.controller.help.HelpController;
+import ch.supsi.connectfour.frontend.controller.help.IHelpController;
+import ch.supsi.connectfour.frontend.controller.preferences.IPreferencesController;
+import ch.supsi.connectfour.frontend.controller.preferences.PreferencesFrontendController;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 
 //OK
 public class MenuBarDispatcher {
     /* controllers */
-    private static final ConnectFourFrontendController connectFourFrontendController;
-    private static final AboutController aboutController;
-    private static final PreferencesFrontendController preferencesFrontendController;
-    private static final HelpController helpController;
-    private static final ApplicationExitController exitController;
+    private static final IGameController connectFourFrontendController;
+    private static final IAboutController aboutController;
+    private static final IPreferencesController preferencesFrontendController;
+    private static final IHelpController helpController;
+    private static final IExitController exitController;
 
     //initialize fields
     static {
@@ -70,13 +79,13 @@ public class MenuBarDispatcher {
      * handle 'about' request by delegating it to a suitable controller
      */
     public void showAbout() {
-        aboutController.showAboutPopUp();
+        aboutController.manageAbout();
     }
     /**
      * handle 'help' request by delegating it to a suitable controller
      */
     public void showHelp() {
-        helpController.showHelpPopUp();
+        helpController.manageHelp();
     }
 
 }

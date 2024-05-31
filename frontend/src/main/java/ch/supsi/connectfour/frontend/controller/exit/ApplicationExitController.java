@@ -1,14 +1,14 @@
-package ch.supsi.connectfour.frontend.controller;
+package ch.supsi.connectfour.frontend.controller.exit;
 
-import ch.supsi.connectfour.frontend.model.ApplicationExitModel;
-import ch.supsi.connectfour.frontend.model.TranslationModel;
+import ch.supsi.connectfour.frontend.model.exit.ApplicationExitModel;
+import ch.supsi.connectfour.frontend.model.translations.TranslationModel;
 import ch.supsi.connectfour.frontend.view.exit.ApplicationExitView;
 import ch.supsi.connectfour.frontend.view.exit.IApplicationExitView;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
 //NOT OK
-public class ApplicationExitController {
+public class ApplicationExitController implements IExitController {
 
     /* self reference */
     private static ApplicationExitController instance;

@@ -1,4 +1,4 @@
-package ch.supsi.connectfour.frontend.controller;
+package ch.supsi.connectfour.frontend.controller.game;
 
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.application.connectfour.GameEventHandler;
@@ -7,8 +7,10 @@ import ch.supsi.connectfour.backend.application.event.MoveEvent;
 import ch.supsi.connectfour.backend.application.event.ValidMoveEvent;
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 import ch.supsi.connectfour.frontend.MainFx;
-import ch.supsi.connectfour.frontend.model.ConnectFourModel;
-import ch.supsi.connectfour.frontend.model.TranslationModel;
+import ch.supsi.connectfour.frontend.model.game.ConnectFourModel;
+import ch.supsi.connectfour.frontend.model.game.IConnectFourModel;
+import ch.supsi.connectfour.frontend.model.translations.ITranslationsModel;
+import ch.supsi.connectfour.frontend.model.translations.TranslationModel;
 import ch.supsi.connectfour.frontend.view.serialization.ISerializationView;
 import ch.supsi.connectfour.frontend.view.serialization.SerializationView;
 import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
@@ -25,7 +27,7 @@ import java.util.Arrays;
 import java.util.List;
 
 //OK
-public class ConnectFourFrontendController implements GameEventHandler {
+public class ConnectFourFrontendController implements GameEventHandler, IGameController {
 
     /* self reference */
     private static ConnectFourFrontendController instance;
@@ -36,8 +38,8 @@ public class ConnectFourFrontendController implements GameEventHandler {
     private final List<Button> buttonList = new ArrayList<>();
 
     /* models */
-    private final TranslationModel translations;
-    private final ConnectFourModel model;
+    private final ITranslationsModel translations;
+    private final IConnectFourModel model;
 
     /* views */
     private final ISerializationView serializationView;

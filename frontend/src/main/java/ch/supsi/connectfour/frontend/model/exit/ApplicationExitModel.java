@@ -1,21 +1,12 @@
-package ch.supsi.connectfour.frontend.model;
+package ch.supsi.connectfour.frontend.model.exit;
 
 import ch.supsi.connectfour.backend.application.translations.TranslationsApplication;
 
 //NOT OK
-public class ApplicationExitModel {
+public class ApplicationExitModel implements IExitModel {
 
     /* self reference */
     private static ApplicationExitModel instance;
-
-    /* backend controller*/
-
-    //NON VIENE MAI USATO... RIMUOVERE? (vedi controller)
-    private static final TranslationsApplication translations;
-
-    static {
-        translations = TranslationsApplication.getInstance();
-    }
 
     /* Data used by the view */
     private final String message;

@@ -10,5 +10,6 @@ import java.io.File;
 public interface ConnectFourDataAccessInterface {
     ConnectFourBusinessInterface getSave(final File file);
 
+    String getFileExtension();
     boolean persist(final ConnectFourBusinessInterface game, final File outputFile);
 }

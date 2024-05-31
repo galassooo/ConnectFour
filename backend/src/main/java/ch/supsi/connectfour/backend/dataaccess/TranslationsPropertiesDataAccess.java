@@ -13,7 +13,7 @@ import java.util.*;
 
 //ALEX
 public class TranslationsPropertiesDataAccess implements TranslationsDataAccessInterface {
-    private static final String supportedLanguagesPath = "/supported-languages.properties";
+    private static final String SUPPORTED_LANGUAGES_PROPERTIES = "/supported-languages.properties";
     private static final String UI_LABELS_PATH = "i18n/UI/ui_labels";
     private static final String LABELS_PATH = "i18n/labels/";
     private static final String LABELS_FORMAT = ".properties";
@@ -33,7 +33,7 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
 
     private @NotNull Properties loadSupportedLanguageTags() {
         Properties supportedLanguageTags = new Properties();
-        try (InputStream supportedLanguageTagsStream = this.getClass().getResourceAsStream(supportedLanguagesPath)) {
+        try (InputStream supportedLanguageTagsStream = this.getClass().getResourceAsStream(SUPPORTED_LANGUAGES_PROPERTIES)) {
             if (supportedLanguageTagsStream != null) {
                 supportedLanguageTags.load(supportedLanguageTagsStream);
             }

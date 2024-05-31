@@ -37,14 +37,14 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
      * @return the loaded game if the retrieval completed successfully, null otherwise
      */
     @Override
-    public ConnectFourBusinessInterface getSave(@NotNull final File file) {
+    public ConnectFourBusiness getSave(@NotNull final File file) {
         // Check if the file is valid: exists, is a file and can be read
         if (!file.exists() || !file.isFile() || !file.canRead()) {
             return null;
         }
         // The mapper will handle the deserialization of the game save, whereas the loadedGame will hold the game loaded by the mapper
         final ObjectMapper mapper = new ObjectMapper();
-        final ConnectFourBusinessInterface loadedGame;
+        final ConnectFourBusiness loadedGame;
 
         try {
             loadedGame = mapper.readValue(file, ConnectFourBusiness.class);

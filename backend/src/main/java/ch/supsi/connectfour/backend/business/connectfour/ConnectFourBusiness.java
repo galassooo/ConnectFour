@@ -3,7 +3,10 @@ package ch.supsi.connectfour.backend.business.connectfour;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayer;
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
+import ch.supsi.connectfour.backend.business.preferences.PreferencesDataAccessInterface;
+import ch.supsi.connectfour.backend.business.symbols.SymbolBusiness;
 import ch.supsi.connectfour.backend.dataaccess.ConnectFourDataAccess;
+import ch.supsi.connectfour.backend.dataaccess.PreferencesPropertiesDataAccess;
 import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.jetbrains.annotations.NotNull;
@@ -12,6 +15,7 @@ import org.jetbrains.annotations.Nullable;
 import java.io.File;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Properties;
 import java.util.Random;
 
 //OK
@@ -24,7 +28,12 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
 
     private static ConnectFourBusinessInterface instance;
 
-    private final ConnectFourDataAccessInterface dataAccess;
+    private static final ConnectFourDataAccessInterface dataAccess;
+    /* preferences data access, used to get the player preferences */
+    /* Ideally this would not be here. In hindsight, we should have followed our initial plan and
+       implemented a separate multi-layer structure for the serialization concern, an approach that
+       would have allowed us to better separate what concerns each class addresses */
+    private static final PreferencesDataAccessInterface preferencesDataAccess;
     // A Path object representing the path - if available - of a save of this game
 
     private Path pathToSave;
@@ -49,6 +58,11 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
     // Gives information about wether or not the last move operation was valid or not
     private boolean wasLastMoveValid;
 
+    static {
+        dataAccess = ConnectFourDataAccess.getInstance();
+        preferencesDataAccess = PreferencesPropertiesDataAccess.getInstance();
+    }
+
     public ConnectFourBusiness(ConnectFourPlayerInterface player1, ConnectFourPlayerInterface player2) {
         if (player2 == null || player1 == null)
             throw new IllegalArgumentException("Players cannot be null");
@@ -58,7 +72,6 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         currentPlayer = new Random().nextBoolean() ? player1 : player2;
         this.gameMatrix = new ConnectFourPlayer[GRID_HEIGHT][GRID_LENGTH];
         this.lastPositionOccupied = new int[GRID_LENGTH];
-        this.dataAccess = ConnectFourDataAccess.getInstance();
     }
 
     /**
@@ -125,16 +138,40 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
     }
 
     /**
-     * Tries to retrieve an instance of ConnectFourModel potentially associated with a file instance
+     * Tries to retrieve an instance of ConnectFourModel potentially associated with a file instance and injects the player symbol and color.
      *
      * @param file a file potentially containing a valid save
      * @return an instance of ConnectFourModel if the file is valid, null otherwise
      */
     @Override
     public ConnectFourBusinessInterface getSave(@NotNull final File file) {
-        return this.dataAccess.getSave(file);
+        final ConnectFourBusiness loadedGame = dataAccess.getSave(file);
+        if (loadedGame == null)
+            return null;
+
+        /*
+         *  As per requirement, the player symbols and colors must not be saved along with the players.
+         *  In order to implement this, we "inject" the symbols and colors into the loaded game's players
+         *  before sending the game to the layers above
+         */
+        final Properties preferences = preferencesDataAccess.getPreferences();
+        loadedGame.player1.setSymbol(new SymbolBusiness(preferences.getProperty("player-one-symbol")));
+        loadedGame.player1.setColor(preferences.getProperty("player-one-color"));
+
+        loadedGame.player2.setSymbol(new SymbolBusiness(preferences.getProperty("player-two-symbol")));
+        loadedGame.player2.setColor(preferences.getProperty("player-two-color"));
+
+        /*
+         * Because of defensive-copy mechanisms implemented by setters, at this point the current player is
+         * a clone of either player1 or player2. This assignment makes sure that that object is overridden by
+         * one of the two objects representing the two players in the game, instead of having a third cloned player
+         */
+        loadedGame.currentPlayer = loadedGame.currentPlayer.equals(loadedGame.player1) ? loadedGame.player1 : loadedGame.player2;
+
+        return loadedGame;
     }
 
+    @JsonIgnore // Otherwise this is considered a getter
     @Override
     public @NotNull String getSaveName() {
         return this.pathToSave.getFileName().toString();
@@ -156,11 +193,11 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
             file (else it could be deleted in the meantime and lead to errors).
          */
         if (outputDirectory == null && saveName == null && this.pathToSave != null && this.pathToSave.toFile().exists()) {
-            wasSaved = this.dataAccess.persist(this, this.pathToSave.toFile());
+            wasSaved = dataAccess.persist(this, this.pathToSave.toFile());
         } else {
 
             this.pathToSave = Path.of(outputDirectory + File.separator + saveName + dataAccess.getFileExtension());
-            wasSaved = this.dataAccess.persist(this, new File(String.valueOf(this.pathToSave)));
+            wasSaved = dataAccess.persist(this, new File(String.valueOf(this.pathToSave)));
         }
         /*
          * If there was an error while saving the game, remove the path from this instance. The update of the path
@@ -186,6 +223,7 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         return this.persist(null, null);
     }
 
+    @JsonIgnore // Otherwise this is considered a getter
     @Override
     public boolean isDraw() {
         int cnt = 0;
@@ -278,18 +316,9 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         return isFinished;
     }
 
-
     /* setters */
-    public void setCurrentPlayer(@NotNull ConnectFourPlayerInterface currentPlayer) {
-        this.currentPlayer = currentPlayer;
-    }
-
-    public void setPlayer1(@NotNull ConnectFourPlayerInterface player1) {
-        this.player1 = player1;
-    }
-
-    public void setPlayer2(@NotNull ConnectFourPlayerInterface player2) {
-        this.player2 = player2;
+    void setCurrentPlayer(@NotNull ConnectFourPlayerInterface currentPlayer) {
+        this.currentPlayer = (ConnectFourPlayerInterface) currentPlayer.clone();
     }
 
     public void setFinished(boolean finished) {
@@ -301,7 +330,7 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
     }
 
     void setGameMatrix(ConnectFourPlayerInterface[][] gameMatrix) {
-        this.gameMatrix = gameMatrix; //deep copy is useless, (private am)
+        this.gameMatrix = gameMatrix;
     }
 
     void setPathToSave(Path pathToSave) {
@@ -311,7 +340,6 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
     void setWasLastMoveValid(boolean wasLastMoveValid) {
         this.wasLastMoveValid = wasLastMoveValid;
     }
-
 
     /* getters */
     @Override
@@ -329,7 +357,6 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         return player2; // safety copy
     }
 
-
     /**
      * Getter method for the gameMatrix field
      *
@@ -344,11 +371,11 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         return Arrays.copyOf(lastPositionOccupied, lastPositionOccupied.length); //safety copy
     }
 
-    private Path getPathToSave() {
+    public Path getPathToSave() {
         return pathToSave;
     }
 
-    private boolean isWasLastMoveValid() {
+    public boolean isWasLastMoveValid() {
         return wasLastMoveValid;
     }
 

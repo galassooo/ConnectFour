@@ -21,18 +21,17 @@ public class ConnectFourBusinessDeserializer extends JsonDeserializer<ConnectFou
         ConnectFourPlayerInterface player1 = jp.getCodec().treeToValue(node.get("player1"), ConnectFourPlayerInterface.class);
         ConnectFourPlayerInterface player2 = jp.getCodec().treeToValue(node.get("player2"), ConnectFourPlayerInterface.class);
         ConnectFourPlayerInterface currentPlayer = jp.getCodec().treeToValue(node.get("currentPlayer"), ConnectFourPlayerInterface.class);
-        currentPlayer = currentPlayer.equals(player1) ? player1 : player2;
 
         ConnectFourBusiness connectFourBusiness = new ConnectFourBusiness(player1, player2);
         connectFourBusiness.setCurrentPlayer(currentPlayer);
 
-        if (node.has("saveName")) {
-            Path pathToSave = jp.getCodec().treeToValue(node.get("saveName"), Path.class);
+        if (node.has("pathToSave")) {
+            Path pathToSave = jp.getCodec().treeToValue(node.get("pathToSave"), Path.class);
             connectFourBusiness.setPathToSave(pathToSave);
         }
 
-        if (node.has("isFinished")) {
-            boolean isFinished = node.get("isFinished").asBoolean();
+        if (node.has("finished")) {
+            boolean isFinished = node.get("finished").asBoolean();
             connectFourBusiness.setFinished(isFinished);
         }
 

@@ -20,11 +20,8 @@ public interface ConnectFourGameInterface {
     void insert(int column);
 
     ConnectFourPlayerInterface getCurrentPlayer();
-    void setCurrentPlayer(ConnectFourPlayerInterface player);
 
     ConnectFourPlayerInterface getPlayer1();
-    void setPlayer1(ConnectFourPlayerInterface player1);
 
     ConnectFourPlayerInterface getPlayer2();
-    void setPlayer2(ConnectFourPlayerInterface player2);
 }

@@ -6,6 +6,9 @@ import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 
 import java.io.File;
 
+/**
+ * Defines the behaviour that a generic game model should expose to the view and controller
+ */
 public interface IConnectFourModel {
     GameEvent playerMove(int column);
 

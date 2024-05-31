@@ -7,7 +7,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Consumer;
 
 //OK
-public class HelpModel {
+public class HelpModel implements IHelpModel {
     /* backend controllers */
     private static final TranslationsApplication translations = TranslationsApplication.getInstance();
     private static final PreferencesApplication preferencesApplication = PreferencesApplication.getInstance();

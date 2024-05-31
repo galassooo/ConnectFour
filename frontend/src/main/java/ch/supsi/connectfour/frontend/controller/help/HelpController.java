@@ -1,6 +1,7 @@
 package ch.supsi.connectfour.frontend.controller.help;
 
 import ch.supsi.connectfour.frontend.model.help.HelpModel;
+import ch.supsi.connectfour.frontend.model.help.IHelpModel;
 import ch.supsi.connectfour.frontend.view.help.IHelpView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -30,7 +31,7 @@ public class HelpController implements IHelpController {
     private final Stage stage;
 
     /* models */
-    private final List<HelpModel> models = new ArrayList<>();
+    private final List<IHelpModel> models = new ArrayList<>();
 
     /* view */
     private IHelpView helpView;
@@ -114,7 +115,7 @@ public class HelpController implements IHelpController {
      * @param index page to be shown
      */
     private void show(int index) {
-        HelpModel model = models.get(index);
+        IHelpModel model = models.get(index);
         helpView.loadImage(model.getImagePath());
 
         helpView.setHowToPlayLabel(model.getHowToPlay());

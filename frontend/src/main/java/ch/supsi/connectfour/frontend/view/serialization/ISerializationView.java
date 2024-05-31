@@ -5,6 +5,10 @@ import javafx.stage.Stage;
 
 import java.io.File;
 
+
+/**
+ * Defines the behaviour that a generic serialization view should expose to the controller
+ */
 public interface ISerializationView {
     File askForDirectory(File initialDirectory, String title, Stage stage);
 

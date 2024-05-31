@@ -2,13 +2,16 @@ package ch.supsi.connectfour.frontend.view.preferences;
 
 import ch.supsi.connectfour.backend.business.symbols.SymbolBusiness;
 import ch.supsi.connectfour.frontend.model.preferences.IPreferencesModel;
-import ch.supsi.connectfour.frontend.model.preferences.PreferencesModel;
 import javafx.event.ActionEvent;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
 
+
+/**
+ * Defines the behaviour that a generic preferences view should expose to the controller
+ */
 public interface IPreferencesView {
     void setShapes(List<SymbolBusiness> supportedShapes);
 

@@ -4,6 +4,9 @@ import javafx.event.ActionEvent;
 
 import java.util.function.Consumer;
 
+/**
+ * Defines the behaviour that a generic help view should expose to the controller
+ */
 public interface IHelpView {
     void loadImage(String imagePath);
 

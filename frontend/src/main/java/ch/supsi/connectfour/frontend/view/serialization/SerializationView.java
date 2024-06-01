@@ -20,7 +20,9 @@ public class SerializationView implements ISerializationView {
     public SerializationView() {
     }
 
-    //ALEX
+    /**
+     * Builds a message to display to the user with the given message, popup title and type of alert
+     */
     @Override
     public void showMessage(final String message, final String title, final Alert.AlertType type, Stage stage) {
         Alert alert = new Alert(type);
@@ -36,6 +38,7 @@ public class SerializationView implements ISerializationView {
 
     /**
      * Loads a CSS stylesheet for the popup
+     *
      * @param alert alert popup
      */
     private void loadCssForAlert(@NotNull Alert alert) {
@@ -58,7 +61,14 @@ public class SerializationView implements ISerializationView {
         });
     }
 
-    //ALEX
+    /**
+     * Builds and displays a window to ask the user for a directory on their filesystem
+     *
+     * @param initialDirectory the initial directory where the directoryChooser will be
+     * @param title            the title of the window
+     * @param stage            stage where the window will be displayed
+     * @return a File instance representing the Directory the user selected through the DirectoryChooser
+     */
     @Override
     public File askForDirectory(final File initialDirectory, final String title, Stage stage) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
@@ -67,7 +77,13 @@ public class SerializationView implements ISerializationView {
         return directoryChooser.showDialog(stage);
     }
 
-    //ALEX
+    /**
+     * Builds and displays a window to ask the user for a file  on their filesystem
+     *
+     * @param title the title of the window
+     * @param stage stage where the window will be displayed
+     * @return a File instance representing the Directory the user selected through the DirectoryChooser
+     */
     @Override
     public File askForFile(final String title, Stage stage) {
         FileChooser fileChooser = new FileChooser();
@@ -75,7 +91,9 @@ public class SerializationView implements ISerializationView {
         return fileChooser.showOpenDialog(stage);
     }
 
-    //ALEX
+    /**
+     *  todo: comment waitin for possible refactor
+     */
     @Override
     public boolean showConfirmationDialog(final String message, final String title, final String confirmText, final String cancelText, Stage stage) {
         // Create a confirmation dialog
@@ -98,7 +116,7 @@ public class SerializationView implements ISerializationView {
         return result.isPresent() && result.get() == okButton;
     }
 
-    //ALEX
+    //ALEX todo: same as above
     @Override
     public String showInputDialog(final String message, final String title) {
         // Create a TextInputDialog

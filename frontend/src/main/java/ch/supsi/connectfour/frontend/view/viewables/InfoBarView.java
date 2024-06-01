@@ -17,6 +17,10 @@ public class InfoBarView implements Viewable {
     @FXML
     private TextFlow textLabel;
 
+    public static void setDefaultMessage(String message) {
+        defaultMessage = message;
+    }
+
     @FXML
     private void initialize() {
     }
@@ -28,12 +32,9 @@ public class InfoBarView implements Viewable {
         textLabel.getChildren().add(textNode);
     }
 
-    public static void setDefaultMessage(String message) {
-        defaultMessage = message;
-    }
-
     /**
      * Displays the message associated with the event
+     *
      * @param event event
      */
     @Override

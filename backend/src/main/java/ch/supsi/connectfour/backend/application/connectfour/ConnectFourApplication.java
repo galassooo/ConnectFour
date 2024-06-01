@@ -7,6 +7,7 @@ import ch.supsi.connectfour.backend.business.player.ConnectFourPlayer;
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 import ch.supsi.connectfour.backend.business.preferences.PreferencesBusiness;
 import ch.supsi.connectfour.backend.business.symbols.SymbolBusiness;
+import ch.supsi.connectfour.backend.business.symbols.SymbolInterface;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,17 +45,17 @@ public class ConnectFourApplication {
      */
     public GameEvent playerMove(int column) {
         if (!currentMatch.isFinished()) {
-            //se la partita è in corso
+            // se la partita è in corso
             if (currentMatch.canInsert(column)) { // e posso inserire la pedina
-                currentMatch.insert(column); //allora la inserisco
+                currentMatch.insert(column); // allora la inserisco
                 GameEvent data;
 
                 ConnectFourPlayerInterface playerWhoMoved = currentMatch.getCurrentPlayer();
-                currentMatch.switchCurrentPlayer(); //cambio il turno
+                currentMatch.switchCurrentPlayer(); // cambio il turno
 
-                if (currentMatch.isWin()) { //se questa mossa è stata quella vincente
+                if (currentMatch.isWin()) { // se questa mossa è stata quella vincente
 
-                    currentMatch.setFinished(true);  //allora avrò un win event
+                    currentMatch.setFinished(true);  // allora avrò un win event
                     data = new WinEvent(playerWhoMoved, column, currentMatch.getLastPositioned(column));
 
                 } else if (currentMatch.isDraw()) { // altrimenti se la mossa ha portato a uno stallo...
@@ -62,22 +63,24 @@ public class ConnectFourApplication {
                     data = new DrawEvent(currentMatch.getPlayer1(), currentMatch.getPlayer2(), column);
 
                 } else {
-                    //altrimenti avrò semplicemente una mossa valida
+                    // altrimenti avrò semplicemente una mossa valida
                     data = new ValidMoveEvent(playerWhoMoved, currentMatch.getCurrentPlayer(), column, currentMatch.getLastPositioned(column));
                 }
                 return data;
             }
         }
-        //in caso non posso inserire allora avrò una mossa invalida
+        // in caso non posso inserire allora avrò una mossa invalida
         return new InvalidMoveEvent(currentMatch.getCurrentPlayer(), column);
     }
 
     /**
-     * creates a new game
+     * Creates a new game
      */
     public void createNewGame() {
-        ConnectFourPlayerInterface p1 = new ConnectFourPlayer("P1", preferences.getPreference("player-one-color").toString(), new SymbolBusiness(preferences.getPreference("player-one-symbol").toString()));
-        ConnectFourPlayerInterface p2 = new ConnectFourPlayer("P2", preferences.getPreference("player-two-color").toString(), new SymbolBusiness(preferences.getPreference("player-two-symbol").toString()));
+        SymbolInterface p1Symbol = new SymbolBusiness(preferences.getPreference("player-one-symbol").toString());
+        SymbolInterface p2Symbol = new SymbolBusiness(preferences.getPreference("player-two-symbol").toString());
+        ConnectFourPlayerInterface p1 = new ConnectFourPlayer("P1", preferences.getPreference("player-one-color").toString(), p1Symbol);
+        ConnectFourPlayerInterface p2 = new ConnectFourPlayer("P2", preferences.getPreference("player-two-color").toString(), p2Symbol);
         currentMatch = new ConnectFourBusiness(p1, p2);
     }
 

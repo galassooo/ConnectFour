@@ -22,8 +22,7 @@ public class ConnectFourPlayer extends PlayerBusiness implements ConnectFourPlay
     }
 
     @JsonCreator
-    private ConnectFourPlayer(@JsonProperty("name") String name,
-                              @JsonProperty("color") String color) {
+    private ConnectFourPlayer(@JsonProperty("name") String name, @JsonProperty("color") String color) {
         super(name);
         this.color = color;
     }
@@ -33,7 +32,7 @@ public class ConnectFourPlayer extends PlayerBusiness implements ConnectFourPlay
     @Override
     @JsonIgnore // For getters, this tells Jackson not to use it to serialize whatever the getter is getting
     public SymbolInterface getSymbol() {
-        return ((SymbolBusiness)symbol).clone();
+        return ((SymbolBusiness) symbol).clone();
     }
 
     @Override
@@ -55,13 +54,13 @@ public class ConnectFourPlayer extends PlayerBusiness implements ConnectFourPlay
     public void setSymbol(SymbolInterface symbol) {
         if (symbol == null)
             return;
-        this.symbol = ((SymbolBusiness)symbol).clone();
+        this.symbol = ((SymbolBusiness) symbol).clone();
     }
 
     @Override
     public ConnectFourPlayer clone() {
         ConnectFourPlayer clone = (ConnectFourPlayer) super.clone();
-        if( clone != null) {
+        if (clone != null) {
             clone.symbol = (symbol != null) ? ((SymbolBusiness) symbol).clone() : null;
             return clone;
         }

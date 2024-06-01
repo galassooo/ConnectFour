@@ -1,5 +1,7 @@
 package ch.supsi.connectfour.frontend.model.exit;
 
+import ch.supsi.connectfour.frontend.model.translations.TranslationModel;
+
 //NOT OK
 public class ApplicationExitModel implements IExitModel {
 
@@ -12,16 +14,17 @@ public class ApplicationExitModel implements IExitModel {
     private final String confirmText;
     private final String cancelText;
 
-    private ApplicationExitModel(String message, String title, String confirmText, String cancelText) {
-        this.message = message;
-        this.title = title;
-        this.confirmText = confirmText;
-        this.cancelText = cancelText;
+    private ApplicationExitModel() {
+        TranslationModel translationModel = TranslationModel.getInstance();
+        this.message = translationModel.translate("label.close_confirmation");
+        this.title = translationModel.translate("label.confirm");
+        this.confirmText = translationModel.translate("label.confirm");
+        this.cancelText = translationModel.translate("label.cancel");
     }
 
-    public static ApplicationExitModel getInstance(String message, String title, String confirmText, String cancelText) {
+    public static ApplicationExitModel getInstance() {
         if (instance == null) {
-            instance = new ApplicationExitModel(message, title, confirmText, cancelText);
+            instance = new ApplicationExitModel();
         }
         return instance;
     }

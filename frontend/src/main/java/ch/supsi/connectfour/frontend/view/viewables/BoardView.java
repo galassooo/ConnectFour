@@ -13,6 +13,7 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 
 import java.net.URL;
+
 public class BoardView implements Viewable {
 
     /* Field - URL symbol provider */
@@ -46,7 +47,8 @@ public class BoardView implements Viewable {
 
     /**
      * Sets the symbol for a cell at the specified row and column.
-     * @param row The row index of the cell.
+     *
+     * @param row    The row index of the cell.
      * @param column The column index of the cell.
      * @param symbol The symbol to set.
      */
@@ -66,8 +68,9 @@ public class BoardView implements Viewable {
 
     /**
      * Sets the background color for a cell at the specified row and column.
-     * @param row The row index of the cell.
-     * @param column The column index of the cell.
+     *
+     * @param row       The row index of the cell.
+     * @param column    The column index of the cell.
      * @param colorCode The color code to set.
      */
     private void setCellBackground(int row, int column, String colorCode) {
@@ -87,6 +90,7 @@ public class BoardView implements Viewable {
 
     /**
      * Shows the game event on the board.
+     *
      * @param event The game event to show.
      */
     @Override

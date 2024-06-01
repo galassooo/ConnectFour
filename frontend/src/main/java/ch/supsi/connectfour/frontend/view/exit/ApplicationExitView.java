@@ -17,7 +17,7 @@ public class ApplicationExitView implements IApplicationExitView {
     private static IExitModel model;
 
     /**
-     * construct the object
+     * Construct the object
      *
      * @param model the associated model
      */

@@ -10,12 +10,11 @@ import java.util.ResourceBundle;
 
 public class TranslationModel implements ITranslationsModel {
 
-    /* self reference */
-    private static TranslationModel instance;
-
     /* backend controllers */
     private static final TranslationsApplication translationsController;
     private static final PreferencesApplication preferencesController;
+    /* self reference */
+    private static TranslationModel instance;
 
     // Initialize controllers
     static {

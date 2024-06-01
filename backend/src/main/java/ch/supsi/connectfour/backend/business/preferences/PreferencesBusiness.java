@@ -45,8 +45,8 @@ public class PreferencesBusiness implements PreferencesBusinessInterface {
     /**
      * Delegates the retrieval of the preference associated with a given key
      *
-     * @param key   the key associated with the preference in a key-value pair
-     * @return  the value associated with the given key
+     * @param key the key associated with the preference in a key-value pair
+     * @return the value associated with the given key
      */
     @Override
     public Object getPreference(String key) {

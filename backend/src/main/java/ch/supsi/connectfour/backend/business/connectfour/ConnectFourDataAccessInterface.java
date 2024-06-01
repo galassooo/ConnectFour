@@ -11,5 +11,6 @@ public interface ConnectFourDataAccessInterface {
     ConnectFourBusiness getSave(final File file);
 
     String getFileExtension();
+
     boolean persist(final ConnectFourBusinessInterface game, final File outputFile);
 }

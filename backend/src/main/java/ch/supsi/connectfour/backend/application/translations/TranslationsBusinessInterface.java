@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 /**
  * Defines the behaviour that a generic translations model should expose to the controller
  */
-
 public interface TranslationsBusinessInterface {
 
     boolean isSupportedLanguageTag(String languageTag);

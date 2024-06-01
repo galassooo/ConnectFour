@@ -83,7 +83,7 @@ public class ConnectFourModel implements IConnectFourModel {
     }
 
     /**
-     * tries to load a match from a file
+     * Tries to load a match from a file
      *
      * @param file File from which the game is intended to be loaded
      * @return The loaded game, null if it was not loaded successfully

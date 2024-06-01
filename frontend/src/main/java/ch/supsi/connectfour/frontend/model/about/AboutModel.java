@@ -18,6 +18,12 @@ public class AboutModel implements IAboutModel {
     private static final TranslationsApplication translator;
     private static final PreferencesApplication preferences;
 
+    /* static initializer for static fields */
+    static {
+        translator = TranslationsApplication.getInstance();
+        preferences = PreferencesApplication.getInstance();
+    }
+
     /* data */
     private final String aboutConnectFourLabel;
     private final String builtOnLabel;
@@ -27,12 +33,6 @@ public class AboutModel implements IAboutModel {
     private String developers;
     private String version;
     private String date;
-
-    /* static initializer for static fields */
-    static {
-        translator = TranslationsApplication.getInstance();
-        preferences = PreferencesApplication.getInstance();
-    }
 
     /**
      * Construct the object

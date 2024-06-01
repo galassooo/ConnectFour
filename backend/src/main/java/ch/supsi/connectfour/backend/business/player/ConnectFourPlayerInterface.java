@@ -12,9 +12,9 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 public interface ConnectFourPlayerInterface extends PlayerBusinessInterface {
     SymbolInterface getSymbol();
 
+    void setSymbol(SymbolInterface symbol);
+
     String getColor();
 
     void setColor(String color);
-
-    void setSymbol(SymbolInterface symbol);
 }

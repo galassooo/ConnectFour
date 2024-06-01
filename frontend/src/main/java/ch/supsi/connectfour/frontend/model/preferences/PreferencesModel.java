@@ -18,7 +18,7 @@ public class PreferencesModel implements IPreferencesModel {
     private boolean languageOnlyRequested;
 
     /**
-     * construct an instance
+     * Construct an instance
      *
      * @param enableMessage  message to be displayed for enable
      * @param disableMessage message to be displayed for disable
@@ -29,15 +29,6 @@ public class PreferencesModel implements IPreferencesModel {
         this.disableMessage = disableMessage;
         this.languageOnlyMessage = languageOnlyMessage;
         languageOnlyRequested = false;
-    }
-
-    /* setter */
-    public void setPreference(AbstractMap.SimpleEntry<String, String> preference) {
-        backendController.setPreference(preference);
-    }
-
-    public void setLanguageOnlyRequested(boolean languageOnlyRequested) {
-        this.languageOnlyRequested = languageOnlyRequested;
     }
 
     /* getters */
@@ -55,5 +46,14 @@ public class PreferencesModel implements IPreferencesModel {
 
     public boolean isOnlyLanguageRequested() {
         return languageOnlyRequested;
+    }
+
+    /* setter */
+    public void setPreference(AbstractMap.SimpleEntry<String, String> preference) {
+        backendController.setPreference(preference);
+    }
+
+    public void setLanguageOnlyRequested(boolean languageOnlyRequested) {
+        this.languageOnlyRequested = languageOnlyRequested;
     }
 }

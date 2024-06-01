@@ -73,7 +73,7 @@ public class AboutView implements IAboutView {
     }
 
     /**
-     * set the action of the 'close button'
+     * Set the action of the 'close button'
      *
      * @param eventConsumer the action to be performed on press
      */

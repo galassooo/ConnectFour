@@ -16,6 +16,7 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Objects;
@@ -23,7 +24,9 @@ import java.util.Objects;
 public class MainFx extends Application {
 
     public static final String APP_TITLE;
+
     static {
+        // Load the application title dynamically
         APP_TITLE = TranslationModel.getInstance().translate("label.game_name");
     }
 
@@ -32,7 +35,8 @@ public class MainFx extends Application {
     }
 
     /**
-     * loads application components
+     * Loads application components
+     *
      * @param primaryStage root
      */
     @Override

@@ -14,7 +14,7 @@ public class SymbolProvider<T> implements SymbolProviderApplication<T> {
      * Applying the FUNC function will translate the symbols into URLs and return them as the return type.
      *
      * @param func function to apply on all list symbols
-     * @param s list of symbols
+     * @param s    list of symbols
      * @return a list of translated symbols
      */
     @Override
@@ -28,7 +28,7 @@ public class SymbolProvider<T> implements SymbolProviderApplication<T> {
      * Applying the FUNC function will translate the symbol into URL and return it as the return type.
      *
      * @param func function to apply on symbol
-     * @param s symbol
+     * @param s    symbol
      * @return a translated type
      */
     @Override

@@ -18,16 +18,13 @@ import java.util.Objects;
 //OK
 public class HelpController implements IHelpController {
 
-    /* self reference */
-    private static HelpController instance;
-
     /* screens number */
     private static final int NUM_SCREENS = 6;
-
     /* formatters */
     private static final String IMAGES_RESOURCE_FORMAT = "%d.jpg";
     private static final String LABELS_FORMAT = "label.help_%d";
-
+    /* self reference */
+    private static HelpController instance;
     /* stage */
     private final Stage stage;
 

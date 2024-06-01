@@ -13,8 +13,6 @@ import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.AbstractMap;
@@ -27,12 +25,10 @@ import java.util.stream.Stream;
 public class PreferencesFrontendController implements IPreferencesController, EventHandler<LanguageOnlyRequired> {
 
     public static final String IMAGES_SYMBOLS = "images/symbols/";
-    /* self reference */
-    private static PreferencesFrontendController instance;
-
     /* regex */
     private final static String SYMBOL_REGEX = "/images/symbols/.*\\.PNG";
-
+    /* self reference */
+    private static PreferencesFrontendController instance;
     /* models */
     private final PreferencesModel model;
     private final TranslationModel translationModel;
@@ -104,6 +100,16 @@ public class PreferencesFrontendController implements IPreferencesController, Ev
     }
 
     /**
+     * @return an instance of this class
+     */
+    public static PreferencesFrontendController getInstance() {
+        if (instance == null) {
+            instance = new PreferencesFrontendController();
+        }
+        return instance;
+    }
+
+    /**
      * @return a list of key-value pairs representing the preferences selected by the user in the preferences menu
      */
     private @NotNull List<AbstractMap.SimpleEntry<String, String>> getPreferences() {
@@ -116,16 +122,6 @@ public class PreferencesFrontendController implements IPreferencesController, Ev
                 new AbstractMap.SimpleEntry<>("player-two-symbol", String.valueOf(preferencesView.getPlayerTwoShape().getValue()))
         );
         return preferences;
-    }
-
-    /**
-     * @return an instance of this class
-     */
-    public static PreferencesFrontendController getInstance() {
-        if (instance == null) {
-            instance = new PreferencesFrontendController();
-        }
-        return instance;
     }
 
     /**

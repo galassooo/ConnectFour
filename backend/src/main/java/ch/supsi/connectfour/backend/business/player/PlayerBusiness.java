@@ -47,11 +47,11 @@ public abstract class PlayerBusiness implements Cloneable, PlayerBusinessInterfa
         return null;
     }
 
-    //solo per test
+    // Only used in testing
     @Contract(pure = true)
     @Override
     public @NotNull String toString() {
-        return "name: " + name;
+        return String.format("Name: %s", name);
     }
 
     @Override

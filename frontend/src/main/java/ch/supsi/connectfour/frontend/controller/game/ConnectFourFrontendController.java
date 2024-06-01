@@ -46,7 +46,7 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
     private final List<Viewable> viewableItems = new ArrayList<>();
 
     /**
-     * initialize models and serialization views
+     * Initialize models and serialization views
      */
     private ConnectFourFrontendController() {
         this.model = ConnectFourModel.getInstance();
@@ -104,6 +104,9 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
             String confirmation = translations.translate("label.confirmation");
             String confirm = translations.translate("label.confirm");
             String cancel = translations.translate("label.cancel");
+            /* TODO: this interaction. We are providing the view with the translations. Should we not store the translations in the
+                model and then ask the model to provide the translations like we did elsewhere??
+             */
 
             if (this.serializationView.showConfirmationDialog(overWrite, confirmation, confirm, cancel, primaryStage)) {
                 // Update the save button to prevent saving on new game
@@ -112,13 +115,13 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
                 newGame();
             }
         } else {
-            //there is no game in progress, so it creates a new one
+            // there is no game in progress, so it creates a new one
             newGame();
         }
     }
 
     /**
-     * enable columns buttons, ask model to create a new game and clear views
+     * Enable columns buttons, ask model to create a new game and clear views
      */
     private void newGame() {
         this.clearViews();
@@ -127,11 +130,15 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
     }
 
     /**
-     * manage save request
+     * Manage save request
      */
     public void manageSave() {
         //if persist operation was successful
         if (model.persist()) {
+            /*
+             *  TODO: anche qui la stessa interazione di sopra. Non so se potrebbe aver senso passare alla view piuttosto un
+             *  booleano in cui diciamo se l'operazione è andata a buon fine o no e poi la view tira su la trad dal model
+             */
             String correct = translations.translate("label.correctly_saved");
             this.serializationView.showMessage(correct, null, Alert.AlertType.INFORMATION, primaryStage);
         } else {
@@ -142,7 +149,7 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
     }
 
     /**
-     * update the current stage title including the saving name
+     * Update the current stage title including the saving name
      *
      * @param gameName file name of the loaded match
      */
@@ -151,9 +158,10 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
     }
 
     /**
-     * manage the save as request
+     * Manage the save as request
      */
     public void manageSaveAs() {
+        // TODO: same interaction
         String chosen = translations.translate("label.chosen_directory");
         final File dir = this.serializationView.askForDirectory(new File(System.getProperty("user.home")), chosen, primaryStage);
 
@@ -219,7 +227,7 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
     }
 
     /**
-     * handle open request
+     * Handle open request
      */
     public void manageOpen() {
         final File file = this.serializationView.askForFile(translations.translate("label.select_file_to_load"), primaryStage);

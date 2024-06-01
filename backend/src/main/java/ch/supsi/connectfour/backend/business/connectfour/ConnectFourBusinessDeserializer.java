@@ -11,9 +11,15 @@ import java.nio.file.Path;
 
 /**
  * This is a deserializer, a class used in combination with the Jackson library to obtain custom deserialization behaviour
+ * Further information on why we decided to use a custom deserializer can be found in the body of the deserialize method
  */
 public class ConnectFourBusinessDeserializer extends JsonDeserializer<ConnectFourBusiness> {
 
+    /**
+     * A better approach for this would have been using reflections to extract all the names of the fields dynamically
+     * so that the code would be more resilient to change. Due to time constraints, this was unfortunately not possible
+     * so the name of the fields are hardcoded
+     */
     @Override
     public ConnectFourBusiness deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
@@ -46,7 +52,7 @@ public class ConnectFourBusinessDeserializer extends JsonDeserializer<ConnectFou
         }
 
         /*
-         * The whole point of having this custom deserializer was to prevent Jacksons default serializer to create a new
+         * The whole point of having this custom deserializer was to prevent Jacksons default deserializer to create a new
          * instance of player for each cell of the matrix. This custom behaviour allows us to only have 2 instances of
          * Player around the matrix, instead of 6*7 different instances representing the same players.
          */

@@ -1,8 +1,8 @@
 package ch.supsi.connectfour.backend.dataaccess;
 
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
-import ch.supsi.connectfour.backend.business.connectfour.ConnectFourDataAccessInterface;
 import ch.supsi.connectfour.backend.business.connectfour.ConnectFourBusiness;
+import ch.supsi.connectfour.backend.business.connectfour.ConnectFourDataAccessInterface;
 import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -13,11 +13,10 @@ import java.io.IOException;
 
 public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
 
-    /* self reference */
-    protected static ConnectFourDataAccess instance;
-
     /* field */
     private static final String EXTENSION = ".json";
+    /* self reference */
+    protected static ConnectFourDataAccess instance;
 
     /* constructor */
     protected ConnectFourDataAccess() {

@@ -1,33 +1,27 @@
 package ch.supsi.connectfour.frontend.controller.exit;
 
 import ch.supsi.connectfour.frontend.model.exit.ApplicationExitModel;
-import ch.supsi.connectfour.frontend.model.translations.TranslationModel;
 import ch.supsi.connectfour.frontend.view.exit.ApplicationExitView;
 import ch.supsi.connectfour.frontend.view.exit.IApplicationExitView;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
-//NOT OK
+//NOT OK //todo: is it ok now? I moved the translations to the model!
 public class ApplicationExitController implements IExitController {
 
     /* self reference */
     private static ApplicationExitController instance;
-
+    /* view */
+    private final IApplicationExitView view;
     /* stage */
     private Stage primaryStage;
 
-    /* view */
-    private final IApplicationExitView view;
-
     private ApplicationExitController() {
-        TranslationModel translationModel = TranslationModel.getInstance();
-        //tradurre label direttamente nel model?
-        ApplicationExitModel model = ApplicationExitModel.getInstance(translationModel.translate("label.close_confirmation"), translationModel.translate("label.confirmation"), translationModel.translate("label.confirm"), translationModel.translate("label.cancel"));
+        ApplicationExitModel model = ApplicationExitModel.getInstance();
         view = new ApplicationExitView(model);
     }
 
     /**
-     *
      * @return an instance of this class
      */
     public static ApplicationExitController getInstance() {
@@ -38,7 +32,8 @@ public class ApplicationExitController implements IExitController {
     }
 
     /**
-     * initialize instance's field
+     * Initialize instance's field
+     *
      * @param primaryStage root stage
      */
     public void build(@NotNull Stage primaryStage) {
@@ -46,7 +41,7 @@ public class ApplicationExitController implements IExitController {
     }
 
     /**
-     * handle exit request
+     * Handle exit request
      */
     public void manageExit() {
         if (view.showConfirmationDialog()) {

@@ -7,7 +7,7 @@ import ch.supsi.connectfour.backend.business.preferences.PreferencesDataAccessIn
 import ch.supsi.connectfour.backend.business.symbols.SymbolBusiness;
 import ch.supsi.connectfour.backend.dataaccess.ConnectFourDataAccess;
 import ch.supsi.connectfour.backend.dataaccess.PreferencesPropertiesDataAccess;
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -25,43 +25,35 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
     private static final int GRID_LENGTH = 7;
 
     private static final int GRID_HEIGHT = 6;
-
-    private static ConnectFourBusinessInterface instance;
-
     private static final ConnectFourDataAccessInterface dataAccess;
     /* preferences data access, used to get the player preferences */
     /* Ideally this would not be here. In hindsight, we should have followed our initial plan and
        implemented a separate multi-layer structure for the serialization concern, an approach that
        would have allowed us to better separate what concerns each class addresses */
     private static final PreferencesDataAccessInterface preferencesDataAccess;
-    // A Path object representing the path - if available - of a save of this game
-
-    private Path pathToSave;
-
-    // True if the game is finished, false otherwise
-    private boolean isFinished = false;
-
-    // Stores information about the first available row in any given column
-    private int[] lastPositionOccupied;
-
-    // Represents the game board. Contains null if the cell is empty, or a reference to an instance of PlayerModel if a player is present
-    private ConnectFourPlayerInterface[][] gameMatrix;
-
-    // The first player
-    private ConnectFourPlayerInterface player1;
-
-    // The second player
-    private ConnectFourPlayerInterface player2;
-
-    // Player currently allowed to move
-    private ConnectFourPlayerInterface currentPlayer;
-    // Gives information about wether or not the last move operation was valid or not
-    private boolean wasLastMoveValid;
+    private static ConnectFourBusinessInterface instance;
 
     static {
         dataAccess = ConnectFourDataAccess.getInstance();
         preferencesDataAccess = PreferencesPropertiesDataAccess.getInstance();
     }
+
+    // A Path object representing the path - if available - of a save of this game
+    private Path pathToSave;
+    // True if the game is finished, false otherwise
+    private boolean isFinished = false;
+    // Stores information about the first available row in any given column
+    private int[] lastPositionOccupied;
+    // Represents the game board. Contains null if the cell is empty, or a reference to an instance of PlayerModel if a player is present
+    private ConnectFourPlayerInterface[][] gameMatrix;
+    // The first player
+    private final ConnectFourPlayerInterface player1;
+    // The second player
+    private final ConnectFourPlayerInterface player2;
+    // Player currently allowed to move
+    private ConnectFourPlayerInterface currentPlayer;
+    // Gives information about wether or not the last move operation was valid or not
+    private boolean wasLastMoveValid;
 
     public ConnectFourBusiness(ConnectFourPlayerInterface player1, ConnectFourPlayerInterface player2) {
         if (player2 == null || player1 == null)
@@ -195,7 +187,6 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         if (outputDirectory == null && saveName == null && this.pathToSave != null && this.pathToSave.toFile().exists()) {
             wasSaved = dataAccess.persist(this, this.pathToSave.toFile());
         } else {
-
             this.pathToSave = Path.of(outputDirectory + File.separator + saveName + dataAccess.getFileExtension());
             wasSaved = dataAccess.persist(this, new File(String.valueOf(this.pathToSave)));
         }
@@ -316,29 +307,8 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         return isFinished;
     }
 
-    /* setters */
-    void setCurrentPlayer(@NotNull ConnectFourPlayerInterface currentPlayer) {
-        this.currentPlayer = (ConnectFourPlayerInterface) currentPlayer.clone();
-    }
-
     public void setFinished(boolean finished) {
         isFinished = finished;
-    }
-
-    void setLastPositionOccupied(int[] lastPositionOccupied) {
-        this.lastPositionOccupied = lastPositionOccupied;
-    }
-
-    void setGameMatrix(ConnectFourPlayerInterface[][] gameMatrix) {
-        this.gameMatrix = gameMatrix;
-    }
-
-    void setPathToSave(Path pathToSave) {
-        this.pathToSave = pathToSave;
-    }
-
-    void setWasLastMoveValid(boolean wasLastMoveValid) {
-        this.wasLastMoveValid = wasLastMoveValid;
     }
 
     /* getters */
@@ -357,6 +327,14 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         return (ConnectFourPlayerInterface) player2.clone(); // safety copy
     }
 
+    public Path getPathToSave() {
+        return pathToSave;
+    }
+
+    public boolean isWasLastMoveValid() {
+        return wasLastMoveValid;
+    }
+
     /**
      * Getter method for the gameMatrix field
      *
@@ -367,16 +345,30 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         return getGameMatrixDeepCopy(this.gameMatrix); //safety copy
     }
 
+    /* setters */
+    void setCurrentPlayer(@NotNull ConnectFourPlayerInterface currentPlayer) {
+        this.currentPlayer = (ConnectFourPlayerInterface) currentPlayer.clone();
+    }
+
+    void setGameMatrix(ConnectFourPlayerInterface[][] gameMatrix) {
+        this.gameMatrix = gameMatrix;
+    }
+
     public int[] getLastPositionOccupied() {
         return Arrays.copyOf(lastPositionOccupied, lastPositionOccupied.length); //safety copy
     }
 
-    public Path getPathToSave() {
-        return pathToSave;
+    void setLastPositionOccupied(int[] lastPositionOccupied) {
+        this.lastPositionOccupied = lastPositionOccupied;
     }
 
-    public boolean isWasLastMoveValid() {
-        return wasLastMoveValid;
+
+    void setPathToSave(Path pathToSave) {
+        this.pathToSave = pathToSave;
+    }
+
+    void setWasLastMoveValid(boolean wasLastMoveValid) {
+        this.wasLastMoveValid = wasLastMoveValid;
     }
 
 }

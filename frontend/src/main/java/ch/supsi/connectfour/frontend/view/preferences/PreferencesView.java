@@ -3,7 +3,6 @@ package ch.supsi.connectfour.frontend.view.preferences;
 import ch.supsi.connectfour.backend.business.symbols.SymbolBusiness;
 import ch.supsi.connectfour.frontend.model.preferences.IPreferencesModel;
 import ch.supsi.connectfour.frontend.model.preferences.LanguageOnlyRequired;
-import ch.supsi.connectfour.frontend.model.preferences.PreferencesModel;
 import ch.supsi.connectfour.frontend.model.translations.ITranslationsModel;
 import ch.supsi.connectfour.frontend.model.translations.TranslationModel;
 import javafx.beans.binding.Bindings;
@@ -27,6 +26,11 @@ import java.util.function.Consumer;
 
 public class PreferencesView implements IPreferencesView {
 
+    private final ITranslationsModel translationModel;
+    /* symbol list - field */
+    private final List<ComboBox<SymbolBusiness>> playerShapeBoxes = new ArrayList<>();
+    private final List<ColorPicker> colorPickers = new ArrayList<>();
+    private final List<ComboBoxBase<?>> comboBoxes = new ArrayList<>();
     /* components */
     @FXML
     public Text preferencesText;
@@ -44,15 +48,8 @@ public class PreferencesView implements IPreferencesView {
     private Button saveButton;
     @FXML
     private Button cancelButton;
-
     /* model */
     private IPreferencesModel model;
-    private final ITranslationsModel translationModel;
-
-    /* symbol list - field */
-    private final List<ComboBox<SymbolBusiness>> playerShapeBoxes = new ArrayList<>();
-    private final List<ColorPicker> colorPickers = new ArrayList<>();
-    private final List<ComboBoxBase<?>> comboBoxes = new ArrayList<>();
     private Stage root;
 
 
@@ -60,9 +57,12 @@ public class PreferencesView implements IPreferencesView {
         translationModel = TranslationModel.getInstance();
     }
 
-    //ALEX (magari fai un commento dettagliato dentro)
     @FXML
     void initialize() {
+        /*
+         * The following lines simply aggregate together similar objects in a List, in order to simplify
+         * interactions with all elements at once through stream operations
+         */
         playerShapeBoxes.add(playerOneShapeComboBox);
         playerShapeBoxes.add(playerTwoShapeComboBox);
 
@@ -73,7 +73,8 @@ public class PreferencesView implements IPreferencesView {
         comboBoxes.addAll(colorPickers);
         comboBoxes.add(languageComboBox);
 
-        //colors equal binding
+        // Colors equal binding. Returns true if both colors are null or if the two colors are equal. Used to disable the save
+        // button dynamically
         BooleanBinding colorsEqualBinding = Bindings.createBooleanBinding(() -> {
             Object playerOneColor = playerOneColorPicker.getValue();
             Object playerTwoColor = playerTwoColorPicker.getValue();
@@ -82,7 +83,8 @@ public class PreferencesView implements IPreferencesView {
                     (playerOneColor != null && playerOneColor.equals(playerTwoColor));
         }, playerOneColorPicker.valueProperty(), playerTwoColorPicker.valueProperty());
 
-        //shapes equal binding
+        //shapes equal binding. Returns true if both shapes are null or if the two shapes are equal. Used to disable the save
+        // button dynamically
         BooleanBinding shapesEqualBinding = Bindings.createBooleanBinding(() -> {
             Object playerOneShape = playerOneShapeComboBox.getValue();
             Object playerTwoShape = playerTwoShapeComboBox.getValue();
@@ -91,7 +93,7 @@ public class PreferencesView implements IPreferencesView {
                     (playerOneShape != null && playerOneShape.equals(playerTwoShape));
         }, playerOneShapeComboBox.valueProperty(), playerTwoShapeComboBox.valueProperty());
 
-        //language equal binding
+        //language equal binding. Returns true if the user changed the language in the preferences
         BooleanBinding languageEqualBinding = Bindings.createBooleanBinding(() -> {
             String oldLanguage = translationModel.getCurrentLanguage().toString();
             String newLanguage = languageComboBox.getValue();
@@ -106,12 +108,11 @@ public class PreferencesView implements IPreferencesView {
         //construct a single binding obj given the others
         BooleanBinding saveButtonDisabledBinding = colorsEqualBinding.and(shapesEqualBinding).and(languageEqualBinding);
 
-        //bind the button to the booleanBinding
+        // Bind the the binding to the disable property of the button, so that if the binding returns true the button
+        // is disabled, else enabled
         saveButton.disableProperty().bind(saveButtonDisabledBinding);
 
         // Function to update preferencesText based on current state
-
-
         Runnable updatePreferencesText = () -> {
             boolean colorsEqual = colorsEqualBinding.get();
             boolean shapesEqual = shapesEqualBinding.get();
@@ -141,6 +142,33 @@ public class PreferencesView implements IPreferencesView {
         comboBoxes.forEach((cBox) -> cBox.valueProperty().addListener((observable, oldValue, newValue) -> updatePreferencesText.run()));
 
         preferencesText.setText(" \n ");
+    }
+
+    /* getters */
+    @Override
+    public String getSelectedLanguage() {
+        return languageComboBox.getValue();
+    }
+
+    @Override
+    public String getPlayerOneColor() {
+        return playerOneColorPicker.getValue().toString();
+    }
+
+    @Override
+    public String getPlayerTwoColor() {
+        return playerTwoColorPicker.getValue().toString();
+    }
+
+    @Override
+    public SymbolBusiness getPlayerOneShape() {
+        return playerOneShapeComboBox.getValue();
+    }
+
+    @Override
+
+    public SymbolBusiness getPlayerTwoShape() {
+        return playerTwoShapeComboBox.getValue();
     }
 
     /* setters */
@@ -184,33 +212,6 @@ public class PreferencesView implements IPreferencesView {
     @Override
     public void setOnCancelButton(@NotNull Consumer<ActionEvent> eventConsumer) {
         cancelButton.setOnAction(eventConsumer::accept);
-    }
-
-    /* getters */
-    @Override
-    public String getSelectedLanguage() {
-        return languageComboBox.getValue();
-    }
-
-    @Override
-    public String getPlayerOneColor() {
-        return playerOneColorPicker.getValue().toString();
-    }
-
-    @Override
-    public String getPlayerTwoColor() {
-        return playerTwoColorPicker.getValue().toString();
-    }
-
-    @Override
-    public SymbolBusiness getPlayerOneShape() {
-        return playerOneShapeComboBox.getValue();
-    }
-
-    @Override
-
-    public SymbolBusiness getPlayerTwoShape() {
-        return playerTwoShapeComboBox.getValue();
     }
 }
 

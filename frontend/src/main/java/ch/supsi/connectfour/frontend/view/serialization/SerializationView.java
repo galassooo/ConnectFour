@@ -34,11 +34,11 @@ public class SerializationView implements ISerializationView {
         alert.initOwner(root);
         alert.setHeaderText(null);
         if (success) {
-            alert.setTitle(model.getSuccess());
-            alert.setContentText(model.getCorrectlySaved());
+            alert.setTitle(model.getTranslation("label.success"));
+            alert.setContentText(model.getTranslation("label.correctly_saved"));
         } else {
-            alert.setTitle(model.getError());
-            alert.setContentText(model.getNotCorrectlySaved());
+            alert.setTitle(model.getTranslation("label.error"));
+            alert.setContentText(model.getTranslation("label.not_correctly_saved"));
         }
         ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("/images/serialization/excl_mark.png"));
 
@@ -81,7 +81,7 @@ public class SerializationView implements ISerializationView {
     public File askForDirectory(final File initialDirectory) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(initialDirectory);
-        directoryChooser.setTitle(model.getChooseDirectory());
+        directoryChooser.setTitle(model.getTranslation("label.chosen_directory"));
         return directoryChooser.showDialog(root);
     }
 
@@ -93,7 +93,7 @@ public class SerializationView implements ISerializationView {
     @Override
     public File askForFile() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle(model.getInsertNameTitle());
+        fileChooser.setTitle(model.getTranslation("label.insert_name_title"));
         return fileChooser.showOpenDialog(root);
     }
 
@@ -105,13 +105,13 @@ public class SerializationView implements ISerializationView {
         // Create a confirmation dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.initOwner(root);
-        alert.setTitle(model.getConfirmation());
+        alert.setTitle(model.getTranslation("label.confirmation"));
         alert.setHeaderText(null);
-        alert.setContentText(model.getOverWrite());
+        alert.setContentText(model.getTranslation("label.overwrite_confirmation"));
 
         // Set OK and Cancel buttons
-        ButtonType okButton = new ButtonType(model.getConfirm());
-        ButtonType cancelButton = new ButtonType(model.getCancel(), ButtonType.CANCEL.getButtonData());
+        ButtonType okButton = new ButtonType(model.getTranslation("label.confirm"));
+        ButtonType cancelButton = new ButtonType(model.getTranslation("label.cancel"), ButtonType.CANCEL.getButtonData());
         alert.getButtonTypes().setAll(okButton, cancelButton);
 
         loadCssForAlert(alert);
@@ -129,9 +129,9 @@ public class SerializationView implements ISerializationView {
     public String showInputDialog() {
         // Create a TextInputDialog
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle(model.getInsertNameTitle());
+        dialog.setTitle(model.getTranslation("label.insert_name_title"));
         dialog.setHeaderText(null);
-        dialog.setContentText(model.getInsertName());
+        dialog.setContentText(model.getTranslation("label.insert_name"));
 
         // Show the input dialog and wait for user input
         Optional<String> result = dialog.showAndWait();

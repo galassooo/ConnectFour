@@ -3,10 +3,12 @@ package ch.supsi.connectfour.frontend.model.game;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourApplication;
 import ch.supsi.connectfour.backend.application.connectfour.ConnectFourBusinessInterface;
 import ch.supsi.connectfour.backend.application.event.GameEvent;
+import ch.supsi.connectfour.backend.application.translations.TranslationsApplication;
 import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 import org.jetbrains.annotations.Nullable;
-
 import java.io.File;
+import java.util.HashMap;
+import java.util.List;
 
 public class ConnectFourModel implements IConnectFourModel {
 
@@ -16,39 +18,19 @@ public class ConnectFourModel implements IConnectFourModel {
     /* backend controller */
     private final ConnectFourApplication backendController;
 
-    private final String insertName;
-    private final String insertNameTitle;
-    private final String chooseDirectory;
-    private final String correctlySaved;
-    private final String notCorrectlySaved;
-    private final String confirm;
-    private final String error;
-    private final String overWrite;
-    private final String confirmation;
-    private final String cancel;
-    private final String success;
+    /* data */
+    private final HashMap<String, String> translatedLabels = new HashMap<>();
 
-    private ConnectFourModel(String insertName, String insertNameTitle, String chooseDirectory, String correctlySaved, String notCorrectlySaved, String confirm, String error, String overWrite, String confirmation, String cancel, String success) {
-        this.insertName = insertName;
-        this.insertNameTitle = insertNameTitle;
-        this.chooseDirectory = chooseDirectory;
-        this.correctlySaved = correctlySaved;
-        this.notCorrectlySaved = notCorrectlySaved;
-        this.confirm = confirm;
-        this.error = error;
-        this.overWrite = overWrite;
-        this.confirmation = confirmation;
-        this.cancel = cancel;
-        this.success = success;
+    private ConnectFourModel() {
         this.backendController = ConnectFourApplication.getInstance();
     }
 
     /**
      * @return an instance of this class
      */
-    public static ConnectFourModel getInstance(String insertName, String insertNameTitle, String chooseDirectory, String correctlySaved, String notCorrectlySaved, String confirm, String error, String overWrite, String confirmation, String cancel, String success) {
+    public static ConnectFourModel getInstance() {
         if (instance == null) {
-            instance = new ConnectFourModel(insertName, insertNameTitle, chooseDirectory, correctlySaved, notCorrectlySaved, confirm, error, overWrite, confirmation, cancel, success);
+            instance = new ConnectFourModel();
         }
         return instance;
     }
@@ -134,57 +116,18 @@ public class ConnectFourModel implements IConnectFourModel {
     }
 
     @Override
-    public String getInsertName() {
-        return insertName;
+    public String getTranslation(String key){
+        return translatedLabels.get(key);
     }
 
     @Override
-    public String getInsertNameTitle() {
-        return insertNameTitle;
-    }
-
-    @Override
-    public String getChooseDirectory() {
-        return chooseDirectory;
-    }
-
-    @Override
-    public String getCorrectlySaved() {
-        return correctlySaved;
-    }
-
-    @Override
-    public String getNotCorrectlySaved() {
-        return notCorrectlySaved;
-    }
-
-    @Override
-    public String getConfirm() {
-        return confirm;
-    }
-
-    @Override
-    public String getError() {
-        return error;
-    }
-
-    @Override
-    public String getOverWrite() {
-        return overWrite;
-    }
-
-    @Override
-    public String getConfirmation() {
-        return confirmation;
-    }
-
-    @Override
-    public String getCancel() {
-        return cancel;
-    }
-
-    @Override
-    public String getSuccess() {
-        return this.success;
+    public void translateAndSave() {
+        List<String> list = List.of("label.insert_name", "label.insert_name_title",
+                "label.chosen_directory", "label.correctly_saved","label.not_correctly_saved",
+                "label.confirm", "label.error", "label.overwrite_confirmation","label.cancel",
+                "label.confirmation","label.success"
+        );
+        TranslationsApplication translator = TranslationsApplication.getInstance();
+        list.forEach( key -> translatedLabels.putIfAbsent(key, translator.translate(key)));
     }
 }

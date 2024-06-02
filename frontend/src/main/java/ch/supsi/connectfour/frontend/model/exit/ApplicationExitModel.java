@@ -1,24 +1,22 @@
 package ch.supsi.connectfour.frontend.model.exit;
 
-import ch.supsi.connectfour.frontend.model.translations.TranslationModel;
+import ch.supsi.connectfour.backend.application.translations.TranslationsApplication;
+import ch.supsi.connectfour.frontend.model.Translatable;
 
-public class ApplicationExitModel implements IExitModel {
+import java.util.HashMap;
+import java.util.List;
+
+public class ApplicationExitModel implements Translatable {
 
     /* self reference */
     private static ApplicationExitModel instance;
 
     /* Data used by the view */
-    private final String message;
-    private final String title;
-    private final String confirmText;
-    private final String cancelText;
+    private final HashMap<String, String> translatedLabels = new HashMap<>();
+
 
     private ApplicationExitModel() {
-        TranslationModel translationModel = TranslationModel.getInstance();
-        this.message = translationModel.translate("label.close_confirmation");
-        this.title = translationModel.translate("label.confirm");
-        this.confirmText = translationModel.translate("label.confirm");
-        this.cancelText = translationModel.translate("label.cancel");
+
     }
 
     public static ApplicationExitModel getInstance() {
@@ -28,24 +26,16 @@ public class ApplicationExitModel implements IExitModel {
         return instance;
     }
 
-    /* getters */
     @Override
-    public String getMessage() {
-        return message;
+    public String getTranslation(String key){
+        return translatedLabels.get(key);
     }
 
     @Override
-    public String getTitle() {
-        return title;
-    }
-
-    @Override
-    public String getConfirmText() {
-        return confirmText;
-    }
-
-    @Override
-    public String getCancelText() {
-        return cancelText;
+    public void translateAndSave() {
+        List<String> list = List.of(
+                "label.close_confirmation","label.confirmation", "label.cancel", "label.confirm" );
+        TranslationsApplication translator = TranslationsApplication.getInstance();
+        list.forEach( key -> translatedLabels.putIfAbsent(key, translator.translate(key)));
     }
 }

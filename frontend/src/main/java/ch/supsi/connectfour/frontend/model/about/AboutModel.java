@@ -2,46 +2,36 @@ package ch.supsi.connectfour.frontend.model.about;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesApplication;
 import ch.supsi.connectfour.backend.application.translations.TranslationsApplication;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
-
 public class AboutModel implements IAboutModel {
 
     /* backend controllers */
-    private static final TranslationsApplication translator;
     private static final PreferencesApplication preferences;
 
-    /* static initializer for static fields */
-    static {
-        translator = TranslationsApplication.getInstance();
-        preferences = PreferencesApplication.getInstance();
-    }
-
     /* data */
-    private final String aboutConnectFourLabel;
-    private final String builtOnLabel;
-    private final String runtimeVersionLabel;
-    private final String poweredByLabel;
-    private final String closeText;
+
+    private final HashMap<String, String> translatedLabels = new HashMap<>();
     private String developers;
     private String version;
     private String date;
+
+    /* static initializer for static fields */
+    static {
+        preferences = PreferencesApplication.getInstance();
+    }
 
     /**
      * Construct the object
      */
     public AboutModel() {
-        aboutConnectFourLabel = translator.translate("label.title");
-        closeText = translator.translate("label.close");
-        builtOnLabel = translator.translate("label.built_on");
-        runtimeVersionLabel = translator.translate("label.runtime_version");
-        poweredByLabel = translator.translate("label.powered_by");
         getProp();
     }
 
@@ -97,30 +87,6 @@ public class AboutModel implements IAboutModel {
     }
 
     /* getters */
-    @Override
-    public String getAboutConnectFourLabel() {
-        return aboutConnectFourLabel;
-    }
-
-    @Override
-    public String getBuiltOnLabel() {
-        return builtOnLabel;
-    }
-
-    @Override
-    public String getRuntimeVersionLabel() {
-        return runtimeVersionLabel;
-    }
-
-    @Override
-    public String getPoweredByLabel() {
-        return poweredByLabel;
-    }
-
-    @Override
-    public String getCloseText() {
-        return closeText;
-    }
 
     @Override
     public String getDevelopers() {
@@ -135,5 +101,18 @@ public class AboutModel implements IAboutModel {
     @Override
     public String getDate() {
         return date;
+    }
+
+    @Override
+    public String getTranslation(String key){
+        return translatedLabels.get(key);
+    }
+
+    @Override
+    public void translateAndSave() {
+        List<String> list = List.of(
+                "label.title", "label.close", "label.built_on", "label.runtime_version", "label.powered_by");
+        TranslationsApplication translator = TranslationsApplication.getInstance();
+        list.forEach( key -> translatedLabels.putIfAbsent(key, translator.translate(key)));
     }
 }

@@ -1,8 +1,11 @@
 package ch.supsi.connectfour.frontend.model.preferences;
 
 import ch.supsi.connectfour.backend.application.preferences.PreferencesApplication;
+import ch.supsi.connectfour.backend.application.translations.TranslationsApplication;
 
 import java.util.AbstractMap;
+import java.util.HashMap;
+import java.util.List;
 
 public class PreferencesModel implements IPreferencesModel {
 
@@ -10,41 +13,21 @@ public class PreferencesModel implements IPreferencesModel {
     private static PreferencesApplication backendController;
 
     /* data */
-    private final String enableMessage;
-    private final String disableMessage;
-    private final String languageOnlyMessage;
 
     private boolean languageOnlyRequested;
+
+    private final HashMap<String, String> translatedLabels = new HashMap<>();
 
     /**
      * Construct an instance
      *
-     * @param enableMessage  message to be displayed for enable
-     * @param disableMessage message to be displayed for disable
      */
-    public PreferencesModel(String enableMessage, String disableMessage, String languageOnlyMessage) {
+    public PreferencesModel() {
         backendController = PreferencesApplication.getInstance();
-        this.enableMessage = enableMessage;
-        this.disableMessage = disableMessage;
-        this.languageOnlyMessage = languageOnlyMessage;
         languageOnlyRequested = false;
     }
 
     /* getters */
-    @Override
-    public String getEnableMessage() {
-        return enableMessage;
-    }
-
-    @Override
-    public String getDisableMessage() {
-        return disableMessage;
-    }
-
-    @Override
-    public String getLanguageOnlyMessage() {
-        return languageOnlyMessage;
-    }
 
     public boolean isOnlyLanguageRequested() {
         return languageOnlyRequested;
@@ -58,5 +41,19 @@ public class PreferencesModel implements IPreferencesModel {
     @Override
     public void setLanguageOnlyRequested(boolean languageOnlyRequested) {
         this.languageOnlyRequested = languageOnlyRequested;
+    }
+
+
+    @Override
+    public String getTranslation(String key){
+        return translatedLabels.get(key);
+    }
+
+    @Override
+    public void translateAndSave() {
+        List<String> list = List.of(
+                "label.preferences_please_choose", "label.preferences_cannot_save", "label.preferences_language_only");
+        TranslationsApplication translator = TranslationsApplication.getInstance();
+        list.forEach( key -> translatedLabels.putIfAbsent(key, translator.translate(key)));
     }
 }

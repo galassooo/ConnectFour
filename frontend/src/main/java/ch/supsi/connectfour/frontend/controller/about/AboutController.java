@@ -1,11 +1,13 @@
 package ch.supsi.connectfour.frontend.controller.about;
 
+import ch.supsi.connectfour.frontend.model.about.AboutModel;
+import ch.supsi.connectfour.frontend.model.about.IAboutModel;
+import ch.supsi.connectfour.frontend.view.about.AboutView;
 import ch.supsi.connectfour.frontend.view.about.IAboutView;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.net.URL;
 
@@ -33,7 +35,11 @@ public class AboutController implements IAboutController {
                 return;
             }
 
+            IAboutModel aboutModel = new AboutModel();
+            aboutModel.translateAndSave();
+
             FXMLLoader aboutLoader = new FXMLLoader(fxmlUrl);
+            aboutLoader.setControllerFactory(param -> new AboutView(aboutModel));
             BorderPane content = aboutLoader.load();
             aboutView = aboutLoader.getController();
 

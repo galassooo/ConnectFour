@@ -31,7 +31,6 @@ public class PreferencesFrontendController implements IPreferencesController, Ev
     private static PreferencesFrontendController instance;
     /* models */
     private final PreferencesModel model;
-    private final TranslationModel translationModel;
 
     /* stage */
     private final Stage stage;
@@ -44,12 +43,10 @@ public class PreferencesFrontendController implements IPreferencesController, Ev
      */
     private PreferencesFrontendController() {
 
-        translationModel = TranslationModel.getInstance();
-        String pleaseChoose = translationModel.translate("label.preferences_please_choose");
-        String cannotSave = translationModel.translate("label.preferences_cannot_save");
-        String languageOnly = translationModel.translate("label.preferences_language_only");
+        TranslationModel translationModel = TranslationModel.getInstance();
         // Instantiate the model and provide the translations it needs
-        model = new PreferencesModel(pleaseChoose, cannotSave, languageOnly);
+        model = new PreferencesModel();
+        model.translateAndSave();
         stage = new Stage();
         stage.addEventHandler(LanguageOnlyRequired.LANGUAGE_CHANGE, this);
 
@@ -87,7 +84,7 @@ public class PreferencesFrontendController implements IPreferencesController, Ev
                 stage.close();
             });
             // Provide the view with the information on supported languages
-            preferencesView.setLanguages(this.translationModel.getSupportedLanguages());
+            preferencesView.setLanguages(translationModel.getSupportedLanguages());
             this.initViewChoices();
 
             stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/preferences/gear.png"))));
@@ -164,7 +161,7 @@ public class PreferencesFrontendController implements IPreferencesController, Ev
                                 return null;
                             }).toList();
         } catch (IOException e) {
-            System.err.printf("Could not load symbols from %s%n" + IMAGES_SYMBOLS);
+            System.err.printf("Could not load symbols from %s%n", IMAGES_SYMBOLS);
             e.printStackTrace();
         }
         this.preferencesView.setSymbols(validSymbols);

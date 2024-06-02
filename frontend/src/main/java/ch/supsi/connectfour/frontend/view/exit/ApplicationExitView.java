@@ -1,7 +1,7 @@
 package ch.supsi.connectfour.frontend.view.exit;
 
+import ch.supsi.connectfour.frontend.model.Translatable;
 import ch.supsi.connectfour.frontend.model.exit.ApplicationExitModel;
-import ch.supsi.connectfour.frontend.model.exit.IExitModel;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -13,7 +13,7 @@ import java.util.Optional;
 
 public class ApplicationExitView implements IApplicationExitView {
     /* model */
-    private static IExitModel model;
+    private static Translatable model;
 
     /**
      * Construct the object
@@ -33,13 +33,13 @@ public class ApplicationExitView implements IApplicationExitView {
     public boolean showConfirmationDialog() {
         // Create a confirmation dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle(model.getTitle());
+        alert.setTitle(model.getTranslation("label.confirmation"));
         alert.setHeaderText(null);
-        alert.setContentText(model.getMessage());
+        alert.setContentText(model.getTranslation("label.close_confirmation"));
 
         // Set OK and Cancel button text
-        ButtonType okButton = new ButtonType(model.getConfirmText());
-        ButtonType cancelButton = new ButtonType(model.getCancelText(), ButtonType.CANCEL.getButtonData());
+        ButtonType okButton = new ButtonType(model.getTranslation("label.confirm"));
+        ButtonType cancelButton = new ButtonType(model.getTranslation("label.cancel"), ButtonType.CANCEL.getButtonData());
         alert.getButtonTypes().setAll(okButton, cancelButton);
 
         loadCssForAlert(alert);

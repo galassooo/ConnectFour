@@ -125,15 +125,15 @@ public class PreferencesView implements IPreferencesView {
              * viene generato un evento -> il controller lo cattura -> setta il campo del model in base all'evento generato
              */
             if (!languageEqual && colorsEqual && shapesEqual) {
-                this.preferencesText.setText(model.getLanguageOnlyMessage());
+                this.preferencesText.setText(model.getTranslation("label.preferences_language_only"));
                 Event.fireEvent(root, new LanguageOnlyRequired(true));
 
             } else if (colorsEqual && shapesEqual) {
-                this.preferencesText.setText(model.getDisableMessage());
+                this.preferencesText.setText(model.getTranslation("label.preferences_cannot_save"));
                 Event.fireEvent(root, new LanguageOnlyRequired(false));
 
             } else {
-                this.preferencesText.setText(model.getEnableMessage());
+                this.preferencesText.setText(model.getTranslation("label.preferences_please_choose"));
                 Event.fireEvent(root, new LanguageOnlyRequired(false));
             }
         };

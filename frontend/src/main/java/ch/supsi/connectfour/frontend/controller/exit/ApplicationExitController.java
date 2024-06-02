@@ -5,22 +5,26 @@ import ch.supsi.connectfour.frontend.view.exit.ApplicationExitView;
 import ch.supsi.connectfour.frontend.view.exit.IApplicationExitView;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
-
 public class ApplicationExitController implements IExitController {
 
     /* self reference */
     private static ApplicationExitController instance;
-    /* view */
-    private final IApplicationExitView view;
+
     /* stage */
     private Stage primaryStage;
 
+    /* view */
+    private final IApplicationExitView view;
+
     private ApplicationExitController() {
         ApplicationExitModel model = ApplicationExitModel.getInstance();
+        model.translateAndSave();
+
         view = new ApplicationExitView(model);
     }
 
     /**
+     *
      * @return an instance of this class
      */
     public static ApplicationExitController getInstance() {
@@ -31,8 +35,7 @@ public class ApplicationExitController implements IExitController {
     }
 
     /**
-     * Initialize instance's field
-     *
+     * initialize instance's field
      * @param primaryStage root stage
      */
     public void build(@NotNull Stage primaryStage) {
@@ -40,7 +43,7 @@ public class ApplicationExitController implements IExitController {
     }
 
     /**
-     * Handle exit request
+     * handle exit request
      */
     public void manageExit() {
         if (view.showConfirmationDialog()) {

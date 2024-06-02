@@ -48,21 +48,10 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
      */
     private ConnectFourFrontendController() {
         this.translations = TranslationModel.getInstance();
-        final String insertName = translations.translate("label.insert_name");
-        final String insertNameTitle = translations.translate("label.insert_name_title");
-        final String chooseDirectory = translations.translate("label.chosen_directory");
-        final String correctlySaved = translations.translate("label.correctly_saved");
-        final String notCorrectlySaved = translations.translate("label.not_correctly_saved");
-        final String confirm = translations.translate("label.confirm");
-        final String error = translations.translate("label.error");
-        final String overWrite = translations.translate("label.overwrite_confirmation");
-        final String cancel = translations.translate("label.cancel");
-        final String confirmation = translations.translate("label.confirmation");
-        final String success = translations.translate("label.success");
-        this.model = ConnectFourModel // weird formatting for better readability
-                .getInstance(insertName, insertNameTitle, chooseDirectory,
-                        correctlySaved, notCorrectlySaved,
-                        confirm, error, overWrite, confirmation, cancel, success);
+        this.model = ConnectFourModel.getInstance();
+
+        // weird formatting for better readability
+        model.translateAndSave();
 
         this.serializationView = new SerializationView(primaryStage, model);
     }

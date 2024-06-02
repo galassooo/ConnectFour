@@ -1,6 +1,5 @@
 package ch.supsi.connectfour.frontend.view.about;
 
-import ch.supsi.connectfour.frontend.model.about.AboutModel;
 import ch.supsi.connectfour.frontend.model.about.IAboutModel;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -42,14 +41,18 @@ public class AboutView implements IAboutView {
     @FXML
     private Label versionValue;
 
+    private final IAboutModel model;
+
+    public AboutView(IAboutModel model) {
+        this.model = model;
+    }
+
     /**
      * Initializes the view by loading the necessary components through queries to the model class
      * and loads the board image
      */
     @FXML
     void initialize() {
-
-        IAboutModel model = new AboutModel(); //model class
 
         URL imageUrl = getClass().getResource("/images/about/board.png");
         if (imageUrl == null) {
@@ -60,14 +63,14 @@ public class AboutView implements IAboutView {
         imageView.setImage(image);
 
         //query data
-        poweredByLabel.setText(model.getPoweredByLabel());
-        button.setText(model.getCloseText());
-        builtOnLabel.setText(model.getBuiltOnLabel());
-        runtimeVersionLabel.setText(model.getRuntimeVersionLabel());
+        poweredByLabel.setText(model.getTranslation("label.powered_by"));
+        button.setText(model.getTranslation("label.close"));
+        builtOnLabel.setText(model.getTranslation("label.built_on"));
+        runtimeVersionLabel.setText(model.getTranslation("label.runtime_version"));
         dateValue.setText(model.getDate());
         versionValue.setText(model.getVersion());
         developersValue.setText(model.getDevelopers());
-        this.aboutConnectFourLabel.setText(model.getAboutConnectFourLabel());
+        this.aboutConnectFourLabel.setText(model.getTranslation("label.title"));
 
     }
 

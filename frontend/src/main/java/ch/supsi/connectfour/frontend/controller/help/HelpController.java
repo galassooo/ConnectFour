@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Stack;
 
 //OK
 public class HelpController implements IHelpController {
@@ -46,7 +48,7 @@ public class HelpController implements IHelpController {
             }
 
             FXMLLoader aboutLoader = new FXMLLoader(fxmlUrl);
-            BorderPane content = aboutLoader.load();
+            StackPane content = aboutLoader.load();
             helpView = aboutLoader.getController();
 
 

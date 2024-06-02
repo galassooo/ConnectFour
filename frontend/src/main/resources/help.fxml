@@ -4,46 +4,55 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<BorderPane xmlns:fx="http://javafx.com/fxml/1" id="pane" stylesheets="styleSheets/help.css" maxHeight="-Infinity"
-            maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0"
-            prefWidth="500.0" xmlns="http://javafx.com/javafx/20.0.1"
-            fx:controller="ch.supsi.connectfour.frontend.view.help.HelpView">
-    <top>
-        <Label fx:id="HowToPlayLabel" id="HowToPlayLabel" text="How to play" BorderPane.alignment="CENTER">
-            <BorderPane.margin>
-                <Insets top="10.0"/>
-            </BorderPane.margin>
-            <font>
-                <Font size="16.0"/>
-            </font>
-        </Label>
-    </top>
-    <center>
-        <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
-            <children>
-                <ImageView fx:id="image" fitHeight="150.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true"/>
-                <Label fx:id="helpLabel" text="You can select a column by clicking on the column button"/>
-            </children>
-        </VBox>
-    </center>
-    <bottom>
-        <HBox fx:id="hbox" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="300.0" spacing="20.0"
-              BorderPane.alignment="CENTER">
-            <children>
-                <Button fx:id="previousButton" mnemonicParsing="false" text="Close"/>
-                <Button fx:id="nextButton" mnemonicParsing="false" text="Next"/>
-            </children>
-            <BorderPane.margin>
-                <Insets right="20.0" top="10.0"/>
-            </BorderPane.margin>
-            <padding>
-                <Insets bottom="10.0" top="5.0"/>
-            </padding>
-            <opaqueInsets>
-                <Insets/>
-            </opaqueInsets>
-        </HBox>
-    </bottom>
-</BorderPane>
+
+<StackPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ch.supsi.connectfour.frontend.view.help.HelpView">
+   <children>
+      <BorderPane id="pane" prefHeight="200.0" prefWidth="200.0" StackPane.alignment="BOTTOM_LEFT">
+         <bottom>
+            <ImageView fx:id="clippy" fitHeight="74.0" fitWidth="56.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="BOTTOM_LEFT" />
+         </bottom>
+      </BorderPane>
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="270.0" prefWidth="500.0" stylesheets="styleSheets/help.css">
+          <top>
+              <Label id="HowToPlayLabel" fx:id="HowToPlayLabel" text="How to play" BorderPane.alignment="CENTER">
+                  <BorderPane.margin>
+                      <Insets top="10.0" />
+                  </BorderPane.margin>
+                  <font>
+                      <Font size="16.0" />
+                  </font>
+              </Label>
+          </top>
+          <center>
+              <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" spacing="10.0" BorderPane.alignment="CENTER">
+                  <children>
+                      <ImageView fx:id="image" fitHeight="150.0" fitWidth="350.0" pickOnBounds="true" preserveRatio="true" />
+                      <Label fx:id="helpLabel" text="You can select a column by clicking on the column button" />
+                  </children>
+              </VBox>
+          </center>
+          <bottom>
+              <HBox fx:id="hbox" alignment="CENTER_RIGHT" prefHeight="35.0" prefWidth="300.0" spacing="20.0" BorderPane.alignment="CENTER">
+                  <children>
+                      <Button fx:id="previousButton" mnemonicParsing="false" text="Close" />
+                      <Button fx:id="nextButton" mnemonicParsing="false" text="Next" />
+                  </children>
+                  <BorderPane.margin>
+                      <Insets right="20.0" top="10.0" />
+                  </BorderPane.margin>
+                  <padding>
+                      <Insets bottom="10.0" top="5.0" />
+                  </padding>
+                  <opaqueInsets>
+                      <Insets />
+                  </opaqueInsets>
+              </HBox>
+          </bottom>
+      </BorderPane>
+   </children>
+</StackPane>

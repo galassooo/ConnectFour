@@ -7,7 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
-//OK
 public class HelpModel implements IHelpModel {
     /* backend controllers */
     private final static TranslationsApplication translations = TranslationsApplication.getInstance();
@@ -57,34 +56,42 @@ public class HelpModel implements IHelpModel {
         return TITLE;
     }
 
+    @Override
     public String getHowToPlay() {
         return howToPlay;
     }
 
+    @Override
     public String getImagePath() {
         return imagePath;
     }
 
+    @Override
     public String getNextBtnLabel() {
         return nextBtnLabel;
     }
 
+    @Override
     public String getHelpText() {
         return helpText;
     }
 
+    @Override
     public Consumer<ActionEvent> getPreviousBtnAction() {
         return previousBtnAction;
     }
 
+    @Override
     public @NotNull Consumer<ActionEvent> getNextBtnAction() {
         return nextBtnAction;
     }
 
+    @Override
     public String getPreviousBtnText() {
         return previousBtnText;
     }
 
+    @Override
     public boolean isShowPreviousBtn() {
         return showPreviousBtn;
     }

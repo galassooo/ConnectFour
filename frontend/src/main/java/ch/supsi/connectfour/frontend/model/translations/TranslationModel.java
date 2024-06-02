@@ -69,6 +69,7 @@ public class TranslationModel implements ITranslationsModel {
      * @param s string key
      * @return translated string
      */
+    @Override
     public String translate(String s) {
         return translationsController.translate(s);
     }
@@ -88,6 +89,7 @@ public class TranslationModel implements ITranslationsModel {
      *
      * @return The Locale object representing the current language.
      */
+    @Override
     public Locale getCurrentLanguage() {
         return Locale.forLanguageTag(String.valueOf(preferencesController.getPreference("language-tag")));
     }

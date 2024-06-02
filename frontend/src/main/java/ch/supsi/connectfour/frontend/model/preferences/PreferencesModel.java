@@ -4,7 +4,6 @@ import ch.supsi.connectfour.backend.application.preferences.PreferencesApplicati
 
 import java.util.AbstractMap;
 
-//OK
 public class PreferencesModel implements IPreferencesModel {
 
     /* backend controller */
@@ -32,14 +31,17 @@ public class PreferencesModel implements IPreferencesModel {
     }
 
     /* getters */
+    @Override
     public String getEnableMessage() {
         return enableMessage;
     }
 
+    @Override
     public String getDisableMessage() {
         return disableMessage;
     }
 
+    @Override
     public String getLanguageOnlyMessage() {
         return languageOnlyMessage;
     }
@@ -53,6 +55,7 @@ public class PreferencesModel implements IPreferencesModel {
         backendController.setPreference(preference);
     }
 
+    @Override
     public void setLanguageOnlyRequested(boolean languageOnlyRequested) {
         this.languageOnlyRequested = languageOnlyRequested;
     }

@@ -132,22 +132,27 @@ public class ConnectFourModel implements IConnectFourModel {
     public ConnectFourPlayerInterface getOtherPlayer(ConnectFourPlayerInterface player) {
         return this.backendController.getOtherPlayer(player);
     }
+
     @Override
     public String getInsertName() {
         return insertName;
     }
+
     @Override
     public String getInsertNameTitle() {
         return insertNameTitle;
     }
+
     @Override
     public String getChooseDirectory() {
         return chooseDirectory;
     }
+
     @Override
     public String getCorrectlySaved() {
         return correctlySaved;
     }
+
     @Override
     public String getNotCorrectlySaved() {
         return notCorrectlySaved;
@@ -157,18 +162,22 @@ public class ConnectFourModel implements IConnectFourModel {
     public String getConfirm() {
         return confirm;
     }
+
     @Override
     public String getError() {
         return error;
     }
+
     @Override
     public String getOverWrite() {
         return overWrite;
     }
+
     @Override
     public String getConfirmation() {
         return confirmation;
     }
+
     @Override
     public String getCancel() {
         return cancel;

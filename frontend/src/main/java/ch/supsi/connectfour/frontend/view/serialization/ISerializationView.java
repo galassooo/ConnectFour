@@ -1,10 +1,6 @@
 package ch.supsi.connectfour.frontend.view.serialization;
 
-import javafx.scene.control.Alert;
-import javafx.stage.Stage;
-
 import java.io.File;
-
 
 /**
  * Defines the behaviour that a generic serialization view should expose to the controller
@@ -19,5 +15,4 @@ public interface ISerializationView {
     boolean showConfirmationDialog();
 
     String showInputDialog();
-
 }

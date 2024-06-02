@@ -13,7 +13,6 @@ import ch.supsi.connectfour.frontend.controller.preferences.PreferencesFrontendC
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 
-//OK
 public class MenuBarDispatcher {
     /* controllers */
     private static final IGameController connectFourFrontendController;

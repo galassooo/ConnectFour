@@ -18,7 +18,6 @@ import java.util.Arrays;
 import java.util.Properties;
 import java.util.Random;
 
-//OK
 // Tells Jackson to use our custom deserializer
 @JsonDeserialize(using = ConnectFourBusinessDeserializer.class)
 public class ConnectFourBusiness implements ConnectFourBusinessInterface {
@@ -31,7 +30,6 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
        implemented a separate multi-layer structure for the serialization concern, an approach that
        would have allowed us to better separate what concerns each class addresses */
     private static final PreferencesDataAccessInterface preferencesDataAccess;
-    private static ConnectFourBusinessInterface instance;
 
     static {
         dataAccess = ConnectFourDataAccess.getInstance();
@@ -361,7 +359,6 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
     void setLastPositionOccupied(int[] lastPositionOccupied) {
         this.lastPositionOccupied = lastPositionOccupied;
     }
-
 
     void setPathToSave(Path pathToSave) {
         this.pathToSave = pathToSave;

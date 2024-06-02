@@ -25,7 +25,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-//OK
 public class ConnectFourFrontendController implements GameEventHandler, IGameController {
 
     /* self reference */

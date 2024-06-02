@@ -11,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 import java.util.Optional;
 
-//OK
 public class ApplicationExitView implements IApplicationExitView {
     /* model */
     private static IExitModel model;
@@ -30,6 +29,7 @@ public class ApplicationExitView implements IApplicationExitView {
      *
      * @return true if the user confirmed, false otherwise
      */
+    @Override
     public boolean showConfirmationDialog() {
         // Create a confirmation dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);

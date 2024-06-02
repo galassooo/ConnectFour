@@ -8,5 +8,4 @@ public interface PreferencesDataAccessInterface {
     Properties getPreferences();
 
     boolean storePreference(Map.Entry<String, String> preference);
-
 }

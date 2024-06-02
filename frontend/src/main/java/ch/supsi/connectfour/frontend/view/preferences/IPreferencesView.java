@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.function.Consumer;
 
-
 /**
  * Defines the behaviour that a generic preferences view should expose to the controller
  */

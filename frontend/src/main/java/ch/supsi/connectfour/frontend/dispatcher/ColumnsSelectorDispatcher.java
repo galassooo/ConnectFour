@@ -12,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-//OK
 public class ColumnsSelectorDispatcher {
 
     /* controller */
@@ -59,5 +58,4 @@ public class ColumnsSelectorDispatcher {
             connectFourFrontendController.manageColumnSelection(Integer.parseInt(button.getId()));
         }
     }
-
 }

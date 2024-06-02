@@ -68,7 +68,6 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
     private @Nullable Path createUserPreferencesDirectory() {
         try {
             return Files.createDirectories(this.getUserPreferencesDirectoryPath());
-
         } catch (IOException e) {
             System.err.printf("Unable to create user preferences directory: %s\n", e.getMessage());
             e.printStackTrace();
@@ -183,6 +182,7 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
 
         if (userPreferencesFileExists()) {
             userPreferences = this.loadPreferences(this.getUserPreferencesFilePath());
+            // the user preferences exist if we're here..
             newProperties = (Properties) userPreferences.clone();
             return userPreferences;
         }

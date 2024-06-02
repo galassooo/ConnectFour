@@ -8,6 +8,8 @@ public abstract class GameEvent implements GameEventInterface {
 
     /* fields */
     private final static TranslationsApplication translations = TranslationsApplication.getInstance();
+    // These are currently not used but we decided to include them because they could be useful if, for example,
+    // we decided to have a log of all events that happened in the game
     private final String eventMessage;
     private final String eventLogMessage;
 

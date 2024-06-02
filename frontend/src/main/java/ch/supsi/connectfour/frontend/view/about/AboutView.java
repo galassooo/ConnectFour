@@ -13,7 +13,6 @@ import org.jetbrains.annotations.NotNull;
 import java.net.URL;
 import java.util.function.Consumer;
 
-//OK
 public class AboutView implements IAboutView {
 
     /* components */
@@ -77,6 +76,7 @@ public class AboutView implements IAboutView {
      *
      * @param eventConsumer the action to be performed on press
      */
+    @Override
     public void setOnActButton(@NotNull Consumer<ActionEvent> eventConsumer) {
         button.setOnAction(eventConsumer::accept);
     }

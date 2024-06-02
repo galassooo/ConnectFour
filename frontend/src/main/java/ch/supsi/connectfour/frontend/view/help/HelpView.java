@@ -12,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 import java.net.URL;
 import java.util.function.Consumer;
 
-//OK
 public class HelpView implements IHelpView {
 
     /* components */
@@ -39,7 +38,7 @@ public class HelpView implements IHelpView {
 
     /* init */
     @FXML
-    private void initialize(){
+    private void initialize() {
         URL imageUrl = getClass().getResource("/images/help/clippy.png");
         if (imageUrl == null) {
             System.err.println("Error while loading board image");

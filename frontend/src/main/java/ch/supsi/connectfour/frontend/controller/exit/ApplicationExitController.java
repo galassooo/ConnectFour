@@ -6,7 +6,6 @@ import ch.supsi.connectfour.frontend.view.exit.IApplicationExitView;
 import javafx.stage.Stage;
 import org.jetbrains.annotations.NotNull;
 
-//NOT OK //todo: is it ok now? I moved the translations to the model!
 public class ApplicationExitController implements IExitController {
 
     /* self reference */

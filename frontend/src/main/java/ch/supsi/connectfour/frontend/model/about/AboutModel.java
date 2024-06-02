@@ -11,7 +11,6 @@ import java.time.format.FormatStyle;
 import java.util.Locale;
 import java.util.Properties;
 
-//OK
 public class AboutModel implements IAboutModel {
 
     /* backend controllers */
@@ -98,34 +97,42 @@ public class AboutModel implements IAboutModel {
     }
 
     /* getters */
+    @Override
     public String getAboutConnectFourLabel() {
         return aboutConnectFourLabel;
     }
 
+    @Override
     public String getBuiltOnLabel() {
         return builtOnLabel;
     }
 
+    @Override
     public String getRuntimeVersionLabel() {
         return runtimeVersionLabel;
     }
 
+    @Override
     public String getPoweredByLabel() {
         return poweredByLabel;
     }
 
+    @Override
     public String getCloseText() {
         return closeText;
     }
 
+    @Override
     public String getDevelopers() {
         return developers;
     }
 
+    @Override
     public String getVersion() {
         return version;
     }
 
+    @Override
     public String getDate() {
         return date;
     }

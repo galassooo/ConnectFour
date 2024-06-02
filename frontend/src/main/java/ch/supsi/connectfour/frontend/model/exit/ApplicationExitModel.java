@@ -2,7 +2,6 @@ package ch.supsi.connectfour.frontend.model.exit;
 
 import ch.supsi.connectfour.frontend.model.translations.TranslationModel;
 
-//NOT OK
 public class ApplicationExitModel implements IExitModel {
 
     /* self reference */
@@ -30,19 +29,22 @@ public class ApplicationExitModel implements IExitModel {
     }
 
     /* getters */
-
+    @Override
     public String getMessage() {
         return message;
     }
 
+    @Override
     public String getTitle() {
         return title;
     }
 
+    @Override
     public String getConfirmText() {
         return confirmText;
     }
 
+    @Override
     public String getCancelText() {
         return cancelText;
     }

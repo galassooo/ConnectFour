@@ -25,4 +25,26 @@ public interface IConnectFourModel {
     ConnectFourPlayerInterface getOtherPlayer(ConnectFourPlayerInterface player);
 
     ConnectFourBusinessInterface tryLoadingSave(File file);
+
+    String getInsertName();
+
+    String getInsertNameTitle();
+
+    String getChooseDirectory();
+
+    String getCorrectlySaved();
+
+    String getNotCorrectlySaved();
+
+    String getConfirm();
+
+    String getError();
+
+    String getOverWrite();
+
+    String getConfirmation();
+
+    String getCancel();
+
+    String getSuccess();
 }

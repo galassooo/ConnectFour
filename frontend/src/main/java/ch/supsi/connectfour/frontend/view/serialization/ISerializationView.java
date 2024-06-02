@@ -10,14 +10,14 @@ import java.io.File;
  * Defines the behaviour that a generic serialization view should expose to the controller
  */
 public interface ISerializationView {
-    File askForDirectory(File initialDirectory, String title, Stage stage);
+    File askForDirectory(File initialDirectory);
 
-    File askForFile(String title, Stage stage);
+    File askForFile();
 
-    void showMessage(String message, String title, Alert.AlertType type, Stage stage);
+    void showMessage(boolean wasSuccessful);
 
-    boolean showConfirmationDialog(String message, String title, String confirmText, String cancelText, Stage stage);
+    boolean showConfirmationDialog();
 
-    String showInputDialog(String message, String title);
+    String showInputDialog();
 
 }

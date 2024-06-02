@@ -1,5 +1,6 @@
 package ch.supsi.connectfour.frontend.view.serialization;
 
+import ch.supsi.connectfour.frontend.model.game.IConnectFourModel;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -16,20 +17,29 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class SerializationView implements ISerializationView {
+    private final Stage root;
+    private final IConnectFourModel model;
 
-    public SerializationView() {
+    public SerializationView(Stage stage, IConnectFourModel model) {
+        this.root = stage;
+        this.model = model;
     }
 
     /**
      * Builds a message to display to the user with the given message, popup title and type of alert
      */
     @Override
-    public void showMessage(final String message, final String title, final Alert.AlertType type, Stage stage) {
-        Alert alert = new Alert(type);
-        alert.initOwner(stage);
-        alert.setTitle(title);
+    public void showMessage(boolean success) {
+        Alert alert = success ? new Alert(Alert.AlertType.INFORMATION) : new Alert(Alert.AlertType.ERROR);
+        alert.initOwner(root);
         alert.setHeaderText(null);
-        alert.setContentText(message);
+        if (success) {
+            alert.setTitle(model.getSuccess());
+            alert.setContentText(model.getCorrectlySaved());
+        } else {
+            alert.setTitle(model.getError());
+            alert.setContentText(model.getNotCorrectlySaved());
+        }
         ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(new Image("/images/serialization/excl_mark.png"));
 
         loadCssForAlert(alert);
@@ -65,47 +75,43 @@ public class SerializationView implements ISerializationView {
      * Builds and displays a window to ask the user for a directory on their filesystem
      *
      * @param initialDirectory the initial directory where the directoryChooser will be
-     * @param title            the title of the window
-     * @param stage            stage where the window will be displayed
      * @return a File instance representing the Directory the user selected through the DirectoryChooser
      */
     @Override
-    public File askForDirectory(final File initialDirectory, final String title, Stage stage) {
+    public File askForDirectory(final File initialDirectory) {
         DirectoryChooser directoryChooser = new DirectoryChooser();
         directoryChooser.setInitialDirectory(initialDirectory);
-        directoryChooser.setTitle(title);
-        return directoryChooser.showDialog(stage);
+        directoryChooser.setTitle(model.getChooseDirectory());
+        return directoryChooser.showDialog(root);
     }
 
     /**
      * Builds and displays a window to ask the user for a file  on their filesystem
      *
-     * @param title the title of the window
-     * @param stage stage where the window will be displayed
      * @return a File instance representing the Directory the user selected through the DirectoryChooser
      */
     @Override
-    public File askForFile(final String title, Stage stage) {
+    public File askForFile() {
         FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle(title);
-        return fileChooser.showOpenDialog(stage);
+        fileChooser.setTitle(model.getInsertNameTitle());
+        return fileChooser.showOpenDialog(root);
     }
 
     /**
-     *  todo: comment waitin for possible refactor
+     * Builds and shows a confirmation dialog to the user
      */
     @Override
-    public boolean showConfirmationDialog(final String message, final String title, final String confirmText, final String cancelText, Stage stage) {
+    public boolean showConfirmationDialog() {
         // Create a confirmation dialog
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.initOwner(stage);
-        alert.setTitle(title);
+        alert.initOwner(root);
+        alert.setTitle(model.getConfirmation());
         alert.setHeaderText(null);
-        alert.setContentText(message);
+        alert.setContentText(model.getOverWrite());
 
         // Set OK and Cancel buttons
-        ButtonType okButton = new ButtonType(confirmText);
-        ButtonType cancelButton = new ButtonType(cancelText, ButtonType.CANCEL.getButtonData());
+        ButtonType okButton = new ButtonType(model.getConfirm());
+        ButtonType cancelButton = new ButtonType(model.getCancel(), ButtonType.CANCEL.getButtonData());
         alert.getButtonTypes().setAll(okButton, cancelButton);
 
         loadCssForAlert(alert);
@@ -116,14 +122,16 @@ public class SerializationView implements ISerializationView {
         return result.isPresent() && result.get() == okButton;
     }
 
-    //ALEX todo: same as above
+    /**
+     * Builds and shows a text input dialog
+     */
     @Override
-    public String showInputDialog(final String message, final String title) {
+    public String showInputDialog() {
         // Create a TextInputDialog
         TextInputDialog dialog = new TextInputDialog();
-        dialog.setTitle(title);
+        dialog.setTitle(model.getInsertNameTitle());
         dialog.setHeaderText(null);
-        dialog.setContentText(message);
+        dialog.setContentText(model.getInsertName());
 
         // Show the input dialog and wait for user input
         Optional<String> result = dialog.showAndWait();

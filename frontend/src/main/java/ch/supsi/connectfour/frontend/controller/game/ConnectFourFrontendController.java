@@ -15,7 +15,6 @@ import ch.supsi.connectfour.frontend.view.serialization.ISerializationView;
 import ch.supsi.connectfour.frontend.view.serialization.SerializationView;
 import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
 import ch.supsi.connectfour.frontend.view.viewables.Viewable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
 import javafx.stage.Stage;
@@ -49,9 +48,24 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
      * Initialize models and serialization views
      */
     private ConnectFourFrontendController() {
-        this.model = ConnectFourModel.getInstance();
-        this.serializationView = new SerializationView();
         this.translations = TranslationModel.getInstance();
+        final String insertName = translations.translate("label.insert_name");
+        final String insertNameTitle = translations.translate("label.insert_name_title");
+        final String chooseDirectory = translations.translate("label.chosen_directory");
+        final String correctlySaved = translations.translate("label.correctly_saved");
+        final String notCorrectlySaved = translations.translate("label.not_correctly_saved");
+        final String confirm = translations.translate("label.confirm");
+        final String error = translations.translate("label.error");
+        final String overWrite = translations.translate("label.overwrite_confirmation");
+        final String cancel = translations.translate("label.cancel");
+        final String confirmation = translations.translate("label.confirmation");
+        final String success = translations.translate("label.success");
+        this.model = ConnectFourModel // weird formatting for better readability
+                .getInstance(insertName, insertNameTitle, chooseDirectory,
+                        correctlySaved, notCorrectlySaved,
+                        confirm, error, overWrite, confirmation, cancel, success);
+
+        this.serializationView = new SerializationView(primaryStage, model);
     }
 
     /**
@@ -98,17 +112,7 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
     public void manageNew() {
         if (!model.isCurrentMatchNull()) {
             // If the user confirms their choice to open a new game
-
-            //split declaration for better readability
-            String overWrite = translations.translate("label.overwrite_confirmation");
-            String confirmation = translations.translate("label.confirmation");
-            String confirm = translations.translate("label.confirm");
-            String cancel = translations.translate("label.cancel");
-            /* TODO: this interaction. We are providing the view with the translations. Should we not store the translations in the
-                model and then ask the model to provide the translations like we did elsewhere??
-             */
-
-            if (this.serializationView.showConfirmationDialog(overWrite, confirmation, confirm, cancel, primaryStage)) {
+            if (this.serializationView.showConfirmationDialog()) {
                 // Update the save button to prevent saving on new game
                 saveMenu.setDisable(true);
                 primaryStage.setTitle(MainFx.APP_TITLE);
@@ -133,19 +137,7 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
      * Manage save request
      */
     public void manageSave() {
-        //if persist operation was successful
-        if (model.persist()) {
-            /*
-             *  TODO: anche qui la stessa interazione di sopra. Non so se potrebbe aver senso passare alla view piuttosto un
-             *  booleano in cui diciamo se l'operazione è andata a buon fine o no e poi la view tira su la trad dal model
-             */
-            String correct = translations.translate("label.correctly_saved");
-            this.serializationView.showMessage(correct, null, Alert.AlertType.INFORMATION, primaryStage);
-        } else {
-            //otherwise show an error message
-            String incorrect = translations.translate("label.not_correctly_saved");
-            this.serializationView.showMessage(incorrect, null, Alert.AlertType.ERROR, primaryStage);
-        }
+        this.serializationView.showMessage(model.persist());
     }
 
     /**
@@ -161,28 +153,22 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
      * Manage the save as request
      */
     public void manageSaveAs() {
-        // TODO: same interaction
-        String chosen = translations.translate("label.chosen_directory");
-        final File dir = this.serializationView.askForDirectory(new File(System.getProperty("user.home")), chosen, primaryStage);
+        final File dir = this.serializationView.askForDirectory(new File(System.getProperty("user.home")));
 
         // Check if the dir variable points to something, whether the directory exists on the filesystem and is a directory
         if (dir != null && dir.exists() && dir.isDirectory()) {
 
-            String insertName = translations.translate("label.insert_name");
-            String title = translations.translate("label.insert_name_title");
-            final String fileName = this.serializationView.showInputDialog(insertName, title);
+            final String fileName = this.serializationView.showInputDialog();
 
             if (fileName != null && model.persist(dir, fileName)) {
 
-                String correct = translations.translate("label.correctly_saved");
-                this.serializationView.showMessage(correct, null, Alert.AlertType.INFORMATION, primaryStage);
+                this.serializationView.showMessage(true);
 
                 saveMenu.setDisable(false);
                 this.updateTitle(this.model.getSaveName());
 
             } else {
-                String incorrect = translations.translate("label.not_correctly_saved");
-                this.serializationView.showMessage(incorrect, null, Alert.AlertType.ERROR, primaryStage);
+                this.serializationView.showMessage(false);
             }
         }
     }
@@ -230,7 +216,7 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
      * Handle open request
      */
     public void manageOpen() {
-        final File file = this.serializationView.askForFile(translations.translate("label.select_file_to_load"), primaryStage);
+        final File file = this.serializationView.askForFile();
         /*
         If it points to an instance of File, exists, is an actual file in the filesystem and can be read
          */
@@ -243,7 +229,7 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
                 this.updateBoard(loadedGame.getGameMatrix());
 
                 // Success!
-                this.serializationView.showMessage(translations.translate("label.loading_confirmation"), translations.translate("label.confirm"), Alert.AlertType.INFORMATION, primaryStage);
+                this.serializationView.showMessage(true);
                 saveMenu.setDisable(false);
 
                 this.updateTitle(loadedGame.getSaveName());
@@ -251,7 +237,7 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
                     buttonList.forEach(btn -> btn.setDisable(false));
             } else {
                 // Error while loading the game
-                this.serializationView.showMessage(translations.translate("label.loading_error"), translations.translate("label.error"), Alert.AlertType.ERROR, primaryStage);
+                this.serializationView.showMessage(false);
             }
         }
     }

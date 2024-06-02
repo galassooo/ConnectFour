@@ -34,6 +34,21 @@ public class HelpView implements IHelpView {
     @FXML
     private HBox hbox;
 
+    @FXML
+    private ImageView clippy;
+
+    /* init */
+    @FXML
+    private void initialize(){
+        URL imageUrl = getClass().getResource("/images/help/clippy.png");
+        if (imageUrl == null) {
+            System.err.println("Error while loading board image");
+            return;
+        }
+        Image image = new Image(imageUrl.toExternalForm());
+        clippy.setImage(image);
+    }
+
     /* setters */
     @Override
     public void setHelpLabel(String content) {

@@ -8,12 +8,17 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.List;
 
 /**
  * This is a deserializer, a class used in combination with the Jackson library to obtain custom deserialization behaviour
  * Further information on why we decided to use a custom deserializer can be found in the body of the deserialize method
  */
 public class ConnectFourBusinessDeserializer extends JsonDeserializer<ConnectFourBusiness> {
+
+    private static final List<String> fieldNames = List
+            .of("player1", "player2", "currentPlayer", "pathToSave",
+                "finished", "lastPositionOccupied", "wasLastMoveValid", "gameMatrix");
 
     /**
      * A better approach for this would have been using reflections to extract all the names of the fields dynamically
@@ -23,6 +28,13 @@ public class ConnectFourBusinessDeserializer extends JsonDeserializer<ConnectFou
     @Override
     public ConnectFourBusiness deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
+
+        for (String fieldName : fieldNames) {
+            if (!node.has(fieldName)) {
+                System.err.println("Error! The selected file is not valid!");
+                throw new IOException();
+            }
+        }
 
         ConnectFourPlayerInterface player1 = jp.getCodec().treeToValue(node.get("player1"), ConnectFourPlayerInterface.class);
         ConnectFourPlayerInterface player2 = jp.getCodec().treeToValue(node.get("player2"), ConnectFourPlayerInterface.class);

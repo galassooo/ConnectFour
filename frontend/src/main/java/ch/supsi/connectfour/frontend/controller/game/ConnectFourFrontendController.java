@@ -145,7 +145,7 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
 
             final String fileName = this.serializationView.showInputDialog();
 
-            if (fileName != null && model.persist(dir, fileName)) {
+            if (fileName != null && !fileName.isEmpty() && model.persist(dir, fileName)) {
 
                 this.serializationView.showMessage(true);
 

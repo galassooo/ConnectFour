@@ -36,7 +36,6 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
     private final List<Button> buttonList = new ArrayList<>();
 
     /* models */
-    private final ITranslationsModel translations;
     private final IConnectFourModel model;
 
     /* views */
@@ -47,7 +46,6 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
      * Initialize models and serialization views
      */
     private ConnectFourFrontendController() {
-        this.translations = TranslationModel.getInstance();
         this.model = ConnectFourModel.getInstance();
 
         // weird formatting for better readability
@@ -79,8 +77,7 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
         primaryStage = stage;
         saveMenu = saveMenuItem;
         viewableItems.addAll(Arrays.stream(viewables).toList());
-        primaryStage = stage;
-        InfoBarView.setDefaultMessage(this.translations.translate("label.infobar_welcome"));
+        InfoBarView.setDefaultMessage(TranslationModel.getInstance().translate("label.infobar_welcome"));
     }
 
     /**

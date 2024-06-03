@@ -20,7 +20,7 @@ public class ApplicationExitView implements IApplicationExitView {
      *
      * @param model the associated model
      */
-    public ApplicationExitView(ApplicationExitModel model) {
+    public ApplicationExitView(Translatable model) {
         ApplicationExitView.model = model;
     }
 

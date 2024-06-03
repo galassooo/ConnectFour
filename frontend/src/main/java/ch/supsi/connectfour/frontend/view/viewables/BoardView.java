@@ -95,6 +95,7 @@ public class BoardView implements Viewable {
      */
     @Override
     public void show(GameEvent event) {
+        // There will only ever be ValidMoveEvents here
         if (event instanceof ValidMoveEvent e) {
             // Update cell symbol and background for a valid move event
             setCellSymbol(e.getRow(), e.getColumn(), e.getPlayerSymbol());
@@ -115,7 +116,7 @@ public class BoardView implements Viewable {
         }
         Image image = new Image(imageUrl.toExternalForm());
 
-        // Reset cell symbols to transparent pawns
+        // Reset cell symbols to transparent tokens
         for (javafx.scene.Node node : gridPaneSymbols.getChildren()) {
             if (node instanceof AnchorPane anchorPane) {
                 for (javafx.scene.Node child : anchorPane.getChildren()) {

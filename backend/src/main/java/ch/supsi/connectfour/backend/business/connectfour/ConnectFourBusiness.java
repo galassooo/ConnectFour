@@ -324,11 +324,11 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
     public ConnectFourPlayerInterface getPlayer2() {
         return (ConnectFourPlayerInterface) player2.clone(); // safety copy
     }
-
+    // Used by Jackson
     public Path getPathToSave() {
         return pathToSave;
     }
-
+    // Used by Jackson
     public boolean isWasLastMoveValid() {
         return wasLastMoveValid;
     }

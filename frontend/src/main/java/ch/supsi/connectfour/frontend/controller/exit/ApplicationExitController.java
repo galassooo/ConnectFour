@@ -1,5 +1,6 @@
 package ch.supsi.connectfour.frontend.controller.exit;
 
+import ch.supsi.connectfour.frontend.model.Translatable;
 import ch.supsi.connectfour.frontend.model.exit.ApplicationExitModel;
 import ch.supsi.connectfour.frontend.view.exit.ApplicationExitView;
 import ch.supsi.connectfour.frontend.view.exit.IApplicationExitView;
@@ -17,7 +18,7 @@ public class ApplicationExitController implements IExitController {
     private final IApplicationExitView view;
 
     private ApplicationExitController() {
-        ApplicationExitModel model = ApplicationExitModel.getInstance();
+        Translatable model = ApplicationExitModel.getInstance();
         model.translateAndSave();
 
         view = new ApplicationExitView(model);

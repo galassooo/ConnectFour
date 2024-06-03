@@ -154,12 +154,11 @@ public class PreferencesFrontendController implements IPreferencesController, Ev
                                     // At this point, value should be in the form ... / images / symbol / ...png
                                     // so this splits around the occurrences of / and only takes the last element
                                     String fileName = relativePath.split("/")[3];
-                                    // Removes the extension. This approach is a bit flawed as it relies on the images being pngs, so it could be improved
-                                    //TODO
+                                    // Based on the regex, it determines the length of the format specifier (+ 1 for the .)
                                     String[] extension = SYMBOL_REGEX.split("\\.");
                                     int extensionLen = extension[extension.length-1].length()+1;
 
-                                    fileName = fileName.substring(0, fileName.length() - 4).toUpperCase();
+                                    fileName = fileName.substring(0, fileName.length() - extensionLen).toUpperCase();
                                     // The relative path and the filename are wrapped in a Symbol object and returned
                                     return new SymbolBusiness(relativePath, fileName);
                                 }

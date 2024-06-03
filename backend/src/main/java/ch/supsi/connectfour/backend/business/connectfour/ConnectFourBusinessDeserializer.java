@@ -31,6 +31,7 @@ public class ConnectFourBusinessDeserializer extends JsonDeserializer<ConnectFou
         ConnectFourBusiness connectFourBusiness = new ConnectFourBusiness(player1, player2);
         connectFourBusiness.setCurrentPlayer(currentPlayer);
 
+        // If a field with the provided name exists, then read and load it onto the model
         if (node.has("pathToSave")) {
             Path pathToSave = jp.getCodec().treeToValue(node.get("pathToSave"), Path.class);
             connectFourBusiness.setPathToSave(pathToSave);

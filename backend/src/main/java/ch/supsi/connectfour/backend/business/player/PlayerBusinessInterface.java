@@ -8,5 +8,4 @@ public interface PlayerBusinessInterface {
     int getId();
 
     Object clone();
-
 }

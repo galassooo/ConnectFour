@@ -87,7 +87,7 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
         return Path.of(USER_HOME_DIRECTORY, PREFERENCES_DIRECTORY, PREFERENCES_FILE);
     }
 
-    // Wether or not the user preferences file exists
+    // Whether the user preferences file exists
     private boolean userPreferencesFileExists() {
         return Files.exists(this.getUserPreferencesFilePath());
     }
@@ -196,7 +196,7 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
     }
 
     /**
-     * Stores the preference in the user preferences. Thid method works on a copy of the user preferences
+     * Stores the preference in the user preferences. This method works on a copy of the user preferences
      * stored in newProperties to only have an impact on the actual properties file in the filesystem and the copy
      * so that the current settings are not affected until an application restart
      *
@@ -217,6 +217,5 @@ public class PreferencesPropertiesDataAccess implements PreferencesDataAccessInt
             return false;
         }
     }
-
 }
 

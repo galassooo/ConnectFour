@@ -53,7 +53,7 @@ public class AboutController implements IAboutController {
     }
 
     /**
-     * @return the istance of this class
+     * @return the instance of this class
      */
     public static AboutController getInstance() {
         if (instance == null) {

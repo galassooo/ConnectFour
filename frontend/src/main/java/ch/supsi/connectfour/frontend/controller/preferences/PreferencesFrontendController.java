@@ -89,9 +89,10 @@ public class PreferencesFrontendController implements IPreferencesController, Ev
 
             stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("/images/preferences/gear.png"))));
             stage.setScene(scene);
-            stage.setTitle(translationModel.translate("label.preferences"));
+            stage.setTitle(model.getTranslation("label.preferences"));
 
         } catch (IOException e) {
+            System.err.println("Failed to load preferences!");
             e.printStackTrace();
         }
     }
@@ -154,6 +155,10 @@ public class PreferencesFrontendController implements IPreferencesController, Ev
                                     // so this splits around the occurrences of / and only takes the last element
                                     String fileName = relativePath.split("/")[3];
                                     // Removes the extension. This approach is a bit flawed as it relies on the images being pngs, so it could be improved
+                                    //TODO
+                                    String[] extension = SYMBOL_REGEX.split("\\.");
+                                    int extensionLen = extension[extension.length-1].length()+1;
+
                                     fileName = fileName.substring(0, fileName.length() - 4).toUpperCase();
                                     // The relative path and the filename are wrapped in a Symbol object and returned
                                     return new SymbolBusiness(relativePath, fileName);
@@ -170,6 +175,7 @@ public class PreferencesFrontendController implements IPreferencesController, Ev
     /**
      * Shows the preferences popup
      */
+    @Override
     public void managePreferences() {
         stage.setResizable(false);
         stage.show();

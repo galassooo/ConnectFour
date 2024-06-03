@@ -16,10 +16,8 @@ public class TranslationsApplication {
     /* business references */
     private final TranslationsBusinessInterface translationsModel;
 
-    private final PreferencesBusinessInterface preferencesModel;
-
     private TranslationsApplication() {
-        this.preferencesModel = PreferencesBusiness.getInstance();
+        PreferencesBusinessInterface preferencesModel = PreferencesBusiness.getInstance();
         this.translationsModel = TranslationBusiness.getInstance();
 
         String currentLanguage = preferencesModel.getCurrentLanguage();

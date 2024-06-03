@@ -92,6 +92,7 @@ public class HelpController implements IHelpController {
 
                     /* help content translation */
                     String.format(LABELS_FORMAT, i),
+
                     /* if it's constructing the last screen it'll set next button as a 'play button' */
                     i == NUM_SCREENS ? "label.play" : "label.next",
 
@@ -138,6 +139,7 @@ public class HelpController implements IHelpController {
     /**
      * Shows the popup
      */
+    @Override
     public void manageHelp() {
         show(0);
     }

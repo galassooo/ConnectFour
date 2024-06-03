@@ -89,7 +89,7 @@ public class ConnectFourApplication {
      *
      * @param newMatch new match
      */
-    public void overrideCurrentMatch(@Nullable final ConnectFourBusinessInterface newMatch) {
+    private void overrideCurrentMatch(@Nullable final ConnectFourBusinessInterface newMatch) {
         currentMatch = newMatch;
     }
 

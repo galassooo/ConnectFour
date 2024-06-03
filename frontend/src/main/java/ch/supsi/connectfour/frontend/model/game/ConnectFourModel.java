@@ -66,7 +66,7 @@ public class ConnectFourModel implements IConnectFourModel {
      * Delegates the persistence of the current game to the backend controller. This method is intended to be used
      * when the game was already 'saved as' once.
      *
-     * @return true if the persistence operation was successfull, false otherwise
+     * @return true if the persistence operation was successful, false otherwise
      */
     @Override
     public boolean persist() {
@@ -74,11 +74,11 @@ public class ConnectFourModel implements IConnectFourModel {
     }
 
     /**
-     * Delegates the persistency of the current game to the backendcontroller.
+     * Delegates the persistence of the current game to the backendcontroller.
      *
      * @param directory the directory where the game should be saved
      * @param filename  the name of the file to save the game to
-     * @return true if the persistence operation was successfull, false otherwise
+     * @return true if the persistence operation was successful, false otherwise
      */
     @Override
     public boolean persist(File directory, String filename) {
@@ -125,7 +125,7 @@ public class ConnectFourModel implements IConnectFourModel {
         List<String> list = List.of("label.insert_name", "label.insert_name_title",
                 "label.chosen_directory", "label.correctly_saved","label.not_correctly_saved",
                 "label.confirm", "label.error", "label.overwrite_confirmation","label.cancel",
-                "label.confirmation","label.success"
+                "label.confirmation","label.success", "label.infobar_welcome"
         );
         TranslationsApplication translator = TranslationsApplication.getInstance();
         list.forEach( key -> translatedLabels.putIfAbsent(key, translator.translate(key)));

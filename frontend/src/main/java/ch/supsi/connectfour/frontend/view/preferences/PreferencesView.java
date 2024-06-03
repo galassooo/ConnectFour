@@ -108,7 +108,7 @@ public class PreferencesView implements IPreferencesView {
         //construct a single binding obj given the others
         BooleanBinding saveButtonDisabledBinding = colorsEqualBinding.and(shapesEqualBinding).and(languageEqualBinding);
 
-        // Bind the the binding to the disable property of the button, so that if the binding returns true the button
+        // Bind the binding to the disable property of the button, so that if the binding returns true the button
         // is disabled, else enabled
         saveButton.disableProperty().bind(saveButtonDisabledBinding);
 

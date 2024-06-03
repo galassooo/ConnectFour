@@ -50,7 +50,7 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
     private final ConnectFourPlayerInterface player2;
     // Player currently allowed to move
     private ConnectFourPlayerInterface currentPlayer;
-    // Gives information about wether or not the last move operation was valid or not
+    // Gives information about whether the last move operation was valid or not
     private boolean wasLastMoveValid;
 
     public ConnectFourBusiness(ConnectFourPlayerInterface player1, ConnectFourPlayerInterface player2) {
@@ -172,7 +172,7 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
      *
      * @param outputDirectory the directory in which the file should be created
      * @param saveName        the name of the save
-     * @return true if the persistence operation was successfull, false otherwise
+     * @return true if the persistence operation was successful, false otherwise
      */
     @Override
     public boolean persist(@Nullable final File outputDirectory, @Nullable final String saveName) {
@@ -190,7 +190,7 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         }
         /*
          * If there was an error while saving the game, remove the path from this instance. The update of the path
-         * is performed before actually knowing if the saving operation was successfull to already include the path in
+         * is performed before actually knowing if the saving operation was successful to already include the path in
          * the serialized version of this instance.
          */
         if (outputDirectory == null && !wasSaved) {

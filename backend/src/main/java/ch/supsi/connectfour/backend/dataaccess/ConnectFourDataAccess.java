@@ -66,7 +66,7 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
      *
      * @param game       an object representing the game to persist
      * @param outputFile the file to serialize the game to
-     * @return wether or not the persistence operation completed successfully
+     * @return whether the persistence operation completed successfully
      */
     @Override
     public boolean persist(@NotNull final ConnectFourBusinessInterface game, @NotNull final File outputFile) {
@@ -82,7 +82,7 @@ public class ConnectFourDataAccess implements ConnectFourDataAccessInterface {
             System.err.printf("An error occurred while trying to create file %s%n", outputFile);
             e.printStackTrace();
         }
-        final ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
+        final ObjectMapper mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT); //used to format output file
         try {
             mapper.writeValue(outputFile, game);
         } catch (IOException e) {

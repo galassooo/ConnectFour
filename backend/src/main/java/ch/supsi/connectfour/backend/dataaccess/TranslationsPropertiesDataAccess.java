@@ -4,7 +4,6 @@ import ch.supsi.connectfour.backend.business.translations.TranslationsDataAccess
 import org.jetbrains.annotations.NotNull;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -35,7 +34,6 @@ public class TranslationsPropertiesDataAccess implements TranslationsDataAccessI
 
         return myself;
     }
-
     /**
      * Loads and returns the supported language tags. The supported language tags are loaded from a
      * default properties file

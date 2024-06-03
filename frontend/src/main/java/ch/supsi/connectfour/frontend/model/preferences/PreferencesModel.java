@@ -52,7 +52,9 @@ public class PreferencesModel implements IPreferencesModel {
     @Override
     public void translateAndSave() {
         List<String> list = List.of(
-                "label.preferences_please_choose", "label.preferences_cannot_save", "label.preferences_language_only");
+                "label.preferences_please_choose", "label.preferences_cannot_save", "label.preferences_language_only",
+                "label.preferences"
+        );
         TranslationsApplication translator = TranslationsApplication.getInstance();
         list.forEach( key -> translatedLabels.putIfAbsent(key, translator.translate(key)));
     }

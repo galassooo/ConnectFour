@@ -9,8 +9,6 @@ import ch.supsi.connectfour.backend.business.player.ConnectFourPlayerInterface;
 import ch.supsi.connectfour.frontend.MainFx;
 import ch.supsi.connectfour.frontend.model.game.ConnectFourModel;
 import ch.supsi.connectfour.frontend.model.game.IConnectFourModel;
-import ch.supsi.connectfour.frontend.model.translations.ITranslationsModel;
-import ch.supsi.connectfour.frontend.model.translations.TranslationModel;
 import ch.supsi.connectfour.frontend.view.serialization.ISerializationView;
 import ch.supsi.connectfour.frontend.view.serialization.SerializationView;
 import ch.supsi.connectfour.frontend.view.viewables.InfoBarView;
@@ -47,8 +45,6 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
      */
     private ConnectFourFrontendController() {
         this.model = ConnectFourModel.getInstance();
-
-        // weird formatting for better readability
         model.translateAndSave();
 
         this.serializationView = new SerializationView(primaryStage, model);
@@ -77,7 +73,7 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
         primaryStage = stage;
         saveMenu = saveMenuItem;
         viewableItems.addAll(Arrays.stream(viewables).toList());
-        InfoBarView.setDefaultMessage(TranslationModel.getInstance().translate("label.infobar_welcome"));
+        InfoBarView.setDefaultMessage(model.getTranslation("label.infobar_welcome"));
     }
 
     /**
@@ -85,6 +81,7 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
      *
      * @param column colonna nel quale il giocatore intende inserire la pedina
      */
+    @Override
     public void manageColumnSelection(int column) {
         GameEvent data = model.playerMove(column);
 
@@ -94,6 +91,7 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
     /**
      * Manage the player's request to create a new game
      */
+    @Override
     public void manageNew() {
         if (!model.isCurrentMatchNull()) {
             // If the user confirms their choice to open a new game
@@ -121,6 +119,7 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
     /**
      * Manage save request
      */
+    @Override
     public void manageSave() {
         this.serializationView.showMessage(model.persist());
     }
@@ -137,6 +136,7 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
     /**
      * Manage the save as request
      */
+    @Override
     public void manageSaveAs() {
         final File dir = this.serializationView.askForDirectory(new File(System.getProperty("user.home")));
 
@@ -200,6 +200,7 @@ public class ConnectFourFrontendController implements GameEventHandler, IGameCon
     /**
      * Handle open request
      */
+    @Override
     public void manageOpen() {
         final File file = this.serializationView.askForFile();
         /*

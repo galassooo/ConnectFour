@@ -8,6 +8,7 @@ import ch.supsi.connectfour.backend.business.symbols.SymbolBusiness;
 import ch.supsi.connectfour.backend.dataaccess.ConnectFourDataAccess;
 import ch.supsi.connectfour.backend.dataaccess.PreferencesPropertiesDataAccess;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -133,6 +134,7 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
      * @param file a file potentially containing a valid save
      * @return an instance of ConnectFourModel if the file is valid, null otherwise
      */
+    @JsonIgnore
     @Override
     public ConnectFourBusinessInterface getSave(@NotNull final File file) {
         final ConnectFourBusiness loadedGame = dataAccess.getSave(file);
@@ -161,7 +163,7 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         return loadedGame;
     }
 
-    @JsonIgnore // Otherwise this is considered a getter
+    @JsonIgnore // otherwise Jackson will use this when serializing
     @Override
     public @NotNull String getSaveName() {
         return this.pathToSave.getFileName().toString();
@@ -284,6 +286,7 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
      * @param column colonna della quale si vuole ottenere l'ultima riga occupata
      * @return l'indice dell'ultima riga occupata in quella colonna
      */
+    @JsonIgnore
     @Override
     public int getLastPositioned(int column) {
         return GRID_HEIGHT - lastPositionOccupied[column];
@@ -298,6 +301,7 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
     }
 
     // Getter and setter methods
+    @JsonInclude
     public boolean isFinished() {
         if (this.isFinished)
             this.wasLastMoveValid = false;
@@ -305,30 +309,31 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
         return isFinished;
     }
 
-    public void setFinished(boolean finished) {
-        isFinished = finished;
-    }
-
     /* getters */
+    @JsonInclude
     @Override
     public ConnectFourPlayerInterface getCurrentPlayer() {
         return (ConnectFourPlayerInterface) currentPlayer.clone();
     }
 
+    @JsonInclude
     @Override
     public ConnectFourPlayerInterface getPlayer1() {
         return (ConnectFourPlayerInterface) player1.clone();
     }
 
+    @JsonInclude
     @Override
     public ConnectFourPlayerInterface getPlayer2() {
         return (ConnectFourPlayerInterface) player2.clone(); // safety copy
     }
-    // Used by Jackson
+
+    @JsonInclude
     public Path getPathToSave() {
         return pathToSave;
     }
-    // Used by Jackson
+
+    @JsonInclude
     public boolean isWasLastMoveValid() {
         return wasLastMoveValid;
     }
@@ -338,34 +343,41 @@ public class ConnectFourBusiness implements ConnectFourBusinessInterface {
      *
      * @return a deep copy of the original matrix
      */
+    @JsonInclude
     @Override
     public ConnectFourPlayerInterface[][] getGameMatrix() {
         return getGameMatrixDeepCopy(this.gameMatrix); //safety copy
     }
-
-    /* setters */
-    void setCurrentPlayer(@NotNull ConnectFourPlayerInterface currentPlayer) {
-        this.currentPlayer = (ConnectFourPlayerInterface) currentPlayer.clone();
-    }
-
-    void setGameMatrix(ConnectFourPlayerInterface[][] gameMatrix) {
-        this.gameMatrix = gameMatrix;
-    }
-
+    @JsonInclude
     public int[] getLastPositionOccupied() {
         return Arrays.copyOf(lastPositionOccupied, lastPositionOccupied.length); //safety copy
     }
 
+    /* setters */
+    @JsonInclude // used in deserialization
+    void setCurrentPlayer(@NotNull ConnectFourPlayerInterface currentPlayer) {
+        this.currentPlayer = (ConnectFourPlayerInterface) currentPlayer.clone();
+    }
+    @JsonInclude
+    void setGameMatrix(ConnectFourPlayerInterface[][] gameMatrix) {
+        this.gameMatrix = gameMatrix;
+    }
+
+    @JsonInclude
     void setLastPositionOccupied(int[] lastPositionOccupied) {
         this.lastPositionOccupied = lastPositionOccupied;
     }
-
+    @JsonInclude
     void setPathToSave(Path pathToSave) {
         this.pathToSave = pathToSave;
     }
-
+    @JsonInclude
     void setWasLastMoveValid(boolean wasLastMoveValid) {
         this.wasLastMoveValid = wasLastMoveValid;
+    }
+    @JsonInclude
+    public void setFinished(boolean finished) {
+        isFinished = finished;
     }
 
 }
